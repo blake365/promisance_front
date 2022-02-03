@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
-import { RootState } from './store'
 
 export const userSlice = createSlice({
 	name: 'user',
@@ -39,6 +38,19 @@ export const signupUser = createAsyncThunk(
 		} catch (e) {
 			console.log('Error', e.response.data)
 			return thunkAPI.rejectWithValue(e.response.data)
+		}
+	}
+)
+
+export const loginUser = createAsyncThunk(
+	'users/loginUser',
+	async (values, thunkAPI) => {
+		try {
+			const res = await Axios.post('/auth/login', values)
+			let data = await res.json()
+			console.log('data', data)
+		} catch (e) {
+			console.log(e)
 		}
 	}
 )
