@@ -2,7 +2,7 @@ import { Button, Center, Group, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { signupUser, userSelector } from '../store/userSlice'
+import { register, signupUser, userSelector } from '../store/userSlice'
 import { useEffect } from 'react'
 
 export default function Signup() {
@@ -56,10 +56,10 @@ export default function Signup() {
 			<Center>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Sign Up
+						Register
 					</Title>
 					<form
-						onSubmit={form.onSubmit((values) => dispatch(signupUser(values)))}
+						onSubmit={form.onSubmit((values) => dispatch(register(values)))}
 					>
 						<TextInput
 							label='Email'

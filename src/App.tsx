@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import {
 	ColorScheme,
 	ColorSchemeProvider,
@@ -14,7 +14,6 @@ import {
 	Header,
 	MediaQuery,
 	Navbar,
-	Text,
 	Title,
 	useMantineTheme,
 	ScrollArea,
@@ -24,12 +23,15 @@ import {
 import Sidebar from './components/sidebar'
 
 import './App.css'
-import { useClickOutside } from '@mantine/hooks'
 import InfoBar from './components/infobar'
+import { useDispatch } from 'react-redux'
+import { userLoaded } from './store/userSlice'
+import Axios from 'axios'
 
 function App() {
 	const [opened, setOpened] = useState(false)
 	const theme = useMantineTheme()
+	const dispatch = useDispatch()
 
 	// const clickRef = useClickOutside(() => setOpened(false))
 	const preferredColorScheme = useColorScheme()
@@ -37,6 +39,18 @@ function App() {
 		useState<ColorScheme>(preferredColorScheme)
 	const toggleColorScheme = (value?: ColorScheme) =>
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+
+	useEffect(() => {
+		async function loadUser() {
+			try {
+				const res = await Axios.get('auth/me')
+				dispatch(userLoaded(res.data))
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		loadUser()
+	})
 
 	return (
 		<ColorSchemeProvider

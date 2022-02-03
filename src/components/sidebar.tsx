@@ -44,61 +44,66 @@ const Sidebar = () => {
 		<Fragment>
 			<Group direction='column' spacing='xs'>
 				<Title order={4}>Information</Title>
-				{infolinks.map((link) => (
+				{infolinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
+						key={index}
 					>
 						{link}
 					</Button>
 				))}
 				<Title order={4}>Use Turns</Title>
-				{turnLinks.map((link) => (
+				{turnLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
+						key={index}
 					>
 						{link}
 					</Button>
 				))}
 				<Title order={4}>Finance</Title>
-				{financeLinks.map((link) => (
+				{financeLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
+						key={index}
 					>
 						{link}
 					</Button>
 				))}
 				<Title order={4}>Magic</Title>
-				{foreignLinks.map((link) => (
+				{foreignLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
+						key={index}
 					>
 						{link}
 					</Button>
 				))}
 				<Title order={4}>Settings</Title>
-				{managementLinks.map((link) => (
+				{managementLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
+						key={index}
 					>
 						{link}
 					</Button>

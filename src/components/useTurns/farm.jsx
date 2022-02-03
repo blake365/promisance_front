@@ -1,25 +1,18 @@
-import {
-	Center,
-	Group,
-	Title,
-	NumberInput,
-	Button,
-	Divider,
-} from '@mantine/core'
+import { Button, Center, Group, NumberInput, Text, Title } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { empireLoaded } from '../../store/empireSlice'
 
-export default function Cash() {
-	// TODO: state management for form input
-	const empire = {
-		id: 2,
-		turns: 200,
-	}
+export default function Farm() {
+	const empire = useSelector((state) => state.empire)
+
+	const dispatch = useDispatch()
 
 	const form = useForm({
 		initialValues: {
 			empireId: empire.id,
-			type: 'cash',
+			type: 'farm',
 			turns: 0,
 			condensed: true,
 		},
@@ -33,11 +26,23 @@ export default function Cash() {
 		},
 	})
 
-	const doTurns = async (values: Object) => {
+	const loadEmpireTest = async () => {
+		try {
+			const res = await Axios.get(`/empire/${empire.uuid}`)
+			console.log(res.data)
+
+			dispatch(empireLoaded(res.data))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const doTurns = async (values) => {
 		try {
 			const res = await Axios.post('/useturns', values)
 
 			console.log(res.data)
+			loadEmpireTest()
 		} catch (error) {
 			console.log(error)
 		}
@@ -45,19 +50,19 @@ export default function Cash() {
 
 	return (
 		<main>
-			<Center mb={10}>
+			<Center>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Cash
+						Farm
 					</Title>
 					<div>
-						For each turn focusing on your economy, your people will produce 25%
-						more money
+						For each turn you spend farming, your farms will produce 25% more
+						food
 					</div>
 					<form onSubmit={form.onSubmit((values) => doTurns(values))}>
 						<Group direction='column' spacing='sm' align='center'>
 							<NumberInput
-								label='Spend how many turns making money?'
+								label='Spend how many turns farming?'
 								min={0}
 								defaultValue={0}
 								stepHoldDelay={500}
@@ -65,26 +70,11 @@ export default function Cash() {
 								max={empire.turns}
 								{...form.getInputProps('turns')}
 							/>
-							<Button color='yellow' type='submit'>
-								Make Money
+							<Button color='green' type='submit'>
+								Farm
 							</Button>
 						</Group>
 					</form>
-				</Group>
-			</Center>
-			<Divider size='lg' />
-			<Center mt={10}>
-				<Group direction='column' spacing='sm' align='center'>
-					<div>Update your tax rate:</div>
-					<NumberInput
-						label='Tax Rate'
-						min={0}
-						max={100}
-						defaultValue={40}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<Button>Change Tax Rate</Button>
 				</Group>
 			</Center>
 		</main>

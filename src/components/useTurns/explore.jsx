@@ -1,12 +1,13 @@
 import { Center, Group, Title, NumberInput, Button } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { empireLoaded } from '../../store/empireSlice'
 
 export default function Explore() {
-	const empire = {
-		id: 2,
-		turns: 200,
-	}
+	const empire = useSelector((state) => state.empire)
+
+	const dispatch = useDispatch()
 
 	const form = useForm({
 		initialValues: {
@@ -25,11 +26,23 @@ export default function Explore() {
 		},
 	})
 
-	const doTurns = async (values: Object) => {
+	const loadEmpireTest = async () => {
+		try {
+			const res = await Axios.get(`/empire/${empire.uuid}`)
+			console.log(res.data)
+
+			dispatch(empireLoaded(res.data))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const doTurns = async (values) => {
 		try {
 			const res = await Axios.post('/useturns', values)
 
 			console.log(res.data)
+			loadEmpireTest()
 		} catch (error) {
 			console.log(error)
 		}
@@ -53,7 +66,7 @@ export default function Explore() {
 								defaultValue={0}
 								stepHoldDelay={500}
 								stepHoldInterval={100}
-								// max={availableTurns}
+								max={empire.turns}
 								{...form.getInputProps('turns')}
 							/>
 							<Button color='grape' type='submit'>

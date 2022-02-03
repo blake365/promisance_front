@@ -21,6 +21,7 @@ import Signup from './components/Signup'
 import Axios from 'axios'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
+Axios.defaults.withCredentials = true
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -28,7 +29,6 @@ ReactDOM.render(
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<App />}>
-						<Route path='' element={<Login />} />
 						<Route path='login' element={<Login />} />
 						<Route path='signup' element={<Signup />} />
 						<Route path='summary' element={<Summary />} />
