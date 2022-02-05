@@ -17,6 +17,7 @@ import Meditate from './components/useTurns/meditate'
 import Summary from './components/summary'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import Overview from './components/overview'
 
 import Axios from 'axios'
 
@@ -32,6 +33,7 @@ ReactDOM.render(
 						<Route path='login' element={<Login />} />
 						<Route path='signup' element={<Signup />} />
 						<Route path='summary' element={<Summary />} />
+						<Route path='overview' element={<Overview />} />
 						<Route path='farm' element={<Farm />} />
 						<Route path='cash' element={<Cash />} />
 						<Route path='explore' element={<Explore />} />

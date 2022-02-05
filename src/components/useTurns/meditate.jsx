@@ -71,7 +71,7 @@ export default function Meditate() {
 								{...form.getInputProps('turns')}
 							/>
 							<Button color='grape' type='submit'>
-								Explore
+								Meditate
 							</Button>
 						</Group>
 					</form>

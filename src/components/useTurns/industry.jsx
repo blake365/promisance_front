@@ -96,7 +96,7 @@ export default function Industry() {
 						label='Infantry'
 						min={0}
 						max={100}
-						defaultValue={25}
+						defaultValue={empire.indArmy}
 						stepHoldDelay={500}
 						stepHoldInterval={100}
 					/>
@@ -104,7 +104,7 @@ export default function Industry() {
 						label='Tanks'
 						min={0}
 						max={100}
-						defaultValue={25}
+						defaultValue={empire.indLnd}
 						stepHoldDelay={500}
 						stepHoldInterval={100}
 					/>
@@ -112,7 +112,7 @@ export default function Industry() {
 						label='Jets'
 						min={0}
 						max={100}
-						defaultValue={25}
+						defaultValue={empire.indFly}
 						stepHoldDelay={500}
 						stepHoldInterval={100}
 					/>
@@ -120,7 +120,7 @@ export default function Industry() {
 						label='Battleships'
 						min={0}
 						max={100}
-						defaultValue={25}
+						defaultValue={empire.indSea}
 						stepHoldDelay={500}
 						stepHoldInterval={100}
 					/>
