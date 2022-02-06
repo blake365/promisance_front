@@ -1,6 +1,8 @@
 import { Button, Center, Group, NumberInput, Table, Title } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
+import Axios from 'axios'
+import { empireLoaded } from '../../store/empireSlice'
 
 export default function Build() {
 	let buildNumberArray = []
@@ -9,6 +11,8 @@ export default function Build() {
 		error: '',
 	}
 	const empire = useSelector((state) => state.empire)
+
+	const dispatch = useDispatch()
 
 	const getBuildAmounts = (empire) => {
 		let buildCost = Math.round(3500 + empire.land * 0.1)
@@ -100,6 +104,28 @@ export default function Build() {
 		errors.error = error
 	}
 
+	const loadEmpireTest = async () => {
+		try {
+			const res = await Axios.get(`/empire/${empire.uuid}`)
+			console.log(res.data)
+
+			dispatch(empireLoaded(res.data))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const doBuild = async (values) => {
+		try {
+			const res = await Axios.post('/build', values)
+
+			console.log(res.data)
+			loadEmpireTest()
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	return (
 		<main>
 			<Center mb={10}>
@@ -122,7 +148,7 @@ export default function Build() {
 					<form
 						onSubmit={
 							totalBuild < canBuild
-								? form.onSubmit((values) => console.log(values))
+								? form.onSubmit((values) => doBuild(values))
 								: setErrors("Can't build that many buildings")
 						}
 					>
@@ -148,17 +174,6 @@ export default function Build() {
 											hideControls
 											min={0}
 											defaultValue={0}
-											// value={value}
-											// onChange={(val) => {
-											// 	console.log(val)
-											// 	const parsedVal = parseInt(val)
-											// 	console.log(parsedVal)
-											// 	if (parsedVal === '' || Number.isNaN(parsedVal)) {
-											// 		setValue(0)
-											// 	} else {
-											// 		setValue(val)
-											// 	}
-											// }}
 											max={empire.freeLand}
 											{...form.getInputProps('bldPop')}
 										/>
