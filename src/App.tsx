@@ -27,6 +27,7 @@ import InfoBar from './components/infobar'
 import { useDispatch } from 'react-redux'
 import { userLoaded } from './store/userSlice'
 import Axios from 'axios'
+import TurnResultContainer from './components/useTurns/TurnResultContainer'
 
 function App() {
 	const [opened, setOpened] = useState(false)
@@ -114,7 +115,7 @@ function App() {
 				>
 					<main style={{ paddingRight: 15, paddingBottom: 15 }}>
 						<InfoBar />
-						<div>This is where the turn result goes</div>
+						<TurnResultContainer />
 						<Outlet />
 					</main>
 				</AppShell>

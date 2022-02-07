@@ -1,24 +1,32 @@
-import { Center, Group, Title, NumberInput, Button } from '@mantine/core'
+import {
+	Center,
+	Group,
+	Title,
+	NumberInput,
+	Button,
+	Checkbox,
+} from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
+import { clearResult, setResult } from '../../store/turnResultsSlice'
 
-export default function Explore() {
-	const empire = useSelector((state) => state.empire)
+export default function GeneralAction(props) {
+	// const empire = useSelector((state) => state.empire)
 
 	const dispatch = useDispatch()
 
 	const form = useForm({
 		initialValues: {
-			empireId: empire.id,
-			type: 'explore',
+			empireId: props.empire.id,
+			type: props.type,
 			turns: 0,
-			condensed: false,
+			condensed: true,
 		},
 
 		validationRules: {
-			turns: (value) => value < empire.turns && value > 0,
+			turns: (value) => value < props.empire.turns && value > 0,
 		},
 
 		errorMessages: {
@@ -28,7 +36,7 @@ export default function Explore() {
 
 	const loadEmpireTest = async () => {
 		try {
-			const res = await Axios.get(`/empire/${empire.uuid}`)
+			const res = await Axios.get(`/empire/${props.empire.uuid}`)
 			console.log(res.data)
 
 			dispatch(empireLoaded(res.data))
@@ -40,8 +48,7 @@ export default function Explore() {
 	const doTurns = async (values) => {
 		try {
 			const res = await Axios.post('/useturns', values)
-
-			console.log(res.data)
+			dispatch(setResult(res.data))
 			loadEmpireTest()
 		} catch (error) {
 			console.log(error)
@@ -49,33 +56,42 @@ export default function Explore() {
 	}
 
 	return (
-		<main>
+		<section>
 			<Center>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Explore
+						{props.title}
 					</Title>
 					<div>
-						For each turn you spend exploring, your empire will grow by XX acres
+						For each turn you spend {props.flavor}, your empire produces 25%
+						more {props.item}.
 					</div>
-					<form onSubmit={form.onSubmit((values) => doTurns(values))}>
+					<form onSubmit={form.onSubmit((values) =>
+					{
+						dispatch(clearResult)
+						doTurns(values)
+					})}>
 						<Group direction='column' spacing='sm' align='center'>
 							<NumberInput
-								label='Spend how many turns exploring?'
+								label={`Spend how many turns ${props.flavor}?`}
 								min={0}
 								defaultValue={0}
 								stepHoldDelay={500}
 								stepHoldInterval={100}
-								max={empire.turns}
+								max={props.empire.turns}
 								{...form.getInputProps('turns')}
 							/>
-							<Button color='grape' type='submit'>
-								Explore
+							<Checkbox
+								label='condensed'
+								{...form.getInputProps('condensed', { type: 'checkbox' })}
+							/>
+							<Button color={props.color} type='submit'>
+								{props.title}
 							</Button>
 						</Group>
 					</form>
 				</Group>
 			</Center>
-		</main>
+		</section>
 	)
 }
