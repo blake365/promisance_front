@@ -1,4 +1,5 @@
-import {
+import
+{
 	Center,
 	Group,
 	Title,
@@ -12,7 +13,8 @@ import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 
-export default function GeneralAction(props) {
+export default function GeneralAction(props)
+{
 	// const empire = useSelector((state) => state.empire)
 
 	const dispatch = useDispatch()
@@ -34,10 +36,11 @@ export default function GeneralAction(props) {
 		},
 	})
 
-	const loadEmpireTest = async () => {
+	const loadEmpireTest = async () =>
+	{
 		try {
 			const res = await Axios.get(`/empire/${props.empire.uuid}`)
-			console.log(res.data)
+			// console.log(res.data)
 
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
@@ -45,7 +48,8 @@ export default function GeneralAction(props) {
 		}
 	}
 
-	const doTurns = async (values) => {
+	const doTurns = async (values) =>
+	{
 		try {
 			const res = await Axios.post('/useturns', values)
 			dispatch(setResult(res.data))
@@ -56,16 +60,18 @@ export default function GeneralAction(props) {
 	}
 
 	return (
-		<section>
+		<section style={{ paddingTop: '1rem' }}>
 			<Center>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>
 						{props.title}
 					</Title>
-					<div>
+					{props.explore ? (<div>
+						For each turn you spend {props.flavor}, your empire will grow by {props.explore} {props.item}.
+					</div>) : (<div>
 						For each turn you spend {props.flavor}, your empire produces 25%
 						more {props.item}.
-					</div>
+					</div>)}
 					<form onSubmit={form.onSubmit((values) =>
 					{
 						dispatch(clearResult)
@@ -82,7 +88,8 @@ export default function GeneralAction(props) {
 								{...form.getInputProps('turns')}
 							/>
 							<Checkbox
-								label='condensed'
+								label='Condensed'
+								color={props.color}
 								{...form.getInputProps('condensed', { type: 'checkbox' })}
 							/>
 							<Button color={props.color} type='submit'>

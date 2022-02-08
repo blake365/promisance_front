@@ -1,4 +1,6 @@
-import {
+import
+{
+	Text,
 	Center,
 	Group,
 	Title,
@@ -9,47 +11,36 @@ import {
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
+import GeneralAction from './generalAction'
 import { empireLoaded } from '../../store/empireSlice'
 
-export default function Cash() {
+export default function Cash()
+{
 	const empire = useSelector((state) => state.empire)
-
 	const dispatch = useDispatch()
 
 	const form = useForm({
 		initialValues: {
 			empireId: empire.id,
-			type: 'cash',
-			turns: 0,
-			condensed: true,
+			tax: empire.tax,
 		},
 
 		validationRules: {
-			turns: (value) => value < empire.turns && value > 0,
+			tax: (value) => value <= 100 && value > 0,
 		},
 
 		errorMessages: {
-			turns: 'Invalid number of turns',
+			tax: 'Invalid tax rate',
 		},
 	})
 
-	const loadEmpireTest = async () => {
+	const updateTax = async (values) =>
+	{
 		try {
-			const res = await Axios.get(`/empire/${empire.uuid}`)
-			console.log(res.data)
+			const res = await Axios.put(`/empire/${empire.uuid}`, values)
 
+			console.log(res.data)
 			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	const doTurns = async (values) => {
-		try {
-			const res = await Axios.post('/useturns', values)
-
-			console.log(res.data)
-			loadEmpireTest()
 		} catch (error) {
 			console.log(error)
 		}
@@ -57,46 +48,34 @@ export default function Cash() {
 
 	return (
 		<main>
-			<Center mb={10}>
-				<Group direction='column' spacing='sm' align='center'>
-					<Title order={1} align='center'>
-						Cash
-					</Title>
-					<div>
-						For each turn focusing on your economy, your people will produce 25%
-						more money
-					</div>
-					<form onSubmit={form.onSubmit((values) => doTurns(values))}>
-						<Group direction='column' spacing='sm' align='center'>
-							<NumberInput
-								label='Spend how many turns making money?'
-								min={0}
-								defaultValue={0}
-								stepHoldDelay={500}
-								stepHoldInterval={100}
-								max={empire.turns}
-								{...form.getInputProps('turns')}
-							/>
-							<Button color='yellow' type='submit'>
-								Make Money
-							</Button>
-						</Group>
-					</form>
-				</Group>
-			</Center>
-			<Divider size='lg' />
+
+			<GeneralAction
+				title='Cash'
+				type='cash'
+				flavor='focusing on your economy'
+				item='money'
+				color='yellow'
+				empire={empire}
+			/>
+			<Divider size='lg' style={{ marginTop: '1rem' }} />
 			<Center mt={10}>
 				<Group direction='column' spacing='sm' align='center'>
-					<div>Update your tax rate:</div>
-					<NumberInput
-						label='Tax Rate'
-						min={0}
-						max={100}
-						defaultValue={40}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<Button>Change Tax Rate</Button>
+					<Title order={3}>Tax Settings</Title>
+					<Text size='sm'>Update your empire's tax rate:</Text>
+					<form onSubmit={form.onSubmit((values) => updateTax(values))}>
+						<Group direction='column' align='center'>
+							<NumberInput
+								label='Tax Rate'
+								min={0}
+								max={100}
+								defaultValue={40}
+								stepHoldDelay={500}
+								stepHoldInterval={100}
+								{...form.getInputProps('tax')}
+							/>
+							<Button type='submit' color='yellow'>Update</Button>
+						</Group>
+					</form>
 				</Group>
 			</Center>
 		</main>

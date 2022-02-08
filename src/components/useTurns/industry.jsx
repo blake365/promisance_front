@@ -1,9 +1,11 @@
-import {
+import
+{
 	Button,
 	Center,
 	Divider,
 	Group,
 	NumberInput,
+	SimpleGrid,
 	Text,
 	Title,
 } from '@mantine/core'
@@ -11,8 +13,16 @@ import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
+import GeneralAction from './generalAction'
 
-export default function Industry() {
+export default function Industry()
+{
+	let industryNumberArray = []
+	let totalIndustry = 0
+	let errors = {
+		error: '',
+	}
+
 	const empire = useSelector((state) => state.empire)
 
 	const dispatch = useDispatch()
@@ -20,111 +30,120 @@ export default function Industry() {
 	const form = useForm({
 		initialValues: {
 			empireId: empire.id,
-			type: 'industry',
-			turns: 0,
-			condensed: true,
+			indArmy: empire.indArmy,
+			indLnd: empire.indLnd,
+			indFly: empire.indFly,
+			indSea: empire.indSea
 		},
 
 		validationRules: {
-			turns: (value) => value < empire.turns && value > 0,
+			indArmy: (value) => value <= 100 && value >= 0,
+			indLnd: (value) => value <= 100 && value >= 0,
+			indFly: (value) => value <= 100 && value >= 0,
+			indSea: (value) => value <= 100 && value >= 0,
 		},
 
 		errorMessages: {
-			turns: 'Invalid number of turns',
+			indArmy: 'Invalid percent production',
+			indLnd: 'Invalid percent production',
+			indFly: 'Invalid percent production',
+			indSea: 'Invalid percent production',
 		},
 	})
 
-	const loadEmpireTest = async () => {
-		try {
-			const res = await Axios.get(`/empire/${empire.uuid}`)
-			console.log(res.data)
+	industryNumberArray = Object.values(form.values).slice(1)
 
+	totalIndustry = industryNumberArray
+		.filter(Number)
+		.reduce((partialSum, a) => partialSum + a, 0)
+
+	function setErrors(error)
+	{
+		errors.error = error
+	}
+
+	const updateIndustry = async (values) =>
+	{
+		try {
+			const res = await Axios.put(`/empire/${empire.uuid}`, values)
+
+			console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
-	const doTurns = async (values) => {
-		try {
-			const res = await Axios.post('/useturns', values)
-
-			console.log(res.data)
-			loadEmpireTest()
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
 	return (
-		<main>
-			<Center mb={10}>
-				<Group direction='column' spacing='sm' align='center'>
-					<Title order={1} align='center'>
-						Industry
-					</Title>
-					<div>
-						For each turn you spend focusing on industry, your factories will
-						make 25% more troops.
-					</div>
-					<form onSubmit={form.onSubmit((values) => doTurns(values))}>
-						<Group direction='column' spacing='sm' align='center'>
-							<NumberInput
-								label='Spend how many turns making troops?'
-								min={0}
-								defaultValue={0}
-								stepHoldDelay={500}
-								stepHoldInterval={100}
-								max={empire.turns}
-								{...form.getInputProps('turns')}
-							/>
-							<Button color='red' type='submit'>
-								Make Troops
-							</Button>
-						</Group>
-					</form>
-				</Group>
-			</Center>
-			<Divider size='lg' />
+		<main style={{ paddingBottom: '1rem' }}>
+			<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
+				item='troops' color='red' empire={empire} />
+
+			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
 			<Center mt={5}>
 				<Group direction='column' spacing='sm' align='center'>
-					<h2>Industry Settings</h2>
+					<Title order={3}>Industry Settings</Title>
 					<Text size='sm'>
 						Input the percentage of production to dedicate to each type of unit.{' '}
 					</Text>
-					<NumberInput
-						label='Infantry'
-						min={0}
-						max={100}
-						defaultValue={empire.indArmy}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<NumberInput
-						label='Tanks'
-						min={0}
-						max={100}
-						defaultValue={empire.indLnd}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<NumberInput
-						label='Jets'
-						min={0}
-						max={100}
-						defaultValue={empire.indFly}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<NumberInput
-						label='Battleships'
-						min={0}
-						max={100}
-						defaultValue={empire.indSea}
-						stepHoldDelay={500}
-						stepHoldInterval={100}
-					/>
-					<Button color='red'>Update Industry</Button>
+					<form onSubmit={
+						totalIndustry === 100
+							? form.onSubmit((values) => updateIndustry(values))
+							: setErrors("Values must add up to 100")
+					}>
+
+						<Group direction='column' align='center'>
+							<SimpleGrid cols={2} spacing={5}>
+								<NumberInput
+									label='Infantry'
+									min={0}
+									max={100}
+									defaultValue={empire.indArmy}
+									stepHoldDelay={500}
+									stepHoldInterval={100}
+									{...form.getInputProps('indArmy')}
+								/>
+								<NumberInput
+									label='Tanks'
+									min={0}
+									max={100}
+									defaultValue={empire.indLnd}
+									stepHoldDelay={500}
+									stepHoldInterval={100}
+									{...form.getInputProps('indLnd')}
+								/>
+								<NumberInput
+									label='Jets'
+									min={0}
+									max={100}
+									defaultValue={empire.indFly}
+									stepHoldDelay={500}
+									stepHoldInterval={100}
+									{...form.getInputProps('indFly')}
+								/>
+								<NumberInput
+									label='Battleships'
+									min={0}
+									max={100}
+									defaultValue={empire.indSea}
+									stepHoldDelay={500}
+									stepHoldInterval={100}
+									{...form.getInputProps('indSea')}
+								/>
+							</SimpleGrid>
+							<div style={{ color: 'red' }}>{errors.error}</div>
+							{errors.error ? (
+								<Button color='red' type='submit' disabled>
+									Update
+								</Button>
+							) : (
+								<Button color='red' type='submit'>
+									Update
+								</Button>
+							)}
+						</Group>
+					</form>
 				</Group>
 			</Center>
 		</main>

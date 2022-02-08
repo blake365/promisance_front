@@ -2,12 +2,13 @@ import { Button, Grid, Group, Table, Title } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../store/empireSlice'
 import Axios from 'axios'
-import GeneralAction from './useTurns/generalAction'
 
-export default function Summary() {
+export default function Summary()
+{
 	const dispatch = useDispatch()
 
-	const loadEmpireTest = async () => {
+	const loadEmpireTest = async () =>
+	{
 		try {
 			const res = await Axios.get(
 				'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
@@ -139,30 +140,7 @@ export default function Summary() {
 				<div>Next 2 turns in XX minutes, XX seconds</div>
 				<div>The current round will end in X days, XX hours</div>
 
-				<GeneralAction
-					title='Farm'
-					type='farm'
-					flavor='farming'
-					item='food'
-					color='green'
-					empire={empire}
-				/>
-				<GeneralAction
-					title='Cash'
-					type='cash'
-					flavor='focusing on your economy'
-					item='money'
-					color='yellow'
-					empire={empire}
-				/>
-				<GeneralAction
-					title='Meditate'
-					type='meditate'
-					flavor='meditating'
-					item='mana'
-					color='grape'
-					empire={empire}
-				/>
+
 			</Group>
 		</main>
 	)
