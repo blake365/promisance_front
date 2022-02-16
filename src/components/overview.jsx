@@ -1,4 +1,5 @@
-import {
+import
+{
 	Button,
 	Grid,
 	Group,
@@ -15,7 +16,8 @@ import { empireLoaded } from '../store/empireSlice'
 import Axios from 'axios'
 import { PureComponent } from 'react'
 
-import {
+import
+{
 	BarChart,
 	Bar,
 	Cell,
@@ -27,10 +29,12 @@ import {
 	ResponsiveContainer,
 } from 'recharts'
 
-export default function Overview() {
+export default function Overview()
+{
 	const dispatch = useDispatch()
 
-	const loadEmpireTest = async () => {
+	const loadEmpireTest = async () =>
+	{
 		try {
 			const res = await Axios.get(
 				'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
@@ -135,6 +139,74 @@ export default function Overview() {
 		},
 	]
 
+	function generalLog(number, base)
+	{
+		return Math.log(base) / Math.log(number)
+	}
+
+	const calcSizeBonus = ({ networth }) =>
+	{
+		let net = Math.max(networth, 1)
+		let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
+		size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
+		return size
+	}
+
+	let size = calcSizeBonus(empire)
+	console.log(size)
+
+	const calcPCI = (empire) =>
+	{
+		const { bldCash, land } = empire
+		return Math.round(25 * (1 + bldCash / Math.max(land, 1)))
+	}
+
+	console.log(calcPCI(empire))
+
+	// takes place of calcFinances function
+	let income = Math.round(
+		(calcPCI(empire) *
+			(empire.tax / 100) *
+			(empire.health / 100) *
+			empire.peasants +
+			empire.bldCash * 500) / size
+	)
+
+	// let loan = Math.round(empire.loan / 200)
+
+	let expenses = Math.round(
+		empire.trpArm * 1 +
+		empire.trpLnd * 2.5 +
+		empire.trpFly * 4 +
+		empire.trpSea * 7 +
+		empire.land * 8 +
+		empire.trpWiz * 0.5
+	)
+
+	//TODO: set up race/era modifier
+	let expensesBonus = Math.min(0.5, empire.bldCost / Math.max(empire.land, 1))
+
+	expenses -= Math.round(expenses * expensesBonus)
+
+	// takes place of calcProvisions function
+	let production =
+		10 * empire.freeLand +
+		empire.bldFood *
+		85 *
+		Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
+	// production *= food production modifier
+	let foodpro = Math.round(production)
+
+	let consumption =
+		empire.trpArm * 0.05 +
+		empire.trpLnd * 0.03 +
+		empire.trpFly * 0.02 +
+		empire.trpSea * 0.01 +
+		empire.peasants * 0.01 +
+		empire.trpWiz * 0.25
+	// consumption *= food consumption modifier
+	let foodcon = Math.round(consumption)
+
 	return (
 		<main>
 			<Group direction='column' spacing='sm' align='center' grow>
@@ -145,7 +217,7 @@ export default function Overview() {
 
 				{empire && (
 					<Card shadow='sm' padding='lg'>
-						<Card.Section>
+						<Card>
 							<Group>
 								<h3>
 									{empire.name} (#{empire.id})
@@ -155,16 +227,20 @@ export default function Overview() {
 									{empire.race}
 								</Badge>
 							</Group>
-						</Card.Section>
-						<Card.Section>
+						</Card>
+						<Card>
 							<Text weight={500}>Agriculture</Text>
-							<Group></Group>
-						</Card.Section>
-						<Card.Section>
+							<Group><div>Est. Production</div><div>{foodpro.toLocaleString()}</div></Group>
+							<Group><div>Est. Consumption</div><div>{foodcon.toLocaleString()}</div></Group>
+							<Group><div>Net</div><div>{(foodpro - foodcon).toLocaleString()}</div></Group>
+						</Card>
+						<Card>
 							<Text weight={500}>Finance</Text>
-							<Group></Group>
-						</Card.Section>
-						<Card.Section>
+							<Group><div>Income</div><div>{income.toLocaleString()}</div></Group>
+							<Group><div>Expenses</div><div>{expenses.toLocaleString()}</div></Group>
+							<Group><div>Net</div><div>{(income - expenses).toLocaleString()}</div></Group>
+						</Card>
+						<Card>
 							<Text weight={500} align='center'>
 								Land Division
 							</Text>
@@ -197,8 +273,8 @@ export default function Overview() {
 									))}
 								</Bar>
 							</BarChart>
-						</Card.Section>
-						<Card.Section>
+						</Card>
+						<Card>
 							<Text weight={500} align='center'>
 								Military
 							</Text>
@@ -230,7 +306,7 @@ export default function Overview() {
 								</Bar>
 								<Bar dataKey='networth' yAxisId='right' fill='#82ca9d' />
 							</BarChart>
-						</Card.Section>
+						</Card>
 					</Card>
 				)}
 			</Group>

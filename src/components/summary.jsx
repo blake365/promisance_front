@@ -48,11 +48,11 @@ export default function Summary()
 							<tbody>
 								<tr>
 									<td style={{ width: '50%' }}>Turns</td>
-									<td>{empire?.turns} (max 360)</td>
+									<td>{empire?.turns} (max 500)</td>
 								</tr>
 								<tr>
 									<td>Stored Turns</td>
-									<td>0 (max 150)</td>
+									<td>{empire?.storedturns} (max 250)</td>
 								</tr>
 								<tr>
 									<td>Rank</td>

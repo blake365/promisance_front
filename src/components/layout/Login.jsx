@@ -1,11 +1,12 @@
 import { Button, Center, Group, TextInput, Title } from '@mantine/core'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from '@mantine/hooks'
-import { login } from '../store/userSlice'
+import { login } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-export default function Login() {
+export default function Login()
+{
 	const dispatch = useDispatch()
 
 	const form = useForm({
@@ -19,7 +20,8 @@ export default function Login() {
 
 	let navigate = useNavigate()
 
-	useEffect(() => {
+	useEffect(() =>
+	{
 		if (isLoggedIn) {
 			return navigate('/summary')
 		}

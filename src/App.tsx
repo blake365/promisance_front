@@ -20,10 +20,10 @@ import {
 	Button,
 } from '@mantine/core'
 
-import Sidebar from './components/sidebar'
+import Sidebar from './components/layout/sidebar'
 
 import './App.css'
-import InfoBar from './components/infobar'
+import InfoBar from './components/layout/infobar'
 import { useDispatch } from 'react-redux'
 import { userLoaded } from './store/userSlice'
 import Axios from 'axios'

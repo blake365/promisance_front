@@ -15,9 +15,10 @@ import Industry from './components/useTurns/industry'
 import Build from './components/useTurns/build'
 import Meditate from './components/useTurns/meditate'
 import Summary from './components/summary'
-import Login from './components/Login'
-import Signup from './components/Signup'
+import Login from './components/layout/Login'
+import Signup from './components/layout/Signup'
 import Overview from './components/overview'
+import PrivateMarket from './components/markets/PrivateMarket'
 
 import Axios from 'axios'
 
@@ -40,6 +41,7 @@ ReactDOM.render(
 						<Route path='meditate' element={<Meditate />} />
 						<Route path='industry' element={<Industry />} />
 						<Route path='build' element={<Build />} />
+						<Route path='Black%20Market' element={<PrivateMarket />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

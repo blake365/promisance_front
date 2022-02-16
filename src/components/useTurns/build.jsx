@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
+import { clearResult, setResult } from '../../store/turnResultsSlice'
 
-export default function Build() {
+export default function Build()
+{
 	let buildNumberArray = []
 	let totalBuild = 0
 	let errors = {
@@ -14,7 +16,8 @@ export default function Build() {
 
 	const dispatch = useDispatch()
 
-	const getBuildAmounts = (empire) => {
+	const getBuildAmounts = (empire) =>
+	{
 		let buildCost = Math.round(3500 + empire.land * 0.1)
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
@@ -49,13 +52,13 @@ export default function Build() {
 
 		validationRules: {
 			// totalBuild: (value) => value < canBuild,
-			bldPop: (value) => value < canBuild,
-			bldCash: (value) => value < canBuild,
-			bldCost: (value) => value < canBuild,
-			bldFood: (value) => value < canBuild,
-			bldTroop: (value) => value < canBuild,
-			bldWiz: (value) => value < canBuild,
-			bldDef: (value) => value < canBuild,
+			bldPop: (value) => value <= canBuild,
+			bldCash: (value) => value <= canBuild,
+			bldCost: (value) => value <= canBuild,
+			bldFood: (value) => value <= canBuild,
+			bldTroop: (value) => value <= canBuild,
+			bldWiz: (value) => value <= canBuild,
+			bldDef: (value) => value <= canBuild,
 		},
 
 		errorMessages: {
@@ -97,14 +100,16 @@ export default function Build() {
 	totalBuild = buildNumberArray
 		.filter(Number)
 		.reduce((partialSum, a) => partialSum + a, 0)
-	// console.log(totalBuild)
+	console.log(totalBuild)
 	// console.log(value)
 
-	function setErrors(error) {
+	function setErrors(error)
+	{
 		errors.error = error
 	}
 
-	const loadEmpireTest = async () => {
+	const loadEmpireTest = async () =>
+	{
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
 			console.log(res.data)
@@ -115,11 +120,13 @@ export default function Build() {
 		}
 	}
 
-	const doBuild = async (values) => {
+	const doBuild = async (values) =>
+	{
 		try {
 			const res = await Axios.post('/build', values)
-
+			// dispatch(setResult(res.data))
 			console.log(res.data)
+			dispatch(setResult(res.data))
 			loadEmpireTest()
 		} catch (error) {
 			console.log(error)
@@ -147,8 +154,12 @@ export default function Build() {
 
 					<form
 						onSubmit={
-							totalBuild < canBuild
-								? form.onSubmit((values) => doBuild(values))
+							totalBuild <= canBuild
+								? form.onSubmit((values) =>
+								{
+									dispatch(clearResult)
+									doBuild(values)
+								})
 								: setErrors("Can't build that many buildings")
 						}
 					>

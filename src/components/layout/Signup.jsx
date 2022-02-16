@@ -2,10 +2,11 @@ import { Button, Center, Group, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { register, signupUser, userSelector } from '../store/userSlice'
+import { register, signupUser, userSelector } from '../../store/userSlice'
 import { useEffect } from 'react'
 
-export default function Signup() {
+export default function Signup()
+{
 	const dispatch = useDispatch()
 
 	// const { isFetching, isSuccess, isError, errorMessage } =
