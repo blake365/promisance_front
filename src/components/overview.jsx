@@ -1,12 +1,10 @@
 import
 {
 	Button,
-	Grid,
 	Group,
-	Table,
 	Title,
 	Card,
-	Image,
+	SimpleGrid,
 	Text,
 	Badge,
 	useMantineTheme,
@@ -14,7 +12,6 @@ import
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../store/empireSlice'
 import Axios from 'axios'
-import { PureComponent } from 'react'
 
 import
 {
@@ -28,6 +25,26 @@ import
 	Legend,
 	ResponsiveContainer,
 } from 'recharts'
+
+
+const NetProduced = (props) =>
+{
+	return (
+		<>
+			<Text>{props.title}:</Text>
+			<Text
+				align='right'
+				style={props.value >= 0 ? { color: 'green' } : { color: 'red' }}
+				weight={600}
+			>
+				{props.value <= 0 ? '' : '+'}
+				{props.money && '$'}
+				{props.value.toLocaleString()}
+			</Text>
+		</>
+	)
+}
+
 
 export default function Overview()
 {
@@ -153,7 +170,7 @@ export default function Overview()
 	}
 
 	let size = calcSizeBonus(empire)
-	console.log(size)
+	// console.log(size)
 
 	const calcPCI = (empire) =>
 	{
@@ -161,11 +178,11 @@ export default function Overview()
 		return Math.round(25 * (1 + bldCash / Math.max(land, 1)))
 	}
 
-	console.log(calcPCI(empire))
+	let cpi = calcPCI(empire)
 
 	// takes place of calcFinances function
 	let income = Math.round(
-		(calcPCI(empire) *
+		(cpi *
 			(empire.tax / 100) *
 			(empire.health / 100) *
 			empire.peasants +
@@ -207,6 +224,8 @@ export default function Overview()
 	// consumption *= food consumption modifier
 	let foodcon = Math.round(consumption)
 
+	let loanpayed = 0
+
 	return (
 		<main>
 			<Group direction='column' spacing='sm' align='center' grow>
@@ -217,96 +236,143 @@ export default function Overview()
 
 				{empire && (
 					<Card shadow='sm' padding='lg'>
-						<Card>
-							<Group>
-								<h3>
-									{empire.name} (#{empire.id})
-								</h3>
 
-								<Badge color='pink' variant='light'>
-									{empire.race}
-								</Badge>
-							</Group>
-						</Card>
-						<Card>
-							<Text weight={500}>Agriculture</Text>
-							<Group><div>Est. Production</div><div>{foodpro.toLocaleString()}</div></Group>
-							<Group><div>Est. Consumption</div><div>{foodcon.toLocaleString()}</div></Group>
-							<Group><div>Net</div><div>{(foodpro - foodcon).toLocaleString()}</div></Group>
-						</Card>
-						<Card>
-							<Text weight={500}>Finance</Text>
-							<Group><div>Income</div><div>{income.toLocaleString()}</div></Group>
-							<Group><div>Expenses</div><div>{expenses.toLocaleString()}</div></Group>
-							<Group><div>Net</div><div>{(income - expenses).toLocaleString()}</div></Group>
-						</Card>
-						<Card>
-							<Text weight={500} align='center'>
-								Land Division
-							</Text>
-							<BarChart
-								width={500}
-								height={300}
-								data={landData}
-								margin={{
-									top: 5,
-									right: 30,
-									left: 20,
-									bottom: 5,
-								}}
-							>
-								<CartesianGrid strokeDasharray='3 3' />
-								<XAxis dataKey='icon' interval={0} />
-								<YAxis
-								// formatter={(value) =>
-								// 	new Intl.NumberFormat('en').format(value)
-								// }
-								/>
-								<Tooltip
-									formatter={(value) =>
-										new Intl.NumberFormat('en').format(value)
-									}
-								/>
-								<Bar dataKey='amount'>
-									{landData.map((entry, index) => (
-										<Cell key={`cell-${index}`} fill={landBarColors[index]} />
-									))}
-								</Bar>
-							</BarChart>
-						</Card>
-						<Card>
-							<Text weight={500} align='center'>
-								Military
-							</Text>
-							<BarChart
-								width={500}
-								height={300}
-								data={militaryData}
-								margin={{
-									top: 5,
-									right: 30,
-									left: 20,
-									bottom: 5,
-								}}
-							>
-								<CartesianGrid strokeDasharray='3 3' />
-								<XAxis dataKey='name' interval={0} />
-								<YAxis yAxisId='left' orientation='left' stroke='#8884d8' />
-								<YAxis yAxisId='right' orientation='right' stroke='#82ca9d' />
-								<Tooltip
-									formatter={(value) =>
-										new Intl.NumberFormat('en').format(value)
-									}
-								/>
-								<Legend />
-								<Bar dataKey='amount' yAxisId='left' fill='#8884d8'>
-									{landData.map((entry, index) => (
-										<Cell key={`cell-${index}`} fill={troopBarColors[index]} />
-									))}
-								</Bar>
-								<Bar dataKey='networth' yAxisId='right' fill='#82ca9d' />
-							</BarChart>
-						</Card>
+						<Group direction='column' grow>
+							<div>
+								<Text weight={800} size='lg' align='center'>
+									{empire.name} (#{empire.id})
+								</Text>
+								<SimpleGrid cols={2} spacing={1}>
+									<Text>Turns:</Text>
+									<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
+									<Text>Turns Used:</Text>
+									<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
+									<Text>Health:</Text>
+									<Text align='right'>{empire.health}</Text>
+									<Text>Networth:</Text>
+									<Text align='right'>{empire.networth}</Text>
+									<Text>Population:</Text>
+									<Text align='right'>{empire.peasants}</Text>
+									<Text>Race:</Text>
+									<Text align='right'>{empire.race}</Text>
+									<Text>Era:</Text>
+									<Text align='right'>{empire.era}</Text>
+
+
+								</SimpleGrid>
+
+							</div>
+
+							<div>
+								<Text weight={800} size='lg'>Agriculture:</Text>
+								<SimpleGrid cols={2} spacing={1}>
+									<Text>Food:</Text>
+									<Text align='right'>{empire.food.toLocaleString()}</Text>
+									<Text>Est. Production:</Text>
+									<Text align='right'>{foodpro.toLocaleString()}</Text>
+									<Text>Est. Consumption:</Text>
+									<Text align='right'>{foodcon.toLocaleString()}</Text>
+
+									<NetProduced title='Net' value={foodpro - foodcon} />
+								</SimpleGrid>
+							</div>
+
+							<div>
+								<Text weight={800} size='lg'>Economy:</Text>
+								<SimpleGrid cols={2} spacing={1}>
+									<Text>Money:</Text>
+									<Text align='right'>${empire.cash.toLocaleString()}</Text>
+									<Text>Per Capita Income:</Text>
+									<Text align='right'>${cpi.toLocaleString()}</Text>
+									<Text>Est. Income:</Text>
+									<Text align='right'>${income.toLocaleString()}</Text>
+									<Text>Est. Expenses:</Text>
+									<Text align='right'>${expenses.toLocaleString()}</Text>
+									{loanpayed > 0 ? (
+										<>
+											<Text>Loan Payment:</Text>
+											<Text align='right'>${loanpayed.toLocaleString()}</Text>
+										</>
+									) : (
+										''
+									)}
+
+									<NetProduced title='Net' value={income - expenses} money />
+									<Text>Savings Balance:</Text>
+									<Text align='right'>$XXXXX</Text>
+									<Text>Loan Balance:</Text>
+									<Text align='right'>$XXXXX</Text>
+								</SimpleGrid>
+							</div>
+
+							<div>
+								<Text weight={500} align='center'>
+									Land Division
+								</Text>
+								<BarChart
+									width={500}
+									height={300}
+									data={landData}
+									margin={{
+										top: 5,
+										right: 30,
+										left: 20,
+										bottom: 5,
+									}}
+								>
+									<CartesianGrid strokeDasharray='3 3' />
+									<XAxis dataKey='icon' interval={0} />
+									<YAxis
+									// formatter={(value) =>
+									// 	new Intl.NumberFormat('en').format(value)
+									// }
+									/>
+									<Tooltip
+										formatter={(value) =>
+											new Intl.NumberFormat('en').format(value)
+										}
+									/>
+									<Bar dataKey='amount'>
+										{landData.map((entry, index) => (
+											<Cell key={`cell-${index}`} fill={landBarColors[index]} />
+										))}
+									</Bar>
+								</BarChart>
+							</div>
+							<div>
+								<Text weight={500} align='center'>
+									Military
+								</Text>
+								<BarChart
+									width={500}
+									height={300}
+									data={militaryData}
+									margin={{
+										top: 5,
+										right: 30,
+										left: 20,
+										bottom: 5,
+									}}
+								>
+									<CartesianGrid strokeDasharray='3 3' />
+									<XAxis dataKey='name' interval={0} />
+									<YAxis yAxisId='left' orientation='left' stroke='#8884d8' />
+									<YAxis yAxisId='right' orientation='right' stroke='#82ca9d' />
+									<Tooltip
+										formatter={(value) =>
+											new Intl.NumberFormat('en').format(value)
+										}
+									/>
+									<Legend />
+									<Bar dataKey='amount' yAxisId='left' fill='#8884d8'>
+										{landData.map((entry, index) => (
+											<Cell key={`cell-${index}`} fill={troopBarColors[index]} />
+										))}
+									</Bar>
+									<Bar dataKey='networth' yAxisId='right' fill='#82ca9d' />
+								</BarChart>
+							</div>
+						</Group>
 					</Card>
 				)}
 			</Group>
