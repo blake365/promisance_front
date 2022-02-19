@@ -16,7 +16,7 @@ import { empireLoaded } from '../../store/empireSlice'
 
 export default function Cash()
 {
-	const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
 	const dispatch = useDispatch()
 
 	const form = useForm({

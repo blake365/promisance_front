@@ -4,7 +4,7 @@ import GeneralAction from './generalAction'
 
 export default function Meditate()
 {
-	const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
 
 	return (
 		<GeneralAction

@@ -10,9 +10,9 @@ const Sidebar = () =>
 		'Overview',
 		'Scores',
 		// 'Graveyard',
-		'Empire Search',
+		// 'Empire Search',
 		// 'News Search',
-		'Discord',
+		// 'Discord',
 	]
 	const turnLinks = [
 		'Explore',
@@ -48,7 +48,7 @@ const Sidebar = () =>
 				{infolinks.map((link, index) => (
 					<Button
 						component={Link}
-						to={`/${link}`}
+						to={`/app/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
@@ -61,7 +61,7 @@ const Sidebar = () =>
 				{turnLinks.map((link, index) => (
 					<Button
 						component={Link}
-						to={`/${link}`}
+						to={`/app/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
@@ -74,7 +74,7 @@ const Sidebar = () =>
 				{financeLinks.map((link, index) => (
 					<Button
 						component={Link}
-						to={`/${link}`}
+						to={`/app/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
@@ -87,7 +87,7 @@ const Sidebar = () =>
 				{foreignLinks.map((link, index) => (
 					<Button
 						component={Link}
-						to={`/${link}`}
+						to={`/app/${link}`}
 						variant='subtle'
 						compact
 						fullWidth
@@ -100,7 +100,7 @@ const Sidebar = () =>
 				{managementLinks.map((link, index) => (
 					<Button
 						component={Link}
-						to={`/${link}`}
+						to={`/app/${link}`}
 						variant='subtle'
 						compact
 						fullWidth

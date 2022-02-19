@@ -1,17 +1,12 @@
 import
 {
-	Button,
 	Group,
 	Title,
 	Card,
 	SimpleGrid,
 	Text,
-	Badge,
-	useMantineTheme,
 } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../store/empireSlice'
-import Axios from 'axios'
+import { useSelector } from 'react-redux'
 
 import
 {
@@ -23,7 +18,6 @@ import
 	CartesianGrid,
 	Tooltip,
 	Legend,
-	ResponsiveContainer,
 } from 'recharts'
 
 
@@ -48,29 +42,7 @@ const NetProduced = (props) =>
 
 export default function Overview()
 {
-	const dispatch = useDispatch()
-
-	const loadEmpireTest = async () =>
-	{
-		try {
-			const res = await Axios.get(
-				'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
-			)
-			console.log(res.data)
-
-			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	let now = new Date()
-	const empire = useSelector((state) => state.empire)
-
-	const theme = useMantineTheme()
-
-	const secondaryColor =
-		theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7]
+	const { empire } = useSelector((state) => state.empire)
 
 	const landBarColors = [
 		'#1982C4',
@@ -232,7 +204,6 @@ export default function Overview()
 				<Title order={1} align='center'>
 					Overview
 				</Title>
-				<Button onClick={loadEmpireTest}>Load Empire Test</Button>
 
 				{empire && (
 					<Card shadow='sm' padding='lg'>

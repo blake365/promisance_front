@@ -15,12 +15,13 @@ import Industry from './components/useTurns/industry'
 import Build from './components/useTurns/build'
 import Meditate from './components/useTurns/meditate'
 import Summary from './components/summary'
-import Login from './components/layout/Login'
-import Signup from './components/layout/Signup'
 import Overview from './components/overview'
 import PrivateMarket from './components/markets/PrivateMarket'
 
+import Home from './components/pages/Home'
+
 import Axios from 'axios'
+import CreateEmpire from './components/pages/CreateEmpire'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -30,9 +31,9 @@ ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
 				<Routes>
-					<Route path='/' element={<App />}>
-						<Route path='login' element={<Login />} />
-						<Route path='signup' element={<Signup />} />
+					<Route path='/' element={<Home />} />
+					<Route path='/createEmpire' element={<CreateEmpire />} />
+					<Route path='/app' element={<App />}>
 						<Route path='summary' element={<Summary />} />
 						<Route path='overview' element={<Overview />} />
 						<Route path='farm' element={<Farm />} />

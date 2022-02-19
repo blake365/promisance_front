@@ -1,9 +1,9 @@
 import { Paper, SimpleGrid, Text } from '@mantine/core'
-import { useSelector } from 'react-redux'
 
-export default function InfoBar() {
-	const empire = useSelector((state) => state.empire)
-
+export default function InfoBar({ data })
+{
+	// console.log(data.empire)
+	const empire = data.empire
 	return (
 		<Paper padding='xs' shadow='xs' radius='xs' withBorder>
 			<SimpleGrid

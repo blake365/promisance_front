@@ -1,9 +1,7 @@
 import { Button, Center, Group, TextInput, Title } from '@mantine/core'
-import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from '@mantine/hooks'
 import { login } from '../../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 export default function Login()
 {
@@ -16,16 +14,16 @@ export default function Login()
 		},
 	})
 
-	const { isLoggedIn } = useSelector((state) => state.user)
+	// const { isLoggedIn } = useSelector((state) => state.user)
 
-	let navigate = useNavigate()
+	// let navigate = useNavigate()
 
-	useEffect(() =>
-	{
-		if (isLoggedIn) {
-			return navigate('/summary')
-		}
-	}, [isLoggedIn])
+	// useEffect(() =>
+	// {
+	// 	if (isLoggedIn) {
+	// 		return navigate('app/summary')
+	// 	}
+	// }, [isLoggedIn])
 
 	return (
 		<main>
@@ -35,25 +33,25 @@ export default function Login()
 						Login
 					</Title>
 					<form onSubmit={form.onSubmit((values) => dispatch(login(values)))}>
-						<TextInput
-							label='Username'
-							placeholder=''
-							type='text'
-							required
-							{...form.getInputProps('username')}
-						/>
-						<TextInput
-							label='Password'
-							placeholder=''
-							type='password'
-							required
-							{...form.getInputProps('password')}
-						/>
-						<Button type='submit'>Login</Button>
+						<Group direction='column' spacing='sm' align='center'>
+							<TextInput
+								label='Username'
+								placeholder=''
+								type='text'
+								required
+								{...form.getInputProps('username')}
+							/>
+							<TextInput
+								label='Password'
+								placeholder=''
+								type='password'
+								required
+								{...form.getInputProps('password')}
+							/>
+							<Button type='submit'>Login</Button>
+						</Group>
 					</form>
-					<div>
-						Don't have an account? <Link to='/signup'>sign up</Link>
-					</div>
+
 				</Group>
 			</Center>
 		</main>

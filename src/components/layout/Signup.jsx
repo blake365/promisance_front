@@ -1,34 +1,11 @@
 import { Button, Center, Group, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { register, signupUser, userSelector } from '../../store/userSlice'
-import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { register, } from '../../store/userSlice'
 
 export default function Signup()
 {
 	const dispatch = useDispatch()
-
-	// const { isFetching, isSuccess, isError, errorMessage } =
-	// 	useSelector(userSelector)
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		dispatch(clearState())
-	// 	}
-	// }, [])
-
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		dispatch(clearState())
-	// 		//   history.push('/');
-	// 	}
-
-	// 	if (isError) {
-	// 		console.log(errorMessage)
-	// 		dispatch(clearState())
-	// 	}
-	// }, [isSuccess, isError])
 
 	//TODO: set up server side validation response
 
@@ -62,32 +39,32 @@ export default function Signup()
 					<form
 						onSubmit={form.onSubmit((values) => dispatch(register(values)))}
 					>
-						<TextInput
-							label='Email'
-							placeholder='me@email.com'
-							type='email'
-							required
-							{...form.getInputProps('email')}
-						/>
-						<TextInput
-							label='Username'
-							placeholder=''
-							type='text'
-							required
-							{...form.getInputProps('username')}
-						/>
-						<TextInput
-							label='Password'
-							placeholder=''
-							type='password'
-							required
-							{...form.getInputProps('password')}
-						/>
-						<Button type='submit'>Sign Up</Button>
+						<Group direction='column' spacing='sm' align='center'>
+							<TextInput
+								label='Email'
+								placeholder='me@email.com'
+								type='email'
+								required
+								{...form.getInputProps('email')}
+							/>
+							<TextInput
+								label='Username'
+								placeholder=''
+								type='text'
+								required
+								{...form.getInputProps('username')}
+							/>
+							<TextInput
+								label='Password'
+								placeholder=''
+								type='password'
+								required
+								{...form.getInputProps('password')}
+							/>
+							<Button type='submit'>Sign Up</Button>
+						</Group>
 					</form>
-					<div>
-						Already have an account? <Link to='/login'>Login</Link>
-					</div>
+
 				</Group>
 			</Center>
 		</main>

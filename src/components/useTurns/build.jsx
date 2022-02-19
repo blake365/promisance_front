@@ -12,7 +12,7 @@ export default function Build()
 	let errors = {
 		error: '',
 	}
-	const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
 
 	const dispatch = useDispatch()
 

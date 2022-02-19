@@ -21,11 +21,27 @@ export const register = createAsyncThunk(
 	}
 )
 
+export const demo = createAsyncThunk(
+	'user/demo',
+	async (thunkAPI) => {
+		try {
+			const res = await Axios.post('/auth/demo')
+			// console.log(res)
+			let data = res.data
+			return { user: data }
+			// redirect to login page
+		} catch (e) {
+			console.log(e)
+			return thunkAPI.rejectWithValue()
+		}
+	}
+)
+
 export const login = createAsyncThunk(
 	'user/login',
 	async (values, thunkAPI) => {
 		try {
-			console.log(values)
+			// console.log(values)
 			const res = await Axios.post('/auth/login', values)
 			// console.log(res)
 			let data = res.data
@@ -37,7 +53,7 @@ export const login = createAsyncThunk(
 	}
 )
 
-// export const logout = createAsyncThunk('user/logout', )
+//TODO: export const logout = createAsyncThunk('user/logout', )
 
 export const userSlice = createSlice({
 	name: 'user',
@@ -57,6 +73,10 @@ export const userSlice = createSlice({
 		},
 		[register.rejected]: (state, action) => {
 			state.isLoggedIn = false
+		},
+		[demo.fulfilled]: (state, action) => {
+			state.isLoggedIn = true
+			state.user = action.payload.user
 		},
 		[login.fulfilled]: (state, action) => {
 			state.isLoggedIn = true

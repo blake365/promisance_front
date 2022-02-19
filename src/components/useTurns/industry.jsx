@@ -23,7 +23,7 @@ export default function Industry()
 		error: '',
 	}
 
-	const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
 
 	const dispatch = useDispatch()
 

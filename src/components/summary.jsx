@@ -1,28 +1,26 @@
-import { Button, Grid, Group, Table, Title } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../store/empireSlice'
-import Axios from 'axios'
+import { Grid, Group, Table, Title } from '@mantine/core'
+import { useSelector } from 'react-redux'
 
 export default function Summary()
 {
-	const dispatch = useDispatch()
+	// const dispatch = useDispatch()
 
-	const loadEmpireTest = async () =>
-	{
-		try {
-			const res = await Axios.get(
-				'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
-			)
-			console.log(res.data)
+	// const loadEmpireTest = async () =>
+	// {
+	// 	try {
+	// 		const res = await Axios.get(
+	// 			'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
+	// 		)
+	// 		console.log(res.data)
 
-			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	// 		dispatch(empireLoaded(res.data))
+	// 	} catch (error) {
+	// 		console.log(error)
+	// 	}
+	// }
 
 	let now = new Date()
-	const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
 
 	return (
 		<main>
@@ -30,12 +28,12 @@ export default function Summary()
 				<Title order={1} align='center'>
 					Summary
 				</Title>
-				<Button onClick={loadEmpireTest}>Load Empire Test</Button>
+				{/* <Button onClick={loadEmpireTest}>Load Empire Test</Button> */}
 
 				<Title order={2} align='center'>
 					{empire?.name}(#{empire?.id})
 				</Title>
-				<Grid justify='space-between' grow>
+				{empire ? (<Grid justify='space-between' grow>
 					<Grid.Col sm={6} md={6}>
 						<Table
 							verticalSpacing='xs'
@@ -60,27 +58,27 @@ export default function Summary()
 								</tr>
 								<tr>
 									<td>Civilians</td>
-									<td>{empire?.peasants.toLocaleString()}</td>
+									<td>{empire?.peasants?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Land Acres</td>
-									<td>{empire?.land.toLocaleString()}</td>
+									<td>{empire?.land?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Money</td>
-									<td>${empire?.cash.toLocaleString()}</td>
+									<td>${empire?.cash?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Food</td>
-									<td>{empire?.food.toLocaleString()}</td>
+									<td>{empire?.food?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Mana</td>
-									<td>{empire?.runes.toLocaleString()}</td>
+									<td>{empire?.runes?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Net Worth</td>
-									<td>${empire?.networth.toLocaleString()}</td>
+									<td>${empire?.networth?.toLocaleString()}</td>
 								</tr>
 							</tbody>
 						</Table>
@@ -134,7 +132,7 @@ export default function Summary()
 							</tbody>
 						</Table>
 					</Grid.Col>
-				</Grid>
+				</Grid>) : ('')}
 				<div>{now.toISOString}</div>
 				<div>You get 2 turns every 15 minutes</div>
 				<div>Next 2 turns in XX minutes, XX seconds</div>
