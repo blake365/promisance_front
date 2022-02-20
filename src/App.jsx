@@ -38,7 +38,7 @@ function App()
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const empire = useSelector((state) => state.empire)
 
-	console.log(empire)
+	// console.log(empire)
 
 	useEffect(() =>
 	{
@@ -99,14 +99,6 @@ function App()
 						</MediaQuery>
 
 						<Title order={1}>Solo Promisance</Title>
-						<div>
-							<Button component={Link} to='/login' compact>
-								Login
-							</Button>
-							<Button component={Link} to='/signup' compact>
-								Sign Up
-							</Button>
-						</div>
 					</div>
 				</Header>
 			}

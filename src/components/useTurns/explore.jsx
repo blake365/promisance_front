@@ -7,7 +7,7 @@ export default function Explore()
 {
 	const { empire } = useSelector((state) => state.empire)
 
-	const newLand = Math.ceil((1 / (empire.land * 0.00022 + 0.25)) * 20)
+	const newLand = Math.ceil((1 / (empire.land * 0.00022 + 0.25)) * 40)
 
 	return (
 		<main>

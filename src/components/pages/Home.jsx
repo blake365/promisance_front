@@ -107,6 +107,7 @@ export default function Home()
                                         { value: 'orc', label: 'Orc' },
                                         { value: 'gnome', label: 'Gnome' },
                                     ]}
+                                    {...form.getInputProps('race')}
                                 />
                                 <Button type='submit'>Create</Button>
                             </Group>

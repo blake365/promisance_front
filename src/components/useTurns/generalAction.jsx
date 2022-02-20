@@ -28,7 +28,7 @@ export default function GeneralAction(props)
 		},
 
 		validationRules: {
-			turns: (value) => value < props.empire.turns && value > 0,
+			turns: (value) => value <= props.empire.turns && value > 0,
 		},
 
 		errorMessages: {

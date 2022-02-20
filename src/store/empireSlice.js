@@ -93,7 +93,7 @@ export const fetchEmpire = createAsyncThunk(
 			// console.log(values)
 			const res = await Axios.get(`/empire/${uuid}`)
 			let data = res.data
-			console.log(data)
+			// console.log(data)
 			return {empire: data}
 		} catch (e) {
 			console.log(e)

@@ -172,6 +172,8 @@ export default function Overview()
 		empire.trpWiz * 0.5
 	)
 
+	let loanpayed = Math.min(Math.round(empire.loan / 200), empire.cash)
+
 	//TODO: set up race/era modifier
 	let expensesBonus = Math.min(0.5, empire.bldCost / Math.max(empire.land, 1))
 
@@ -196,8 +198,6 @@ export default function Overview()
 	// consumption *= food consumption modifier
 	let foodcon = Math.round(consumption)
 
-	let loanpayed = 0
-
 	return (
 		<main>
 			<Group direction='column' spacing='sm' align='center' grow>
@@ -221,9 +221,9 @@ export default function Overview()
 									<Text>Health:</Text>
 									<Text align='right'>{empire.health}</Text>
 									<Text>Networth:</Text>
-									<Text align='right'>{empire.networth}</Text>
+									<Text align='right'>${empire.networth.toLocaleString()}</Text>
 									<Text>Population:</Text>
-									<Text align='right'>{empire.peasants}</Text>
+									<Text align='right'>{empire.peasants.toLocaleString()}</Text>
 									<Text>Race:</Text>
 									<Text align='right'>{empire.race}</Text>
 									<Text>Era:</Text>
@@ -259,20 +259,13 @@ export default function Overview()
 									<Text align='right'>${income.toLocaleString()}</Text>
 									<Text>Est. Expenses:</Text>
 									<Text align='right'>${expenses.toLocaleString()}</Text>
-									{loanpayed > 0 ? (
-										<>
-											<Text>Loan Payment:</Text>
-											<Text align='right'>${loanpayed.toLocaleString()}</Text>
-										</>
-									) : (
-										''
-									)}
-
-									<NetProduced title='Net' value={income - expenses} money />
+									<Text>Loan Payment:</Text>
+									<Text align='right'>${loanpayed.toLocaleString()}</Text>
+									<NetProduced title='Net' value={income - expenses - loanpayed} money />
 									<Text>Savings Balance:</Text>
-									<Text align='right'>$XXXXX</Text>
+									<Text align='right'>${empire.bank.toLocaleString()}</Text>
 									<Text>Loan Balance:</Text>
-									<Text align='right'>$XXXXX</Text>
+									<Text align='right'>${empire.loan.toLocaleString()}</Text>
 								</SimpleGrid>
 							</div>
 

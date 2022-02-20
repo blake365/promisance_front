@@ -5,7 +5,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 
-import { store } from './store/store'
+import { persistor, store } from './store/store'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Farm from './components/useTurns/farm'
@@ -22,6 +22,7 @@ import Home from './components/pages/Home'
 
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
+import { PersistGate } from 'redux-persist/integration/react'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -29,6 +30,7 @@ Axios.defaults.withCredentials = true
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<Home />} />
@@ -45,7 +47,8 @@ ReactDOM.render(
 						<Route path='Black%20Market' element={<PrivateMarket />} />
 					</Route>
 				</Routes>
-			</BrowserRouter>
+				</BrowserRouter>
+				</PersistGate>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
