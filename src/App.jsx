@@ -103,7 +103,7 @@ function App()
 				</Header>
 			}
 		>
-			<main style={{ paddingRight: 15, paddingBottom: 15 }}>
+			<main style={{ paddingBottom: 15 }}>
 				{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 					<InfoBar data={empire} />
 					<TurnResultContainer />

@@ -1,19 +1,23 @@
-import { Button, Center, Group, NumberInput, Table, Title } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Table, Title, Card, SimpleGrid, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
-
+import { clearResult, setResult } from '../../store/turnResultsSlice'
+import { useState } from 'react'
 
 
 export default function PrivateMarket()
 {
+    const [result, setResult] = useState(null)
+
     let buyNumberArray = []
     let totalBuy = 0
+    let totalPrice = 0
     let errors = {
         error: '',
     }
-    const empire = useSelector((state) => state.empire)
+    const { empire } = useSelector((state) => state.empire)
 
     const dispatch = useDispatch()
 
@@ -37,116 +41,102 @@ export default function PrivateMarket()
     const trpFlyCost = getCost(empire, 2000)
     const trpSeaCost = getCost(empire, 3000)
 
-
+    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, 30]
 
     const form = useForm({
         initialValues: {
             empireId: empire.id,
             type: 'buy',
-            // turns: 0,
             buyArm: 0,
             buyLnd: 0,
             buyFly: 0,
             buySea: 0,
             buyFood: 0,
-            // totalBuild: totalBuild,
         },
 
         validationRules: {
-
+            buyArm: (value) => value <= empire.cash / trpArmCost,
+            buyLnd: (value) => value <= empire.cash / trpLndCost,
+            buyFly: (value) => value <= empire.cash / trpFlyCost,
+            buySea: (value) => value <= empire.cash / trpSeaCost,
+            buyFood: (value) => value <= empire.cash / 30,
         },
 
         errorMessages: {
-
+            buyArm: 'Not Enough Money',
+            buyLnd: 'Not Enough Money',
+            buyFly: 'Not Enough Money',
+            buySea: 'Not Enough Money',
+            buyFood: 'Not Enough Money',
         },
     })
 
-    const MarketRow = (props) =>
-    {
-        let action = props.action
-        let owned = props.type.toLowerCase()
-        let avail = 'mkt' + props.type
-        if (!props.food) {
-            owned = 'trp' + props.type
-        }
-        let max = Math.floor(props.empire.cash / props.cost)
-
-        // console.log(props.type, avail, owned)
-        return (
-
-            <tr style={{ textAlign: 'right' }}>
-                <td style={{ textAlign: 'left' }}>{props.unit}</td>
-                <td>
-                    {props.empire[owned].toLocaleString()}
-                </td>
-                <td>{props.empire[avail].toLocaleString()}</td>
-                <td>${props.cost.toLocaleString()}</td>
-                <td>{max.toLocaleString()} <Button size='xs' onClick={() => form.setFieldValue(action, max)}> {'>'}</Button></td>
-                <td>
-                    <NumberInput
-                        hideControls
-                        min={0}
-                        max={props.empire.cash / props.cost}
-                        {...form.getInputProps(`${action}`)}
-                    />
-                </td>
-            </tr>
-
-        )
+    if (form.values['buyArm'] === undefined) {
+        form.setFieldValue('buyArm', 0)
+    }
+    if (form.values['buyLnd'] === undefined) {
+        form.setFieldValue('buyLnd', 0)
+    }
+    if (form.values['buyFly'] === undefined) {
+        form.setFieldValue('buyFly', 0)
+    }
+    if (form.values['buySea'] === undefined) {
+        form.setFieldValue('buySea', 0)
+    }
+    if (form.values['buyFood'] === undefined) {
+        form.setFieldValue('buyFood', 0)
     }
 
-    // if (form.values['buyArm'] === undefined) {
-    //     form.setFieldValue('buyArm', 0)
-    // }
-    // if (form.values['buyLnd'] === undefined) {
-    //     form.setFieldValue('buyLnd', 0)
-    // }
-    // if (form.values['buyFly'] === undefined) {
-    //     form.setFieldValue('buyFly', 0)
-    // }
-    // if (form.values['buySea'] === undefined) {
-    //     form.setFieldValue('buySea', 0)
-    // }
-    // if (form.values['buyFood'] === undefined) {
-    //     form.setFieldValue('buyFood', 0)
-    // }
-
     buyNumberArray = Object.values(form.values).slice(2)
-    console.log(buyNumberArray)
+    // console.log(buyNumberArray)
 
-    // totalBuild = buildNumberArray
-    //     .filter(Number)
-    //     .reduce((partialSum, a) => partialSum + a, 0)
-    // // console.log(totalBuild)
-    // // console.log(value)
+    const spendArray = buyNumberArray.map((value, index) =>
+    {
+        value = value * priceArray[index]
+        return value
+    })
 
-    // function setErrors(error)
-    // {
-    //     errors.error = error
-    // }
+    // console.log(spendArray)
+
+    totalBuy = buyNumberArray
+        .filter(Number)
+        .reduce((partialSum, a) => partialSum + a, 0)
+    console.log(totalBuy)
+
+    totalPrice = spendArray
+        .filter(Number)
+        .reduce((partialSum, a) => partialSum + a, 0)
+    console.log(totalPrice)
+    // console.log(value)
+
+    function setErrors(error)
+    {
+        errors.error = error
+    }
+
+    console.log(result)
 
     const loadEmpireTest = async () =>
     {
         try {
             const res = await Axios.get(`/empire/${empire.uuid}`)
-            console.log(res.data)
-
+            // setResult(res.data)
             dispatch(empireLoaded(res.data))
         } catch (error) {
             console.log(error)
         }
     }
 
-    // const doBuy = async (values) =>
-    // {
-    //     try {
-    //         const res = await Axios.post('/buy', values)
-    //         console.log(res.data)
-    //         loadEmpireTest()
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const doBuy = async (values) =>
+    {
+        try {
+            const res = await Axios.post('/buy', values)
+            setResult(res.data)
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <main>
@@ -161,33 +151,157 @@ export default function PrivateMarket()
 
                     <form
                         onSubmit={
-                            form.onSubmit((values) => console.log(values))
+                            totalPrice <= empire.cash
+                                ? form.onSubmit((values) =>
+                                {
+                                    dispatch(clearResult)
+                                    console.log(values)
+                                    doBuy(values)
+                                })
+                                : setErrors("Not Enough Money")
                         }
                     >
-                        <Table verticalSpacing='xs' striped>
-                            <thead>
-                                <tr>
-                                    <th>Unit</th>
-                                    <th>Owned</th>
-                                    <th>Available</th>
-                                    <th>Price</th>
-                                    <th>Can Buy</th>
-                                    <th>Buy</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <MarketRow unit='Infantry' empire={empire} cost={trpArmCost} action='buyArm' type='Arm' />
-
-                                <MarketRow unit='Tanks' empire={empire} cost={trpLndCost} action='buyLnd' type='Lnd' />
-
-                                <MarketRow unit='Jets' empire={empire} cost={trpFlyCost} action='buyFly' type='Fly' />
-
-                                <MarketRow unit='Battleships' empire={empire} cost={trpSeaCost} action='buySea' type='Sea' />
-
-                                <MarketRow unit='Food' empire={empire} cost={30} action='buyFood' type='Food' food />
-
-                            </tbody>
-                        </Table>
+                        <SimpleGrid
+                            cols={1}
+                            spacing='xs'
+                            sx={{ width: '99%' }}
+                        >
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text weight='bold' align='center'>
+                                    Unit:
+                                </Text>
+                                <Text weight='bold' align='center'>
+                                    Owned:
+                                </Text>
+                                <Text weight='bold' align='center'>
+                                    Available:
+                                </Text>
+                                <Text weight='bold' align='center'>
+                                    Price:
+                                </Text>
+                                <Text weight='bold' align='center'>
+                                    Can Buy:
+                                </Text>
+                                <Text weight='bold' align='center'>
+                                    Buy:
+                                </Text>
+                            </Group>
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text align='center'>
+                                    Footmen
+                                </Text>
+                                <Text align='center'>
+                                    {empire.trpArm.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    {empire.mktArm.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    ${trpArmCost}
+                                </Text>
+                                <Text align='center'>
+                                    {Math.floor(empire.cash / trpArmCost).toLocaleString()}
+                                </Text>
+                                <NumberInput
+                                    hideControls
+                                    min={0}
+                                    max={empire.cash / trpArmCost}
+                                    {...form.getInputProps(`buyArm`)}
+                                />
+                            </Group>
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text align='center'>
+                                    Catapults
+                                </Text>
+                                <Text align='center'>
+                                    {empire.trpLnd.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    {empire.mktLnd.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    ${trpLndCost}
+                                </Text>
+                                <Text align='center'>
+                                    {Math.floor(empire.cash / trpLndCost).toLocaleString()}
+                                </Text>
+                                <NumberInput
+                                    hideControls
+                                    min={0}
+                                    max={empire.cash / trpLndCost}
+                                    {...form.getInputProps(`buyLnd`)}
+                                />
+                            </Group>
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text align='center'>
+                                    Zeppelins
+                                </Text>
+                                <Text align='center'>
+                                    {empire.trpFly.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    {empire.mktFly.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    ${trpFlyCost}
+                                </Text>
+                                <Text align='center'>
+                                    {Math.floor(empire.cash / trpFlyCost).toLocaleString()}
+                                </Text>
+                                <NumberInput
+                                    hideControls
+                                    min={0}
+                                    max={empire.cash / trpFlyCost}
+                                    {...form.getInputProps(`buyFly`)}
+                                />
+                            </Group>
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text align='center'>
+                                    Galleons
+                                </Text>
+                                <Text align='center'>
+                                    {empire.trpSea.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    {empire.mktSea.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    ${trpSeaCost}
+                                </Text>
+                                <Text align='center'>
+                                    {Math.floor(empire.cash / trpSeaCost).toLocaleString()}
+                                </Text>
+                                <NumberInput
+                                    hideControls
+                                    min={0}
+                                    max={empire.cash / trpSeaCost}
+                                    {...form.getInputProps(`buySea`)}
+                                />
+                            </Group>
+                            <Group direction='row' spacing='md' noWrap grow>
+                                <Text align='center'>
+                                    Food
+                                </Text>
+                                <Text align='center'>
+                                    {empire.food.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    {empire.mktFood.toLocaleString()}
+                                </Text>
+                                <Text align='center'>
+                                    $30
+                                </Text>
+                                <Text align='center'>
+                                    {Math.floor(empire.cash / 30).toLocaleString()}
+                                </Text>
+                                <NumberInput
+                                    hideControls
+                                    min={0}
+                                    max={empire.cash / 30}
+                                    {...form.getInputProps(`buyFood`)}
+                                />
+                            </Group>
+                        </SimpleGrid>
                         <div style={{ color: 'red' }}>{errors.error}</div>
                         {errors.error ? (
                             <Button color='black' type='submit' disabled>
@@ -199,7 +313,24 @@ export default function PrivateMarket()
                             </Button>
                         )}
                     </form>
+                    {result &&
+                        <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
+                            backgroundColor: theme.colors.gray[1],
+                            '&:hover': {
+                                backgroundColor: theme.colors.gray[2],
+                            },
+                        })}>
+                            <Group direction='column' spacing='xs'>
+                                {result?.resultBuyArm.amount > 0 ? <div>You purchased {result.resultBuyArm.amount.toLocaleString()} footmen for ${result.resultBuyArm.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyLnd.amount > 0 ? <div>You purchased {result.resultBuyLnd.amount.toLocaleString()} catapults for ${result.resultBuyLnd.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} zeppelins for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} galleons for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} food for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
+                            </Group>
+                        </Card>
+                    }
                 </Group>
+
             </Center>
         </main>
     )
