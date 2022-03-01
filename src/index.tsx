@@ -23,6 +23,7 @@ import Home from './components/pages/Home'
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
+import WorldBank from './components/markets/WorldBank'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -45,6 +46,7 @@ ReactDOM.render(
 						<Route path='industry' element={<Industry />} />
 						<Route path='build' element={<Build />} />
 						<Route path='Black%20Market' element={<PrivateMarket />} />
+						<Route path='World%20Bank' element={<WorldBank />} />
 					</Route>
 				</Routes>
 				</BrowserRouter>

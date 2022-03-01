@@ -38,7 +38,6 @@ export default function Cash()
 	{
 		try {
 			const res = await Axios.put(`/empire/${empire.uuid}`, values)
-
 			console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
