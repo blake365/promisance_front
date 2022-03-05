@@ -1,5 +1,7 @@
 import { Grid, Group, Table, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
+import { eraArray } from '../config/eras'
+import { raceArray } from '../config/races'
 
 export default function Summary()
 {
@@ -57,7 +59,7 @@ export default function Summary()
 									<td>{empire?.rank}</td>
 								</tr>
 								<tr>
-									<td>Civilians</td>
+									<td>{eraArray[empire.era].peasants}</td>
 									<td>{empire?.peasants?.toLocaleString()}</td>
 								</tr>
 								<tr>
@@ -69,11 +71,11 @@ export default function Summary()
 									<td>${empire?.cash?.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Food</td>
+									<td>{eraArray[empire.era].food}</td>
 									<td>{empire?.food?.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Mana</td>
+									<td>{eraArray[empire.era].runes}</td>
 									<td>{empire?.runes?.toLocaleString()}</td>
 								</tr>
 								<tr>
@@ -95,11 +97,11 @@ export default function Summary()
 							<tbody>
 								<tr>
 									<td style={{ width: '50%' }}>Era</td>
-									<td>{empire?.era}</td>
+									<td>{eraArray[empire.era].name}</td>
 								</tr>
 								<tr>
 									<td>Race</td>
-									<td>{empire?.race}</td>
+									<td>{raceArray[empire.race].name}</td>
 								</tr>
 								<tr>
 									<td>Health</td>
@@ -110,23 +112,23 @@ export default function Summary()
 									<td>{empire?.tax}%</td>
 								</tr>
 								<tr>
-									<td>Infantry</td>
+									<td>{eraArray[empire.era].trparm}</td>
 									<td>{empire?.trpArm.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Tanks</td>
+									<td>{eraArray[empire.era].trplnd}</td>
 									<td>{empire?.trpLnd.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Jets</td>
+									<td>{eraArray[empire.era].trpfly}</td>
 									<td>{empire?.trpFly.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Battleships</td>
+									<td>{eraArray[empire.era].trpsea}</td>
 									<td>{empire?.trpSea.toLocaleString()}</td>
 								</tr>
 								<tr>
-									<td>Wizards</td>
+									<td>{eraArray[empire.era].trpwiz}</td>
 									<td>{empire?.trpWiz.toLocaleString()}</td>
 								</tr>
 							</tbody>

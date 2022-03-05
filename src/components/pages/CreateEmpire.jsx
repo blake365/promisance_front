@@ -15,7 +15,7 @@ export default function CreateEmpire(props)
 	const form = useForm({
 		initialValues: {
 			name: '',
-			race: '',
+			race: 0,
 		},
 
 		validationRules: {
@@ -60,10 +60,15 @@ export default function CreateEmpire(props)
 								placeholder="Pick one"
 								required
 								data={[
-									{ value: 'elf', label: 'Elf' },
-									{ value: 'gremlin', label: 'Gremlin' },
-									{ value: 'orc', label: 'Orc' },
-									{ value: 'gnome', label: 'Gnome' },
+									{ value: 0, label: 'Human' },
+									{ value: 1, label: 'Elf' },
+									{ value: 2, label: 'Dwarf' },
+									{ value: 3, label: 'Troll' },
+									{ value: 4, label: 'Gnome' },
+									{ value: 5, label: 'Gremlin' },
+									{ value: 6, label: 'Orc' },
+									{ value: 7, label: 'Drow' },
+									{ value: 8, label: 'Goblin' },
 								]}
 							/>
 							<Button type='submit'>Create</Button>

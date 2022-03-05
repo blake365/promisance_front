@@ -5,6 +5,9 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { useState } from 'react'
+import { eraArray } from '../../config/eras'
+import { raceArray } from '../../config/races'
+import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 
 
 export default function PrivateMarket()
@@ -24,10 +27,10 @@ export default function PrivateMarket()
     const getCost = (emp, base) =>
     {
         let cost = base
-        let costBonus = 1 - ((1 - 0.2) * (emp.bldCost / emp.land) + 0.2 * (emp.bldCost / emp.land))
+        let costBonus = 1 - ((1 - PVTM_SHOPBONUS) * (empire.bldCost / empire.land) + PVTM_SHOPBONUS * (empire.bldCost / empire.land))
 
         cost *= costBonus
-        //TODO: race modifier here
+        cost *= (2 - ((100 + raceArray[empire.race].mod_market) / 100))
 
         if (cost < base * 0.6) {
             cost = base * 0.6
@@ -36,12 +39,12 @@ export default function PrivateMarket()
         return Math.round(cost)
     }
 
-    const trpArmCost = getCost(empire, 500)
-    const trpLndCost = getCost(empire, 1000)
-    const trpFlyCost = getCost(empire, 2000)
-    const trpSeaCost = getCost(empire, 3000)
+    const trpArmCost = getCost(empire, PVTM_TRPARM)
+    const trpLndCost = getCost(empire, PVTM_TRPLND)
+    const trpFlyCost = getCost(empire, PVTM_TRPFLY)
+    const trpSeaCost = getCost(empire, PVTM_TRPSEA)
 
-    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, 30]
+    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD]
 
     const form = useForm({
         initialValues: {
@@ -188,7 +191,7 @@ export default function PrivateMarket()
                             </Group>
                             <Group direction='row' spacing='md' noWrap grow>
                                 <Text align='center'>
-                                    Footmen
+                                    {eraArray[empire.era].trparm}
                                 </Text>
                                 <Text align='center'>
                                     {empire.trpArm.toLocaleString()}
@@ -211,7 +214,7 @@ export default function PrivateMarket()
                             </Group>
                             <Group direction='row' spacing='md' noWrap grow>
                                 <Text align='center'>
-                                    Catapults
+                                    {eraArray[empire.era].trplnd}
                                 </Text>
                                 <Text align='center'>
                                     {empire.trpLnd.toLocaleString()}
@@ -234,7 +237,7 @@ export default function PrivateMarket()
                             </Group>
                             <Group direction='row' spacing='md' noWrap grow>
                                 <Text align='center'>
-                                    Zeppelins
+                                    {eraArray[empire.era].trpfly}
                                 </Text>
                                 <Text align='center'>
                                     {empire.trpFly.toLocaleString()}
@@ -257,7 +260,7 @@ export default function PrivateMarket()
                             </Group>
                             <Group direction='row' spacing='md' noWrap grow>
                                 <Text align='center'>
-                                    Galleons
+                                    {eraArray[empire.era].trpsea}
                                 </Text>
                                 <Text align='center'>
                                     {empire.trpSea.toLocaleString()}
@@ -280,7 +283,7 @@ export default function PrivateMarket()
                             </Group>
                             <Group direction='row' spacing='md' noWrap grow>
                                 <Text align='center'>
-                                    Food
+                                    {eraArray[empire.era].food}
                                 </Text>
                                 <Text align='center'>
                                     {empire.food.toLocaleString()}
@@ -289,15 +292,15 @@ export default function PrivateMarket()
                                     {empire.mktFood.toLocaleString()}
                                 </Text>
                                 <Text align='center'>
-                                    $30
+                                    ${PVTM_FOOD}
                                 </Text>
                                 <Text align='center'>
-                                    {Math.floor(empire.cash / 30).toLocaleString()}
+                                    {Math.floor(empire.cash / PVTM_FOOD).toLocaleString()}
                                 </Text>
                                 <NumberInput
                                     hideControls
                                     min={0}
-                                    max={empire.cash / 30}
+                                    max={empire.cash / PVTM_FOOD}
                                     {...form.getInputProps(`buyFood`)}
                                 />
                             </Group>
@@ -321,11 +324,11 @@ export default function PrivateMarket()
                             },
                         })}>
                             <Group direction='column' spacing='xs'>
-                                {result?.resultBuyArm.amount > 0 ? <div>You purchased {result.resultBuyArm.amount.toLocaleString()} footmen for ${result.resultBuyArm.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyLnd.amount > 0 ? <div>You purchased {result.resultBuyLnd.amount.toLocaleString()} catapults for ${result.resultBuyLnd.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} zeppelins for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} galleons for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} food for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyArm.amount > 0 ? <div>You purchased {result.resultBuyArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultBuyArm.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyLnd.amount > 0 ? <div>You purchased {result.resultBuyLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultBuyLnd.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
                             </Group>
                         </Card>
                     }

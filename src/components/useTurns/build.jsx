@@ -4,6 +4,11 @@ import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
+import { raceArray } from '../../config/races'
+import { eraArray } from '../../config/eras'
+
+// TODO: clear form on submit
+// TODO: fix styling of button, unused land, top alignment, text alignment in cells
 
 export default function Build()
 {
@@ -21,8 +26,7 @@ export default function Build()
 		let buildCost = Math.round(3500 + empire.land * 0.1)
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
-
-		//TODO: buildrate race bonus
+		buildRate = Math.round((100 + raceArray[empire.race].mod_buildrate) / 100 * buildRate)
 
 		let canBuild = Math.min(
 			Math.floor(empire.cash / buildCost),
@@ -174,7 +178,7 @@ export default function Build()
 							</thead>
 							<tbody>
 								<tr>
-									<td>Apartments</td>
+									<td>{eraArray[empire.era].bldpop}</td>
 									<td>
 										{empire.bldPop} (
 										{Math.round((empire.bldPop / empire.land) * 100)}%)
@@ -191,7 +195,7 @@ export default function Build()
 									</td>
 								</tr>
 								<tr>
-									<td>Business Centers</td>
+									<td>{eraArray[empire.era].bldcash}</td>
 									<td>
 										{empire.bldCash} (
 										{Math.round((empire.bldCash / empire.land) * 100)}%)
@@ -208,7 +212,7 @@ export default function Build()
 									</td>
 								</tr>
 								<tr>
-									<td>Factories</td>
+									<td>{eraArray[empire.era].bldtrp}</td>
 									<td>
 										{empire.bldTroop} (
 										{Math.round((empire.bldTroop / empire.land) * 100)}%)
@@ -225,7 +229,7 @@ export default function Build()
 									</td>
 								</tr>
 								<tr>
-									<td>Warehouses</td>
+									<td>{eraArray[empire.era].bldcost}</td>
 									<td>
 										{empire.bldCost} (
 										{Math.round((empire.bldCost / empire.land) * 100)}%)
@@ -242,7 +246,7 @@ export default function Build()
 									</td>
 								</tr>
 								<tr>
-									<td>PSI Centers</td>
+									<td>{eraArray[empire.era].bldwiz}</td>
 									<td>
 										{empire.bldWiz} (
 										{Math.round((empire.bldWiz / empire.land) * 100)}%)
@@ -259,7 +263,7 @@ export default function Build()
 									</td>
 								</tr>
 								<tr>
-									<td>Plantations</td>
+									<td>{eraArray[empire.era].bldfood}</td>
 									<td>
 										{empire.bldFood} (
 										{Math.round((empire.bldFood / empire.land) * 100)}%)
@@ -276,8 +280,8 @@ export default function Build()
 										/>
 									</td>
 								</tr>
-								<tr>
-									<td>Bunkers</td>
+								{/* <tr>
+									<td>{eraArray[empire.era].blddef}</td>
 									<td>
 										{empire.bldDef} (
 										{Math.round((empire.bldDef / empire.land) * 100)}%)
@@ -292,7 +296,7 @@ export default function Build()
 											{...form.getInputProps('bldDef')}
 										/>
 									</td>
-								</tr>
+								</tr> */}
 								<tr>
 									<td>Unused Land</td>
 									<td>{empire.freeLand.toLocaleString()}</td>

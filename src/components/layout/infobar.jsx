@@ -1,4 +1,6 @@
 import { Paper, SimpleGrid, Text } from '@mantine/core'
+import { eraArray } from '../../config/eras'
+
 
 export default function InfoBar({ data })
 {
@@ -34,13 +36,13 @@ export default function InfoBar({ data })
 				</div>
 				<div>
 					<Text weight='bold' align='center'>
-						Food:
+						{eraArray[empire.era].food}:
 					</Text>{' '}
 					<Text align='center'>{empire.food.toLocaleString()}</Text>
 				</div>
 				<div>
 					<Text weight='bold' align='center'>
-						Mana:
+						{eraArray[empire.era].runes}:
 					</Text>{' '}
 					<Text align='center'>{empire.runes.toLocaleString()}</Text>
 				</div>
