@@ -10,6 +10,8 @@ export default function Explore()
 
 	const newLand = Math.ceil((1 / (empire.land * 0.00019 + 0.25)) * 40 * ((100 + eraArray[empire.era].mod_explore + raceArray[empire.race].mod_explore) / 100))
 
+	// TODO: show amount of land gained from exploring (from backend)
+
 	return (
 		<main>
 			<GeneralAction title='Explore' type='explore' flavor='exploring' explore={newLand}
