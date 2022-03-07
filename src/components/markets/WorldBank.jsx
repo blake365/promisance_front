@@ -10,9 +10,9 @@ function generalLog(number, base)
     return Math.log(base) / Math.log(number)
 }
 
-// TODO: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
-// TODO: form validation
-// TODO: autofill max depoist, max withdraw, max loan, max repayment
+// DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
+// DONE: form validation
+// DONE: added max buttons
 
 export default function WorldBank()
 {
@@ -39,6 +39,9 @@ export default function WorldBank()
     const maxLoan = empire.networth * 50
     const maxSavings = empire.networth * 100
 
+    let depositAmount = maxSavings - empire.bank
+    if (depositAmount < 0) depositAmount = 0
+
     const savingsForm = useForm({
         initialValues: {
             empireId: empire.id,
@@ -48,32 +51,48 @@ export default function WorldBank()
         },
 
         validationRules: {
-
+            withdrawAmt: (value) => value <= empire.bank && value >= 0,
+            depositAmt: (value) => value <= depositAmount
         },
 
         errorMessages: {
-
+            withdrawAmt: "Can't withdraw that much money",
+            depositAmt: "Can't deposit that much money"
         },
     })
+
+    if (savingsForm.values['depositAmt'] === undefined) {
+        savingsForm.setFieldValue('depositAmt', 0)
+    }
+    if (savingsForm.values['withdrawAmt'] === undefined) {
+        savingsForm.setFieldValue('withdrawAmt', 0)
+    }
 
     const loanForm = useForm({
         initialValues: {
             empireId: empire.id,
             type: 'loan',
             loanAmt: 0,
-            repayAmt: empire.loan,
+            repayAmt: 0,
         },
 
         validationRules: {
-
+            loanAmt: (value) => value <= maxLoan && value >= 0,
+            repayAmt: (value) => value <= empire.loan && value >= 0
         },
 
         errorMessages: {
-
+            loanAmt: "Can't take out a loan for that amount",
+            repayAmt: "Can't repay that amount"
         },
     })
 
-
+    if (loanForm.values['loanAmt'] === undefined) {
+        loanForm.setFieldValue('loanAmt', 0)
+    }
+    if (loanForm.values['repayAmt'] === undefined) {
+        loanForm.setFieldValue('repayAmt', 0)
+    }
 
     const loadEmpireTest = async () =>
     {
@@ -101,14 +120,17 @@ export default function WorldBank()
     // console.log(result[0].action)
 
     return (
-        <main>
+        <main style={{ paddingTop: '1rem' }}>
             <Center mb={10}>
                 <Group direction='column' spacing='sm' align='center' grow>
                     <Title order={1} align='center'>
                         World Bank
                     </Title>
                     <div>
-                        Access your savings and loan accounts
+                        Access your savings and loan accounts.
+                    </div>
+                    <div>
+                        Interest is calculated per turn, 52 turns is one APR year.
                     </div>
                     <SimpleGrid
                         cols={2}
@@ -120,35 +142,50 @@ export default function WorldBank()
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
                             <Title order={2} align='center'>Savings</Title>
                             <Group direction='row' spacing='xs' noWrap grow>
-                                <Text>Current Balance:</Text>
-                                <Text align='right'>${empire.bank.toLocaleString()}</Text>
-                            </Group>
-                            <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Max Balance: </Text>
                                 <Text align='right'>${maxSavings.toLocaleString()}</Text>
+                            </Group>
+                            <Group direction='row' spacing='xs' noWrap grow>
+                                <Text>Current Balance:</Text>
+                                <Text align='right'>${empire.bank.toLocaleString()}</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Interest Rate:</Text>
                                 <Text align='right'>{savingRate}%</Text>
                             </Group>
-
-                            {/* TODO: add 'max' buttons */}
+                            <Group direction='row' spacing='xs' noWrap grow>
+                                <Text>Est. Interest Gain:</Text>
+                                <Text align='right'>${Math.floor(empire.bank * savingRate / 52).toLocaleString()}</Text>
+                            </Group>
                             <form
                                 onSubmit={
-                                    savingsForm.onSubmit((values) => { doBanking(values) })
+                                    savingsForm.onSubmit((values) =>
+                                    {
+                                        console.log(values)
+                                        doBanking(values)
+                                    })
                                 }
                             >
                                 <Group align='center' direction='column' spacing='sm'>
                                     <NumberInput
+                                        hideControls
                                         label={`Deposit Money`}
                                         min={0}
-                                        defaultValue={maxSavings - empire.bank}
+                                        defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
                                         max={maxSavings - empire.bank}
                                         {...savingsForm.getInputProps('depositAmt')}
+                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
+                                        {
+                                            if (maxSavings - empire.bank > 0) { savingsForm.setFieldValue('depositAmt', maxSavings - empire.bank) }
+                                            else {
+                                                savingsForm.setFieldValue('depositAmt', 0)
+                                            }
+                                        }}>M</Button>}
                                     />
                                     <NumberInput
+                                        hideControls
                                         label={`Withdraw Money`}
                                         min={0}
                                         defaultValue={empire.bank}
@@ -156,11 +193,17 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={empire.bank}
                                         {...savingsForm.getInputProps('withdrawAmt')}
+                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
+                                        {
+                                            if (empire.bank > 0) { savingsForm.setFieldValue('withdrawAmt', empire.bank) }
+                                            else {
+                                                savingsForm.setFieldValue('withdrawAmt', 0)
+                                            }
+                                        }}>M</Button>}
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Group>
                             </form>
-
                         </Card>
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
                             <Title order={2} align='center'>Loans</Title>
@@ -176,7 +219,10 @@ export default function WorldBank()
                                 <Text>Interest Rate: </Text>
                                 <Text align='right'>{loanRate}%</Text>
                             </Group>
-
+                            <Group direction='row' spacing='xs' noWrap grow>
+                                <Text>Est. Interest Cost:</Text>
+                                <Text align='right'>${Math.floor(empire.loan * loanRate / 52).toLocaleString()}</Text>
+                            </Group>
                             <form
                                 onSubmit={
                                     loanForm.onSubmit((values) => { doBanking(values) })
@@ -184,6 +230,7 @@ export default function WorldBank()
                             >
                                 <Group align='center' direction='column' spacing='sm'>
                                     <NumberInput
+                                        hideControls
                                         label={`Repay Loan Balance`}
                                         min={0}
                                         defaultValue={empire.loan}
@@ -191,14 +238,28 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={empire.loan}
                                         {...loanForm.getInputProps('repayAmt')}
+                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
+                                        {
+                                            if (empire.loan > 0) { loanForm.setFieldValue('repayAmt', empire.loan) }
+                                            else {
+                                                loanForm.setFieldValue('repayAmt', 0)
+                                            }
+                                        }}>M</Button>}
                                     />
                                     <NumberInput
+                                        hideControls
                                         label={`Take Out a Loan`}
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
+                                        max={maxLoan}
                                         {...loanForm.getInputProps('loanAmt')}
+                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
+                                        {
+                                            loanForm.setFieldValue('loanAmt', maxLoan)
+
+                                        }}>M</Button>}
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Group>
@@ -217,7 +278,7 @@ export default function WorldBank()
                                 return <div>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
                             }
                             if (item.action === 'loan') {
-                                return <div>You took out a loan for ${item.amount.toLocaleString()}. </div>
+                                return <div>You took out a loan for ${item.amount.toLocaleString()}.</div>
                             }
                             if (item.action === 'repay') {
                                 return <div>You repaid ${item.amount.toLocaleString()} toward your loan.</div>

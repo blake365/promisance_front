@@ -5,22 +5,6 @@ import { raceArray } from '../config/races'
 
 export default function Summary()
 {
-	// const dispatch = useDispatch()
-
-	// const loadEmpireTest = async () =>
-	// {
-	// 	try {
-	// 		const res = await Axios.get(
-	// 			'/empire/26a4d879-c017-42b8-aa2a-5a1a3c881aa3'
-	// 		)
-	// 		console.log(res.data)
-
-	// 		dispatch(empireLoaded(res.data))
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
-
 	let now = new Date()
 	const { empire } = useSelector((state) => state.empire)
 
@@ -135,12 +119,10 @@ export default function Summary()
 						</Table>
 					</Grid.Col>
 				</Grid>) : ('')}
-				<div>{now.toISOString}</div>
+				<div>{now.toISOString()}</div>
 				<div>You get 2 turns every 15 minutes</div>
 				<div>Next 2 turns in XX minutes, XX seconds</div>
 				<div>The current round will end in X days, XX hours</div>
-
-
 			</Group>
 		</main>
 	)
