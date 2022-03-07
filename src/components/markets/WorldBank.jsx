@@ -1,9 +1,8 @@
-import { Button, Center, Group, NumberInput, Table, Title, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Title, Card, SimpleGrid, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
-import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { useState } from 'react'
 
 function generalLog(number, base)
@@ -11,15 +10,19 @@ function generalLog(number, base)
     return Math.log(base) / Math.log(number)
 }
 
+// TODO: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
+// TODO: form validation
+// TODO: autofill max depoist, max withdraw, max loan, max repayment
+
 export default function WorldBank()
 {
     const [result, setResult] = useState(null)
 
-    let errors = {
-        error: '',
-    }
+    // let errors = {
+    //     error: '',
+    // }
     const { empire } = useSelector((state) => state.empire)
-    let loanDefault = empire.loan
+    // let loanDefault = empire.loan
     const dispatch = useDispatch()
 
     const calcSizeBonus = (networth) =>
@@ -105,7 +108,7 @@ export default function WorldBank()
                         World Bank
                     </Title>
                     <div>
-                        World bank description
+                        Access your savings and loan accounts
                     </div>
                     <SimpleGrid
                         cols={2}
@@ -202,6 +205,8 @@ export default function WorldBank()
                             </form>
                         </Card>
                     </SimpleGrid>
+
+                    {/* TODO: figure out how to solve warning */}
                     {result &&
                         result.map(item =>
                         {

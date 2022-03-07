@@ -15,7 +15,7 @@ import {empireSlice} from './empireSlice'
 const persistConfig = {
 	key: 'root',
   storage, 
-  whitelist: ['user']
+  whitelist: []
 }
 
 const reducers = combineReducers({

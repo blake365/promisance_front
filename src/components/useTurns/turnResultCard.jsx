@@ -24,6 +24,31 @@ const NetProduced = (props) =>
 	)
 }
 
+const spellResult = (result) =>
+{
+	if (result.result === 'success') {
+		if (result.food) {
+			return (<>
+				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> {result.food.toLocaleString()}</span> {result.descriptor}.</Text>
+			</>)
+		} else if (result.cash) {
+			return (<>
+				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> ${result.cash.toLocaleString()}</span>.</Text>
+			</>)
+		} else {
+			// covers time era changes
+			return (<>
+				<Text align='center' weight='bold'>{result.message}</Text>
+			</>)
+		}
+	} else if (result.result === 'fail') {
+		//TODO: untested
+		return (<>
+			<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
+		</>)
+	}
+}
+
 export default function TurnResultCard({ data })
 {
 	console.log(data)
@@ -35,6 +60,7 @@ export default function TurnResultCard({ data })
 					backgroundColor: theme.colors.gray[2],
 				},
 			})}>
+				{data.cast && spellResult(data.cast)}
 				{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
 
 

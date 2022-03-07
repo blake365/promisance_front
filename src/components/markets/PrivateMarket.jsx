@@ -9,6 +9,9 @@ import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 
+// TODO: build sell side of market
+// TODO: make it mobile friendly
+// TODO: add buy max buttons
 
 export default function PrivateMarket()
 {
@@ -27,10 +30,10 @@ export default function PrivateMarket()
     const getCost = (emp, base) =>
     {
         let cost = base
-        let costBonus = 1 - ((1 - PVTM_SHOPBONUS) * (empire.bldCost / empire.land) + PVTM_SHOPBONUS * (empire.bldCost / empire.land))
+        let costBonus = 1 - ((1 - PVTM_SHOPBONUS) * (emp.bldCost / emp.land) + PVTM_SHOPBONUS * (emp.bldCost / emp.land))
 
         cost *= costBonus
-        cost *= (2 - ((100 + raceArray[empire.race].mod_market) / 100))
+        cost *= (2 - ((100 + raceArray[emp.race].mod_market) / 100))
 
         if (cost < base * 0.6) {
             cost = base * 0.6
@@ -62,7 +65,7 @@ export default function PrivateMarket()
             buyLnd: (value) => value <= empire.cash / trpLndCost,
             buyFly: (value) => value <= empire.cash / trpFlyCost,
             buySea: (value) => value <= empire.cash / trpSeaCost,
-            buyFood: (value) => value <= empire.cash / 30,
+            buyFood: (value) => value <= empire.cash / PVTM_FOOD,
         },
 
         errorMessages: {
@@ -157,7 +160,7 @@ export default function PrivateMarket()
                             totalPrice <= empire.cash
                                 ? form.onSubmit((values) =>
                                 {
-                                    dispatch(clearResult)
+                                    // dispatch(clearResult)
                                     console.log(values)
                                     doBuy(values)
                                 })

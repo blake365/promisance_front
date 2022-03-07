@@ -5,7 +5,6 @@ import
     Title,
     NumberInput,
     Button,
-    Checkbox,
     Select
 } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
@@ -13,6 +12,9 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
+
+// TODO: move advance and regress out of select form into separate ui?
+// TODO: show rune cost for spells, show current magic power, show required magic power for spells
 
 export default function MagicCenter()
 {
@@ -26,7 +28,6 @@ export default function MagicCenter()
             type: 'magic',
             spell: null,
             number: 0,
-            condensed: true,
         },
 
         validationRules: {
@@ -50,10 +51,11 @@ export default function MagicCenter()
         }
     }
 
-    const doTurns = async (values) =>
+    const doMagic = async (values) =>
     {
         try {
-            const res = await Axios.post('/useturns', values)
+            const res = await Axios.post('/magic', values)
+            console.log(res.data)
             dispatch(setResult(res.data))
             loadEmpireTest()
         } catch (error) {
@@ -74,8 +76,8 @@ export default function MagicCenter()
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         console.log(values)
-                        // dispatch(clearResult)
-                        // doTurns(values)
+                        dispatch(clearResult)
+                        doMagic(values)
                     })}>
                         <Group direction='column' spacing='sm' align='center'>
                             <Select
@@ -88,14 +90,14 @@ export default function MagicCenter()
                                     { value: 2, label: 'Tree of Gold' },
                                     { value: 3, label: 'Advance to Present' },
                                     { value: 4, label: 'Regress' },
-                                    { value: 5, label: 'Open Time Gate' },
-                                    { value: 6, label: 'Close Time Gate' },
+                                    // { value: 5, label: 'Open Time Gate' },
+                                    // { value: 6, label: 'Close Time Gate' },
 
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
                             <NumberInput
-                                label={`Number of Spells to Cast`}
+                                label={`Cast Spell How Many Times?`}
                                 min={0}
                                 defaultValue={0}
                                 stepHoldDelay={500}
@@ -103,13 +105,9 @@ export default function MagicCenter()
                                 max={empire.turns}
                                 {...form.getInputProps('number')}
                             />
-                            <Checkbox
-                                label='Condensed'
-                                color='grape'
-                                {...form.getInputProps('condensed', { type: 'checkbox' })}
-                            />
+
                             <Button color='grape' type='submit'>
-                                Cast
+                                Cast Spells
                             </Button>
                         </Group>
                     </form>

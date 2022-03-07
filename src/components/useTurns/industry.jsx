@@ -66,7 +66,6 @@ export default function Industry()
 	{
 		try {
 			const res = await Axios.put(`/empire/${empire.uuid}`, values)
-
 			console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
@@ -89,7 +88,11 @@ export default function Industry()
 					</Text>
 					<form onSubmit={
 						totalIndustry === 100
-							? form.onSubmit((values) => updateIndustry(values))
+							? form.onSubmit((values) =>
+							{
+								console.log(values)
+								updateIndustry(values)
+							})
 							: setErrors("Values must add up to 100")
 					}>
 
