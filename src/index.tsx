@@ -16,7 +16,9 @@ import Build from './components/useTurns/build'
 import Meditate from './components/useTurns/meditate'
 import Summary from './components/summary'
 import Overview from './components/overview'
-import PrivateMarket from './components/markets/PrivateMarket'
+// import PrivateMarketBuy from './components/markets/PrivateMarketBuy'
+// import PrivateMarketSell from './components/markets/PrivateMarketSell'
+import PrivateMarket from './components/markets/privateMarket'
 
 import Home from './components/pages/Home'
 
