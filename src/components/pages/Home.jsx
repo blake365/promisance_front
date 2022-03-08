@@ -22,21 +22,7 @@ export default function Home()
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
 
-    let navigate = useNavigate()
-
-    // useEffect(() =>
-    // {
-    //     async function loadUser()
-    //     {
-    //         try {
-    //             const res = await Axios.get('auth/me')
-    //             dispatch(userLoaded(res.data))
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     loadUser()
-    // })
+    const navigate = useNavigate()
 
     useEffect(() =>
     {
@@ -46,13 +32,13 @@ export default function Home()
             // dispatch(empireLoaded(user.empires[0]))
             return navigate('app/')
         }
-    }, [isLoggedIn, user])
+    }, [isLoggedIn, user, navigate])
 
 
     const form = useForm({
         initialValues: {
             name: '',
-            race: 0,
+            race: null,
         },
 
         validationRules: {
@@ -117,7 +103,6 @@ export default function Home()
                                 <Button type='submit'>Create</Button>
                             </Group>
                         </form>
-
                     </Group>
                 </Center>
             </Modal>
@@ -131,10 +116,7 @@ export default function Home()
                         color: 'blue',
                     }}
                 >
-
-
                     <Title order={1}>Solo Promisance</Title>
-
                 </div>
             </Header>
 

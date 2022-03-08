@@ -15,7 +15,7 @@ export function HalfButton(props)
         <ActionIcon size='md' color='blue' onClick={() =>
         {
             props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue / 2))
-        }}>½</ActionIcon>)
+        }}>&#189;</ActionIcon>)
 }
 
 export function HalfAndAll(props)

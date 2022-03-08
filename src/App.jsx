@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import
-{
-	Loader,
-} from '@mantine/core'
-import { Link, Outlet } from 'react-router-dom'
-
+{ Loader } from '@mantine/core'
+import { Outlet, useNavigate } from 'react-router-dom'
+import Axios from 'axios'
 import { useState } from 'react'
 import
 {
@@ -16,7 +14,6 @@ import
 	Title,
 	useMantineTheme,
 	ScrollArea,
-	Button,
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -26,6 +23,7 @@ import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
 import { fetchEmpire } from './store/empireSlice'
+import { load } from './store/userSlice'
 
 function App()
 {
@@ -38,15 +36,32 @@ function App()
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const empire = useSelector((state) => state.empire)
 
+	const navigate = useNavigate()
 	// console.log(empire)
 
 	useEffect(() =>
 	{
+		async function loadUser()
+		{
+			try {
+				const res = await Axios.get('auth/me')
+				console.log(res.data)
+				if (res.data) {
+					dispatch(load())
+				}
+			} catch (error) {
+				navigate('/')
+			}
+		}
+
+		if (!isLoggedIn) {
+			loadUser()
+		}
+
 		if (isLoggedIn && empireStatus === 'idle') {
 			dispatch(fetchEmpire(user.empires[0].uuid))
 		}
-
-	}, [dispatch, isLoggedIn, empireStatus, user.empires])
+	})
 
 	// const clickRef = useClickOutside(() => setOpened(false))
 	// const preferredColorScheme = useColorScheme()

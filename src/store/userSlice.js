@@ -53,6 +53,21 @@ export const login = createAsyncThunk(
 	}
 )
 
+export const load = createAsyncThunk(
+	'user/load',
+	async  (thunkAPI) => {
+		try {
+			const res = await Axios.get('/auth/me')
+			// console.log(res)
+			let data = res.data
+			return { user: data }
+		} catch (e) {
+			console.log(e)
+			return thunkAPI.rejectWithValue()
+		}
+	}
+)
+
 //TODO: export const logout = createAsyncThunk('user/logout', )
 
 export const userSlice = createSlice({
@@ -83,6 +98,14 @@ export const userSlice = createSlice({
 			state.user = action.payload.user
 		},
 		[login.rejected]: (state, action) => {
+			state.isLoggedIn = false
+			state.user = null
+		},
+		[load.fulfilled]: (state, action) => {
+			state.isLoggedIn = true
+			state.user = action.payload.user
+		},
+		[load.rejected]: (state, action) => {
 			state.isLoggedIn = false
 			state.user = null
 		},

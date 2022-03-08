@@ -7,11 +7,12 @@ import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
-import { HalfAndAll, MaxButton } from '../utilities/maxbutton'
+import { MaxButton } from '../utilities/maxbutton'
 
-// TODO: build sell side of market
+// DONE: build sell side of market
 // TODO: make it mobile friendly
-// TODO: add buy max buttons
+// DONE: add buy max buttons
+// FIXME: max buy can be higher than available
 
 export default function PrivateMarketBuy()
 {

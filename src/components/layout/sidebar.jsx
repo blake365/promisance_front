@@ -96,7 +96,7 @@ const Sidebar = () =>
 						{link}
 					</Button>
 				))}
-				<Title order={4}>Settings</Title>
+				<Title order={4}>Settings (TODO: all)</Title>
 				{managementLinks.map((link, index) => (
 					<Button
 						component={Link}
