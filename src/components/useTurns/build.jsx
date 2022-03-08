@@ -6,6 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
+import { MaxButton, HalfButton } from '../utilities/maxbutton'
 
 // TODO: clear form on submit
 // TODO: fix styling of button, unused land, top alignment, text alignment in cells
@@ -132,6 +133,7 @@ export default function Build()
 			console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
+			form.reset()
 		} catch (error) {
 			console.log(error)
 		}
@@ -163,6 +165,7 @@ export default function Build()
 								{
 									dispatch(clearResult)
 									doBuild(values)
+
 								})
 								: setErrors("Can't build that many buildings")
 						}
@@ -189,8 +192,9 @@ export default function Build()
 											hideControls
 											min={0}
 											defaultValue={0}
-											max={empire.freeLand}
+											max={canBuild}
 											{...form.getInputProps('bldPop')}
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldPop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldPop' maxValue={canBuild} /></div>}
 										/>
 									</td>
 								</tr>
@@ -208,6 +212,7 @@ export default function Build()
 											defaultValue={0}
 											max={empire.freeLand}
 											{...form.getInputProps('bldCash')}
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCash' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCash' maxValue={canBuild} /></div>}
 										/>
 									</td>
 								</tr>
@@ -225,6 +230,7 @@ export default function Build()
 											defaultValue={0}
 											max={empire.freeLand}
 											{...form.getInputProps('bldTroop')}
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldTroop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldTroop' maxValue={canBuild} /></div>}
 										/>
 									</td>
 								</tr>
@@ -242,6 +248,7 @@ export default function Build()
 											defaultValue={0}
 											max={empire.freeLand}
 											{...form.getInputProps('bldCost')}
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCost' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCost' maxValue={canBuild} /></div>}
 										/>
 									</td>
 								</tr>
@@ -259,7 +266,8 @@ export default function Build()
 											defaultValue={0}
 											max={empire.freeLand}
 											{...form.getInputProps('bldWiz')}
-										/>
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldWiz' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldWiz' maxValue={canBuild} />
+											</div>} />
 									</td>
 								</tr>
 								<tr>
@@ -277,6 +285,9 @@ export default function Build()
 											defaultValue={0}
 											max={empire.freeLand}
 											{...form.getInputProps('bldFood')}
+											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldFood' maxValue={canBuild} />
+												<HalfButton formName={form} fieldName='bldFood' maxValue={canBuild} />
+											</div>}
 										/>
 									</td>
 								</tr>

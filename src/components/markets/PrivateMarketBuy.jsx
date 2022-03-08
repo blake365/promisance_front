@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+import { HalfAndAll, MaxButton } from '../utilities/maxbutton'
 
 // TODO: build sell side of market
 // TODO: make it mobile friendly
@@ -208,6 +209,7 @@ export default function PrivateMarketBuy()
                                         min={0}
                                         max={empire.cash / trpArmCost}
                                         {...form.getInputProps(`buyArm`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buyArm' maxValue={empire.cash / trpArmCost} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -231,6 +233,7 @@ export default function PrivateMarketBuy()
                                         min={0}
                                         max={empire.cash / trpLndCost}
                                         {...form.getInputProps(`buyLnd`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buyLnd' maxValue={empire.cash / trpLndCost} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -254,6 +257,7 @@ export default function PrivateMarketBuy()
                                         min={0}
                                         max={empire.cash / trpFlyCost}
                                         {...form.getInputProps(`buyFly`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buyFly' maxValue={empire.cash / trpFlyCost} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -277,6 +281,7 @@ export default function PrivateMarketBuy()
                                         min={0}
                                         max={empire.cash / trpSeaCost}
                                         {...form.getInputProps(`buySea`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buySea' maxValue={empire.cash / trpSeaCost} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -300,6 +305,7 @@ export default function PrivateMarketBuy()
                                         min={0}
                                         max={empire.cash / PVTM_FOOD}
                                         {...form.getInputProps(`buyFood`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buyFood' maxValue={empire.cash / PVTM_FOOD} />}
                                     />
                                 </Group>
                             </SimpleGrid>

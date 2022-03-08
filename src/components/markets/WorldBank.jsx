@@ -109,7 +109,7 @@ export default function WorldBank()
     {
         try {
             const res = await Axios.post(`/empire/${empire.uuid}/bank`, values)
-            console.log(res.data)
+            // console.log(res.data)
             setResult(res.data)
             loadEmpireTest()
         } catch (error) {
@@ -161,7 +161,6 @@ export default function WorldBank()
                                 onSubmit={
                                     savingsForm.onSubmit((values) =>
                                     {
-                                        console.log(values)
                                         doBanking(values)
                                     })
                                 }
