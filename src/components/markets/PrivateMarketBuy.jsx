@@ -12,7 +12,7 @@ import { MaxButton } from '../utilities/maxbutton'
 // DONE: build sell side of market
 // TODO: make it mobile friendly
 // DONE: add buy max buttons
-// FIXME: max buy can be higher than available
+// FIXED: max buy can be higher than available
 
 export default function PrivateMarketBuy()
 {
@@ -50,7 +50,19 @@ export default function PrivateMarketBuy()
 
     const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD]
 
-    console.log(priceArray)
+    let availArray = [empire.mktArm, empire.mktLnd, empire.mktFly, empire.mktSea, empire.mktFood]
+
+    availArray = availArray.map((item, index) =>
+    {
+        if (item < Math.floor(empire.cash / priceArray[index])) {
+            return item
+        } else {
+            return Math.floor(empire.cash / priceArray[index])
+        }
+    })
+
+    // console.log(availArray)
+    // console.log(priceArray)
 
     const form = useForm({
         initialValues: {
@@ -110,12 +122,12 @@ export default function PrivateMarketBuy()
     totalBuy = buyNumberArray
         .filter(Number)
         .reduce((partialSum, a) => partialSum + a, 0)
-    console.log(totalBuy)
+    // console.log(totalBuy)
 
     totalPrice = spendArray
         .filter(Number)
         .reduce((partialSum, a) => partialSum + a, 0)
-    console.log(totalPrice)
+    // console.log(totalPrice)
     // console.log(value)
 
     function setErrors(error)
@@ -156,8 +168,7 @@ export default function PrivateMarketBuy()
                             totalPrice <= empire.cash
                                 ? form.onSubmit((values) =>
                                 {
-                                    // dispatch(clearResult)
-                                    console.log(values)
+                                    // console.log(values)
                                     doBuy(values)
                                 })
                                 : setErrors("Not Enough Money")
@@ -203,14 +214,14 @@ export default function PrivateMarketBuy()
                                         ${trpArmCost}
                                     </Text>
                                     <Text align='center'>
-                                        {Math.floor(empire.cash / trpArmCost).toLocaleString()}
+                                        {availArray[0]}
                                     </Text>
                                     <NumberInput
                                         hideControls
                                         min={0}
-                                        max={empire.cash / trpArmCost}
+                                        max={availArray[0]}
                                         {...form.getInputProps(`buyArm`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyArm' maxValue={empire.cash / trpArmCost} />}
+                                        rightSection={<MaxButton formName={form} fieldName='buyArm' maxValue={availArray[0]} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -227,14 +238,14 @@ export default function PrivateMarketBuy()
                                         ${trpLndCost}
                                     </Text>
                                     <Text align='center'>
-                                        {Math.floor(empire.cash / trpLndCost).toLocaleString()}
+                                        {availArray[1]}
                                     </Text>
                                     <NumberInput
                                         hideControls
                                         min={0}
-                                        max={empire.cash / trpLndCost}
+                                        max={availArray[1]}
                                         {...form.getInputProps(`buyLnd`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyLnd' maxValue={empire.cash / trpLndCost} />}
+                                        rightSection={<MaxButton formName={form} fieldName='buyLnd' maxValue={availArray[1]} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -251,14 +262,14 @@ export default function PrivateMarketBuy()
                                         ${trpFlyCost}
                                     </Text>
                                     <Text align='center'>
-                                        {Math.floor(empire.cash / trpFlyCost).toLocaleString()}
+                                        {availArray[2]}
                                     </Text>
                                     <NumberInput
                                         hideControls
                                         min={0}
-                                        max={empire.cash / trpFlyCost}
+                                        max={availArray[2]}
                                         {...form.getInputProps(`buyFly`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyFly' maxValue={empire.cash / trpFlyCost} />}
+                                        rightSection={<MaxButton formName={form} fieldName='buyFly' maxValue={availArray[2]} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -275,14 +286,14 @@ export default function PrivateMarketBuy()
                                         ${trpSeaCost}
                                     </Text>
                                     <Text align='center'>
-                                        {Math.floor(empire.cash / trpSeaCost).toLocaleString()}
+                                        {availArray[3]}
                                     </Text>
                                     <NumberInput
                                         hideControls
                                         min={0}
-                                        max={empire.cash / trpSeaCost}
+                                        max={availArray[3]}
                                         {...form.getInputProps(`buySea`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buySea' maxValue={empire.cash / trpSeaCost} />}
+                                        rightSection={<MaxButton formName={form} fieldName='buySea' maxValue={availArray[3]} />}
                                     />
                                 </Group>
                                 <Group direction='row' spacing='md' noWrap grow>
@@ -299,14 +310,14 @@ export default function PrivateMarketBuy()
                                         ${PVTM_FOOD}
                                     </Text>
                                     <Text align='center'>
-                                        {Math.floor(empire.cash / PVTM_FOOD).toLocaleString()}
+                                        {availArray[4]}
                                     </Text>
                                     <NumberInput
                                         hideControls
                                         min={0}
-                                        max={empire.cash / PVTM_FOOD}
+                                        max={availArray[4]}
                                         {...form.getInputProps(`buyFood`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyFood' maxValue={empire.cash / PVTM_FOOD} />}
+                                        rightSection={<MaxButton formName={form} fieldName='buyFood' maxValue={availArray[4]} />}
                                     />
                                 </Group>
                             </SimpleGrid>

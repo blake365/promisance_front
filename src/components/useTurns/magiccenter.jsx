@@ -5,16 +5,21 @@ import
     Title,
     NumberInput,
     Button,
-    Select
+    Select,
+    Text
 } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
+import { forwardRef } from 'react'
+
+import { eraArray } from '../../config/eras'
+import { raceArray } from '../../config/races'
 
 // TODO: move advance and regress out of select form into separate ui?
-// TODO: show rune cost for spells, show current magic power, show required magic power for spells
+// DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
 export default function MagicCenter()
 {
@@ -44,7 +49,6 @@ export default function MagicCenter()
         try {
             const res = await Axios.get(`/empire/${empire.uuid}`)
             // console.log(res.data)
-
             dispatch(empireLoaded(res.data))
         } catch (error) {
             console.log(error)
@@ -63,6 +67,74 @@ export default function MagicCenter()
         }
     }
 
+    const getPower = (empire) =>
+    {
+        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
+    }
+
+    function generalLog(number, base)
+    {
+        return Math.log(base) / Math.log(number)
+    }
+
+    const calcSizeBonus = ({ networth }) =>
+    {
+        let net = Math.max(networth, 1)
+        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
+        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
+        return size
+    }
+
+    const baseCost = (empire) =>
+    {
+        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
+    }
+
+    const magicPower = getPower(empire)
+
+    const SelectItem = forwardRef(
+        ({ label, power, cost, ...others }, ref) => (
+            <div ref={ref} {...others}>
+
+                <div>
+                    <Text size='md'>{label}</Text>
+                    <Text size='xs'>Power: {power}</Text>
+                    <Text size='xs'>Cost: {cost.toLocaleString()} {eraArray[empire.era].runes}</Text>
+                </div>
+
+            </div>
+        )
+    );
+
+    // check era to see if they can advance or regress
+    const eraCheck = (empire) =>
+    {
+        let nextEra
+        if (eraArray[empire.era].era_next !== -1) {
+            nextEra = eraArray[eraArray[empire.era].era_next].name
+        } else { nextEra = null }
+
+        let canAdvance
+        if (nextEra) {
+            canAdvance = true
+        } else canAdvance = false
+
+        let prevEra
+        if (eraArray[empire.era].era_prev !== -1) {
+            prevEra = eraArray[eraArray[empire.era].era_prev].name
+        } else { prevEra = null }
+
+        let canRegress
+        if (prevEra) {
+            canRegress = true
+        } else canRegress = false
+
+        return { nextEra, canAdvance, prevEra, canRegress }
+    }
+
+    const { nextEra, canAdvance, prevEra, canRegress } = eraCheck(empire)
+
+
     return (
         <section style={{ paddingTop: '1rem' }}>
             <Center>
@@ -72,6 +144,9 @@ export default function MagicCenter()
                     </Title>
                     <div>
                         Cast spells on yourself to generate food, money, and change eras. Spells take two turns to cast.
+                    </div>
+                    <div>
+                        Your current magic power is {magicPower}.
                     </div>
                     <form onSubmit={form.onSubmit((values) =>
                     {
@@ -84,12 +159,13 @@ export default function MagicCenter()
                                 label="Select Spell to Cast"
                                 placeholder="Pick one"
                                 required
+                                itemComponent={SelectItem}
                                 data={[
                                     // { value: 0, label: 'Spell Shield' },
-                                    { value: 1, label: 'Cornucopia' },
-                                    { value: 2, label: 'Tree of Gold' },
-                                    { value: 3, label: 'Advance to Present' },
-                                    { value: 4, label: 'Regress' },
+                                    { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17) },
+                                    { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
+                                    { value: 3, label: `Advance to ${nextEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
+                                    { value: 4, label: `Regress to ${prevEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
                                     // { value: 5, label: 'Open Time Gate' },
                                     // { value: 6, label: 'Close Time Gate' },
 

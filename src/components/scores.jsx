@@ -1,6 +1,5 @@
-import { Grid, Group, Table, Title } from '@mantine/core'
+import { Group, Table, Title } from '@mantine/core'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import Axios from 'axios'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
@@ -20,7 +19,7 @@ export default function Scores()
         {
             try {
                 const res = await Axios.get('empire/scores')
-                console.log(res.data)
+                // console.log(res.data)
                 setScores(res.data)
             } catch (error) {
                 console.log(error)

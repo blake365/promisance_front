@@ -1,5 +1,6 @@
 import { Grid, Group, Table, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
+import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 
@@ -32,11 +33,11 @@ export default function Summary()
 							<tbody>
 								<tr>
 									<td style={{ width: '50%' }}>Turns</td>
-									<td align='right'>{empire?.turns} (max 500)</td>
+									<td align='right'>{empire?.turns} (max {TURNS_MAXIMUM})</td>
 								</tr>
 								<tr>
 									<td>Stored Turns</td>
-									<td align='right'>{empire?.storedturns} (max 250)</td>
+									<td align='right'>{empire?.storedturns} (max {TURNS_STORED})</td>
 								</tr>
 								<tr>
 									<td>Rank</td>
@@ -120,8 +121,8 @@ export default function Summary()
 					</Grid.Col>
 				</Grid>) : ('')}
 				<div>{now.toISOString()}</div>
-				<div>You get 2 turns every 15 minutes</div>
-				<div>Next 2 turns in XX minutes, XX seconds</div>
+				<div>You get {TURNS_COUNT} turns every {TURNS_FREQ} minutes</div>
+				<div>Next {TURNS_COUNT} turns in XX minutes, XX seconds</div>
 				<div>The current round will end in X days, XX hours</div>
 			</Group>
 		</main>
