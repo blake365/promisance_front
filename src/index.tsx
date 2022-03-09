@@ -27,6 +27,7 @@ import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
 import WorldBank from './components/markets/WorldBank'
 import MagicCenter from './components/useTurns/magiccenter'
+import Scores from './components/scores'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -42,6 +43,7 @@ ReactDOM.render(
 					<Route path='/app' element={<App />}>
 						<Route path='summary' element={<Summary />} />
 						<Route path='overview' element={<Overview />} />
+						<Route path='scores' element={<Scores />} />
 						<Route path='farm' element={<Farm />} />
 						<Route path='cash' element={<Cash />} />
 						<Route path='explore' element={<Explore />} />

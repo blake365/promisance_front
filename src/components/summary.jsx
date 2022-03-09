@@ -32,39 +32,39 @@ export default function Summary()
 							<tbody>
 								<tr>
 									<td style={{ width: '50%' }}>Turns</td>
-									<td>{empire?.turns} (max 500)</td>
+									<td align='right'>{empire?.turns} (max 500)</td>
 								</tr>
 								<tr>
 									<td>Stored Turns</td>
-									<td>{empire?.storedturns} (max 250)</td>
+									<td align='right'>{empire?.storedturns} (max 250)</td>
 								</tr>
 								<tr>
 									<td>Rank</td>
-									<td>{empire?.rank}</td>
+									<td align='right'>{empire?.rank}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].peasants}</td>
-									<td>{empire?.peasants?.toLocaleString()}</td>
+									<td align='right'>{empire?.peasants?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Land Acres</td>
-									<td>{empire?.land?.toLocaleString()}</td>
+									<td align='right'>{empire?.land?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Money</td>
-									<td>${empire?.cash?.toLocaleString()}</td>
+									<td align='right'>${empire?.cash?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].food}</td>
-									<td>{empire?.food?.toLocaleString()}</td>
+									<td align='right'>{empire?.food?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].runes}</td>
-									<td>{empire?.runes?.toLocaleString()}</td>
+									<td align='right'>{empire?.runes?.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>Net Worth</td>
-									<td>${empire?.networth?.toLocaleString()}</td>
+									<td align='right'>${empire?.networth?.toLocaleString()}</td>
 								</tr>
 							</tbody>
 						</Table>
@@ -81,39 +81,39 @@ export default function Summary()
 							<tbody>
 								<tr>
 									<td style={{ width: '50%' }}>Era</td>
-									<td>{eraArray[empire.era].name}</td>
+									<td align='right'>{eraArray[empire.era].name}</td>
 								</tr>
 								<tr>
 									<td>Race</td>
-									<td>{raceArray[empire.race].name}</td>
+									<td align='right'>{raceArray[empire.race].name}</td>
 								</tr>
 								<tr>
 									<td>Health</td>
-									<td>{empire?.health}%</td>
+									<td align='right'>{empire?.health}%</td>
 								</tr>
 								<tr>
 									<td>Tax Rate</td>
-									<td>{empire?.tax}%</td>
+									<td align='right'>{empire?.tax}%</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].trparm}</td>
-									<td>{empire?.trpArm.toLocaleString()}</td>
+									<td align='right'>{empire?.trpArm.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].trplnd}</td>
-									<td>{empire?.trpLnd.toLocaleString()}</td>
+									<td align='right'>{empire?.trpLnd.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].trpfly}</td>
-									<td>{empire?.trpFly.toLocaleString()}</td>
+									<td align='right'>{empire?.trpFly.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].trpsea}</td>
-									<td>{empire?.trpSea.toLocaleString()}</td>
+									<td align='right'>{empire?.trpSea.toLocaleString()}</td>
 								</tr>
 								<tr>
 									<td>{eraArray[empire.era].trpwiz}</td>
-									<td>{empire?.trpWiz.toLocaleString()}</td>
+									<td align='right'>{empire?.trpWiz.toLocaleString()}</td>
 								</tr>
 							</tbody>
 						</Table>
