@@ -10,6 +10,8 @@ import { MaxButton, HalfButton } from '../utilities/maxbutton'
 
 // TODO: clear form on submit
 // TODO: fix styling of button, unused land, top alignment, text alignment in cells
+// TODO: build demolish feature
+
 
 export default function Build()
 {

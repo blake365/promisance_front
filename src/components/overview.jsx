@@ -20,6 +20,8 @@ import
 	Legend,
 } from 'recharts'
 
+import { eraArray } from '../config/eras'
+import { raceArray } from '../config/races'
 
 const NetProduced = (props) =>
 {
@@ -102,27 +104,27 @@ export default function Overview()
 
 	const militaryData = [
 		{
-			name: 'footmen',
+			name: eraArray[empire.era].trparm,
 			amount: empire?.trpArm,
 			networth: empire.trpArm * 1,
 		},
 		{
-			name: 'catapults',
+			name: eraArray[empire.era].trplnd,
 			amount: empire?.trpLnd,
 			networth: empire?.trpLnd * 2,
 		},
 		{
-			name: 'zeppelins',
+			name: eraArray[empire.era].trpfly,
 			amount: empire?.trpFly,
 			networth: empire?.trpFly * 4,
 		},
 		{
-			name: 'galleons',
+			name: eraArray[empire.era].trpsea,
 			amount: empire?.trpSea,
 			networth: empire?.trpSea * 6,
 		},
 		{
-			name: 'wizards',
+			name: eraArray[empire.era].trpwiz,
 			amount: empire?.trpWiz,
 			networth: empire?.trpWiz * 2,
 		},
@@ -225,11 +227,9 @@ export default function Overview()
 									<Text>Population:</Text>
 									<Text align='right'>{empire.peasants.toLocaleString()}</Text>
 									<Text>Race:</Text>
-									<Text align='right'>{empire.race}</Text>
+									<Text align='right'>{raceArray[empire.race].name}</Text>
 									<Text>Era:</Text>
-									<Text align='right'>{empire.era}</Text>
-
-
+									<Text align='right'>{eraArray[empire.era].name}</Text>
 								</SimpleGrid>
 
 							</div>

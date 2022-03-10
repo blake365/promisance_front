@@ -31,16 +31,15 @@ export default function MagicCenter()
         initialValues: {
             empireId: empire.id,
             type: 'magic',
-            spell: null,
             number: 0,
         },
 
         validationRules: {
-            turns: (value) => value <= empire.turns && value > 0,
+            number: (value) => value <= Math.floor(empire.turns / 2) && value > 0,
         },
 
         errorMessages: {
-            turns: 'Invalid number of turns',
+            number: "Can't cast spell that many times",
         },
     })
 
@@ -168,7 +167,6 @@ export default function MagicCenter()
                                     { value: 4, label: `Regress to ${prevEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
                                     // { value: 5, label: 'Open Time Gate' },
                                     // { value: 6, label: 'Close Time Gate' },
-
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
@@ -178,7 +176,7 @@ export default function MagicCenter()
                                 defaultValue={0}
                                 stepHoldDelay={500}
                                 stepHoldInterval={100}
-                                max={empire.turns}
+                                max={empire.turns/2} 
                                 {...form.getInputProps('number')}
                             />
 
