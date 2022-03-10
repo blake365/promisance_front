@@ -5,6 +5,11 @@ import Axios from 'axios'
 // 	? { isLoggedIn: true, user }
 // 	: { isLoggedIn: false, user: null }
 
+const initialState = {
+	isLoggedIn: false,
+	user: null,
+}
+
 export const register = createAsyncThunk(
 	'user/register',
 	async (values, thunkAPI) => {
@@ -21,21 +26,18 @@ export const register = createAsyncThunk(
 	}
 )
 
-export const demo = createAsyncThunk(
-	'user/demo',
-	async (thunkAPI) => {
-		try {
-			const res = await Axios.post('/auth/demo')
-			// console.log(res)
-			let data = res.data
-			return { user: data }
-			// redirect to login page
-		} catch (e) {
-			console.log(e)
-			return thunkAPI.rejectWithValue()
-		}
+export const demo = createAsyncThunk('user/demo', async (thunkAPI) => {
+	try {
+		const res = await Axios.post('/auth/demo')
+		// console.log(res)
+		let data = res.data
+		return { user: data }
+		// redirect to login page
+	} catch (e) {
+		console.log(e)
+		return thunkAPI.rejectWithValue()
 	}
-)
+})
 
 export const login = createAsyncThunk(
 	'user/login',
@@ -53,29 +55,31 @@ export const login = createAsyncThunk(
 	}
 )
 
-export const load = createAsyncThunk(
-	'user/load',
-	async  (thunkAPI) => {
-		try {
-			const res = await Axios.get('/auth/me')
-			// console.log(res)
-			let data = res.data
-			return { user: data }
-		} catch (e) {
-			console.log(e)
-			return thunkAPI.rejectWithValue()
-		}
+export const load = createAsyncThunk('user/load', async (thunkAPI) => {
+	try {
+		const res = await Axios.get('/auth/me')
+		// console.log(res)
+		let data = res.data
+		return { user: data }
+	} catch (e) {
+		console.log(e)
+		return thunkAPI.rejectWithValue()
 	}
-)
+})
 
-//TODO: export const logout = createAsyncThunk('user/logout', )
+export const logout = createAsyncThunk('user/logout', async (thunkAPI) => {
+	try {
+		await Axios.get('/auth/logout')
+		return initialState
+	} catch (e) {
+		console.log(e)
+		return thunkAPI.rejectWithValue()
+	}
+})
 
 export const userSlice = createSlice({
 	name: 'user',
-	initialState: {
-		isLoggedIn: false,
-		user: null,
-	},
+	initialState: initialState,
 	reducers: {
 		userLoaded: (state, { payload }) => ({
 			isLoggedIn: true,
@@ -106,6 +110,10 @@ export const userSlice = createSlice({
 			state.user = action.payload.user
 		},
 		[load.rejected]: (state, action) => {
+			state.isLoggedIn = false
+			state.user = null
+		},
+		[logout.fulfilled]: (state, action) => {
 			state.isLoggedIn = false
 			state.user = null
 		},

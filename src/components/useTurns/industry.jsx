@@ -11,6 +11,7 @@ import
 } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import GeneralAction from './generalAction'
@@ -22,6 +23,8 @@ export default function Industry()
 	let errors = {
 		error: '',
 	}
+
+	const [update, setUpdate] = useState()
 
 	const { empire } = useSelector((state) => state.empire)
 
@@ -65,11 +68,13 @@ export default function Industry()
 	const updateIndustry = async (values) =>
 	{
 		try {
-			const res = await Axios.put(`/empire/${empire.uuid}`, values)
-			console.log(res.data)
+			const res = await Axios.post(`/empire/${empire.uuid}/industry`, values)
+			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
+			setUpdate('Success')
 		} catch (error) {
 			console.log(error)
+			setUpdate(error)
 		}
 	}
 
@@ -147,6 +152,7 @@ export default function Industry()
 							)}
 						</Group>
 					</form>
+					<div>{update}</div>
 				</Group>
 			</Center>
 		</main>

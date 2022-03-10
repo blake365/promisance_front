@@ -13,11 +13,15 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
 import { empireLoaded } from '../../store/empireSlice'
+import { useState } from 'react'
+
 
 export default function Cash()
 {
 	const { empire } = useSelector((state) => state.empire)
 	const dispatch = useDispatch()
+
+	const [update, setUpdate] = useState()
 
 	const form = useForm({
 		initialValues: {
@@ -37,11 +41,13 @@ export default function Cash()
 	const updateTax = async (values) =>
 	{
 		try {
-			const res = await Axios.put(`/empire/${empire.uuid}`, values)
-			console.log(res.data)
+			const res = await Axios.post(`/empire/${empire.uuid}/tax`, values)
+			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
+			setUpdate('Success')
 		} catch (error) {
 			console.log(error)
+			setUpdate(error)
 		}
 	}
 
@@ -75,6 +81,7 @@ export default function Cash()
 							<Button type='submit' color='yellow'>Update</Button>
 						</Group>
 					</form>
+					<div>{update}</div>
 				</Group>
 			</Center>
 		</main>
