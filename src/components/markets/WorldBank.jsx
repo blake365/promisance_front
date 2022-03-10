@@ -4,6 +4,7 @@ import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
+import { MaxButton } from '../utilities/maxbutton'
 
 function generalLog(number, base)
 {
@@ -52,7 +53,7 @@ export default function WorldBank()
 
         validationRules: {
             withdrawAmt: (value) => value <= empire.bank && value >= 0,
-            depositAmt: (value) => value <= depositAmount
+            depositAmt: (value) => value <= depositAmount && value >= 0
         },
 
         errorMessages: {
@@ -175,13 +176,9 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={maxSavings - empire.bank}
                                         {...savingsForm.getInputProps('depositAmt')}
-                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
-                                        {
-                                            if (maxSavings - empire.bank > 0) { savingsForm.setFieldValue('depositAmt', maxSavings - empire.bank) }
-                                            else {
-                                                savingsForm.setFieldValue('depositAmt', 0)
+                                        rightSection={
+                                            <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={maxSavings - empire.bank > 0 ? maxSavings - empire.bank : 0} />
                                             }
-                                        }}>M</Button>}
                                     />
                                     <NumberInput
                                         hideControls
@@ -192,13 +189,7 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={empire.bank}
                                         {...savingsForm.getInputProps('withdrawAmt')}
-                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
-                                        {
-                                            if (empire.bank > 0) { savingsForm.setFieldValue('withdrawAmt', empire.bank) }
-                                            else {
-                                                savingsForm.setFieldValue('withdrawAmt', 0)
-                                            }
-                                        }}>M</Button>}
+                                        rightSection={<MaxButton formName={savingsForm} fieldName='withdrawAmt' maxValue={empire.bank} />}
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Group>
@@ -237,13 +228,7 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={empire.loan}
                                         {...loanForm.getInputProps('repayAmt')}
-                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
-                                        {
-                                            if (empire.loan > 0) { loanForm.setFieldValue('repayAmt', empire.loan) }
-                                            else {
-                                                loanForm.setFieldValue('repayAmt', 0)
-                                            }
-                                        }}>M</Button>}
+                                        rightSection={<MaxButton formName={loanForm} fieldName='repayAmt' maxValue={empire.loan} />}
                                     />
                                     <NumberInput
                                         hideControls
@@ -254,11 +239,7 @@ export default function WorldBank()
                                         stepHoldInterval={100}
                                         max={maxLoan}
                                         {...loanForm.getInputProps('loanAmt')}
-                                        rightSection={<Button compact style={{ marginRight: '10px' }} onClick={() =>
-                                        {
-                                            loanForm.setFieldValue('loanAmt', maxLoan)
-
-                                        }}>M</Button>}
+                                        rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={maxLoan} />}
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Group>

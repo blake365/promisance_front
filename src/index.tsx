@@ -16,6 +16,7 @@ import Build from './components/useTurns/build'
 import Meditate from './components/useTurns/meditate'
 import Summary from './components/summary'
 import Overview from './components/overview'
+import ManageEmpire from './components/manageEmpire'
 // import PrivateMarketBuy from './components/markets/PrivateMarketBuy'
 // import PrivateMarketSell from './components/markets/PrivateMarketSell'
 import PrivateMarket from './components/markets/privateMarket'
@@ -36,27 +37,28 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/createEmpire' element={<CreateEmpire />} />
-					<Route path='/app' element={<App />}>
-						<Route path='summary' element={<Summary />} />
-						<Route path='overview' element={<Overview />} />
-						<Route path='scores' element={<Scores />} />
-						<Route path='farm' element={<Farm />} />
-						<Route path='cash' element={<Cash />} />
-						<Route path='explore' element={<Explore />} />
-						<Route path='meditate' element={<Meditate />} />
-						<Route path='industry' element={<Industry />} />
-						<Route path='build' element={<Build />} />
-						<Route path='Black%20Market' element={<PrivateMarket />} />
-						<Route path='World%20Bank' element={<WorldBank />} />
-						<Route path='Magic%20Center' element={<MagicCenter />} />
-					</Route>
-				</Routes>
+				<BrowserRouter>
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/createEmpire' element={<CreateEmpire />} />
+						<Route path='/app' element={<App />}>
+							<Route path='summary' element={<Summary />} />
+							<Route path='overview' element={<Overview />} />
+							<Route path='scores' element={<Scores />} />
+							<Route path='farm' element={<Farm />} />
+							<Route path='cash' element={<Cash />} />
+							<Route path='explore' element={<Explore />} />
+							<Route path='meditate' element={<Meditate />} />
+							<Route path='industry' element={<Industry />} />
+							<Route path='build' element={<Build />} />
+							<Route path='Black%20Market' element={<PrivateMarket />} />
+							<Route path='World%20Bank' element={<WorldBank />} />
+							<Route path='Magic%20Center' element={<MagicCenter />} />
+							<Route path='Manage%20Empire' element={<ManageEmpire />} />
+						</Route>
+					</Routes>
 				</BrowserRouter>
-				</PersistGate>
+			</PersistGate>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

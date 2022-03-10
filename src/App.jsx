@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import
-{ Loader } from '@mantine/core'
+{ ColorSchemeProvider,
+	Group,
+Loader, 
+MantineProvider} from '@mantine/core'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useState } from 'react'
@@ -12,8 +15,8 @@ import
 	MediaQuery,
 	Navbar,
 	Title,
-	useMantineTheme,
 	ScrollArea,
+	Button
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -23,12 +26,13 @@ import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
 import { fetchEmpire } from './store/empireSlice'
-import { load } from './store/userSlice'
+import { load, logout } from './store/userSlice'
+import ThemeToggle from './components/utilities/themeToggle'
+import { useLocalStorageValue } from '@mantine/hooks'
 
 function App()
 {
 	const [opened, setOpened] = useState(false)
-	const theme = useMantineTheme()
 	const dispatch = useDispatch()
 
 	const empireStatus = useSelector(state => state.empire.status)
@@ -63,16 +67,20 @@ function App()
 		}
 	})
 
-	// const clickRef = useClickOutside(() => setOpened(false))
-	// const preferredColorScheme = useColorScheme()
-	// const [colorScheme, setColorScheme] =
-	// 	useState<ColorScheme>(preferredColorScheme)
-	// const toggleColorScheme = (value?: ColorScheme) =>
-	// 	setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+	const [colorScheme, setColorScheme] = useLocalStorageValue({
+		key: 'prom-color-scheme',
+		defaultValue: 'light'
+	});
+  	const toggleColorScheme = (value) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
 	return (
-
-		<AppShell
+		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
+			<AppShell
+			styles={(theme) => ({
+        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1] },
+      })}
 			navbarOffsetBreakpoint='sm'
 			fixed
 			navbar={
@@ -90,43 +98,44 @@ function App()
 					>
 						<Sidebar />
 					</Navbar.Section>
+					<Navbar.Section>
+						<Button
+						onClick={()=>dispatch(logout())}
+						variant='subtle'
+						compact
+						fullWidth
+					>
+						Logout
+					</Button>
+					</Navbar.Section>
 				</Navbar>
 			}
 			header={
 				<Header height={70} padding='md'>
-					{/* Handle other responsive styles with MediaQuery component or createStyles function */}
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							height: '100%',
-							color: 'blue',
-						}}
-					>
+					<Group direction='row' position='apart' spacing='xs'>
 						<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
 							<Burger
 								opened={opened}
 								onClick={() => setOpened((o) => !o)}
 								size='sm'
-								color={theme.colors.red[9]}
-								mr='xl'
 							/>
 						</MediaQuery>
-
 						<Title order={1}>Solo Promisance</Title>
-					</div>
+						<ThemeToggle />
+					</Group>
 				</Header>
 			}
 		>
-			<main style={{ paddingBottom: 15 }}>
+			<main style={{ paddingBottom: 15}}>
 				{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 					<InfoBar data={empire} />
 					<TurnResultContainer />
 					<Outlet />
 				</>)}
-
 			</main>
-		</AppShell>
+				</AppShell>
+				</MantineProvider>
+			</ColorSchemeProvider>
 	)
 }
 

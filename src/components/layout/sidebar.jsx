@@ -1,13 +1,11 @@
 import { Button, Group, Title } from '@mantine/core'
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { logout } from '../../store/userSlice'
-import { useDispatch } from 'react-redux'
+
 
 const Sidebar = () =>
 {
-	// const navigate = useNavigate()
-	const dispatch = useDispatch()
+
 
 	const infolinks = [
 		'Summary',
@@ -40,8 +38,7 @@ const Sidebar = () =>
 	]
 	const managementLinks = [
 		'Manage Empire',
-		'Manage Account',
-		'Delete Account',
+		
 	]
 
 	
@@ -101,7 +98,7 @@ const Sidebar = () =>
 						{link}
 					</Button>
 				))}
-				<Title order={4}>Settings (TODO: all)</Title>
+				<Title order={4}>Settings</Title>
 				{managementLinks.map((link, index) => (
 					<Button
 						component={Link}
@@ -114,15 +111,7 @@ const Sidebar = () =>
 						{link}
 					</Button>
 				))}
-				<Button
-						onClick={()=>dispatch(logout())}
-						variant='subtle'
-						compact
-						fullWidth
-						
-					>
-						Logout
-					</Button>
+				
 			</Group>
 		</Fragment>
 	)

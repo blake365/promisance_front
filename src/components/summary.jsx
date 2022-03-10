@@ -10,7 +10,7 @@ export default function Summary()
 	const { empire } = useSelector((state) => state.empire)
 
 	return (
-		<main>
+		<main style={{ paddingTop: '1rem' }}>
 			<Group direction='column' spacing='sm' align='center' grow>
 				<Title order={1} align='center'>
 					Summary

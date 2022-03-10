@@ -1,4 +1,5 @@
-import { ActionIcon, Button } from "@mantine/core"
+import { ActionIcon } from "@mantine/core"
+import { IconArrowBarToUp } from '@tabler/icons'
 
 export function MaxButton(props)
 {
@@ -6,7 +7,8 @@ export function MaxButton(props)
         <ActionIcon size='md' color='blue' onClick={() =>
         {
             props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue))
-        }}>⏫</ActionIcon>)
+        }}><IconArrowBarToUp /></ActionIcon>)
+    
 }
 
 export function HalfButton(props)
@@ -25,7 +27,7 @@ export function HalfAndAll(props)
             <ActionIcon size='md' color='blue' onClick={() =>
             {
                 props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue))
-            }}>⏫</ActionIcon>
+            }}><IconArrowBarToUp /></ActionIcon>
             <ActionIcon size='md' color='blue' onClick={() =>
             {
                 props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue / 2))

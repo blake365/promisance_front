@@ -142,7 +142,7 @@ export default function Build()
 	}
 
 	return (
-		<main>
+		<main style={{ paddingTop: '1rem' }}>
 			<Center mb={10}>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>

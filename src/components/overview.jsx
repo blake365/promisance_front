@@ -201,7 +201,7 @@ export default function Overview()
 	let foodcon = Math.round(consumption)
 
 	return (
-		<main>
+		<main style={{ paddingTop: '1rem' }}>
 			<Group direction='column' spacing='sm' align='center' grow>
 				<Title order={1} align='center'>
 					Overview

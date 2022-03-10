@@ -19,7 +19,7 @@ export default function PrivateMarketBuy()
     const [result, setResult] = useState(null)
 
     let buyNumberArray = []
-    let totalBuy = 0
+    
     let totalPrice = 0
     let errors = {
         error: '',
@@ -119,9 +119,9 @@ export default function PrivateMarketBuy()
 
     // console.log(spendArray)
 
-    totalBuy = buyNumberArray
-        .filter(Number)
-        .reduce((partialSum, a) => partialSum + a, 0)
+    // totalBuy = buyNumberArray
+    //     .filter(Number)
+    //     .reduce((partialSum, a) => partialSum + a, 0)
     // console.log(totalBuy)
 
     totalPrice = spendArray
@@ -214,7 +214,7 @@ export default function PrivateMarketBuy()
                                         ${trpArmCost}
                                     </Text>
                                     <Text align='center'>
-                                        {availArray[0]}
+                                        {availArray[0].toLocaleString()}
                                     </Text>
                                     <NumberInput
                                         hideControls
@@ -238,7 +238,7 @@ export default function PrivateMarketBuy()
                                         ${trpLndCost}
                                     </Text>
                                     <Text align='center'>
-                                        {availArray[1]}
+                                        {availArray[1].toLocaleString()}
                                     </Text>
                                     <NumberInput
                                         hideControls
@@ -262,7 +262,7 @@ export default function PrivateMarketBuy()
                                         ${trpFlyCost}
                                     </Text>
                                     <Text align='center'>
-                                        {availArray[2]}
+                                        {availArray[2].toLocaleString()}
                                     </Text>
                                     <NumberInput
                                         hideControls
@@ -286,7 +286,7 @@ export default function PrivateMarketBuy()
                                         ${trpSeaCost}
                                     </Text>
                                     <Text align='center'>
-                                        {availArray[3]}
+                                        {availArray[3].toLocaleString()}
                                     </Text>
                                     <NumberInput
                                         hideControls
@@ -310,7 +310,7 @@ export default function PrivateMarketBuy()
                                         ${PVTM_FOOD}
                                     </Text>
                                     <Text align='center'>
-                                        {availArray[4]}
+                                        {availArray[4].toLocaleString()}
                                     </Text>
                                     <NumberInput
                                         hideControls

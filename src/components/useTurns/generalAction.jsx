@@ -6,6 +6,7 @@ import
 	NumberInput,
 	Button,
 	Checkbox,
+	Text,
 } from '@mantine/core'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
@@ -66,12 +67,12 @@ export default function GeneralAction(props)
 					<Title order={1} align='center'>
 						{props.title}
 					</Title>
-					{props.explore ? (<div>
+					{props.explore ? (<Text>
 						For each turn you spend {props.flavor}, your empire will grow by {props.explore} {props.item}.
-					</div>) : (<div>
+					</Text>) : (<Text>
 						For each turn you spend {props.flavor}, your empire produces 25%
 						more {props.item}.
-					</div>)}
+					</Text>)}
 					<form onSubmit={form.onSubmit((values) =>
 					{
 						dispatch(clearResult)

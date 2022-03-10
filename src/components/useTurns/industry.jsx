@@ -83,7 +83,6 @@ export default function Industry()
 		<main style={{ paddingBottom: '1rem' }}>
 			<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
 				item='troops' color='red' empire={empire} />
-
 			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
 			<Center mt={5}>
 				<Group direction='column' spacing='sm' align='center'>
