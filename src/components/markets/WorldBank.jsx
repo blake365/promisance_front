@@ -35,8 +35,8 @@ export default function WorldBank()
     }
 
     const size = calcSizeBonus(empire.networth)
-    const loanRate = 7.5 + size
-    const savingRate = 4 + size
+    const loanRate = (7.5 + size)/ 100
+    const savingRate = (4 + size) / 100
     const maxLoan = empire.networth * 50
     const maxSavings = empire.networth * 100
 
@@ -152,7 +152,7 @@ export default function WorldBank()
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Interest Rate:</Text>
-                                <Text align='right'>{savingRate}%</Text>
+                                <Text align='right'>{savingRate*100}%</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Est. Interest Gain:</Text>
@@ -207,7 +207,7 @@ export default function WorldBank()
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Interest Rate: </Text>
-                                <Text align='right'>{loanRate}%</Text>
+                                <Text align='right'>{loanRate*100}%</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Est. Interest Cost:</Text>

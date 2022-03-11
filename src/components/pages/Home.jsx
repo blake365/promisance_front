@@ -38,7 +38,7 @@ export default function Home()
     const form = useForm({
         initialValues: {
             name: '',
-            race: null,
+            
         },
 
         validationRules: {
@@ -73,6 +73,7 @@ export default function Home()
                                 console.log(values)
                                 dispatch(create(values))
                                 setOpened(false)
+                                navigate('/app/Summary')
                             })}
                         >
                             <Group direction='column' spacing='sm' align='center'>

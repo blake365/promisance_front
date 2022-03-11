@@ -7,6 +7,7 @@ import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
 import { MaxButton, HalfButton } from '../utilities/maxbutton'
+import { BUILD_COST } from '../../config/config'
 
 // TODO: clear form on submit
 // TODO: fix styling of button, unused land, top alignment, text alignment in cells
@@ -26,7 +27,7 @@ export default function Build()
 
 	const getBuildAmounts = (empire) =>
 	{
-		let buildCost = Math.round(3500 + empire.land * 0.1)
+		let buildCost = Math.round(BUILD_COST + empire.land * 0.1)
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
 		buildRate = Math.round((100 + raceArray[empire.race].mod_buildrate) / 100 * buildRate)

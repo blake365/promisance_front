@@ -66,9 +66,9 @@ export default function TurnResultCard({ data })
 			</Card>) :
 				(<div style={{ margin: 'auto', marginTop: '1rem' }}>
 					<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
-						backgroundColor: theme.colors.gray[1],
+						backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
 						'&:hover': {
-							backgroundColor: theme.colors.gray[2],
+							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 						},
 					})}>
 						{data.cast && spellResult(data.cast)}
