@@ -8,6 +8,7 @@ import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
 import { MaxButton, HalfButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
+import { Link } from 'react-router-dom'
 
 // TODO: clear form on submit
 // TODO: fix styling of button, unused land, top alignment, text alignment in cells
@@ -173,6 +174,7 @@ export default function Build()
 								: setErrors("Can't build that many buildings")
 						}
 					>
+						<Group direction='column' spacing='sm' align='center'>
 						<Table verticalSpacing='xs' striped>
 							<thead>
 								<tr>
@@ -313,7 +315,7 @@ export default function Build()
 								</tr> */}
 								<tr>
 									<td>Unused Land</td>
-									<td>{empire.freeLand.toLocaleString()}</td>
+									<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>
 								</tr>
 							</tbody>
 						</Table>
@@ -326,8 +328,10 @@ export default function Build()
 							<Button color='black' type='submit'>
 								Begin Construction
 							</Button>
-						)}
+							)}
+						</Group>
 					</form>
+					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{marginTop: '1rem'}}>Demolish Buildings</Button>
 				</Group>
 			</Center>
 		</main>

@@ -29,6 +29,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import WorldBank from './components/markets/WorldBank'
 import MagicCenter from './components/useTurns/magiccenter'
 import Scores from './components/scores'
+import Demolish from './components/useTurns/demolish'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -51,6 +52,7 @@ ReactDOM.render(
 							<Route path='meditate' element={<Meditate />} />
 							<Route path='industry' element={<Industry />} />
 							<Route path='build' element={<Build />} />
+							<Route path='demolish' element={<Demolish />} />
 							<Route path='Black%20Market' element={<PrivateMarket />} />
 							<Route path='World%20Bank' element={<WorldBank />} />
 							<Route path='Magic%20Center' element={<MagicCenter />} />
