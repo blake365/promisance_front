@@ -41,7 +41,7 @@ const NetProduced = (props) =>
 	)
 }
 
-
+// TODO: finish overview page
 export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
@@ -201,7 +201,7 @@ export default function Overview()
 	let foodcon = Math.round(consumption)
 
 	return (
-		<main style={{ paddingTop: '1rem' }}>
+		<main>
 			<Group direction='column' spacing='sm' align='center' grow>
 				<Title order={1} align='center'>
 					Overview

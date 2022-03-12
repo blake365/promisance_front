@@ -3,19 +3,17 @@ import Login from '../layout/Login'
 import Signup from '../layout/Signup'
 
 import { useForm } from '@mantine/hooks'
-
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { demo } from '../../store/userSlice'
 import { create } from '../../store/empireSlice'
 
-
+// TODO: form validation
 export default function Home()
 {
 
     const [opened, setOpened] = useState(false);
-
 
     const dispatch = useDispatch()
 
@@ -26,7 +24,8 @@ export default function Home()
 
     useEffect(() =>
     {
-        if (isLoggedIn && !user.empires) {
+        // console.log(user.empires)
+        if (isLoggedIn && user.empires.length === 0) {
             setOpened(true)
         } else if (isLoggedIn && user.empires.length > 0) {
             // dispatch(empireLoaded(user.empires[0]))
@@ -38,7 +37,6 @@ export default function Home()
     const form = useForm({
         initialValues: {
             name: '',
-            
         },
 
         validationRules: {

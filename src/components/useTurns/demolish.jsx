@@ -180,7 +180,7 @@ export default function Demolish()
 	}
 
 	return (
-		<main style={{ paddingTop: '1rem' }}>
+		<main>
 			<Center mb={10}>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>

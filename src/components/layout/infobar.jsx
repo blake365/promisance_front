@@ -2,10 +2,10 @@ import { Paper, SimpleGrid, Text } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 
 
-export default function InfoBar({ data })
+export default function InfoBar({data})
 {
 	// console.log(data.empire)
-	const empire = data.empire
+	const empire = data
 	return (
 		<Paper padding='xs' shadow='xs' radius='xs' withBorder>
 			<SimpleGrid

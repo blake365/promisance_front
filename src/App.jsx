@@ -25,7 +25,7 @@ import './App.css'
 import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
-import { fetchEmpire } from './store/empireSlice'
+import { fetchEmpire, empireLoaded } from './store/empireSlice'
 import { load, logout } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
 import { useLocalStorageValue } from '@mantine/hooks'
@@ -38,10 +38,22 @@ function App()
 	const empireStatus = useSelector(state => state.empire.status)
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-	const empire = useSelector((state) => state.empire)
+	// const empire = useSelector((state) => state.empire)
+	const { empire } = useSelector((state) => state.empire)
+	// console.log(empire)
 
 	const navigate = useNavigate()
 	// console.log(empire)
+	const loadEmpireTest = async () =>
+	{
+		try {
+			const res = await Axios.get(`/empire/${empire.uuid}`)
+			// console.log(res.data)
+			dispatch(empireLoaded(res.data))
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	useEffect(() =>
 	{
@@ -101,8 +113,9 @@ function App()
 					<Navbar.Section>
 						<Button
 						onClick={()=>dispatch(logout())}
-						variant='subtle'
-						compact
+							variant='subtle'
+							color='red'
+						
 						fullWidth
 					>
 						Logout
@@ -129,13 +142,17 @@ function App()
 			<main style={{ paddingBottom: 15}}>
 				{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 					<InfoBar data={empire} />
+					<Group spacing='sm' position='center' sx={{marginTop: '0.5rem', marginBottom: '0.25rem'}}>
+						<Button compact variant='light'>Game Guide</Button>
+						<Button compact variant='light' onClick={()=>{loadEmpireTest()}} >Refresh</Button>
+					</Group>
 					<TurnResultContainer />
 					<Outlet />
 				</>)}
 			</main>
-				</AppShell>
-				</MantineProvider>
-			</ColorSchemeProvider>
+		</AppShell>
+		</MantineProvider>
+	</ColorSchemeProvider>
 	)
 }
 

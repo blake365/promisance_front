@@ -42,7 +42,6 @@ export default function GeneralAction(props)
 		try {
 			const res = await Axios.get(`/empire/${props.empire.uuid}`)
 			// console.log(res.data)
-
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
 			console.log(error)
@@ -61,7 +60,7 @@ export default function GeneralAction(props)
 	}
 
 	return (
-		<section style={{ paddingTop: '1rem' }}>
+		<section>
 			<Center>
 				<Group direction='column' spacing='sm' align='center'>
 					<Title order={1} align='center'>

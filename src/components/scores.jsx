@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
 
+// TODO: finish scores page
 export default function Scores()
 {
     // get scores
@@ -42,7 +43,7 @@ export default function Scores()
     }
 
     return (
-        <main style={{ paddingTop: '1rem' }}>
+        <main>
             <Group direction='column' spacing='sm' align='center' grow>
                 <Title order={1} align='center'>
                     Scores

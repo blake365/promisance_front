@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () =>
 {
-
-
 	const infolinks = [
 		'Summary',
 		'Overview',
@@ -38,21 +36,20 @@ const Sidebar = () =>
 	]
 	const managementLinks = [
 		'Manage Empire',
-		
 	]
 
 	
 
 	return (
 		<Fragment>
-			<Group direction='column' spacing='xs'>
+			<Group direction='column' spacing='xs' sx={{marginBottom: '1rem'}}>
 				<Title order={4}>Information</Title>
 				{infolinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						compact
+						
 						fullWidth
 						key={index}
 					>
@@ -65,7 +62,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						compact
+						
 						fullWidth
 						key={index}
 					>
@@ -78,7 +75,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						compact
+						
 						fullWidth
 						key={index}
 					>
@@ -91,7 +88,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						compact
+						
 						fullWidth
 						key={index}
 					>
@@ -104,7 +101,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						compact
+						
 						fullWidth
 						key={index}
 					>

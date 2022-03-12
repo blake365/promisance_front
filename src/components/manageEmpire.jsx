@@ -4,6 +4,9 @@ import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 
+// TODO: create polymorph feature
+// TODO: build page
+
 export default function ManageEmpire()
 {
 	const { empire } = useSelector((state) => state.empire)

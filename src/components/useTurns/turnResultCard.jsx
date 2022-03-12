@@ -53,7 +53,7 @@ const spellResult = (result) =>
 
 export default function TurnResultCard({ data })
 {
-	console.log(data)
+	// console.log(data)
 	return (
 		<>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
