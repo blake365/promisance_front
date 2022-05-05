@@ -6,14 +6,14 @@ and compete to become the largest in the land.
 This project is intended to be used with my typescript promisance back end which is also a work in progress. 
 
 top todos:
-black market
-world bank
-magic center
-finish overview page
-demolish buildings
-scores page
+<!-- fix account creation -->
+game guide
+bank deposit glitch
+overview page improvements
+scores page improvements
 empire settings / management
-dark mode/themes
+update to most recent version of Mantine
+themes
 
 
 ## Available Scripts

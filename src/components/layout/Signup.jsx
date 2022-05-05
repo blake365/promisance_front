@@ -14,6 +14,7 @@ export default function Signup()
 			email: '',
 			username: '',
 			password: '',
+
 		},
 
 		validationRules: {
@@ -61,6 +62,7 @@ export default function Signup()
 								required
 								{...form.getInputProps('password')}
 							/>
+							
 							<Button type='submit'>Sign Up</Button>
 						</Group>
 					</form>

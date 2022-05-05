@@ -77,6 +77,8 @@ function App()
 		if (isLoggedIn && empireStatus === 'idle') {
 			dispatch(fetchEmpire(user.empires[0].uuid))
 		}
+
+		
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorageValue({
