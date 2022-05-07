@@ -3,7 +3,8 @@ import
 { ColorSchemeProvider,
 	Group,
 Loader, 
-MantineProvider} from '@mantine/core'
+MantineProvider,
+Modal} from '@mantine/core'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useState } from 'react'
@@ -29,11 +30,20 @@ import { fetchEmpire, empireLoaded } from './store/empireSlice'
 import { load, logout } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
 import { useLocalStorageValue } from '@mantine/hooks'
+import { useLocation } from 'react-router-dom'
+import { setPage } from './store/guideSlice'
+
+
+import Guide from './components/guide/guide'
 
 function App()
 {
 	const [opened, setOpened] = useState(false)
 	const dispatch = useDispatch()
+	const [modalOpened, setModalOpened] = useState(false);
+
+	let location = useLocation()
+    console.log(location)
 
 	const empireStatus = useSelector(state => state.empire.status)
 
@@ -77,9 +87,16 @@ function App()
 		if (isLoggedIn && empireStatus === 'idle') {
 			dispatch(fetchEmpire(user.empires[0].uuid))
 		}
-
-		
 	})
+
+	let locationArr = location.pathname.split('/')
+    let last = locationArr.length - 1
+    let pageState = locationArr[last]
+
+	useEffect(() =>
+	{
+		dispatch(setPage(pageState))
+	}, [navigate])
 
 	const [colorScheme, setColorScheme] = useLocalStorageValue({
 		key: 'prom-color-scheme',
@@ -143,9 +160,19 @@ function App()
 		>
 			<main style={{ paddingBottom: 15}}>
 				{empireStatus !== 'succeeded' ? (<Loader />) : (<>
-					<InfoBar data={empire} />
+							<InfoBar data={empire} />
+							<Modal
+								opened={modalOpened}
+								onClose={() => setModalOpened(false)}
+								title='Game Guide'
+								centered
+								overflow="inside"
+								size="xl"
+							>
+								<Guide empire={empire}/>
+							</Modal>	
 					<Group spacing='sm' position='center' sx={{marginTop: '0.5rem', marginBottom: '0.25rem'}}>
-						<Button compact variant='light'>Game Guide</Button>
+						<Button compact variant='light' onClick={()=>{setModalOpened(true)}}>Game Guide</Button>
 						<Button compact variant='light' onClick={()=>{loadEmpireTest()}} >Refresh</Button>
 					</Group>
 					<TurnResultContainer />
