@@ -1,46 +1,42 @@
-import { Center, Group, Title,  } from "@mantine/core";
-import { useCallback, useState } from "react";
-import { useLocation } from 'react-router-dom';
 import ExploreGuide from "./guidepages/explore";
 import SummaryGuide from "./guidepages/summary";
 import { useSelector } from "react-redux";
+import OverviewGuide from "./guidepages/overview";
+import ScoresGuide from "./guidepages/scores";
+import BuildGuide from "./guidepages/build";
+import DemolishGuide from "./guidepages/demolish";
+import FarmGuide from "./guidepages/farm";
+import CashGuide from "./guidepages/cash";
+import IndustryGuide from "./guidepages/industry";
+import MeditateGuide from "./guidepages/meditate";
 
 export default function Guide(props)
 {
 
-    // let location = useLocation()
-    // // console.log(location)
-
-    // let locationArr = location.pathname.split('/')
-    // let last = locationArr.length - 1
-    // let pageState = locationArr[last]
-    // console.log(pageState)
-
-    // const [page, setPage] = useState(pageState)
-
-    // const callback = useCallback((page) =>
-    // {
-    //     setPage(page)
-    // }, [])
-
-    // console.log(page)
-
     let {guidePage} = useSelector((state) => state.guide)
-    console.log(guidePage)
+    // console.log(guidePage)
 
     switch (guidePage) {
         case 'Summary':
             return <SummaryGuide empire={props.empire} />
         case 'Overview':
+            return <OverviewGuide empire={props.empire} />
         case 'Scores':
+            return <ScoresGuide />
         case 'Explore':
             return <ExploreGuide />
         case 'Build':
-            // return <BuildGuide parentCallback={callback} />
+            return <BuildGuide />
+        case 'demolish':
+            return <DemolishGuide />
         case 'Farm':
+            return <FarmGuide empire={props.empire} />
         case 'Cash':
+            return <CashGuide />
         case 'Industry':
+            return <IndustryGuide />
         case 'Meditate':
+            return <MeditateGuide empire={props.empire} />
         case 'Black%20Market':
         case 'World%20Bank':
         case 'Magic%20Center':

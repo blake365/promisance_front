@@ -43,7 +43,7 @@ function App()
 	const [modalOpened, setModalOpened] = useState(false);
 
 	let location = useLocation()
-    console.log(location)
+    // console.log(location)
 
 	const empireStatus = useSelector(state => state.empire.status)
 
@@ -96,7 +96,7 @@ function App()
 	useEffect(() =>
 	{
 		dispatch(setPage(pageState))
-	}, [navigate])
+	})
 
 	const [colorScheme, setColorScheme] = useLocalStorageValue({
 		key: 'prom-color-scheme',
