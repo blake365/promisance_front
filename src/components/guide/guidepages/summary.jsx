@@ -13,8 +13,7 @@ export default function SummaryGuide({ empire })
     <dt>Turns</dt>
         <dd>The number of turns you currently have available to use (and the maximum you are allowed to accumulate).</dd>
     <dt>Stored Turns</dt>
-                <dd>The number of turns you have stored in reserve (and the maximum allowed). See the 
-                    <GuideLink page='Introduction' text='Introduction' /> for more information.</dd>
+                <dd>The number of turns you have stored in reserve (and the maximum allowed). See the <GuideLink page='Introduction' text='Introduction' /> for more information.</dd>
     <dt>Rank</dt>
         <dd>Your empire's current rank among all other empires, based on its networth.</dd>
     <dt>{eraArray[empire.era].peasants}</dt>

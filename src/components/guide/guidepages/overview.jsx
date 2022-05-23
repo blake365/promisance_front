@@ -20,7 +20,7 @@ export default function OverviewGuide({empire})
     <dt>Population</dt>
         <dd>This is the number of {eraArray[empire.era].peasants} that live in your empire.  {eraArray[empire.era].peasants} are necessary for making money to finance your empire.</dd>
     <dt>Race</dt>
-        <dd>The <GuideLink text='race' page='Races' /> of your empire's inhabitants.</dd>
+        <dd>The <GuideLink text='Race' page='Race' /> of your empire's inhabitants.</dd>
     <dt>Era</dt>
         <dd>The <GuideLink text='Time Period' page='Eras' /> during which your empire exists.</dd>
 </dl>

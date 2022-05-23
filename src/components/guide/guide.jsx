@@ -9,6 +9,8 @@ import FarmGuide from "./guidepages/farm";
 import CashGuide from "./guidepages/cash";
 import IndustryGuide from "./guidepages/industry";
 import MeditateGuide from "./guidepages/meditate";
+import IntroGuide from "./guidepages/introduction";
+import RaceGuide from "./guidepages/race";
 
 export default function Guide(props)
 {
@@ -37,6 +39,10 @@ export default function Guide(props)
             return <IndustryGuide />
         case 'Meditate':
             return <MeditateGuide empire={props.empire} />
+        case 'Introduction':
+            return <IntroGuide empire={props.empire} />
+        case 'Race':
+            return <RaceGuide empire={props.empire} />
         case 'Black%20Market':
         case 'World%20Bank':
         case 'Magic%20Center':
