@@ -11,11 +11,18 @@ import IndustryGuide from "./guidepages/industry";
 import MeditateGuide from "./guidepages/meditate";
 import IntroGuide from "./guidepages/introduction";
 import RaceGuide from "./guidepages/race";
+import EraGuide from "./guidepages/eras";
+import MilitaryGuide from "./guidepages/military";
+import BuildingsGuide from "./guidepages/buildings";
+import BlackMarketGuide from "./guidepages/blackMarket";
+import WorldBankGuide from "./guidepages/worldBank";
+import MagicCenterGuide from "./guidepages/magicCenter";
+import GuideIndex from "./guidepages/guideIndex";
 
 export default function Guide(props)
 {
 
-    let {guidePage} = useSelector((state) => state.guide)
+    let { guidePage } = useSelector((state) => state.guide)
     // console.log(guidePage)
 
     switch (guidePage) {
@@ -43,19 +50,22 @@ export default function Guide(props)
             return <IntroGuide empire={props.empire} />
         case 'Race':
             return <RaceGuide empire={props.empire} />
+        case 'Era':
+            return <EraGuide empire={props.empire} />
+        case 'Military':
+            return <MilitaryGuide empire={props.empire} />
+        case 'Buildings':
+            return <BuildingsGuide empire={props.empire} />
         case 'Black%20Market':
+            return <BlackMarketGuide empire={props.empire} />
         case 'World%20Bank':
+            return <WorldBankGuide />
         case 'Magic%20Center':
+            return <MagicCenterGuide empire={props.empire} />
         case 'Manage%20Empire':
-        default: 
-            return (<div>Nothing yet</div>)
+        case 'Index':
+            return <GuideIndex />
+        default:
+            return <GuideIndex />
     }
-
-
-    // return (
-        
-    //         <ExploreGuide parentCallback={callback}/>
-        
-
-    // )
 }

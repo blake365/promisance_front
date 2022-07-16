@@ -1,12 +1,51 @@
+import { Table } from "@mantine/core"
 import { eraArray } from "../../../config/eras"
+import GuideLink from "../../utilities/guidelink"
 
-export default function FarmGuide({empire})
+import '../guide.css'
+
+export default function EraGuide({ empire })
 {
     return (
-    <div>
-        <h2>Agriculture Focus</h2>
-<p>Here you may choose to spend time with extra focus placed on producing {eraArray[empire.era].food} to sustain your citizens and military.</p>
-<p>While spending turns here, your empire's gross production of {eraArray[empire.era].food} will increase by 25%.</p>
-    </div>
+        <div>
+            <GuideLink text='Return to Index' page='Index' />
+
+            <h2>Time Periods</h2>
+            <p>Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open Time Gate.</p>
+            <p>The offensive and defensive power of <GuideLink page='Military' text='military units' /> varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:</p>
+            <dl>
+                <dt>Industry</dt>
+                <dd>Your ability to produce military units.</dd>
+                <dt>Energy</dt>
+                <dd>The rate at which your {eraArray[empire.era].trpwiz} produce {eraArray[empire.era].runes}.</dd>
+                <dt>Exploration</dt>
+                <dd>How much land you gain per turn spent <GuideLink page='Explore' text='exploring' />.</dd>
+            </dl>
+            <div className="guideTable">
+                <Table highlightOnHover striped style={{ width: 400 }}>
+                    <thead>
+                        <tr><th>Era</th>
+                            <th>Industry</th>
+                            <th>Energy</th>
+                            <th>Exploration</th></tr>
+                    </thead>
+                    <tbody>
+                        {eraArray.map(era => 
+                        {
+                            return (
+                                <tr>
+                                    <td>{era.name}</td>
+                                    <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
+
+                                    <td style={era.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_runepro}%</td>
+
+                                    <td style={era.mod_explore >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_explore}%</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
+        </div>
     )
 }

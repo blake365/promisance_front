@@ -7,7 +7,7 @@ export default function InfoBar({data})
 	// console.log(data.empire)
 	const empire = data
 	return (
-		<Paper padding='xs' shadow='xs' radius='xs' withBorder>
+		<Paper padding='xs' shadow='xs' radius='xs' withBorder >
 			<SimpleGrid
 				cols={6}
 				spacing='xs'
@@ -17,37 +17,37 @@ export default function InfoBar({data})
 				]}
 			>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						Turns:
 					</Text>
 					<Text align='center'>{empire.turns}</Text>
 				</div>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						Land:
 					</Text>{' '}
 					<Text align='center'>{empire.land.toLocaleString()}</Text>
 				</div>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						Money:
 					</Text>{' '}
 					<Text align='center'>${empire.cash.toLocaleString()}</Text>
 				</div>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						{eraArray[empire.era].food}:
 					</Text>{' '}
 					<Text align='center'>{empire.food.toLocaleString()}</Text>
 				</div>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						{eraArray[empire.era].runes}:
 					</Text>{' '}
 					<Text align='center'>{empire.runes.toLocaleString()}</Text>
 				</div>
 				<div>
-					<Text weight='bold' align='center'>
+					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
 						Networth:
 					</Text>{' '}
 					<Text align='center'>${empire.networth.toLocaleString()}</Text>

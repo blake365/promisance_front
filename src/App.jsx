@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import
-{ ColorSchemeProvider,
+{
+	ColorSchemeProvider,
 	Group,
-Loader, 
-MantineProvider,
-Modal} from '@mantine/core'
+	Loader,
+	MantineProvider,
+	Modal
+} from '@mantine/core'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useState } from 'react'
@@ -43,7 +45,7 @@ function App()
 	const [modalOpened, setModalOpened] = useState(false);
 
 	let location = useLocation()
-    // console.log(location)
+	// console.log(location)
 
 	const empireStatus = useSelector(state => state.empire.status)
 
@@ -90,8 +92,8 @@ function App()
 	})
 
 	let locationArr = location.pathname.split('/')
-    let last = locationArr.length - 1
-    let pageState = locationArr[last]
+	let last = locationArr.length - 1
+	let pageState = locationArr[last]
 
 	useEffect(() =>
 	{
@@ -102,64 +104,64 @@ function App()
 		key: 'prom-color-scheme',
 		defaultValue: 'light'
 	});
-  	const toggleColorScheme = (value) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+	const toggleColorScheme = (value) =>
+		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-			<AppShell
-			styles={(theme) => ({
-        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1] },
-      })}
-			navbarOffsetBreakpoint='sm'
-			fixed
-			navbar={
-				<Navbar
-					padding='sm'
-					hiddenBreakpoint='sm'
-					hidden={!opened}
-					width={{ sm: 200 }}
+				<AppShell
+					styles={(theme) => ({
+						main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1] },
+					})}
+					navbarOffsetBreakpoint='sm'
+					fixed
+					navbar={
+						<Navbar
+							padding='sm'
+							hiddenBreakpoint='sm'
+							hidden={!opened}
+							width={{ sm: 200 }}
+						>
+							<Navbar.Section
+								grow
+								component={ScrollArea}
+								ml={10}
+								onClick={() => setOpened(false)}
+							>
+								<Sidebar />
+							</Navbar.Section>
+							<Navbar.Section>
+								<Button
+									onClick={() => dispatch(logout())}
+									variant='subtle'
+									color='red'
+
+									fullWidth
+								>
+									Logout
+								</Button>
+							</Navbar.Section>
+						</Navbar>
+					}
+					header={
+						<Header height={70} padding='md'>
+							<Group direction='row' position='apart' spacing='xs'>
+								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+									<Burger
+										opened={opened}
+										onClick={() => setOpened((o) => !o)}
+										size='sm'
+									/>
+								</MediaQuery>
+								<Title order={1}>Solo Promisance</Title>
+								<ThemeToggle />
+							</Group>
+						</Header>
+					}
 				>
-					<Navbar.Section
-						grow
-						component={ScrollArea}
-						ml={10}
-						onClick={() => setOpened(false)}
-					>
-						<Sidebar />
-					</Navbar.Section>
-					<Navbar.Section>
-						<Button
-						onClick={()=>dispatch(logout())}
-							variant='subtle'
-							color='red'
-						
-						fullWidth
-					>
-						Logout
-					</Button>
-					</Navbar.Section>
-				</Navbar>
-			}
-			header={
-				<Header height={70} padding='md'>
-					<Group direction='row' position='apart' spacing='xs'>
-						<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-							<Burger
-								opened={opened}
-								onClick={() => setOpened((o) => !o)}
-								size='sm'
-							/>
-						</MediaQuery>
-						<Title order={1}>Solo Promisance</Title>
-						<ThemeToggle />
-					</Group>
-				</Header>
-			}
-		>
-			<main style={{ paddingBottom: 15}}>
-				{empireStatus !== 'succeeded' ? (<Loader />) : (<>
+					<main style={{ paddingBottom: 15 }}>
+						{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 							<InfoBar data={empire} />
 							<Modal
 								opened={modalOpened}
@@ -168,20 +170,21 @@ function App()
 								centered
 								overflow="inside"
 								size="xl"
+
 							>
-								<Guide empire={empire}/>
-							</Modal>	
-					<Group spacing='sm' position='center' sx={{marginTop: '0.5rem', marginBottom: '0.25rem'}}>
-						<Button compact variant='light' onClick={()=>{setModalOpened(true)}}>Game Guide</Button>
-						<Button compact variant='light' onClick={()=>{loadEmpireTest()}} >Refresh</Button>
-					</Group>
-					<TurnResultContainer />
-					<Outlet />
-				</>)}
-			</main>
-		</AppShell>
-		</MantineProvider>
-	</ColorSchemeProvider>
+								<Guide empire={empire} />
+							</Modal>
+							<Group spacing='sm' position='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
+								<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
+								<Button compact variant='light' onClick={() => { loadEmpireTest() }} >Refresh</Button>
+							</Group>
+							<TurnResultContainer />
+							<Outlet />
+						</>)}
+					</main>
+				</AppShell>
+			</MantineProvider>
+		</ColorSchemeProvider>
 	)
 }
 
