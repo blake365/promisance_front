@@ -1,14 +1,12 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Table } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
 import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
-import { myItemsLoaded } from '../../store/pubMarketSlice'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 
 // TODO: make it mobile friendly
@@ -21,13 +19,14 @@ export default function PublicMarketSell({ empire })
     // add db entry with type, number, price, empireID, time to Market table
     // deduct items from selling empire
     // show items for sale for current empire
+
     const dispatch = useDispatch()
-    const [result, setResult] = useState(null)
+    // const [result, setResult] = useState(null)
 
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
 
-    console.log(myItems)
+    // console.log(myItems)
 
     const getCost = (emp, base) =>
     {
@@ -143,7 +142,7 @@ export default function PublicMarketSell({ empire })
         try {
             const res = await Axios.post('/market/pubSell', values)
             dispatch(fetchMyItems())
-            setResult(res.data)
+            // setResult(res.data)
             // console.log(values)
             loadEmpireTest()
         } catch (error) {
@@ -151,7 +150,36 @@ export default function PublicMarketSell({ empire })
         }
     }
 
-    console.log(result)
+    // console.log(result)
+
+    let now = new Date()
+    // console.log(now.getTime())
+
+    let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food]
+
+    function truncate(value, precision)
+    {
+        var step = Math.pow(10, precision || 0);
+        var temp = Math.trunc(step * value);
+
+        return temp / step;
+    }
+
+    const myItemsRows = myItems.map((element) =>
+    {
+        let createdAt = new Date(element.createdAt)
+        createdAt = createdAt.getTime()
+        let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
+        return (
+            <tr tr key={element.id}>
+
+                <td>{unitArray[element.type]}</td>
+                <td>{element.amount}</td>
+                <td>${element.price.toLocaleString()}</td>
+                <td>{hoursOnMarket}</td>
+            </tr>
+        )
+    });
 
 
     return (
@@ -222,8 +250,8 @@ export default function PublicMarketSell({ empire })
                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                         formatter={(value) =>
                                             !Number.isNaN(parseFloat(value))
-                                                ? ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                : ' '
+                                                ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
                                         }
                                     />
                                 </Group>
@@ -261,8 +289,8 @@ export default function PublicMarketSell({ empire })
                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                         formatter={(value) =>
                                             !Number.isNaN(parseFloat(value))
-                                                ? ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                : ' '
+                                                ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
                                         }
                                     />
                                 </Group>
@@ -300,8 +328,8 @@ export default function PublicMarketSell({ empire })
                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                         formatter={(value) =>
                                             !Number.isNaN(parseFloat(value))
-                                                ? ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                : ' '
+                                                ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
                                         }
                                     />
                                 </Group>
@@ -339,8 +367,8 @@ export default function PublicMarketSell({ empire })
                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                         formatter={(value) =>
                                             !Number.isNaN(parseFloat(value))
-                                                ? ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                : ' '
+                                                ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
                                         }
                                     />
                                 </Group>
@@ -379,8 +407,8 @@ export default function PublicMarketSell({ empire })
                                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                         formatter={(value) =>
                                             !Number.isNaN(parseFloat(value))
-                                                ? ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                : ' '
+                                                ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
                                         }
                                     />
                                 </Group>
@@ -388,7 +416,17 @@ export default function PublicMarketSell({ empire })
                             <Button type='submit'> Sell Goods </Button>
                         </Group>
                     </form>
-
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Unit</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Hours On Market</th>
+                            </tr>
+                        </thead>
+                        <tbody>{myItemsRows}</tbody>
+                    </Table>
                 </Group>
 
             </Center>

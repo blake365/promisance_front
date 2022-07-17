@@ -3,11 +3,11 @@ import Axios from 'axios'
 
 export const fetchMyItems = createAsyncThunk(
 	'market/myItems',
-	async (thunkAPI) => {
+	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.get('/market/pubSellMine')
-			console.log(res)
+			const res = await Axios.post('/market/pubSellMine', values)
+			// console.log(res)
 			let data = res.data
 			return data
 		} catch (e) {
@@ -19,12 +19,12 @@ export const fetchMyItems = createAsyncThunk(
 
 export const fetchOtherItems = createAsyncThunk(
 	'market/otherItems',
-	async (thunkAPI) => {
+	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.get('/market/pubSellOthers')
+			const res = await Axios.post('/market/pubSellOthers', values)
 			let data = res.data
-			console.log(data)
+			// console.log(data)
 			return data
 		} catch (e) {
 			console.log(e)

@@ -96,10 +96,16 @@ function App()
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
 
+
+
 	useEffect(() =>
 	{
 		dispatch(setPage(pageState))
-		dispatch(fetchMyItems())
+		if (empire) {
+			let marketValues = { empireId: empire.id }
+			dispatch(fetchMyItems(marketValues))
+			dispatch(fetchOtherItems(marketValues))
+		}
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorageValue({
