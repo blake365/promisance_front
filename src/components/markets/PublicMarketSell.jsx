@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/hooks'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
+import { myItemsLoaded } from '../../store/pubMarketSlice'
+import { fetchMyItems } from '../../store/pubMarketSlice'
 
 // TODO: make it mobile friendly
 
@@ -18,15 +20,14 @@ export default function PublicMarketSell({ empire })
     // player sets price and number of units to sell
     // add db entry with type, number, price, empireID, time to Market table
     // deduct items from selling empire
-
+    // show items for sale for current empire
+    const dispatch = useDispatch()
     const [result, setResult] = useState(null)
 
     // console.log(result)
+    const { myItems } = useSelector((state) => state.market)
 
-    // const { marketItems } = useSelector((state) => state.marketItems)
-
-
-    const dispatch = useDispatch()
+    console.log(myItems)
 
     const getCost = (emp, base) =>
     {
@@ -126,13 +127,6 @@ export default function PublicMarketSell({ empire })
         }
     }
 
-    let sumObject = {}
-
-    sumObject.kiy = 'cool'
-    sumObject.num = 34
-
-
-
     // const loadMarketItems = async () =>
     // {
     //     try {
@@ -148,6 +142,7 @@ export default function PublicMarketSell({ empire })
     {
         try {
             const res = await Axios.post('/market/pubSell', values)
+            dispatch(fetchMyItems())
             setResult(res.data)
             // console.log(values)
             loadEmpireTest()

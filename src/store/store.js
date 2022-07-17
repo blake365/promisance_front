@@ -14,6 +14,7 @@ import { userSlice } from './userSlice'
 import { turnResults } from './turnResultsSlice'
 import { empireSlice } from './empireSlice'
 import { guideSlice } from './guideSlice'
+import { pubMarketSlice } from './pubMarketSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -26,6 +27,7 @@ const reducers = combineReducers({
 	user: userSlice.reducer,
 	results: turnResults.reducer,
 	guide: guideSlice.reducer,
+	market: pubMarketSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)

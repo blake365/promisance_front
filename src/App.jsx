@@ -34,6 +34,7 @@ import ThemeToggle from './components/utilities/themeToggle'
 import { useLocalStorageValue } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
+import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 
 
 import Guide from './components/guide/guide'
@@ -98,6 +99,7 @@ function App()
 	useEffect(() =>
 	{
 		dispatch(setPage(pageState))
+		dispatch(fetchMyItems())
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorageValue({
