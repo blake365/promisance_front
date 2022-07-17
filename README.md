@@ -7,10 +7,11 @@ This project is intended to be used with my typescript promisance back end which
 
 top todos:
 <!-- fix account creation -->
-game guide
+<!-- game guide  -->
 bank deposit glitch
 overview page improvements
 scores page improvements
+multiplayer features
 empire settings / management
 update to most recent version of Mantine
 themes

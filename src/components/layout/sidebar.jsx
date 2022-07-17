@@ -25,7 +25,7 @@ const Sidebar = () =>
 	]
 	const financeLinks = [
 		'Black Market',
-		// 'Public Market',
+		'Public Market',
 		'World Bank',
 		// 'Lottery',
 	]
@@ -38,18 +38,18 @@ const Sidebar = () =>
 		'Manage Empire',
 	]
 
-	
+
 
 	return (
 		<Fragment>
-			<Group direction='column' spacing='xs' sx={{marginBottom: '1rem'}}>
+			<Group direction='column' spacing='xs' sx={{ marginBottom: '1rem' }}>
 				<Title order={4}>Information</Title>
 				{infolinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						
+
 						fullWidth
 						key={index}
 					>
@@ -62,7 +62,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						
+
 						fullWidth
 						key={index}
 					>
@@ -75,7 +75,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						
+
 						fullWidth
 						key={index}
 					>
@@ -88,7 +88,7 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						
+
 						fullWidth
 						key={index}
 					>
@@ -101,14 +101,14 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						
+
 						fullWidth
 						key={index}
 					>
 						{link}
 					</Button>
 				))}
-				
+
 			</Group>
 		</Fragment>
 	)

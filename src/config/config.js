@@ -58,7 +58,7 @@ export const PUBMKT_START = 6 // Hours before goods will arrive on public market
 export const PUBMKT_MINTIME = -1 // Number of hours before users can manually remove items (-1 to disallow)
 export const PUBMKT_MAXTIME = 72 // Number of hours before items are automatically removed (-1 to disallow)
 export const PUBMKT_MINSELL = 0 // Minimum percentage of troops, per shipment, that can be sold on public market (0-100)
-export const PUBMKT_MAXSELL = 25 // Maximum percentage of troops, total, that can be sold on public market (0-100)
+export const PUBMKT_MAXSELL = 50 // Maximum percentage of troops, total, that can be sold on public market (0-100)
 export const PUBMKT_MINFOOD = 0 // Same as MINSELL, except for food
 export const PUBMKT_MAXFOOD = 90 // Same as MAXSELL, except for food
 

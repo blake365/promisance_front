@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
+// import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 
 import { persistor, store } from './store/store'
@@ -20,6 +20,7 @@ import ManageEmpire from './components/manageEmpire'
 // import PrivateMarketBuy from './components/markets/PrivateMarketBuy'
 // import PrivateMarketSell from './components/markets/PrivateMarketSell'
 import PrivateMarket from './components/markets/privateMarket'
+import PublicMarket from './components/markets/publicMarket'
 
 import Home from './components/pages/Home'
 
@@ -30,7 +31,7 @@ import WorldBank from './components/markets/WorldBank'
 import MagicCenter from './components/useTurns/magiccenter'
 import Scores from './components/scores'
 import Demolish from './components/useTurns/demolish'
-import Guide from './components/guide/guide'
+// import Guide from './components/guide/guide'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
@@ -56,6 +57,7 @@ ReactDOM.render(
 							<Route path='build' element={<Build />} />
 							<Route path='demolish' element={<Demolish />} />
 							<Route path='Black%20Market' element={<PrivateMarket />} />
+							<Route path='Public%20Market' element={<PublicMarket />} />
 							<Route path='World%20Bank' element={<WorldBank />} />
 							<Route path='Magic%20Center' element={<MagicCenter />} />
 							<Route path='Manage%20Empire' element={<ManageEmpire />} />
