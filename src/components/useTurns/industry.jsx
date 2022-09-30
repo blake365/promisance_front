@@ -6,10 +6,11 @@ import
 	Group,
 	NumberInput,
 	SimpleGrid,
+	Stack,
 	Text,
 	Title,
 } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -85,7 +86,7 @@ export default function Industry()
 				item='troops' color='red' empire={empire} />
 			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
 			<Center mt={5}>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={3}>Industry Settings</Title>
 					<Text size='sm'>
 						Input the percentage of production to dedicate to each type of unit.{' '}
@@ -100,7 +101,7 @@ export default function Industry()
 							: setErrors("Values must add up to 100")
 					}>
 
-						<Group direction='column' align='center'>
+						<Stack align='center'>
 							<SimpleGrid cols={2} spacing={5}>
 								<NumberInput
 									label='Infantry'
@@ -149,10 +150,10 @@ export default function Industry()
 									Update
 								</Button>
 							)}
-						</Group>
+						</Stack>
 					</form>
 					<div>{update}</div>
-				</Group>
+				</Stack>
 			</Center>
 		</main>
 	)

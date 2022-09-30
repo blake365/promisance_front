@@ -1,6 +1,6 @@
-import { Button, Center, Group, NumberInput, Table, Title } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Stack, Table, Title } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
@@ -146,7 +146,7 @@ export default function Build()
 	return (
 		<main>
 			<Center mb={10}>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
 						Build
 					</Title>
@@ -174,129 +174,129 @@ export default function Build()
 								: setErrors("Can't build that many buildings")
 						}
 					>
-						<Group direction='column' spacing='sm' align='center'>
-						<Table verticalSpacing='xs' striped>
-							<thead>
-								<tr>
-									<th>Structure</th>
-									<th>Owned</th>
-									<th>Can Build</th>
-									<th>Build</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>{eraArray[empire.era].bldpop}</td>
-									<td>
-										{empire.bldPop} (
-										{Math.round((empire.bldPop / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={canBuild}
-											{...form.getInputProps('bldPop')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldPop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldPop' maxValue={canBuild} /></div>}
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td>{eraArray[empire.era].bldcash}</td>
-									<td>
-										{empire.bldCash} (
-										{Math.round((empire.bldCash / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldCash')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCash' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCash' maxValue={canBuild} /></div>}
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td>{eraArray[empire.era].bldtrp}</td>
-									<td>
-										{empire.bldTroop} (
-										{Math.round((empire.bldTroop / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldTroop')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldTroop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldTroop' maxValue={canBuild} /></div>}
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td>{eraArray[empire.era].bldcost}</td>
-									<td>
-										{empire.bldCost} (
-										{Math.round((empire.bldCost / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldCost')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCost' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCost' maxValue={canBuild} /></div>}
-										/>
-									</td>
-								</tr>
-								<tr>
-									<td>{eraArray[empire.era].bldwiz}</td>
-									<td>
-										{empire.bldWiz} (
-										{Math.round((empire.bldWiz / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldWiz')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldWiz' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldWiz' maxValue={canBuild} />
-											</div>} />
-									</td>
-								</tr>
-								<tr>
-									<td>{eraArray[empire.era].bldfood}</td>
-									<td>
-										{empire.bldFood} (
-										{Math.round((empire.bldFood / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											type='number'
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldFood')}
-											rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldFood' maxValue={canBuild} />
-												<HalfButton formName={form} fieldName='bldFood' maxValue={canBuild} />
-											</div>}
-										/>
-									</td>
-								</tr>
-								{/* <tr>
+						<Stack spacing='sm' align='center'>
+							<Table verticalSpacing='xs' striped>
+								<thead>
+									<tr>
+										<th>Structure</th>
+										<th>Owned</th>
+										<th>Can Build</th>
+										<th>Build</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{eraArray[empire.era].bldpop}</td>
+										<td>
+											{empire.bldPop} (
+											{Math.round((empire.bldPop / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={canBuild}
+												{...form.getInputProps('bldPop')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldPop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldPop' maxValue={canBuild} /></div>}
+											/>
+										</td>
+									</tr>
+									<tr>
+										<td>{eraArray[empire.era].bldcash}</td>
+										<td>
+											{empire.bldCash} (
+											{Math.round((empire.bldCash / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldCash')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCash' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCash' maxValue={canBuild} /></div>}
+											/>
+										</td>
+									</tr>
+									<tr>
+										<td>{eraArray[empire.era].bldtrp}</td>
+										<td>
+											{empire.bldTroop} (
+											{Math.round((empire.bldTroop / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldTroop')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldTroop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldTroop' maxValue={canBuild} /></div>}
+											/>
+										</td>
+									</tr>
+									<tr>
+										<td>{eraArray[empire.era].bldcost}</td>
+										<td>
+											{empire.bldCost} (
+											{Math.round((empire.bldCost / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldCost')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCost' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCost' maxValue={canBuild} /></div>}
+											/>
+										</td>
+									</tr>
+									<tr>
+										<td>{eraArray[empire.era].bldwiz}</td>
+										<td>
+											{empire.bldWiz} (
+											{Math.round((empire.bldWiz / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldWiz')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldWiz' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldWiz' maxValue={canBuild} />
+												</div>} />
+										</td>
+									</tr>
+									<tr>
+										<td>{eraArray[empire.era].bldfood}</td>
+										<td>
+											{empire.bldFood} (
+											{Math.round((empire.bldFood / empire.land) * 100)}%)
+										</td>
+										<td>{canBuild.toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												type='number'
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldFood')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldFood' maxValue={canBuild} />
+													<HalfButton formName={form} fieldName='bldFood' maxValue={canBuild} />
+												</div>}
+											/>
+										</td>
+									</tr>
+									{/* <tr>
 									<td>{eraArray[empire.era].blddef}</td>
 									<td>
 										{empire.bldDef} (
@@ -313,26 +313,26 @@ export default function Build()
 										/>
 									</td>
 								</tr> */}
-								<tr>
-									<td>Unused Land</td>
-									<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>
-								</tr>
-							</tbody>
-						</Table>
-						<div style={{ color: 'red' }}>{errors.error}</div>
-						{errors.error ? (
-							<Button color='black' type='submit' disabled>
-								Begin Construction
-							</Button>
-						) : (
-							<Button color='black' type='submit'>
-								Begin Construction
-							</Button>
+									<tr>
+										<td>Unused Land</td>
+										<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>
+									</tr>
+								</tbody>
+							</Table>
+							<div style={{ color: 'red' }}>{errors.error}</div>
+							{errors.error ? (
+								<Button color='black' type='submit' disabled>
+									Begin Construction
+								</Button>
+							) : (
+								<Button color='black' type='submit'>
+									Begin Construction
+								</Button>
 							)}
-						</Group>
+						</Stack>
 					</form>
-					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{marginTop: '1rem'}}>Demolish Buildings</Button>
-				</Group>
+					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{ marginTop: '1rem' }}>Demolish Buildings</Button>
+				</Stack>
 			</Center>
 		</main>
 	)

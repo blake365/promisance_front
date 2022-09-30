@@ -1,6 +1,6 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
@@ -113,8 +113,8 @@ export default function PrivateMarketSell()
 
     return (
         <main>
-            <Center mb={10}>
-                <Group direction='column' spacing='sm' align='center'>
+            <Center my={10}>
+                <Stack spacing='sm' align='center'>
                     <form
                         onSubmit={form.onSubmit((values) =>
                         {
@@ -123,7 +123,7 @@ export default function PrivateMarketSell()
                         })
                         }
                     >
-                        <Group direction='column' spacing='sm' align='center'>
+                        <Stack spacing='sm' align='center'>
                             <SimpleGrid
                                 cols={1}
                                 spacing='xs'
@@ -258,7 +258,7 @@ export default function PrivateMarketSell()
                                 </Group>
                             </SimpleGrid>
                             <Button type='submit'> Sell Goods </Button>
-                        </Group>
+                        </Stack>
                     </form>
                     {result &&
                         <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
@@ -267,16 +267,16 @@ export default function PrivateMarketSell()
                                 backgroundColor: theme.colors.gray[2],
                             },
                         })}>
-                            <Group direction='column' spacing='xs' align='center'>
+                            <Stack spacing='xs' align='center'>
                                 {result?.resultSellArm.amount > 0 ? <div>You Sold {result.resultSellArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultSellArm.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellLnd.amount > 0 ? <div>You Sold {result.resultSellLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultSellLnd.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellFly.amount > 0 ? <div>You Sold {result.resultSellFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultSellFly.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellSea.amount > 0 ? <div>You Sold {result.resultSellSea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultSellSea.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellFood.amount > 0 ? <div>You Sold {result.resultSellFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultSellFood.price.toLocaleString()}</div> : ''}
-                            </Group>
+                            </Stack>
                         </Card>
                     }
-                </Group>
+                </Stack>
 
             </Center>
         </main>

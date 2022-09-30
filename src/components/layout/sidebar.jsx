@@ -1,4 +1,4 @@
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Group, Stack, Title } from '@mantine/core'
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ const Sidebar = () =>
 		'Summary',
 		'Overview',
 		'Scores',
+		'Mailbox',
 		// 'Graveyard',
 		// 'Empire Search',
 		// 'News Search',
@@ -21,7 +22,8 @@ const Sidebar = () =>
 		'Cash',
 		'Industry',
 		'Meditate',
-		// 'Heal',
+		'Magic Center',
+		'Heal',
 	]
 	const financeLinks = [
 		'Black Market',
@@ -30,9 +32,9 @@ const Sidebar = () =>
 		// 'Lottery',
 	]
 	const foreignLinks = [
-		// 'War Center',
-		'Magic Center',
-		// 'Intel Center'
+		'War Council',
+		'Offensive Magic',
+		'Intel Center'
 	]
 	const managementLinks = [
 		'Manage Empire',
@@ -42,7 +44,7 @@ const Sidebar = () =>
 
 	return (
 		<Fragment>
-			<Group direction='column' spacing='xs' sx={{ marginBottom: '1rem' }}>
+			<Stack spacing='xs' sx={{ marginBottom: '1rem' }}>
 				<Title order={4}>Information</Title>
 				{infolinks.map((link, index) => (
 					<Button
@@ -82,7 +84,7 @@ const Sidebar = () =>
 						{link}
 					</Button>
 				))}
-				<Title order={4}>Magic</Title>
+				<Title order={4}>Diplomacy (Alpha)</Title>
 				{foreignLinks.map((link, index) => (
 					<Button
 						component={Link}
@@ -109,7 +111,7 @@ const Sidebar = () =>
 					</Button>
 				))}
 
-			</Group>
+			</Stack>
 		</Fragment>
 	)
 }

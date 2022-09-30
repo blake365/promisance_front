@@ -1,8 +1,8 @@
-import { Card, Group, Header, Title, Text, Button,  TextInput, Select, Modal, Center } from '@mantine/core'
+import { Card, Group, Header, Title, Text, Button, TextInput, Select, Modal, Center, Stack } from '@mantine/core'
 import Login from '../layout/Login'
 import Signup from '../layout/Signup'
 
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -66,7 +66,7 @@ export default function Home()
                 onClose={() => setOpened(false)}
             >
                 <Center>
-                    <Group direction='column' spacing='sm' align='center'>
+                    <Stack spacing='sm' align='center'>
                         <Title order={1} align='center'>
                             Create Empire
                         </Title>
@@ -79,7 +79,7 @@ export default function Home()
                                 navigate('/app/Summary')
                             })}
                         >
-                            <Group direction='column' spacing='sm' align='center'>
+                            <Stack spacing='sm' align='center'>
                                 <TextInput
                                     label='Name'
                                     placeholder='empire name'
@@ -105,9 +105,9 @@ export default function Home()
                                     {...form.getInputProps('race')}
                                 />
                                 <Button type='submit'>Create</Button>
-                            </Group>
+                            </Stack>
                         </form>
-                    </Group>
+                    </Stack>
                 </Center>
             </Modal>
             <Header height={70} padding='md'>
@@ -135,7 +135,7 @@ export default function Home()
             </Group>
             <Group position='center' spacing='xl' sx={{ padding: '2rem' }}>
                 <Card withBorder sx={{ height: '500px', width: '275px' }} shadow='md'>
-                    <Group direction='column' spacing='sm' align='center'>
+                    <Stack spacing='sm' align='center'>
                         <Title order={1} align='center'>
                             Demo Account
                         </Title>
@@ -176,7 +176,7 @@ export default function Home()
                         </Group>
                         </form> */}
                         <Button onClick={demoRegister}>Create Demo Account</Button>
-                    </Group>
+                    </Stack>
                 </Card>
                 <Card withBorder sx={{ height: '350px', width: '275px' }} shadow='md'>
                     <Login />

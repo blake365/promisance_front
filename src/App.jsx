@@ -31,7 +31,7 @@ import TurnResultContainer from './components/useTurns/TurnResultContainer'
 import { fetchEmpire, empireLoaded } from './store/empireSlice'
 import { load, logout } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
-import { useLocalStorageValue } from '@mantine/hooks'
+import { useLocalStorage } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
 import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
@@ -108,7 +108,7 @@ function App()
 		}
 	})
 
-	const [colorScheme, setColorScheme] = useLocalStorageValue({
+	const [colorScheme, setColorScheme] = useLocalStorage({
 		key: 'prom-color-scheme',
 		defaultValue: 'light'
 	});
@@ -153,8 +153,8 @@ function App()
 						</Navbar>
 					}
 					header={
-						<Header height={70} padding='md'>
-							<Group direction='row' position='apart' spacing='xs'>
+						<Header height={70} p='sm'>
+							<Group position='apart' spacing='sm'>
 								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
 									<Burger
 										opened={opened}

@@ -1,4 +1,4 @@
-import { Group, Table, Title } from '@mantine/core'
+import { Group, Stack, Table, Title } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { raceArray } from '../config/races'
@@ -44,7 +44,7 @@ export default function Scores()
 
     return (
         <main>
-            <Group direction='column' spacing='sm' align='center' grow>
+            <Stack spacing='sm' align='center' grow>
                 <Title order={1} align='center'>
                     Scores
                 </Title>
@@ -67,7 +67,7 @@ export default function Scores()
                         })}
                     </tbody>
                 </Table>
-            </Group>
+            </Stack>
         </main>
     )
 }

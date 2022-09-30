@@ -1,4 +1,4 @@
-import { Grid, Group, Table, Title } from '@mantine/core'
+import { Grid, Stack, Table, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
@@ -11,7 +11,7 @@ export default function Summary()
 
 	return (
 		<main>
-			<Group direction='column' spacing='sm' align='center' grow>
+			<Stack spacing='sm' align='center' grow>
 				<Title order={1} align='center'>
 					Summary
 				</Title>
@@ -124,7 +124,7 @@ export default function Summary()
 				<div>You get {TURNS_COUNT} turns every {TURNS_FREQ} minutes</div>
 				<div>Next {TURNS_COUNT} turns in XX minutes, XX seconds</div>
 				<div>The current round will end in X days, XX hours</div>
-			</Group>
+			</Stack>
 		</main>
 	)
 }

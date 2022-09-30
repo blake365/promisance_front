@@ -1,6 +1,6 @@
-import { Button, Center, Group, NumberInput, Title, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Title, Card, SimpleGrid, Text, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
@@ -35,7 +35,7 @@ export default function WorldBank()
     }
 
     const size = calcSizeBonus(empire.networth)
-    const loanRate = (7.5 + size)/ 100
+    const loanRate = (7.5 + size) / 100
     const savingRate = (4 + size) / 100
     const maxLoan = empire.networth * 50
     const maxSavings = empire.networth * 100
@@ -123,7 +123,7 @@ export default function WorldBank()
     return (
         <main>
             <Center mb={10}>
-                <Group direction='column' spacing='sm' align='center' grow>
+                <Stack spacing='sm' align='center' grow>
                     <Title order={1} align='center'>
                         World Bank
                     </Title>
@@ -152,7 +152,7 @@ export default function WorldBank()
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Interest Rate:</Text>
-                                <Text align='right'>{savingRate*100}%</Text>
+                                <Text align='right'>{savingRate * 100}%</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Est. Interest Gain:</Text>
@@ -166,7 +166,7 @@ export default function WorldBank()
                                     })
                                 }
                             >
-                                <Group align='center' direction='column' spacing='sm'>
+                                <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
                                         label={`Deposit Money`}
@@ -178,7 +178,7 @@ export default function WorldBank()
                                         {...savingsForm.getInputProps('depositAmt')}
                                         rightSection={
                                             <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={maxSavings - empire.bank > 0 ? maxSavings - empire.bank : 0} />
-                                            }
+                                        }
                                     />
                                     <NumberInput
                                         hideControls
@@ -192,24 +192,24 @@ export default function WorldBank()
                                         rightSection={<MaxButton formName={savingsForm} fieldName='withdrawAmt' maxValue={empire.bank} />}
                                     />
                                     <Button type='submit'>Submit</Button>
-                                </Group>
+                                </Stack>
                             </form>
                         </Card>
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
                             <Title order={2} align='center'>Loans</Title>
-                            <Group direction='row' spacing='xs' noWrap grow>
+                            <Group spacing='xs' noWrap grow>
                                 <Text>Loan Balance:</Text>
                                 <Text align='right'>${empire.loan.toLocaleString()}</Text>
                             </Group>
-                            <Group direction='row' spacing='xs' noWrap grow>
+                            <Group spacing='xs' noWrap grow>
                                 <Text>Available to Borrow:</Text>
                                 <Text align='right'>${maxLoan.toLocaleString()}</Text>
                             </Group>
-                            <Group direction='row' spacing='xs' noWrap grow>
+                            <Group spacing='xs' noWrap grow>
                                 <Text>Interest Rate: </Text>
-                                <Text align='right'>{loanRate*100}%</Text>
+                                <Text align='right'>{loanRate * 100}%</Text>
                             </Group>
-                            <Group direction='row' spacing='xs' noWrap grow>
+                            <Group spacing='xs' noWrap grow>
                                 <Text>Est. Interest Cost:</Text>
                                 <Text align='right'>${Math.floor(empire.loan * loanRate / 52).toLocaleString()}</Text>
                             </Group>
@@ -218,7 +218,7 @@ export default function WorldBank()
                                     loanForm.onSubmit((values) => { doBanking(values) })
                                 }
                             >
-                                <Group align='center' direction='column' spacing='sm'>
+                                <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
                                         label={`Repay Loan Balance`}
@@ -242,7 +242,7 @@ export default function WorldBank()
                                         rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={maxLoan} />}
                                     />
                                     <Button type='submit'>Submit</Button>
-                                </Group>
+                                </Stack>
                             </form>
                         </Card>
                     </SimpleGrid>
@@ -265,7 +265,7 @@ export default function WorldBank()
                             }
                         })
                     }
-                </Group>
+                </Stack>
             </Center>
         </main>
     )

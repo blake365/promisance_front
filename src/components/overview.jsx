@@ -5,6 +5,7 @@ import
 	Card,
 	SimpleGrid,
 	Text,
+	Stack,
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
 
@@ -202,7 +203,7 @@ export default function Overview()
 
 	return (
 		<main>
-			<Group direction='column' spacing='sm' align='center' grow>
+			<Stack spacing='sm' align='center' grow>
 				<Title order={1} align='center'>
 					Overview
 				</Title>
@@ -210,7 +211,7 @@ export default function Overview()
 				{empire && (
 					<Card shadow='sm' padding='lg'>
 
-						<Group direction='column' grow>
+						<Stack grow>
 							<div>
 								<Text weight={800} size='lg' align='center'>
 									{empire.name} (#{empire.id})
@@ -336,10 +337,10 @@ export default function Overview()
 									<Bar dataKey='networth' yAxisId='right' fill='#82ca9d' />
 								</BarChart>
 							</div>
-						</Group>
+						</Stack>
 					</Card>
 				)}
-			</Group>
+			</Stack>
 		</main>
 	)
 }

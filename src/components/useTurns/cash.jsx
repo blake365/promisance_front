@@ -2,13 +2,13 @@ import
 {
 	Text,
 	Center,
-	Group,
+	Stack,
 	Title,
 	NumberInput,
 	Button,
 	Divider,
 } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
@@ -64,11 +64,11 @@ export default function Cash()
 			/>
 			<Divider size='lg' style={{ marginTop: '1rem' }} />
 			<Center mt={10}>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={3}>Tax Settings</Title>
 					<Text size='sm'>Update your empire's tax rate:</Text>
 					<form onSubmit={form.onSubmit((values) => updateTax(values))}>
-						<Group direction='column' align='center'>
+						<Stack align='center'>
 							<NumberInput
 								label='Tax Rate'
 								min={0}
@@ -79,10 +79,10 @@ export default function Cash()
 								{...form.getInputProps('tax')}
 							/>
 							<Button type='submit' color='yellow'>Update</Button>
-						</Group>
+						</Stack>
 					</form>
 					<div>{update}</div>
-				</Group>
+				</Stack>
 			</Center>
 		</main>
 	)

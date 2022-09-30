@@ -1,5 +1,5 @@
-import { Button, Center, Group, TextInput, Title } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { Button, Center, Group, Stack, TextInput, Title } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import { useDispatch } from 'react-redux'
 import { register, } from '../../store/userSlice'
 
@@ -33,14 +33,14 @@ export default function Signup()
 	return (
 		<main>
 			<Center>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
 						Register
 					</Title>
 					<form
 						onSubmit={form.onSubmit((values) => dispatch(register(values)))}
 					>
-						<Group direction='column' spacing='sm' align='center'>
+						<Stack spacing='sm' align='center'>
 							<TextInput
 								label='Email'
 								placeholder='me@email.com'
@@ -62,12 +62,12 @@ export default function Signup()
 								required
 								{...form.getInputProps('password')}
 							/>
-							
+
 							<Button type='submit'>Sign Up</Button>
-						</Group>
+						</Stack>
 					</form>
 
-				</Group>
+				</Stack>
 			</Center>
 		</main>
 	)

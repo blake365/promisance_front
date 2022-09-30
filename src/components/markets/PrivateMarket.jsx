@@ -1,4 +1,4 @@
-import { Tabs, Title, Group, Center } from "@mantine/core"
+import { Tabs, Title, Group, Center, Stack } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
 
@@ -8,26 +8,31 @@ export default function PrivateMarket()
     return (
         <main>
             <Center mb={10}>
-                <Group direction='column' spacing='sm' align='center'>
+                <Stack spacing='sm' align='center'>
                     <Title order={1} align='center'>
                         Black Market
                     </Title>
                     <div>
                         Purchase or sell goods on the Black Market
                     </div>
-                    <Tabs position='center' grow
+                    <Tabs defaultValue="Buy"
                         styles={{
-                            tabControl: { fontSize: '1.2rem' },
+                            tabLabel: { fontSize: '1.2rem' },
                         }}>
-                        <Tabs.Tab label="Buy">
+                        <Tabs.List grow position="center">
+                            <Tabs.Tab value="Buy">Buy</Tabs.Tab>
+                            <Tabs.Tab value="Sell">Sell</Tabs.Tab>
+                        </Tabs.List>
+
+                        <Tabs.Panel value="Buy">
                             <PrivateMarketBuy />
-                        </Tabs.Tab>
-                        <Tabs.Tab label="Sell" >
+                        </Tabs.Panel>
+                        <Tabs.Panel value="Sell" >
                             <PrivateMarketSell />
-                        </Tabs.Tab>
+                        </Tabs.Panel>
                     </Tabs>
 
-                </Group>
+                </Stack>
             </Center>
         </main>
     )

@@ -1,5 +1,5 @@
 import { Button, Center, Group, TextInput, Title, Select, Modal } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import { useDispatch } from 'react-redux'
 import { create } from '../../store/empireSlice'
 import { useState } from 'react'

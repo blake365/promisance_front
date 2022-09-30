@@ -1,6 +1,6 @@
 import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
@@ -22,7 +22,7 @@ export default function PublicMarketBuy({ empire })
     // allow for partial purchases, update entry in db
     // add cash spent to selling empire, remove entry from db
     // refresh search for new lowest price troops of each type
-    // create news event for seller that shows items were purchased
+    //TODO: create news event for seller that shows items were purchased
 
     const { otherItems } = useSelector((state) => state.market)
 
@@ -48,9 +48,9 @@ export default function PublicMarketBuy({ empire })
     {
         try {
             console.log(values)
-            // const res = await Axios.post('/market/pubBuy', values)
+            const res = await Axios.post('/market/pubBuy', values)
             // setResult(res.data)
-            // loadEmpireTest()
+            loadEmpireTest()
             // dispatch(fetchOtherItems())
         } catch (error) {
             console.log(error)
@@ -78,7 +78,7 @@ export default function PublicMarketBuy({ empire })
         let values = {
             id: item.id,
             amount: parseInt(item.amount, 10),
-            price: item.price,
+            // price: item.price,
             cost: item.amount * item.price,
             sellerId: item.empire_id,
             buyerId: empire.id
@@ -106,8 +106,8 @@ export default function PublicMarketBuy({ empire })
 
     return (
         <main>
-            <Center mb={10}>
-                <Group direction='row' spacing='sm' align='center'>
+            <Center my={10}>
+                <Group spacing='sm' align='center'>
                     {itemsToBuy}
                 </Group>
             </Center>

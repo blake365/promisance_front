@@ -2,13 +2,14 @@ import
 {
 	Center,
 	Group,
+	Stack,
 	Title,
 	NumberInput,
 	Button,
 	Checkbox,
 	Text,
 } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
@@ -62,7 +63,7 @@ export default function GeneralAction(props)
 	return (
 		<section>
 			<Center>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
 						{props.title}
 					</Title>
@@ -77,7 +78,7 @@ export default function GeneralAction(props)
 						dispatch(clearResult)
 						doTurns(values)
 					})}>
-						<Group direction='column' spacing='sm' align='center'>
+						<Stack spacing='sm' align='center'>
 							<NumberInput
 								label={`Spend how many turns ${props.flavor}?`}
 								min={0}
@@ -95,9 +96,9 @@ export default function GeneralAction(props)
 							<Button color={props.color} type='submit'>
 								{props.title}
 							</Button>
-						</Group>
+						</Stack>
 					</form>
-				</Group>
+				</Stack>
 			</Center>
 		</section>
 	)

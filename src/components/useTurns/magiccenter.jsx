@@ -6,9 +6,10 @@ import
     NumberInput,
     Button,
     Select,
-    Text
+    Text,
+    Stack
 } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
@@ -137,7 +138,7 @@ export default function MagicCenter()
     return (
         <section style={{ paddingTop: '1rem' }}>
             <Center>
-                <Group direction='column' spacing='sm' align='center'>
+                <Stack spacing='sm' align='center'>
                     <Title order={1} align='center'>
                         Magic Center
                     </Title>
@@ -153,7 +154,7 @@ export default function MagicCenter()
                         dispatch(clearResult)
                         doMagic(values)
                     })}>
-                        <Group direction='column' spacing='sm' align='center'>
+                        <Stack spacing='sm' align='center'>
                             <Select
                                 label="Select Spell to Cast"
                                 placeholder="Pick one"
@@ -176,16 +177,16 @@ export default function MagicCenter()
                                 defaultValue={0}
                                 stepHoldDelay={500}
                                 stepHoldInterval={100}
-                                max={empire.turns/2} 
+                                max={empire.turns / 2}
                                 {...form.getInputProps('number')}
                             />
 
                             <Button color='grape' type='submit'>
                                 Cast Spells
                             </Button>
-                        </Group>
+                        </Stack>
                     </form>
-                </Group>
+                </Stack>
             </Center>
         </section>
     )

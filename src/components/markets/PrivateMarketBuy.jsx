@@ -1,6 +1,6 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
@@ -19,7 +19,7 @@ export default function PrivateMarketBuy()
     const [result, setResult] = useState(null)
 
     let buyNumberArray = []
-    
+
     let totalPrice = 0
     let errors = {
         error: '',
@@ -161,8 +161,8 @@ export default function PrivateMarketBuy()
 
     return (
         <main>
-            <Center mb={10}>
-                <Group direction='column' spacing='sm' align='center'>
+            <Center my={10}>
+                <Stack spacing='sm' align='center'>
                     <form
                         onSubmit={
                             totalPrice <= empire.cash
@@ -174,7 +174,7 @@ export default function PrivateMarketBuy()
                                 : setErrors("Not Enough Money")
                         }
                     >
-                        <Group direction='column' spacing='sm' align='center'>
+                        <Stack spacing='sm' align='center'>
                             <SimpleGrid
                                 cols={1}
                                 spacing='xs'
@@ -331,7 +331,7 @@ export default function PrivateMarketBuy()
                                     Buy Goods
                                 </Button>
                             )}
-                        </Group>
+                        </Stack>
                     </form>
                     {result &&
                         <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
@@ -340,16 +340,16 @@ export default function PrivateMarketBuy()
                                 backgroundColor: theme.colors.gray[2],
                             },
                         })}>
-                            <Group direction='column' spacing='xs' align='center'>
+                            <Stack spacing='xs' align='center'>
                                 {result?.resultBuyArm.amount > 0 ? <div>You purchased {result.resultBuyArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultBuyArm.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuyLnd.amount > 0 ? <div>You purchased {result.resultBuyLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultBuyLnd.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
-                            </Group>
+                            </Stack>
                         </Card>
                     }
-                </Group>
+                </Stack>
 
             </Center>
         </main>

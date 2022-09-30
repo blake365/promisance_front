@@ -1,6 +1,6 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Table } from '@mantine/core'
+import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Table, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
@@ -19,6 +19,7 @@ export default function PublicMarketSell({ empire })
     // add db entry with type, number, price, empireID, time to Market table
     // deduct items from selling empire
     // show items for sale for current empire
+    // TODO: remove items after X hours and return to seller
 
     const dispatch = useDispatch()
     // const [result, setResult] = useState(null)
@@ -184,8 +185,8 @@ export default function PublicMarketSell({ empire })
 
     return (
         <main>
-            <Center mb={10}>
-                <Group direction='column' spacing='sm' align='center'>
+            <Center my={10}>
+                <Stack spacing='sm' align='center'>
                     <form
                         onSubmit={form.onSubmit((values) =>
                         {
@@ -194,7 +195,7 @@ export default function PublicMarketSell({ empire })
                         })
                         }
                     >
-                        <Group direction='column' spacing='sm' align='center'>
+                        <Stack spacing='sm' align='center'>
                             <SimpleGrid
                                 cols={1}
                                 spacing='xs'
@@ -414,7 +415,7 @@ export default function PublicMarketSell({ empire })
                                 </Group>
                             </SimpleGrid>
                             <Button type='submit'> Sell Goods </Button>
-                        </Group>
+                        </Stack>
                     </form>
                     <Table>
                         <thead>
@@ -427,7 +428,7 @@ export default function PublicMarketSell({ empire })
                         </thead>
                         <tbody>{myItemsRows}</tbody>
                     </Table>
-                </Group>
+                </Stack>
 
             </Center>
         </main>

@@ -1,5 +1,5 @@
-import { Button, Center, Group, TextInput, Title } from '@mantine/core'
-import { useForm } from '@mantine/hooks'
+import { Button, Center, Group, Stack, TextInput, Title } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import { login } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 
@@ -28,12 +28,12 @@ export default function Login()
 	return (
 		<main>
 			<Center>
-				<Group direction='column' spacing='sm' align='center'>
+				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
 						Login
 					</Title>
 					<form onSubmit={form.onSubmit((values) => dispatch(login(values)))}>
-						<Group direction='column' spacing='sm' align='center'>
+						<Stack spacing='sm' align='center'>
 							<TextInput
 								label='Username'
 								placeholder=''
@@ -49,10 +49,10 @@ export default function Login()
 								{...form.getInputProps('password')}
 							/>
 							<Button type='submit'>Login</Button>
-						</Group>
+						</Stack>
 					</form>
 
-				</Group>
+				</Stack>
 			</Center>
 		</main>
 	)
