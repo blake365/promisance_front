@@ -1,4 +1,4 @@
-import { Group, Stack, Table, Title } from '@mantine/core'
+import { Stack, Table, Title } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { raceArray } from '../config/races'
@@ -31,7 +31,7 @@ export default function Scores()
 
     const singleScore = (empire) =>
     {
-        return (<tr>
+        return (<tr key={empire.id}>
             <td>{empire.rank}</td>
             <td>{empire.name} (#{empire.id})</td>
             <td>{empire.land.toLocaleString()}</td>
@@ -44,7 +44,7 @@ export default function Scores()
 
     return (
         <main>
-            <Stack spacing='sm' align='center' grow>
+            <Stack spacing='sm' align='center'>
                 <Title order={1} align='center'>
                     Scores
                 </Title>

@@ -109,7 +109,7 @@ export default function Build()
 	totalBuild = buildNumberArray
 		.filter(Number)
 		.reduce((partialSum, a) => partialSum + a, 0)
-	console.log(totalBuild)
+	// console.log(totalBuild)
 	// console.log(value)
 
 	function setErrors(error)
@@ -121,8 +121,7 @@ export default function Build()
 	{
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
-			console.log(res.data)
-
+			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
 			console.log(error)
@@ -134,7 +133,7 @@ export default function Build()
 		try {
 			const res = await Axios.post('/build', values)
 			// dispatch(setResult(res.data))
-			console.log(res.data)
+			// console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()

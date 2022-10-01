@@ -21,16 +21,18 @@ import ManageEmpire from './components/manageEmpire'
 // import PrivateMarketSell from './components/markets/PrivateMarketSell'
 import PrivateMarket from './components/markets/privateMarket'
 import PublicMarket from './components/markets/publicMarket'
+import WorldBank from './components/markets/WorldBank'
+import MagicCenter from './components/useTurns/magiccenter'
+import Scores from './components/scores'
+import Demolish from './components/useTurns/demolish'
+import Attack from './components/diplomacy/attack'
 
 import Home from './components/pages/Home'
 
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
-import WorldBank from './components/markets/WorldBank'
-import MagicCenter from './components/useTurns/magiccenter'
-import Scores from './components/scores'
-import Demolish from './components/useTurns/demolish'
+
 // import Guide from './components/guide/guide'
 
 Axios.defaults.baseURL = 'http://localhost:5001/api'
@@ -44,8 +46,9 @@ ReactDOM.render(
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/createEmpire' element={<CreateEmpire />} />
-						<Route path='/app' element={<App />}>
+						<Route path='/app/' element={<App />}>
 							{/* <Route path='guide' element={<Guide />} /> */}
+							<Route path='' element={<Scores />} />
 							<Route path='summary' element={<Summary />} />
 							<Route path='overview' element={<Overview />} />
 							<Route path='scores' element={<Scores />} />
@@ -61,6 +64,7 @@ ReactDOM.render(
 							<Route path='World%20Bank' element={<WorldBank />} />
 							<Route path='Magic%20Center' element={<MagicCenter />} />
 							<Route path='Manage%20Empire' element={<ManageEmpire />} />
+							<Route path='War%20Council' element={<Attack />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

@@ -1,12 +1,25 @@
-import { Tabs, Title, Group, Center, Stack } from "@mantine/core"
+import { Tabs, Title, Center, Stack } from "@mantine/core"
 import PublicMarketBuy from "./PublicMarketBuy"
 import PublicMarketSell from "./PublicMarketSell"
 
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
 export default function PublicMarket()
 {
     const { empire } = useSelector((state) => state.empire)
+
+    const dispatch = useDispatch()
+
+    useEffect(() =>
+    {
+        if (empire) {
+            let marketValues = { empireId: empire.id }
+            dispatch(fetchMyItems(marketValues))
+            dispatch(fetchOtherItems(marketValues))
+        }
+    })
 
     return (
         <main>

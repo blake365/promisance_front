@@ -11,7 +11,7 @@ export default function Summary()
 
 	return (
 		<main>
-			<Stack spacing='sm' align='center' grow>
+			<Stack spacing='sm' align='center'>
 				<Title order={1} align='center'>
 					Summary
 				</Title>

@@ -101,11 +101,6 @@ function App()
 	useEffect(() =>
 	{
 		dispatch(setPage(pageState))
-		if (empire) {
-			let marketValues = { empireId: empire.id }
-			dispatch(fetchMyItems(marketValues))
-			dispatch(fetchOtherItems(marketValues))
-		}
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorage({

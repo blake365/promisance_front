@@ -1,6 +1,5 @@
 import
 {
-	Group,
 	Title,
 	Card,
 	SimpleGrid,
@@ -203,7 +202,7 @@ export default function Overview()
 
 	return (
 		<main>
-			<Stack spacing='sm' align='center' grow>
+			<Stack spacing='sm' align='center'>
 				<Title order={1} align='center'>
 					Overview
 				</Title>
@@ -211,7 +210,7 @@ export default function Overview()
 				{empire && (
 					<Card shadow='sm' padding='lg'>
 
-						<Stack grow>
+						<Stack>
 							<div>
 								<Text weight={800} size='lg' align='center'>
 									{empire.name} (#{empire.id})
