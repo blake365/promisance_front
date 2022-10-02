@@ -75,7 +75,9 @@ function App()
 			try {
 				const res = await Axios.get('auth/me')
 				console.log(res.data)
-				if (res.data) {
+				if (res.status !== 200) {
+					navigate('/')
+				} else if (res.data) {
 					dispatch(load())
 				}
 			} catch (error) {

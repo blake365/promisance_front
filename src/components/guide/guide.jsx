@@ -18,6 +18,7 @@ import BlackMarketGuide from "./guidepages/blackMarket";
 import WorldBankGuide from "./guidepages/worldBank";
 import MagicCenterGuide from "./guidepages/magicCenter";
 import GuideIndex from "./guidepages/guideIndex";
+import AttackGuide from "./guidepages/attack";
 
 export default function Guide(props)
 {
@@ -62,6 +63,8 @@ export default function Guide(props)
             return <WorldBankGuide />
         case 'Magic%20Center':
             return <MagicCenterGuide empire={props.empire} />
+        case 'War%20Council':
+            return <AttackGuide empire={props.empire} />
         case 'Manage%20Empire':
         case 'Index':
             return <GuideIndex />

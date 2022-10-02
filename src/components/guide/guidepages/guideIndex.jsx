@@ -50,7 +50,7 @@ export default function GuideIndex()
                     <GuideLink text='Sending Foreign Aid' page='Aid' />
                     <GuideLink text='Clans' page='Clans' />
                     <GuideLink text='Clan Forum' page='Forum' />
-                    <GuideLink text='Your Army' page='Army' />
+                    <GuideLink text='Your Army' page='War%20Council' />
                     <GuideLink text='Casting Spells' page='Magic%20Center' />
                     <GuideLink text='Intel Center' page='Intel' />
                 </Group>

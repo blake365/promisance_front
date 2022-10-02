@@ -9,6 +9,7 @@ import
     Stack,
     Card,
     Table,
+    Group,
 } from '@mantine/core'
 import { useEffect, useState, forwardRef } from 'react'
 import { useForm } from '@mantine/form'
@@ -28,23 +29,30 @@ import { raceArray } from '../../config/races'
 // show other empire id, name, era, networth, land...
 // select attack type
 // show attack type information (allow to hide?)
+// submit empire to attack and attack type
+// figure out time gate situation
+// return results and update troop info
 
 
 export default function Attack()
 {
     const { empire } = useSelector((state) => state.empire)
 
+    let era = empire.era
+
     const dispatch = useDispatch()
 
     const [otherEmpires, setOtherEmpires] = useState()
     const [selectedEmpire, setSelectedEmpire] = useState()
+    const [selectedAttack, setSelectedAttack] = useState()
 
     const form = useForm({
         initialValues: {
             empireId: empire.id,
             type: 'attack',
             number: 1,
-            empire: ''
+            empire: '',
+            attack: ''
         },
 
         validationRules: {
@@ -105,8 +113,8 @@ export default function Attack()
         )
     );
 
-    console.log(selectedEmpire)
-
+    // console.log(selectedEmpire)
+    // console.log(selectedAttack)
     // console.log(otherEmpires)
 
     return (
@@ -119,100 +127,132 @@ export default function Attack()
                     <div>
                         Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
                     </div>
+                    <Group position='center'>
+                        <Card>
+                            <Card.Section withBorder inheritPadding py="xs">
+                                <Text weight={500}>Your Army:</Text>
+                            </Card.Section>
+                            <Card.Section inheritPadding py="xs">
+                                <Table striped>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Unit
+                                            </th>
+                                            <th>
+                                                Number
+                                            </th>
+                                            <th>
+                                                Attack
+                                            </th>
+                                            <th>
+                                                Defense
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trparm}</td>
+                                            <td align='right'>{empire?.trpArm.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trparm}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trparm}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trplnd}</td>
+                                            <td align='right'>{empire?.trpLnd.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trplnd}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trplnd}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpfly}</td>
+                                            <td align='right'>{empire?.trpFly.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trpfly}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trpfly}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpsea}</td>
+                                            <td align='right'>{empire?.trpSea.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trpsea}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trpsea}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpwiz}</td>
+                                            <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
+                                            <td align='right'>N/A</td>
+                                            <td align='right'>N/A</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Card.Section>
+                        </Card>
+                        <form onSubmit={form.onSubmit((values) =>
+                        {
+                            console.log(values)
+                            // dispatch(clearResult)
 
-                    <Card>
-                        <Card.Section withBorder inheritPadding py="xs">
-                            <Text weight={500}>Your Army:</Text>
-                        </Card.Section>
-                        <Card.Section inheritPadding py="xs">
-                            <Table striped>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Unit
-                                        </th>
-                                        <th>
-                                            Number
-                                        </th>
-                                        <th>
-                                            Attack
-                                        </th>
-                                        <th>
-                                            Defense
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{eraArray[empire.era].trparm}</td>
-                                        <td align='right'>{empire?.trpArm.toLocaleString()}</td>
-                                        <td align='right'>{eraArray[empire.era].o_trparm}</td>
-                                        <td align='right'>{eraArray[empire.era].d_trparm}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{eraArray[empire.era].trplnd}</td>
-                                        <td align='right'>{empire?.trpLnd.toLocaleString()}</td>
-                                        <td align='right'>{eraArray[empire.era].o_trplnd}</td>
-                                        <td align='right'>{eraArray[empire.era].d_trplnd}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{eraArray[empire.era].trpfly}</td>
-                                        <td align='right'>{empire?.trpFly.toLocaleString()}</td>
-                                        <td align='right'>{eraArray[empire.era].o_trpfly}</td>
-                                        <td align='right'>{eraArray[empire.era].d_trpfly}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{eraArray[empire.era].trpsea}</td>
-                                        <td align='right'>{empire?.trpSea.toLocaleString()}</td>
-                                        <td align='right'>{eraArray[empire.era].o_trpsea}</td>
-                                        <td align='right'>{eraArray[empire.era].d_trpsea}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{eraArray[empire.era].trpwiz}</td>
-                                        <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
-                                        <td align='right'>N/A</td>
-                                        <td align='right'>N/A</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Card.Section>
-                    </Card>
+                        })}>
 
-                    <form onSubmit={form.onSubmit((values) =>
-                    {
-                        console.log(values)
-                        // dispatch(clearResult)
-
-                    })}>
-
-                        <Stack spacing='sm' align='center'>
-                            {otherEmpires && (
+                            <Stack spacing='sm' align='center'>
+                                {otherEmpires && (
+                                    <Select
+                                        searchable
+                                        value={selectedEmpire}
+                                        onChange={setSelectedEmpire}
+                                        label="Select an Empire to Attack"
+                                        placeholder="Pick one"
+                                        withAsterisk
+                                        itemComponent={SelectItem}
+                                        data={otherEmpires}
+                                    />
+                                )}
                                 <Select
-                                    searchable
-                                    value={selectedEmpire}
-                                    onChange={setSelectedEmpire}
-                                    label="Select an Empire to Attack"
+                                    value={selectedAttack}
+                                    onChange={setSelectedAttack}
+                                    label="Select an Attack"
                                     placeholder="Pick one"
                                     withAsterisk
-                                    itemComponent={SelectItem}
-                                    data={otherEmpires}
+                                    // itemComponent={SelectAttack}
+                                    data={[
+                                        { value: 1, label: 'Standard Attack' },
+                                        { value: 2, label: 'Surprise Attack' },
+                                        { value: 3, label: 'Guerilla Strike' },
+                                        { value: 4, label: 'Lay Siege' },
+                                        { value: 5, label: 'Air Strike' },
+                                        { value: 6, label: 'Coastal Assault' }
+                                    ]}
                                 />
-                            )}
-                            {/* <NumberInput
-                                label={`Cast Spell How Many Times?`}
-                                min={0}
-                                defaultValue={0}
-                                stepHoldDelay={500}
-                                stepHoldInterval={100}
-                                max={empire.turns / 2}
-                                {...form.getInputProps('number')}
-                            /> */}
 
-                            <Button color='' type='submit'>
-                                Attack
-                            </Button>
-                        </Stack>
-                    </form>
+                                <Button color='' type='submit'>
+                                    Attack
+                                </Button>
+                            </Stack>
+                        </form>
+
+
+                    </Group>
+                    <Card>
+                        <Card.Section withBorder inheritPadding py="xs">
+                            <Text weight={500}>Attack Options:</Text>
+                        </Card.Section>
+                        <Card.Section inheritPadding py="xs">
+                            <p>In order to attack another empire, it must either be in the same era as yours or a Time Gate must be open between your empires, either opened by you or by your target.</p>
+                            <p>Six different attack methods are available for you to use, each having their own advantages and disadvantages:</p>
+                            <dl>
+                                <dt>Standard Attack</dt>
+                                <dd>The standard attack type, this allows sending all types of military units to attack your target. If successful, you will steal a percentage of your target's land, potentially with some of its original structures intact.</dd>
+                                <dt>Surprise Attack</dt>
+                                <dd>A surprise attack grants a 25% attack power bonus and allows the attacker to bypass any shared forces the defender's clan may have, though this comes at the cost of increased troop losses for the attacker as well as a significantly higher health loss. If successful, all structures on captured land are destroyed.</dd>
+                                <dt>Guerilla Strike</dt>
+                                <dd>By sending in only your {eraArray[era].trparm}, you can avoid your target's other forces. If successful, all structures on captured land are destroyed.</dd>
+                                <dt>Lay Siege</dt>
+                                <dd>By sending in only your {eraArray[era].trplnd}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[era].blddef} and {eraArray[era].bldwiz} are especially vulnerable.</dd>
+                                <dt>Air Strike</dt>
+                                <dd>By sending in only your {eraArray[era].trpfly}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. While attacking from above, significantly more structures can be destroyed, but much fewer will be captured.</dd>
+                                <dt>Coastal Assault</dt>
+                                <dd>By sending in only your {eraArray[era].trpsea}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[era].blddef} and {eraArray[era].bldwiz} are especially vulnerable.</dd>
+                            </dl>
+                        </Card.Section>
+                    </Card>
                 </Stack>
             </Center>
         </section>

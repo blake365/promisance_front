@@ -1,4 +1,4 @@
-import { Button, Group, Table } from "@mantine/core"
+import { Button, Group } from "@mantine/core"
 import { useState } from "react"
 import { PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from "../../../config/config"
 import { eraArray } from "../../../config/eras"
