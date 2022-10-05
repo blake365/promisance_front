@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-      "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.4",
     "@mantine/core": "^5.4.2",
     "@mantine/form": "^5.4.2",
     "@mantine/hooks": "^5.4.2",
@@ -20,6 +20,7 @@
     "axios": "^0.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.4.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",

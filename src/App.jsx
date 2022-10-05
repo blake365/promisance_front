@@ -5,7 +5,8 @@ import
 	Group,
 	Loader,
 	MantineProvider,
-	Modal
+	Modal,
+	Grid
 } from '@mantine/core'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
@@ -188,11 +189,20 @@ function App()
 							>
 								<Guide empire={empire} />
 							</Modal>
-							<Group spacing='sm' position='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-								<EffectIcons />
-								<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
-								<Button compact variant='light' onClick={() => { loadEmpireTest() }} >Refresh</Button>
-							</Group>
+							<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
+								<Grid.Col span={1}>
+									<EffectIcons />
+								</Grid.Col>
+								<Grid.Col span={6}>
+									<Group spacing='xs' position='center'>
+										<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
+										<Button compact variant='light' onClick={() => { loadEmpireTest() }} >Refresh</Button>
+									</Group>
+								</Grid.Col>
+								<Grid.Col span={1}>
+								</Grid.Col>
+
+							</Grid>
 							<TurnResultContainer />
 							<Outlet />
 						</>)}
