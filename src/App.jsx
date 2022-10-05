@@ -38,6 +38,8 @@ import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 
 
 import Guide from './components/guide/guide'
+import EffectIcons from './components/layout/EffectIcons'
+import { fetchEffects } from './store/effectSlice'
 
 function App()
 {
@@ -90,7 +92,14 @@ function App()
 		}
 
 		if (isLoggedIn && empireStatus === 'idle') {
-			dispatch(fetchEmpire(user.empires[0].uuid))
+			dispatch(fetchEmpire(
+				{
+					uuid: user.empires[0].uuid,
+				}
+			))
+			dispatch(fetchEffects({
+				id: user.empires[0].empireId
+			}))
 		}
 	})
 
@@ -180,6 +189,7 @@ function App()
 								<Guide empire={empire} />
 							</Modal>
 							<Group spacing='sm' position='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
+								<EffectIcons />
 								<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
 								<Button compact variant='light' onClick={() => { loadEmpireTest() }} >Refresh</Button>
 							</Group>

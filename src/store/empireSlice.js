@@ -19,13 +19,14 @@ export const create = createAsyncThunk(
 
 export const fetchEmpire = createAsyncThunk(
 	'empire/fetch',
-	async (uuid, thunkAPI) => {
+	async ({ uuid }, thunkAPI) => {
 		try {
 			// console.log(values)
 			const res = await Axios.get(`/empire/${uuid}`)
 			let data = res.data
-			// console.log(data)
-			return { empire: data }
+			return {
+				empire: data,
+			}
 		} catch (e) {
 			console.log(e)
 			return thunkAPI.rejectWithValue()

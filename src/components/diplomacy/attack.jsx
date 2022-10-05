@@ -2,7 +2,6 @@ import
 {
     Center,
     Title,
-    NumberInput,
     Button,
     Select,
     Text,
@@ -38,7 +37,7 @@ export default function Attack()
 {
     const { empire } = useSelector((state) => state.empire)
 
-    let era = empire.era
+    let myEra = empire.era
 
     const dispatch = useDispatch()
 
@@ -105,10 +104,9 @@ export default function Attack()
                 <div>
                     <Text size='md'>(#{empireId}) {name}</Text>
                     <Text size='xs'>Land: {land}</Text>
-                    <Text size='xs'>Era: {era}</Text>
+                    <Text size='xs' color={myEra == era ? 'green' : 'red'}>Era: {era}</Text>
                     <Text size='xs'>Race: {race}</Text>
                 </div>
-
             </div>
         )
     );
@@ -185,49 +183,59 @@ export default function Attack()
                                 </Table>
                             </Card.Section>
                         </Card>
-                        <form onSubmit={form.onSubmit((values) =>
-                        {
-                            console.log(values)
-                            // dispatch(clearResult)
 
-                        })}>
+                        <Card>
 
-                            <Stack spacing='sm' align='center'>
-                                {otherEmpires && (
+                            <Card.Section withBorder inheritPadding py="xs">
+                                <Group position='apart'>
+                                    <Text weight={500}>Attack:</Text>
+                                    <Text weight={300}>Time Gate: Closed</Text>
+                                </Group>
+                            </Card.Section>
+                            <form onSubmit={form.onSubmit((values) =>
+                            {
+                                console.log(values)
+                                // dispatch(clearResult)
+                            })}>
+                                <Stack spacing='sm' align='center'>
+                                    {otherEmpires && (
+                                        <Select
+                                            searchable
+                                            value={selectedEmpire}
+                                            onChange={setSelectedEmpire}
+                                            label="Select an Empire to Attack"
+                                            placeholder="Pick one"
+                                            withAsterisk
+                                            itemComponent={SelectItem}
+                                            data={otherEmpires}
+                                            withinPortal
+                                        />
+                                    )}
                                     <Select
-                                        searchable
-                                        value={selectedEmpire}
-                                        onChange={setSelectedEmpire}
-                                        label="Select an Empire to Attack"
+                                        value={selectedAttack}
+                                        onChange={setSelectedAttack}
+                                        label="Select an Attack Type"
                                         placeholder="Pick one"
                                         withAsterisk
-                                        itemComponent={SelectItem}
-                                        data={otherEmpires}
+                                        withinPortal
+                                        // itemComponent={SelectAttack}
+                                        data={[
+                                            { value: 1, label: 'Standard Attack' },
+                                            { value: 2, label: 'Surprise Attack' },
+                                            { value: 3, label: 'Guerilla Strike' },
+                                            { value: 4, label: 'Lay Siege' },
+                                            { value: 5, label: 'Air Strike' },
+                                            { value: 6, label: 'Coastal Assault' }
+                                        ]}
                                     />
-                                )}
-                                <Select
-                                    value={selectedAttack}
-                                    onChange={setSelectedAttack}
-                                    label="Select an Attack"
-                                    placeholder="Pick one"
-                                    withAsterisk
-                                    // itemComponent={SelectAttack}
-                                    data={[
-                                        { value: 1, label: 'Standard Attack' },
-                                        { value: 2, label: 'Surprise Attack' },
-                                        { value: 3, label: 'Guerilla Strike' },
-                                        { value: 4, label: 'Lay Siege' },
-                                        { value: 5, label: 'Air Strike' },
-                                        { value: 6, label: 'Coastal Assault' }
-                                    ]}
-                                />
 
-                                <Button color='' type='submit'>
-                                    Attack
-                                </Button>
-                            </Stack>
-                        </form>
+                                    <Button color='red' type='submit'>
+                                        Attack
+                                    </Button>
+                                </Stack>
+                            </form>
 
+                        </Card>
 
                     </Group>
                     <Card>
@@ -243,13 +251,13 @@ export default function Attack()
                                 <dt>Surprise Attack</dt>
                                 <dd>A surprise attack grants a 25% attack power bonus and allows the attacker to bypass any shared forces the defender's clan may have, though this comes at the cost of increased troop losses for the attacker as well as a significantly higher health loss. If successful, all structures on captured land are destroyed.</dd>
                                 <dt>Guerilla Strike</dt>
-                                <dd>By sending in only your {eraArray[era].trparm}, you can avoid your target's other forces. If successful, all structures on captured land are destroyed.</dd>
+                                <dd>By sending in only your {eraArray[empire.era].trparm}, you can avoid your target's other forces. If successful, all structures on captured land are destroyed.</dd>
                                 <dt>Lay Siege</dt>
-                                <dd>By sending in only your {eraArray[era].trplnd}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[era].blddef} and {eraArray[era].bldwiz} are especially vulnerable.</dd>
+                                <dd>By sending in only your {eraArray[empire.era].trplnd}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[empire.era].blddef} and {eraArray[empire.era].bldwiz} are especially vulnerable.</dd>
                                 <dt>Air Strike</dt>
-                                <dd>By sending in only your {eraArray[era].trpfly}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. While attacking from above, significantly more structures can be destroyed, but much fewer will be captured.</dd>
+                                <dd>By sending in only your {eraArray[empire.era].trpfly}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. While attacking from above, significantly more structures can be destroyed, but much fewer will be captured.</dd>
                                 <dt>Coastal Assault</dt>
-                                <dd>By sending in only your {eraArray[era].trpsea}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[era].blddef} and {eraArray[era].bldwiz} are especially vulnerable.</dd>
+                                <dd>By sending in only your {eraArray[empire.era].trpsea}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[empire.era].blddef} and {eraArray[empire.era].bldwiz} are especially vulnerable.</dd>
                             </dl>
                         </Card.Section>
                     </Card>
