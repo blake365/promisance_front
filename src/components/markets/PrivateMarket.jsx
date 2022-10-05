@@ -1,4 +1,4 @@
-import { Tabs, Title, Group, Center, Stack } from "@mantine/core"
+import { Tabs, Title, Center, Stack } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
 

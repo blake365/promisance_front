@@ -1,6 +1,5 @@
-import { Paper, Group, Badge, Avatar, Text, ThemeIcon, Tooltip } from '@mantine/core'
+import { Group, ThemeIcon, Tooltip } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { eraArray } from '../../config/eras'
 import { GiMagicGate, GiCheckedShield, GiBroadsword } from 'react-icons/gi'
 
 

@@ -1,11 +1,11 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Table, Stack } from '@mantine/core'
+import { Button, Center, Group, NumberInput, SimpleGrid, Text, Table, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 

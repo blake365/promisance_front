@@ -35,7 +35,7 @@ import ThemeToggle from './components/utilities/themeToggle'
 import { useLocalStorage } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
-import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
+// import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 
 
 import Guide from './components/guide/guide'

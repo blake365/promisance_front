@@ -1,4 +1,4 @@
-import { Button, Center, Group, Stack, TextInput, Title } from '@mantine/core'
+import { Button, Center, Stack, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDispatch } from 'react-redux'
 import { register, } from '../../store/userSlice'

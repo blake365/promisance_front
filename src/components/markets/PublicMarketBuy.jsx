@@ -1,14 +1,14 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text } from '@mantine/core'
+import { Button, Center, Group, Card, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '@mantine/form'
+// import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
-import { MaxButton } from '../utilities/maxbutton'
-import { fetchOtherItems } from '../../store/pubMarketSlice'
+// import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+// import { MaxButton } from '../utilities/maxbutton'
+// import { fetchOtherItems } from '../../store/pubMarketSlice'
 
 // TODO: make it mobile friendly
 

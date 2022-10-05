@@ -1,7 +1,6 @@
 import
 {
 	Center,
-	Group,
 	Stack,
 	Title,
 	NumberInput,
