@@ -104,7 +104,7 @@ export default function Attack()
                 <div>
                     <Text size='md'>(#{empireId}) {name}</Text>
                     <Text size='xs'>Land: {land}</Text>
-                    <Text size='xs' color={myEra == era ? 'green' : 'red'}>Era: {era}</Text>
+                    <Text size='xs'>Era: {era}</Text>
                     <Text size='xs'>Race: {race}</Text>
                 </div>
             </div>
@@ -189,7 +189,7 @@ export default function Attack()
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
                                     <Text weight={500}>Attack:</Text>
-                                    <Text weight={300}>Time Gate: Closed</Text>
+
                                 </Group>
                             </Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
