@@ -3,22 +3,11 @@ import
 	Title,
 	Card,
 	SimpleGrid,
+	Grid,
 	Text,
-	Stack,
+	Group, Col
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
-
-import
-{
-	BarChart,
-	Bar,
-	Cell,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-	Legend,
-} from 'recharts'
 
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
@@ -27,11 +16,11 @@ const NetProduced = (props) =>
 {
 	return (
 		<>
-			<Text>{props.title}:</Text>
+			<Text weight={700}>{props.title}:</Text>
 			<Text
 				align='right'
 				style={props.value >= 0 ? { color: 'green' } : { color: 'red' }}
-				weight={600}
+				weight={700}
 			>
 				{props.value <= 0 ? '' : '+'}
 				{props.money && '$'}
@@ -45,90 +34,6 @@ const NetProduced = (props) =>
 export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
-
-	const landBarColors = [
-		'#1982C4',
-		'#FFCA3A',
-		'#FF595E',
-		'#3E687A',
-		'#6A4C93',
-		'#8AC926',
-		'#553D36',
-		'#000000',
-	]
-
-	const landData = [
-		{
-			name: 'huts',
-			amount: empire?.bldPop,
-			icon: '🛖',
-		},
-		{
-			name: 'markets',
-			amount: empire?.bldCash,
-			icon: '💰',
-		},
-		{
-			name: 'blacksmiths',
-			amount: empire?.bldTroop,
-			icon: '🏭',
-		},
-		{
-			name: 'keeps',
-			amount: empire?.bldCost,
-			icon: '🏰',
-		},
-		{
-			name: 'mage towers',
-			amount: empire?.bldWiz,
-			icon: '🪄',
-		},
-		{
-			name: 'farms',
-			amount: empire?.bldFood,
-			icon: '🌾',
-		},
-		{
-			name: 'guard towers',
-			amount: empire?.bldDef,
-			icon: '💂‍♀️',
-		},
-		{
-			name: 'open land',
-			amount: empire?.freeLand,
-			icon: '⛰',
-		},
-	]
-
-	const troopBarColors = ['#4A5043', '#D73909', '#E09D00', '#008FCC', '#573E79']
-
-	const militaryData = [
-		{
-			name: eraArray[empire.era].trparm,
-			amount: empire?.trpArm,
-			networth: empire.trpArm * 1,
-		},
-		{
-			name: eraArray[empire.era].trplnd,
-			amount: empire?.trpLnd,
-			networth: empire?.trpLnd * 2,
-		},
-		{
-			name: eraArray[empire.era].trpfly,
-			amount: empire?.trpFly,
-			networth: empire?.trpFly * 4,
-		},
-		{
-			name: eraArray[empire.era].trpsea,
-			amount: empire?.trpSea,
-			networth: empire?.trpSea * 6,
-		},
-		{
-			name: eraArray[empire.era].trpwiz,
-			amount: empire?.trpWiz,
-			networth: empire?.trpWiz * 2,
-		},
-	]
 
 	function generalLog(number, base)
 	{
@@ -200,146 +105,178 @@ export default function Overview()
 	// consumption *= food consumption modifier
 	let foodcon = Math.round(consumption)
 
+	// offensive power
+	let oPower = eraArray[empire.era].o_trparm * empire.trpArm +
+		eraArray[empire.era].o_trplnd * empire.trpLnd +
+		eraArray[empire.era].o_trpfly * empire.trpFly +
+		eraArray[empire.era].o_trpsea * empire.trpSea
+	// defensive power
+	let dPower = eraArray[empire.era].d_trparm * empire.trpArm +
+		eraArray[empire.era].d_trplnd * empire.trpLnd +
+		eraArray[empire.era].d_trpfly * empire.trpFly +
+		eraArray[empire.era].d_trpsea * empire.trpSea
 	return (
 		<main>
-			<Stack spacing='sm' align='center'>
-				<Title order={1} align='center'>
-					Overview
-				</Title>
+			<Title order={1} align='center' mb='sm'>
+				Overview
+			</Title>
 
-				{empire && (
-					<Card shadow='sm' padding='lg'>
-
-						<Stack>
-							<div>
-								<Text weight={800} size='lg' align='center'>
-									{empire.name} (#{empire.id})
-								</Text>
-								<SimpleGrid cols={2} spacing={1}>
-									<Text>Turns:</Text>
-									<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
-									<Text>Turns Used:</Text>
-									<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
-									<Text>Health:</Text>
-									<Text align='right'>{empire.health}</Text>
-									<Text>Networth:</Text>
-									<Text align='right'>${empire.networth.toLocaleString()}</Text>
-									<Text>Population:</Text>
-									<Text align='right'>{empire.peasants.toLocaleString()}</Text>
-									<Text>Race:</Text>
-									<Text align='right'>{raceArray[empire.race].name}</Text>
-									<Text>Era:</Text>
-									<Text align='right'>{eraArray[empire.era].name}</Text>
-								</SimpleGrid>
-
-							</div>
-
-							<div>
-								<Text weight={800} size='lg'>Agriculture:</Text>
-								<SimpleGrid cols={2} spacing={1}>
-									<Text>Food:</Text>
-									<Text align='right'>{empire.food.toLocaleString()}</Text>
-									<Text>Est. Production:</Text>
-									<Text align='right'>{foodpro.toLocaleString()}</Text>
-									<Text>Est. Consumption:</Text>
-									<Text align='right'>{foodcon.toLocaleString()}</Text>
-
-									<NetProduced title='Net' value={foodpro - foodcon} />
-								</SimpleGrid>
-							</div>
-
-							<div>
-								<Text weight={800} size='lg'>Economy:</Text>
-								<SimpleGrid cols={2} spacing={1}>
-									<Text>Money:</Text>
-									<Text align='right'>${empire.cash.toLocaleString()}</Text>
-									<Text>Per Capita Income:</Text>
-									<Text align='right'>${cpi.toLocaleString()}</Text>
-									<Text>Est. Income:</Text>
-									<Text align='right'>${income.toLocaleString()}</Text>
-									<Text>Est. Expenses:</Text>
-									<Text align='right'>${expenses.toLocaleString()}</Text>
-									<Text>Loan Payment:</Text>
-									<Text align='right'>${loanpayed.toLocaleString()}</Text>
-									<NetProduced title='Net' value={income - expenses - loanpayed} money />
-									<Text>Savings Balance:</Text>
-									<Text align='right'>${empire.bank.toLocaleString()}</Text>
-									<Text>Loan Balance:</Text>
-									<Text align='right'>${empire.loan.toLocaleString()}</Text>
-								</SimpleGrid>
-							</div>
-
-							<div>
-								<Text weight={500} align='center'>
-									Land Division
-								</Text>
-								<BarChart
-									width={500}
-									height={300}
-									data={landData}
-									margin={{
-										top: 5,
-										right: 30,
-										left: 20,
-										bottom: 5,
-									}}
-								>
-									<CartesianGrid strokeDasharray='3 3' />
-									<XAxis dataKey='icon' interval={0} />
-									<YAxis
-									// formatter={(value) =>
-									// 	new Intl.NumberFormat('en').format(value)
-									// }
-									/>
-									<Tooltip
-										formatter={(value) =>
-											new Intl.NumberFormat('en').format(value)
-										}
-									/>
-									<Bar dataKey='amount'>
-										{landData.map((entry, index) => (
-											<Cell key={`cell-${index}`} fill={landBarColors[index]} />
-										))}
-									</Bar>
-								</BarChart>
-							</div>
-							<div>
-								<Text weight={500} align='center'>
-									Military
-								</Text>
-								<BarChart
-									width={500}
-									height={300}
-									data={militaryData}
-									margin={{
-										top: 5,
-										right: 30,
-										left: 20,
-										bottom: 5,
-									}}
-								>
-									<CartesianGrid strokeDasharray='3 3' />
-									<XAxis dataKey='name' interval={0} />
-									<YAxis yAxisId='left' orientation='left' stroke='#8884d8' />
-									<YAxis yAxisId='right' orientation='right' stroke='#82ca9d' />
-									<Tooltip
-										formatter={(value) =>
-											new Intl.NumberFormat('en').format(value)
-										}
-									/>
-									<Legend />
-									<Bar dataKey='amount' yAxisId='left' fill='#8884d8'>
-										{landData.map((entry, index) => (
-											<Cell key={`cell-${index}`} fill={troopBarColors[index]} />
-										))}
-									</Bar>
-									<Bar dataKey='networth' yAxisId='right' fill='#82ca9d' />
-								</BarChart>
-							</div>
-						</Stack>
+			{empire && (
+				<Group spacing='sm' align='center' position='center' mb='sm'>
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>
+							{empire.name} (#{empire.id})
+						</Text>
+						<SimpleGrid cols={2} spacing={1}>
+							<Text>Turns:</Text>
+							<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
+							<Text>Turns Used:</Text>
+							<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
+							<Text>Health:</Text>
+							<Text align='right'>{empire.health}%</Text>
+							<Text>Networth:</Text>
+							<Text align='right'>${empire.networth.toLocaleString()}</Text>
+							<Text>Population:</Text>
+							<Text align='right'>{empire.peasants.toLocaleString()}</Text>
+							<Text>Race:</Text>
+							<Text align='right'>{raceArray[empire.race].name}</Text>
+							<Text>Era:</Text>
+							<Text align='right'>{eraArray[empire.era].name}</Text>
+						</SimpleGrid>
 					</Card>
-				)}
-			</Stack>
-		</main>
+
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>Agriculture</Text>
+						<SimpleGrid cols={2} spacing={1}>
+							<Text>Food:</Text>
+							<Text align='right'>{empire.food.toLocaleString()}</Text>
+							<Text>Est. Production:</Text>
+							<Text align='right'>{foodpro.toLocaleString()}</Text>
+							<Text>Est. Consumption:</Text>
+							<Text align='right'>{foodcon.toLocaleString()}</Text>
+							<NetProduced title='Net' value={foodpro - foodcon} />
+						</SimpleGrid>
+					</Card>
+
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>Economy</Text>
+						<SimpleGrid cols={2} spacing={1}>
+							<Text>Money:</Text>
+							<Text align='right'>${empire.cash.toLocaleString()}</Text>
+							<Text>Per Capita Income:</Text>
+							<Text align='right'>${cpi.toLocaleString()}</Text>
+							<Text>Est. Income:</Text>
+							<Text align='right'>${income.toLocaleString()}</Text>
+							<Text>Est. Expenses:</Text>
+							<Text align='right'>${expenses.toLocaleString()}</Text>
+							<Text>Loan Payment:</Text>
+							<Text align='right'>${loanpayed.toLocaleString()}</Text>
+							<NetProduced title='Net' value={income - expenses - loanpayed} money />
+							<Text>Savings Balance:</Text>
+							<Text align='right'>${empire.bank.toLocaleString()}</Text>
+							<Text>Loan Balance:</Text>
+							<Text align='right'>${empire.loan.toLocaleString()}</Text>
+						</SimpleGrid>
+					</Card>
+
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>
+							Land Division
+						</Text>
+						<Grid columns={16}>
+							<Col span={6}>
+								<Text>{eraArray[empire.era].bldpop}:</Text>
+								<Text>{eraArray[empire.era].bldcash}:</Text>
+								<Text>{eraArray[empire.era].bldcost}:</Text>
+								<Text>{eraArray[empire.era].bldtrp}:</Text>
+								<Text>{eraArray[empire.era].bldwiz}:</Text>
+								<Text>{eraArray[empire.era].bldfood}:</Text>
+								<Text>{eraArray[empire.era].blddef}:</Text>
+								<Text>Unused Land:</Text>
+								<Text>Total Land:</Text>
+							</Col>
+							<Col span={7}>
+								<Text align='right'>{empire.bldPop.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldCash.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldCost.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldTroop.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldWiz.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldFood.toLocaleString()}</Text>
+								<Text align='right'>{empire.bldDef.toLocaleString()}</Text>
+								<Text align='right'>{empire.freeLand.toLocaleString()}</Text>
+								<Text align='right'>{empire.land.toLocaleString()}</Text>
+							</Col>
+							<Col span={3}>
+								<Text align='center'>({Math.round(empire.bldPop / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldCash / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldCost / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldTroop / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldWiz / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldFood / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.bldDef / empire.land * 100)}%)</Text>
+								<Text align='center'>({Math.round(empire.freeLand / empire.land * 100)}%)</Text>
+								<Text align='left'> </Text>
+							</Col>
+						</Grid>
+					</Card>
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>
+							Military
+						</Text>
+						<Grid columns={14}>
+							<Col span={7}>
+								<Text>{eraArray[empire.era].trparm}:</Text>
+								<Text>{eraArray[empire.era].trplnd}:</Text>
+								<Text>{eraArray[empire.era].trpfly}:</Text>
+								<Text>{eraArray[empire.era].trpsea}:</Text>
+								<Text>{eraArray[empire.era].trpwiz}:</Text>
+								<Text> </Text>
+								<Text mt='sm'>Offensive Power:</Text>
+								<Text>Defensive Power:</Text>
+								<Text mt='sm'>{eraArray[empire.era].runes}:</Text>
+							</Col>
+							<Col span={7}>
+								<Text align='right'>{empire.trpArm.toLocaleString()}</Text>
+								<Text align='right'>{empire.trpLnd.toLocaleString()}</Text>
+								<Text align='right'>{empire.trpFly.toLocaleString()}</Text>
+								<Text align='right'>{empire.trpSea.toLocaleString()}</Text>
+								<Text align='right'>{empire.trpWiz.toLocaleString()}</Text>
+								<Text align='right'> </Text>
+								<Text align='right' mt='sm'>{oPower.toLocaleString()}</Text>
+								<Text align='right'>{dPower.toLocaleString()}</Text>
+								<Text align='right' mt='sm'>{empire.runes.toLocaleString()}</Text>
+							</Col>
+
+						</Grid>
+					</Card>
+					<Card sx={{ width: '340px', minHeight: '285px' }}>
+						<Text weight={800} size='lg'>
+							Relations
+						</Text>
+						<Grid columns={14}>
+							<Col span={7}>
+								<Text>Member of Clan:</Text>
+								<Text>Allies:</Text>
+								<Text>Enemies:</Text>
+
+								<Text mt='sm'>Offensive Actions:</Text>
+								<Text>Defenses:</Text>
+								<Text>Kills:</Text>
+							</Col>
+							<Col span={7}>
+								<Text align='right'>None</Text>
+								<Text align='right'>None</Text>
+								<Text align='right'>None</Text>
+
+								<Text align='right' mt='sm'>{empire.offSucc} ({Math.round(empire.offSucc / empire.offTotal * 100)})</Text>
+								<Text align='right'>{empire.defSucc} ({Math.round(empire.defSucc / empire.defTotal * 100)})</Text>
+								<Text align='right'>{empire.kills}</Text>
+							</Col>
+
+						</Grid>
+					</Card>
+				</Group>
+			)}
+		</main >
 	)
 }

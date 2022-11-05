@@ -28,7 +28,7 @@ export default function PublicMarket()
             dispatch(fetchOtherItems(marketValues))
             setLoading(false)
         }
-    })
+    }, [])
 
     return (
         <main>

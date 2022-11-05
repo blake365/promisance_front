@@ -30,7 +30,7 @@ export default function EffectIcons()
 
     // console.log(effects)
     let activeEffects = []
-    if (effects.length > 0) {
+    if (effects && effects.length > 0) {
         activeEffects = effects.map(effect => (effect.empireEffectName))
     }
 
