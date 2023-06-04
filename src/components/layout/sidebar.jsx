@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () =>
 {
-	const infolinks = [
+	const infoLinks = [
 		'Summary',
 		'Overview',
 		'Scores',
+		'Favorites',
 		'Mailbox',
 		// 'Graveyard',
 		// 'Empire Search',
@@ -46,12 +47,11 @@ const Sidebar = () =>
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem' }}>
 				<Title order={4}>Information</Title>
-				{infolinks.map((link, index) => (
+				{infoLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-
 						fullWidth
 						key={index}
 					>

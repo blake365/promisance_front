@@ -32,6 +32,7 @@ import Home from './components/pages/Home'
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
+import Favorites from './components/useTurns/favorites'
 
 // import Guide from './components/guide/guide'
 
@@ -52,6 +53,7 @@ ReactDOM.render(
 							<Route path='summary' element={<Summary />} />
 							<Route path='overview' element={<Overview />} />
 							<Route path='scores' element={<Scores />} />
+							<Route path='favorites' element={<Favorites />} />
 							<Route path='farm' element={<Farm />} />
 							<Route path='cash' element={<Cash />} />
 							<Route path='explore' element={<Explore />} />

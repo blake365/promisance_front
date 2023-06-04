@@ -9,6 +9,7 @@
     "@mantine/hooks": "^5.4.2",
     "@reduxjs/toolkit": "^1.7.1",
     "@tabler/icons": "^1.54.0",
+    "@tabler/icons-react": "^2.21.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

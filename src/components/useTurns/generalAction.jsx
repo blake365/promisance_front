@@ -13,6 +13,7 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
+import { FavoriteButton } from '../utilities/maxbutton'
 
 export default function GeneralAction(props)
 {
@@ -59,12 +60,14 @@ export default function GeneralAction(props)
 		}
 	}
 
+
+
 	return (
 		<section>
 			<Center>
 				<Stack spacing='sm' align='center'>
-					<Title order={1} align='center'>
-						{props.title}
+					<Title order={1} align='center' sx={{ display: 'inline-block', width: '200px' }}>
+						{props.title} <FavoriteButton title={props.title} empire={props.empire} />
 					</Title>
 					{props.explore ? (<Text>
 						For each turn you spend {props.flavor}, your empire will grow by {props.explore} {props.item}.

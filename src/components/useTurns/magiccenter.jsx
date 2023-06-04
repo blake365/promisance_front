@@ -17,6 +17,7 @@ import { forwardRef } from 'react'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
+import { FavoriteButton } from '../utilities/maxbutton'
 
 // TODO: move advance and regress out of select form into separate ui?
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
@@ -139,7 +140,7 @@ export default function MagicCenter()
             <Center>
                 <Stack spacing='sm' align='center'>
                     <Title order={1} align='center'>
-                        Magic Center
+                        Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
                     </Title>
                     <div>
                         Cast spells on yourself to generate food, money, and change eras. Spells take two turns to cast.

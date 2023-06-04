@@ -53,7 +53,6 @@ export default function Cash()
 
 	return (
 		<main>
-
 			<GeneralAction
 				title='Cash'
 				type='cash'

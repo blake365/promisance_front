@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { MaxButton, HalfButton } from '../utilities/maxbutton'
+import { MaxButton, HalfButton, FavoriteButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 
@@ -147,7 +147,7 @@ export default function Build()
 			<Center mb={10}>
 				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Build
+						Build <FavoriteButton empire={empire} title='Build' />
 					</Title>
 					<div>
 						Each structure consumes one acre of unused land and costs $
