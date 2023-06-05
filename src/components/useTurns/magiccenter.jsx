@@ -136,7 +136,7 @@ export default function MagicCenter()
 
 
     return (
-        <section style={{ paddingTop: '1rem' }}>
+        <section >
             <Center>
                 <Stack spacing='sm' align='center'>
                     <Title order={1} align='center'>

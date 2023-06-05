@@ -45,14 +45,14 @@ const Sidebar = () =>
 
 	return (
 		<Fragment>
-			<Stack spacing='xs' sx={{ marginBottom: '1rem' }}>
+			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
 				<Title order={4}>Information</Title>
 				{infoLinks.map((link, index) => (
 					<Button
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-						fullWidth
+
 						key={index}
 					>
 						{link}
@@ -64,7 +64,6 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-
 						fullWidth
 						key={index}
 					>
@@ -77,7 +76,6 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-
 						fullWidth
 						key={index}
 					>
@@ -90,7 +88,6 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-
 						fullWidth
 						key={index}
 					>
@@ -103,7 +100,6 @@ const Sidebar = () =>
 						component={Link}
 						to={`/app/${link}`}
 						variant='subtle'
-
 						fullWidth
 						key={index}
 					>

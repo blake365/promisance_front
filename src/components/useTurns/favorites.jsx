@@ -1,8 +1,6 @@
 import { Grid, Paper, Stack, Table, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
-import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
+
 
 import Build from './build'
 import Cash from './cash'
@@ -36,6 +34,7 @@ const MapComponents = (title) =>
 
 }
 
+// TODO: ability to reorder favorites
 
 export default function Favorites()
 {
@@ -55,7 +54,7 @@ export default function Favorites()
                 {empire.favorites.map((favorite) =>
                 {
                     return (
-                        <Paper key={favorite} shadow="sm" p="xs" sx={{
+                        <Paper key={favorite} shadow="sm" p="md" sx={{
                             maxWidth: '550px',
                             minWidth: '250px',
                             margin: '0.5rem'

@@ -154,10 +154,10 @@ export default function Build()
 						{buildCost.toLocaleString()} to build.
 					</div>
 					<div>
-						You can build {buildRate.toLocaleString()} structures per turn
+						You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
 					</div>
 					<div>
-						With your resources you can build {canBuild.toLocaleString()}{' '}
+						With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
 						structures
 					</div>
 
@@ -179,7 +179,7 @@ export default function Build()
 									<tr>
 										<th>Structure</th>
 										<th>Owned</th>
-										<th>Can Build</th>
+										{/* <th>Can Build</th> */}
 										<th>Build</th>
 									</tr>
 								</thead>
@@ -190,7 +190,7 @@ export default function Build()
 											{empire.bldPop} (
 											{Math.round((empire.bldPop / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -208,7 +208,7 @@ export default function Build()
 											{empire.bldCash} (
 											{Math.round((empire.bldCash / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -226,7 +226,7 @@ export default function Build()
 											{empire.bldTroop} (
 											{Math.round((empire.bldTroop / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -244,7 +244,7 @@ export default function Build()
 											{empire.bldCost} (
 											{Math.round((empire.bldCost / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -262,7 +262,7 @@ export default function Build()
 											{empire.bldWiz} (
 											{Math.round((empire.bldWiz / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -280,7 +280,7 @@ export default function Build()
 											{empire.bldFood} (
 											{Math.round((empire.bldFood / empire.land) * 100)}%)
 										</td>
-										<td>{canBuild.toLocaleString()}</td>
+										{/* <td>{canBuild.toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -295,23 +295,25 @@ export default function Build()
 											/>
 										</td>
 									</tr>
-									{/* <tr>
-									<td>{eraArray[empire.era].blddef}</td>
-									<td>
-										{empire.bldDef} (
-										{Math.round((empire.bldDef / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldDef')}
-										/>
-									</td>
-								</tr> */}
+									<tr>
+										<td>{eraArray[empire.era].blddef}</td>
+										<td>
+											{empire.bldDef} (
+											{Math.round((empire.bldDef / empire.land) * 100)}%)
+										</td>
+										{/* // <td>{canBuild.toLocaleString()}</td> */}
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={empire.freeLand}
+												{...form.getInputProps('bldDef')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldDef' maxValue={canBuild} />
+													<HalfButton formName={form} fieldName='bldDef' maxValue={canBuild} /></div>}
+											/>
+										</td>
+									</tr>
 									<tr>
 										<td>Unused Land</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>

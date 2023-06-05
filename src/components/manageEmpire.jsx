@@ -13,7 +13,7 @@ export default function ManageEmpire()
 
 	return (
 		<main>
-			<Stack spacing='sm' align='center' grow>
+			<Stack spacing='sm' align='center'>
 				<Title order={1} align='center'>
 					Manage Empire
 				</Title>

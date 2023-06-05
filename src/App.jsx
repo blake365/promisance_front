@@ -151,7 +151,6 @@ function App()
 									onClick={() => dispatch(logout())}
 									variant='subtle'
 									color='red'
-
 									fullWidth
 								>
 									Logout
@@ -160,7 +159,7 @@ function App()
 						</Navbar>
 					}
 					header={
-						<Header height={70} p='sm'>
+						<Header height={60} p='sm'>
 							<Group position='apart' spacing='sm'>
 								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
 									<Burger
