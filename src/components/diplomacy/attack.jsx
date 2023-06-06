@@ -43,8 +43,8 @@ export default function Attack()
     const dispatch = useDispatch()
 
     const [otherEmpires, setOtherEmpires] = useState()
-    const [selectedEmpire, setSelectedEmpire] = useState()
-    const [selectedAttack, setSelectedAttack] = useState()
+    const [selectedEmpire, setSelectedEmpire] = useState('')
+    const [selectedAttack, setSelectedAttack] = useState('')
     const [open, setOpen] = useState(false)
 
     const form = useForm({
@@ -82,13 +82,20 @@ export default function Attack()
         {
             try {
                 const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
-                let otherEmpires = res.data.map(({ name, empireId, land, era, race }) => ({ name, empireId, land, era, race }))
+                let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth }) => ({ name, empireId, land, era, race, networth }))
                 // let dataFormat = otherEmpires.map((empire) =>
                 //     ({ value: empire.empireId.toLocaleString(), label: `(#${empire.empireId}) ${empire.name} - land: ${empire.land.toLocaleString()} era: ${eraArray[empire.era].name} race: ${raceArray[empire.race].name}` })
                 // )
                 let dataFormat = otherEmpires.map((empire) =>
                 ({
-                    value: empire.empireId.toLocaleString(), land: empire.land.toLocaleString(), race: raceArray[empire.race].name, era: eraArray[empire.era].name, name: empire.name, empireId: empire.empireId, label: `(#${empire.empireId}) ${empire.name}`
+                    value: empire.empireId.toLocaleString(),
+                    land: empire.land.toLocaleString(),
+                    networth: empire.networth.toLocaleString(),
+                    race: raceArray[empire.race].name,
+                    era: eraArray[empire.era].name,
+                    name: empire.name,
+                    empireId: empire.empireId,
+                    label: `(#${empire.empireId}) ${empire.name}`
                 })
                 )
                 // console.log(otherEmpires)
@@ -101,13 +108,14 @@ export default function Attack()
     }, [])
 
     const SelectItem = forwardRef(
-        ({ land, era, empireId, name, race, ...others }, ref) => (
+        ({ land, era, empireId, name, race, networth, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <div>
-                    <Text size='md'>(#{empireId}) {name}</Text>
-                    <Text size='xs'>Land: {land}</Text>
-                    <Text size='xs'>Era: {era}</Text>
-                    <Text size='xs'>Race: {race}</Text>
+                    <Text size='md' weight='bold'>(#{empireId}) {name}</Text>
+                    <Text size='md'>Land: {land} acres</Text>
+                    <Text size='md'>Net: ${networth}</Text>
+                    <Text size='md'>Era: {era}</Text>
+                    <Text size='md'>Race: {race}</Text>
                 </div>
             </div>
         )
@@ -128,6 +136,59 @@ export default function Attack()
                         Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
                     </div>
                     <Group position='center'>
+                        <Card sx={{ width: '300px' }}>
+                            <Card.Section withBorder inheritPadding py="xs">
+                                <Group position='apart'>
+                                    <Text weight={500}>Attack:</Text>
+                                </Group>
+                            </Card.Section>
+                            <form onSubmit={form.onSubmit((values) =>
+                            {
+                                console.log(values)
+                                // dispatch(clearResult)
+                            })}>
+                                <Stack spacing='sm' align='center'>
+                                    {otherEmpires && (
+                                        <Select
+                                            searchable
+                                            searchValue={selectedEmpire}
+                                            onSearchChange={setSelectedEmpire}
+                                            label="Select an Empire to Attack"
+                                            placeholder="Pick one"
+                                            withAsterisk
+                                            itemComponent={SelectItem}
+                                            data={otherEmpires}
+                                            withinPortal
+                                            sx={{ width: '100%' }}
+                                            {...form.getInputProps('empire')}
+                                        />
+                                    )}
+                                    <Select
+                                        value={selectedAttack}
+                                        onChange={setSelectedAttack}
+                                        label="Select an Attack Type"
+                                        placeholder="Pick one"
+                                        withAsterisk
+                                        withinPortal
+                                        // itemComponent={SelectAttack}
+                                        data={[
+                                            { value: '1', label: 'Standard Attack' },
+                                            { value: '2', label: 'Surprise Attack' },
+                                            { value: '3', label: 'Guerilla Strike' },
+                                            { value: '4', label: 'Lay Siege' },
+                                            { value: '5', label: 'Air Strike' },
+                                            { value: '6', label: 'Coastal Assault' }
+                                        ]}
+                                        {...form.getInputProps('attack')}
+                                    />
+
+                                    <Button color='red' type='submit'>
+                                        Attack
+                                    </Button>
+                                </Stack>
+                            </form>
+
+                        </Card>
                         <Card>
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Text weight={500}>Your Army:</Text>
@@ -185,62 +246,8 @@ export default function Attack()
                                 </Table>
                             </Card.Section>
                         </Card>
-
-                        <Card>
-
-                            <Card.Section withBorder inheritPadding py="xs">
-                                <Group position='apart'>
-                                    <Text weight={500}>Attack:</Text>
-
-                                </Group>
-                            </Card.Section>
-                            <form onSubmit={form.onSubmit((values) =>
-                            {
-                                console.log(values)
-                                // dispatch(clearResult)
-                            })}>
-                                <Stack spacing='sm' align='center'>
-                                    {otherEmpires && (
-                                        <Select
-                                            searchable
-                                            value={selectedEmpire}
-                                            onChange={setSelectedEmpire}
-                                            label="Select an Empire to Attack"
-                                            placeholder="Pick one"
-                                            withAsterisk
-                                            itemComponent={SelectItem}
-                                            data={otherEmpires}
-                                            withinPortal
-                                        />
-                                    )}
-                                    <Select
-                                        value={selectedAttack}
-                                        onChange={setSelectedAttack}
-                                        label="Select an Attack Type"
-                                        placeholder="Pick one"
-                                        withAsterisk
-                                        withinPortal
-                                        // itemComponent={SelectAttack}
-                                        data={[
-                                            { value: 1, label: 'Standard Attack' },
-                                            { value: 2, label: 'Surprise Attack' },
-                                            { value: 3, label: 'Guerilla Strike' },
-                                            { value: 4, label: 'Lay Siege' },
-                                            { value: 5, label: 'Air Strike' },
-                                            { value: 6, label: 'Coastal Assault' }
-                                        ]}
-                                    />
-
-                                    <Button color='red' type='submit'>
-                                        Attack
-                                    </Button>
-                                </Stack>
-                            </form>
-
-                        </Card>
-
                     </Group>
-                    <Card sx={{ width: '600px' }}>
+                    <Card sx={{ MaxWidth: '600px' }}>
                         <Card.Section withBorder inheritPadding py="xs" >
                             <Text weight={500} sx={{ cursor: "pointer" }} onClick={() => setOpen(!open)}>Attack Types: <span style={{ fontWeight: 300, fontSize: 14 }}>(click to expand)</span></Text>
                         </Card.Section>
