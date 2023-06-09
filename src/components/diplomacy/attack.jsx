@@ -30,7 +30,7 @@ import { raceArray } from '../../config/races'
 // select attack type
 // show attack type information (allow to hide?)
 // submit empire to attack and attack type
-// figure out time gate situation
+// HERE --> figure out time gate situation
 // return results and update troop info
 
 
@@ -52,12 +52,12 @@ export default function Attack()
             empireId: empire.id,
             type: 'attack',
             number: 1,
-            empire: '',
-            attack: ''
+            defenderId: '',
+            attackType: ''
         },
 
         validationRules: {
-            number: (value) => value <= Math.floor(empire.turns / 2) && value > 0,
+            number: (value) => empire.turns >= 2 && value > 0,
         },
 
         errorMessages: {
@@ -125,6 +125,19 @@ export default function Attack()
     // console.log(selectedAttack)
     // console.log(otherEmpires)
 
+    const sendAttack = async (values) =>
+    {
+        try {
+            const res = await Axios.post(`/attack`, values)
+            console.log(res.data)
+            // dispatch(setResult(res.data))
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         <section style={{ paddingTop: '1rem' }}>
             <Center>
@@ -145,6 +158,7 @@ export default function Attack()
                             <form onSubmit={form.onSubmit((values) =>
                             {
                                 console.log(values)
+                                sendAttack(values)
                                 // dispatch(clearResult)
                             })}>
                                 <Stack spacing='sm' align='center'>
@@ -160,7 +174,7 @@ export default function Attack()
                                             data={otherEmpires}
                                             withinPortal
                                             sx={{ width: '100%' }}
-                                            {...form.getInputProps('empire')}
+                                            {...form.getInputProps('defenderId')}
                                         />
                                     )}
                                     <Select
@@ -172,14 +186,14 @@ export default function Attack()
                                         withinPortal
                                         // itemComponent={SelectAttack}
                                         data={[
-                                            { value: '1', label: 'Standard Attack' },
-                                            { value: '2', label: 'Surprise Attack' },
-                                            { value: '3', label: 'Guerilla Strike' },
-                                            { value: '4', label: 'Lay Siege' },
-                                            { value: '5', label: 'Air Strike' },
-                                            { value: '6', label: 'Coastal Assault' }
+                                            { value: 'standard', label: 'Standard Attack' },
+                                            { value: 'surprise', label: 'Surprise Attack' },
+                                            { value: 'trparm', label: 'Guerilla Strike' },
+                                            { value: 'trplnd', label: 'Lay Siege' },
+                                            { value: 'trpfly', label: 'Air Strike' },
+                                            { value: 'trpsea', label: 'Coastal Assault' }
                                         ]}
-                                        {...form.getInputProps('attack')}
+                                        {...form.getInputProps('attackType')}
                                     />
 
                                     <Button color='red' type='submit'>
