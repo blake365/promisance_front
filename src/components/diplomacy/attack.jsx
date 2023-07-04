@@ -16,7 +16,7 @@ import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
-import { clearResult, setResult } from '../../store/turnResultsSlice'
+import { setResult } from '../../store/turnResultsSlice'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'

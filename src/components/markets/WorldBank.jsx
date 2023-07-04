@@ -38,7 +38,10 @@ export default function WorldBank()
     const loanRate = (7.5 + size) / 100
     const savingRate = (4 + size) / 100
     const maxLoan = empire.networth * 50
-    const maxSavings = empire.networth * 100
+    let maxSavings = empire.networth * 100
+    let canSave = maxSavings
+    if (empire.cash < maxSavings) canSave = empire.cash
+
 
     let depositAmount = maxSavings - empire.bank
     if (depositAmount < 0) depositAmount = 0
@@ -174,10 +177,10 @@ export default function WorldBank()
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
-                                        max={maxSavings - empire.bank}
+                                        max={canSave - empire.bank}
                                         {...savingsForm.getInputProps('depositAmt')}
                                         rightSection={
-                                            <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={maxSavings - empire.bank > 0 ? maxSavings - empire.bank : 0} />
+                                            <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={canSave - empire.bank > 0 ? canSave - empire.bank : 0} />
                                         }
                                     />
                                     <NumberInput

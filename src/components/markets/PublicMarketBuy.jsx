@@ -5,7 +5,6 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
 // import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 // import { MaxButton } from '../utilities/maxbutton'
 // import { fetchOtherItems } from '../../store/pubMarketSlice'
@@ -17,12 +16,14 @@ export default function PublicMarketBuy({ empire })
     // Public Market Workflow:
     // get other items from redux store
     // search for lowest price troops of each type
+    //TODO: organize market items to simplify display
     // display in market view
     // on purchase, add items to current empire, deduct cash spent
     // allow for partial purchases, update entry in db
     // add cash spent to selling empire, remove entry from db
     // refresh search for new lowest price troops of each type
     //TODO: create news event for seller that shows items were purchased
+    //TODO: custom ordering view (show orders on sell side so they can be filled)
 
     const { otherItems } = useSelector((state) => state.market)
 
@@ -69,7 +70,7 @@ export default function PublicMarketBuy({ empire })
         return temp / step;
     }
 
-    const itemsToBuy = otherItems.map((item) =>
+    const itemsToBuy = otherItems?.map((item) =>
     {
         let createdAt = new Date(item.createdAt)
         createdAt = createdAt.getTime()

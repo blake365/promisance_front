@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
-//FIXME: bug with data loading/rendering?? maybe fixed
+//FIXME: bug with data loading/rendering??
 
 export default function PublicMarket()
 {
