@@ -76,6 +76,18 @@ export default function Attack()
         }
     }
 
+    const sendAttack = async (values) =>
+    {
+        try {
+            const res = await Axios.post(`/attack`, values)
+            console.log(res.data)
+            dispatch(setResult(res.data))
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() =>
     {
         const loadOtherEmpires = async () =>
@@ -105,7 +117,7 @@ export default function Attack()
             }
         }
         loadOtherEmpires()
-    }, [])
+    }, [empire.offTotal])
 
     const SelectItem = forwardRef(
         ({ land, era, empireId, name, race, networth, ...others }, ref) => (
@@ -125,17 +137,7 @@ export default function Attack()
     // console.log(selectedAttack)
     // console.log(otherEmpires)
 
-    const sendAttack = async (values) =>
-    {
-        try {
-            const res = await Axios.post(`/attack`, values)
-            console.log(res.data)
-            // dispatch(setResult(res.data))
-            loadEmpireTest()
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
 
 
     return (
