@@ -5,7 +5,6 @@ import
 	SimpleGrid,
 } from '@mantine/core'
 
-
 const NetProduced = (props) =>
 {
 	return (
@@ -22,6 +21,24 @@ const NetProduced = (props) =>
 			</Text>
 		</>
 	)
+}
+
+const attackResult = (result) =>
+{
+	if (result.result === 'success') {
+		return (<>
+			<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
+			</span></Text>
+			<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+			<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+		</>)
+	} else if (result.result === 'fail') {
+		return (<>
+			<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
+			<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+			<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+		</>)
+	}
 }
 
 const spellResult = (result) =>
@@ -71,6 +88,7 @@ export default function TurnResultCard({ data })
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 						},
 					})}>
+						{data.attack && attackResult(data.attack)}
 						{data.cast && spellResult(data.cast)}
 						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
 
