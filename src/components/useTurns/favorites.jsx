@@ -1,4 +1,4 @@
-import { Grid, Paper, Stack, Table, Title } from '@mantine/core'
+import { Grid, Paper, Text, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
 
 
@@ -9,6 +9,7 @@ import Farm from './farm'
 import Industry from './industry'
 import Meditate from './meditate'
 import MagicCenter from './magiccenter'
+import Heal from './heal'
 
 const MapComponents = (title) =>
 {
@@ -31,6 +32,9 @@ const MapComponents = (title) =>
     else if (title === 'MagicCenter') {
         return <MagicCenter />
     }
+    else if (title === 'Heal') {
+        return <Heal />
+    }
 
 }
 
@@ -47,6 +51,7 @@ export default function Favorites()
             <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>
                 Favorites
             </Title>
+            {empire.favorites.length === 0 && <Text align='center'>Add favorites from the actions in the <b>Use Turns</b> category</Text>}
             <Grid
                 grow
                 justify='center'

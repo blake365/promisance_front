@@ -60,6 +60,16 @@ export default function GeneralAction(props)
 		}
 	}
 
+	let flavorText = `For each turn you spend ${props.flavor}, your empire produces 25%
+						more ${props.item}.`
+
+	if (props.explore) {
+		flavorText = `For each turn you spend ${props.flavor}, your empire will grow by ${props.explore} ${props.item}.`
+	}
+	if (props.type === 'heal') {
+		flavorText = `For each turn you spend ${props.flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 75% of its baseline value.`
+	}
+
 
 
 	return (
@@ -69,12 +79,9 @@ export default function GeneralAction(props)
 					<Title order={1} align='center' sx={{ display: 'inline-block', width: '200px' }}>
 						{props.title} <FavoriteButton title={props.title} empire={props.empire} />
 					</Title>
-					{props.explore ? (<Text>
-						For each turn you spend {props.flavor}, your empire will grow by {props.explore} {props.item}.
-					</Text>) : (<Text>
-						For each turn you spend {props.flavor}, your empire produces 25%
-						more {props.item}.
-					</Text>)}
+					<Text>
+						{flavorText}
+					</Text>
 					<form onSubmit={form.onSubmit((values) =>
 					{
 						dispatch(clearResult)

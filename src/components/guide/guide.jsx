@@ -19,6 +19,7 @@ import WorldBankGuide from "./guidepages/worldBank";
 import MagicCenterGuide from "./guidepages/magicCenter";
 import GuideIndex from "./guidepages/guideIndex";
 import AttackGuide from "./guidepages/attack";
+import HealGuide from "./guidepages/heal";
 
 export default function Guide(props)
 {
@@ -55,6 +56,8 @@ export default function Guide(props)
             return <EraGuide empire={props.empire} />
         case 'Military':
             return <MilitaryGuide empire={props.empire} />
+        case 'Heal':
+            return <HealGuide empire={props.empire} />
         case 'Buildings':
             return <BuildingsGuide empire={props.empire} />
         case 'Black%20Market':

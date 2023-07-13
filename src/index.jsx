@@ -26,6 +26,7 @@ import MagicCenter from './components/useTurns/magiccenter'
 import Scores from './components/scores'
 import Demolish from './components/useTurns/demolish'
 import Attack from './components/diplomacy/attack'
+import Heal from './components/useTurns/heal'
 
 import Home from './components/pages/Home'
 
@@ -61,6 +62,7 @@ ReactDOM.render(
 							<Route path='industry' element={<Industry />} />
 							<Route path='build' element={<Build />} />
 							<Route path='demolish' element={<Demolish />} />
+							<Route path='Heal' element={<Heal />} />
 							<Route path='Black%20Market' element={<PrivateMarket />} />
 							<Route path='Public%20Market' element={<PublicMarket />} />
 							<Route path='World%20Bank' element={<WorldBank />} />
