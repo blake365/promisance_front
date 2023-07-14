@@ -46,7 +46,7 @@ const ERA_PAST = {
 	d_trpsea: 6,
 	era_prev: -1,
 	era_next: 1,
-	color: 'indigo',
+	color: 'royalblue',
 }
 
 const ERA_PRESENT = {

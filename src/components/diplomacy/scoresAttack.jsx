@@ -1,0 +1,197 @@
+import
+{
+    Center,
+    Title,
+    Button,
+    Select,
+    Text,
+    Stack,
+    Card,
+    Table,
+    Group,
+    Collapse,
+} from '@mantine/core'
+import { useEffect, useState, forwardRef } from 'react'
+import { useForm } from '@mantine/form'
+import Axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { empireLoaded } from '../../store/empireSlice'
+import { setResult } from '../../store/turnResultsSlice'
+
+import { eraArray } from '../../config/eras'
+import { raceArray } from '../../config/races'
+import { loadScores } from '../../store/scoresSlice'
+
+// TODO: build attacking page
+// show your army information
+// show attack and def value of your troops
+// get list of other empires
+// select empire to attack
+// show other empire id, name, era, networth, land...
+// select attack type
+// show attack type information (allow to hide?)
+// submit empire to attack and attack type
+// HERE --> figure out time gate situation
+// return results and update troop info
+
+
+export default function ScoresAttack({ enemy })
+{
+
+    const { empire } = useSelector((state) => state.empire)
+    const dispatch = useDispatch()
+
+    const [selectedAttack, setSelectedAttack] = useState('')
+
+    const form = useForm({
+        initialValues: {
+            empireId: empire.id,
+            type: 'attack',
+            number: 1,
+            defenderId: enemy.id,
+            attackType: ''
+        },
+
+        validationRules: {
+            number: (value) => empire.turns >= 2 && value > 0,
+        },
+
+        errorMessages: {
+            number: "Can't attack that many times",
+        },
+    })
+
+    const loadEmpireTest = async () =>
+    {
+        try {
+            const res = await Axios.get(`/empire/${empire.uuid}`)
+            // console.log(res.data)
+            dispatch(empireLoaded(res.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const sendAttack = async (values) =>
+    {
+        try {
+            const res = await Axios.post(`/attack`, values)
+            // console.log(res.data)
+            dispatch(setResult(res.data))
+            loadEmpireTest()
+            dispatch(loadScores())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    return (
+        <section>
+            <Center>
+                <Stack spacing='sm' align='center'>
+                    <Group position='center'>
+                        <Card sx={{ width: '300px' }}>
+                            <Card.Section withBorder inheritPadding py="xs">
+                                <Group position='apart'>
+                                    <Text weight={500}>Attack:</Text>
+                                </Group>
+                            </Card.Section>
+                            <form onSubmit={form.onSubmit((values) =>
+                            {
+                                console.log(values)
+                                sendAttack(values)
+                                // dispatch(clearResult)
+                            })}>
+                                <Stack spacing='sm' align='center'>
+                                    <Title>{enemy.name} (#{enemy.id})</Title>
+                                    <Select
+                                        value={selectedAttack}
+                                        onChange={setSelectedAttack}
+                                        label="Select an Attack Type"
+                                        placeholder="Pick one"
+                                        withAsterisk
+                                        withinPortal
+                                        // itemComponent={SelectAttack}
+                                        data={[
+                                            { value: 'standard', label: 'Standard Attack' },
+                                            { value: 'surprise', label: 'Surprise Attack' },
+                                            { value: 'trparm', label: 'Guerilla Strike' },
+                                            { value: 'trplnd', label: 'Lay Siege' },
+                                            { value: 'trpfly', label: 'Air Strike' },
+                                            { value: 'trpsea', label: 'Coastal Assault' }
+                                        ]}
+                                        {...form.getInputProps('attackType')}
+                                    />
+
+                                    <Button color='red' type='submit'>
+                                        Attack
+                                    </Button>
+                                </Stack>
+                            </form>
+
+                        </Card>
+                        <Card>
+                            <Card.Section withBorder inheritPadding py="xs">
+                                <Text weight={500}>Your Army:</Text>
+                            </Card.Section>
+                            <Card.Section inheritPadding py="xs">
+                                <Table striped>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Unit
+                                            </th>
+                                            <th>
+                                                Number
+                                            </th>
+                                            <th>
+                                                Attack
+                                            </th>
+                                            <th>
+                                                Defense
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trparm}</td>
+                                            <td align='right'>{empire?.trpArm.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trparm}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trparm}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trplnd}</td>
+                                            <td align='right'>{empire?.trpLnd.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trplnd}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trplnd}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpfly}</td>
+                                            <td align='right'>{empire?.trpFly.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trpfly}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trpfly}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpsea}</td>
+                                            <td align='right'>{empire?.trpSea.toLocaleString()}</td>
+                                            <td align='right'>{eraArray[empire.era].o_trpsea}</td>
+                                            <td align='right'>{eraArray[empire.era].d_trpsea}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpwiz}</td>
+                                            <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
+                                            <td align='right'>N/A</td>
+                                            <td align='right'>N/A</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Card.Section>
+                        </Card>
+                    </Group>
+
+                </Stack>
+            </Center>
+        </section>
+    )
+}

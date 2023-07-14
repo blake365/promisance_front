@@ -1,6 +1,6 @@
-import { Paper, Grid, Text } from '@mantine/core'
+import { Paper, Grid, Text, Center } from '@mantine/core'
 import { eraArray } from '../../config/eras'
-
+import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 
 export default function InfoBar({ data })
 {
@@ -23,45 +23,69 @@ export default function InfoBar({ data })
 					<Text align='center'>Mail</Text>
 				</div> */}
 				<Grid.Col span={2}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Turns:
-					</Text>
+					<Center>
+						<GitBranch size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={1}>
+							Turns
+						</Text>
+					</Center>
 					<Text align='center'>{empire.turns}</Text>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Land:
-					</Text>{' '}
+					<Center>
+						<Mountains size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Land
+						</Text>
+					</Center>
 					<Text align='center'>{empire.land.toLocaleString()}</Text>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Money:
-					</Text>{' '}
+					<Center>
+						<Coins size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Money
+						</Text>
+					</Center>
+
 					<Text align='center'>${empire.cash.toLocaleString()}</Text>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						{eraArray[empire.era].food}:
-					</Text>{' '}
+					<Center>
+						<ForkKnife size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							{eraArray[empire.era].food}
+						</Text>
+					</Center>
 					<Text align='center'>{empire.food.toLocaleString()}</Text>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						{eraArray[empire.era].runes}:
-					</Text>{' '}
+					<Center>
+						<Brain size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							{eraArray[empire.era].runes}
+						</Text>
+					</Center>
+
 					<Text align='center'>{empire.runes.toLocaleString()}</Text>
 				</Grid.Col>
 				<Grid.Col span={2}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Health:
-					</Text>{' '}
+					<Center>
+						<Heart size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Health
+						</Text>
+					</Center>
+
 					<Text align='center'>{empire.health}%</Text>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Networth:
-					</Text>{' '}
+					<Center>
+						<Scales size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Net Worth
+						</Text>
+					</Center>
 					<Text align='center'>${empire.networth.toLocaleString()}</Text>
 				</Grid.Col>
 			</Grid>

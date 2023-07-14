@@ -77,6 +77,7 @@ export default function Cash()
 								stepHoldInterval={100}
 								{...form.getInputProps('tax')}
 							/>
+							<Text size='sm'>A high tax rate will lower your max health. </Text>
 							<Button type='submit' color='yellow'>Update</Button>
 						</Stack>
 					</form>

@@ -41,6 +41,7 @@ import { setPage } from './store/guideSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
+import { loadScores } from './store/scoresSlice'
 
 function App()
 {
