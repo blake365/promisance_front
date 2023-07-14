@@ -37,8 +37,8 @@ export const pubMarketSlice = createSlice({
 	name: 'market',
 	initialState: {
 		status: 'idle',
-		myItems: null,
-		otherItems: null,
+		myItems: [],
+		otherItems: [],
 	},
 	reducers: {
 		myItemsLoaded: (state, { payload }) => ({

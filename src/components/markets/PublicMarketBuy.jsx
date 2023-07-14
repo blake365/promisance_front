@@ -1,4 +1,4 @@
-import { Button, Center, Group, Card, Text } from '@mantine/core'
+import { Button, Center, Group, Card, Text, Loader } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 // import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -31,6 +31,7 @@ export default function PublicMarketBuy({ empire })
 
     // const { empire } = useSelector((state) => state.empire)
 
+    console.log(otherItems)
     const dispatch = useDispatch()
     // console.log(result)
 
@@ -108,9 +109,12 @@ export default function PublicMarketBuy({ empire })
     return (
         <main>
             <Center my={10}>
-                <Group spacing='sm' align='center'>
-                    {itemsToBuy}
-                </Group>
+                {!otherItems ?
+                    (<Loader />) : (
+                        <Group spacing='sm' align='center'>
+                            {itemsToBuy}
+                        </Group>
+                    )}
             </Center>
         </main>
     )
