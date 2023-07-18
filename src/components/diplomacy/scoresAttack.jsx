@@ -92,11 +92,7 @@ export default function ScoresAttack({ enemy })
                 <Stack spacing='sm' align='center'>
                     <Group position='center'>
                         <Card sx={{ width: '300px' }}>
-                            <Card.Section withBorder inheritPadding py="xs">
-                                <Group position='apart'>
-                                    <Text weight={500}>Attack:</Text>
-                                </Group>
-                            </Card.Section>
+
                             <form onSubmit={form.onSubmit((values) =>
                             {
                                 console.log(values)
@@ -104,7 +100,6 @@ export default function ScoresAttack({ enemy })
                                 // dispatch(clearResult)
                             })}>
                                 <Stack spacing='sm' align='center'>
-                                    <Title>{enemy.name} (#{enemy.id})</Title>
                                     <Select
                                         value={selectedAttack}
                                         onChange={setSelectedAttack}

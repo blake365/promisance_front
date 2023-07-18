@@ -8,15 +8,17 @@ const Sidebar = () =>
 	const infoLinks = [
 		'Summary',
 		'Overview',
+		'My News',
 		'Scores',
-		'Favorites',
 		'Mailbox',
+		'World News',
 		// 'Graveyard',
 		// 'Empire Search',
 		// 'News Search',
 		// 'Discord',
 	]
 	const turnLinks = [
+		'Favorites',
 		'Explore',
 		'Build',
 		'Farm',
@@ -82,7 +84,7 @@ const Sidebar = () =>
 						{link}
 					</Button>
 				))}
-				<Title order={4}>Diplomacy (Alpha)</Title>
+				<Title order={4}>Diplomacy</Title>
 				{foreignLinks.map((link, index) => (
 					<Button
 						component={Link}

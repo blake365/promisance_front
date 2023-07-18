@@ -33,6 +33,15 @@ export default function InfoBar({ data })
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
+						<Scales size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Net Worth
+						</Text>
+					</Center>
+					<Text align='center'>${empire.networth.toLocaleString()}</Text>
+				</Grid.Col>
+				<Grid.Col span={3}>
+					<Center>
 						<Mountains size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
 							Land
@@ -79,15 +88,7 @@ export default function InfoBar({ data })
 
 					<Text align='center'>{empire.health}%</Text>
 				</Grid.Col>
-				<Grid.Col span={3}>
-					<Center>
-						<Scales size={20} color={eraArray[empire.era].color} />
-						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Net Worth
-						</Text>
-					</Center>
-					<Text align='center'>${empire.networth.toLocaleString()}</Text>
-				</Grid.Col>
+
 			</Grid>
 		</Paper>
 	)
