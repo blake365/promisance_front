@@ -1,7 +1,6 @@
 import { Group, ThemeIcon, Tooltip } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { GiMagicGate, GiCheckedShield, GiBroadsword } from 'react-icons/gi'
-
+import { ShieldStar, Sword, CalendarCheck, NewspaperClipping, Envelope } from '@phosphor-icons/react'
 
 // add a whole new redux slice for empire effects
 
@@ -34,9 +33,6 @@ export default function EffectIcons()
         activeEffects = effects.map(effect => (effect.empireEffectName))
     }
 
-
-    // console.log(activeEffects)
-
     // console.log(activeEffects)
     return (
         <div>
@@ -44,20 +40,21 @@ export default function EffectIcons()
                 (<Group spacing='xs' ml='sm'>
                     <Tooltip label='Spell Shield' withArrow events={{ hover: true, focus: false, touch: true }}>
                         <ThemeIcon size="md" radius="md" color={activeEffects.includes('spell shield') ? "green" : 'gray'}>
-                            <GiCheckedShield />
+                            <ShieldStar />
                         </ThemeIcon>
                     </Tooltip>
                     <Tooltip label='Time Gate' withArrow events={{ hover: true, focus: false, touch: true }}>
                         <ThemeIcon size="md" radius="md" color={activeEffects.includes('time gate') ? "green" : 'gray'}>
-                            <GiMagicGate />
+                            <CalendarCheck />
                         </ThemeIcon>
                     </Tooltip>
                     <Tooltip label='Attack Boost' withArrow events={{ hover: true, focus: false, touch: true }}>
                         <ThemeIcon size="md" radius="md" color={activeEffects.includes('attack boost') ? "green" : 'gray'}>
-                            <GiBroadsword />
+                            <Sword />
                         </ThemeIcon>
                     </Tooltip>
                 </Group>)}
+
         </div>
     )
 }

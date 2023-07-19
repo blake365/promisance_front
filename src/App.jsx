@@ -42,6 +42,7 @@ import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
 import { loadScores } from './store/scoresSlice'
+import CommunicationIcons from './components/layout/communicationIcons'
 
 function App()
 {
@@ -200,6 +201,7 @@ function App()
 									</Group>
 								</Grid.Col>
 								<Grid.Col span={1}>
+									<CommunicationIcons />
 								</Grid.Col>
 
 							</Grid>
