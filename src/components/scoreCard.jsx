@@ -69,10 +69,11 @@ const ScoreCard = ({ empire, myId }) =>
                     <Button size='xs' compact disabled={empire.id === myId}>Send Aid</Button>
                     <Button size='xs' compact>Recent News</Button>
                 </Group>
+                <Collapse in={openedAttack}>
+                    <ScoresAttack enemy={empire} />
+                </Collapse>
             </Collapse>
-            <Collapse in={openedAttack}>
-                <ScoresAttack enemy={empire} />
-            </Collapse>
+
             <Card.Section sx={{ backgroundColor: 'white', height: '4px' }}>
             </Card.Section>
         </Card>

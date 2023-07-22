@@ -177,7 +177,7 @@ function App()
 							hiddenBreakpoint='sm'
 							hidden={!opened}
 							width={{ sm: 200 }}
-							zIndex={1000}
+							zIndex={100}
 						>
 							<Navbar.Section
 								grow

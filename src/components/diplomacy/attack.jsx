@@ -20,6 +20,7 @@ import { setResult } from '../../store/turnResultsSlice'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
+import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 
 // TODO: build attacking page
 // show your army information
@@ -123,11 +124,11 @@ export default function Attack()
         ({ land, era, empireId, name, race, networth, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <div>
-                    <Text size='md' weight='bold'>(#{empireId}) {name}</Text>
-                    <Text size='md'>Land: {land} acres</Text>
-                    <Text size='md'>Net: ${networth}</Text>
-                    <Text size='md'>Era: {era}</Text>
-                    <Text size='md'>Race: {race}</Text>
+                    <Text size='sm' weight='bold'>{name}(#{empireId}) </Text>
+                    <Text size='sm'><Mountains /> {land} acres</Text>
+                    <Text size='sm'><Scales /> ${networth}</Text>
+                    <Text size='sm'><Hourglass /> {era}</Text>
+                    <Text size='sm'><Alien /> {race}</Text>
                 </div>
             </div>
         )
