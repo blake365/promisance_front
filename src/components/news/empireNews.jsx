@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { Loader, Box, Title, Button, Group, Text } from "@mantine/core"
+import { Loader, Title, Button, Group, Text } from "@mantine/core"
 import { useState, useEffect } from "react"
 import Axios from "axios"
 import NewsItem from "./newsItem"
@@ -78,7 +78,7 @@ export default function EmpireNews()
                 <Title>Your News</Title>
                 <Button compact size='xs' mt='xs' onClick={handleMarkAsRead}>Mark as Read</Button>
             </Group>
-            <Box>
+            <div style={{ height: '90vh', overflow: 'scroll' }}>
                 {loading ? <Loader /> : (
                     news.map((item) =>
                     {
@@ -87,7 +87,7 @@ export default function EmpireNews()
                     )
                 )}
                 {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
-            </Box>
+            </div>
         </section>
     )
 }

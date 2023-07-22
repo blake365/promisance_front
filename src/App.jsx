@@ -20,7 +20,8 @@ import
 	ScrollArea,
 	Button,
 	Tooltip,
-	ThemeIcon
+	ThemeIcon,
+	Indicator
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -52,6 +53,8 @@ function App()
 	const dispatch = useDispatch()
 	const [modalOpened, setModalOpened] = useState(false);
 	const [drawer, { open, close }] = useDisclosure(false)
+	const [news, setNews] = useState()
+
 	let location = useLocation()
 	// console.log(location)
 
@@ -88,7 +91,16 @@ function App()
 		}
 	}
 
-
+	const checkForNews = async () =>
+	{
+		try {
+			const res = await Axios.get(`/news/${empire.id}/check`)
+			// console.log(res.data.new)
+			return res.data.new
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	useEffect(() =>
 	{
@@ -127,6 +139,16 @@ function App()
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
 
+	useEffect(() =>
+	{
+		if (empireStatus === 'succeeded') {
+			checkForNews().then((data) =>
+			{
+				console.log(data)
+				setNews(data)
+			})
+		}
+	})
 
 	useEffect(() =>
 	{
@@ -155,6 +177,7 @@ function App()
 							hiddenBreakpoint='sm'
 							hidden={!opened}
 							width={{ sm: 200 }}
+							zIndex={1000}
 						>
 							<Navbar.Section
 								grow
@@ -217,16 +240,18 @@ function App()
 										{
 											loadEmpireTest()
 											loadMarket()
-										}} >Refresh</Button>
+										}}>Refresh</Button>
 									</Group>
 								</Grid.Col>
 								<Grid.Col span={1}>
 									<Group spacing='xs' mr='sm' position='right'>
-										<Button onClick={open} size='sm' compact><NewspaperClipping size='1rem' /> </Button>
+										<Indicator color="green" processing disabled={!news} zIndex={3}>
+											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /> </Button>
+										</Indicator>
 									</Group>
 								</Grid.Col>
 							</Grid>
-							<Drawer opened={drawer} onClose={close} position='right' size='lg' sc>
+							<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
 								<EmpireNews />
 							</Drawer>
 							<TurnResultContainer />
