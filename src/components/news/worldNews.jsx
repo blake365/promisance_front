@@ -21,12 +21,18 @@ export default function WorldNews()
 
     let myId = empire.id
 
+    let body = {
+        skip: 0,
+        take: 25,
+        view: true
+    }
+
     useEffect(() =>
     {
         const getNews = async () =>
         {
             try {
-                const res = await Axios.get('/news/');
+                const res = await Axios.post('/news/', body);
                 const data = res.data;
                 return data;
             } catch (error) {

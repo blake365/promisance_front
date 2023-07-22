@@ -1,4 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import Axios from 'axios'
+import { useDisclosure } from '@mantine/hooks';
 import
 {
 	ColorSchemeProvider,
@@ -6,13 +9,8 @@ import
 	Loader,
 	MantineProvider,
 	Modal,
-	Grid
-} from '@mantine/core'
-import { Outlet, useNavigate } from 'react-router-dom'
-import Axios from 'axios'
-import { useState } from 'react'
-import
-{
+	Grid,
+	Drawer,
 	AppShell,
 	Burger,
 	Header,
@@ -20,7 +18,9 @@ import
 	Navbar,
 	Title,
 	ScrollArea,
-	Button
+	Button,
+	Tooltip,
+	ThemeIcon
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -41,15 +41,17 @@ import { setPage } from './store/guideSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { loadScores } from './store/scoresSlice'
-import CommunicationIcons from './components/layout/communicationIcons'
+import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
+import EmpireNews from './components/news/empireNews';
+
+
 
 function App()
 {
 	const [opened, setOpened] = useState(false)
 	const dispatch = useDispatch()
 	const [modalOpened, setModalOpened] = useState(false);
-
+	const [drawer, { open, close }] = useDisclosure(false)
 	let location = useLocation()
 	// console.log(location)
 
@@ -72,6 +74,21 @@ function App()
 			console.log(error)
 		}
 	}
+
+	const loadMarket = async () =>
+	{
+		try {
+			if (empire) {
+				let marketValues = { empireId: empire.id }
+				dispatch(fetchMyItems(marketValues))
+				dispatch(fetchOtherItems(marketValues))
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+
 
 	useEffect(() =>
 	{
@@ -109,7 +126,6 @@ function App()
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
-
 
 
 	useEffect(() =>
@@ -197,14 +213,22 @@ function App()
 								<Grid.Col span={6}>
 									<Group spacing='xs' position='center'>
 										<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
-										<Button compact variant='light' onClick={() => { loadEmpireTest() }} >Refresh</Button>
+										<Button compact variant='light' onClick={() =>
+										{
+											loadEmpireTest()
+											loadMarket()
+										}} >Refresh</Button>
 									</Group>
 								</Grid.Col>
 								<Grid.Col span={1}>
-									<CommunicationIcons />
+									<Group spacing='xs' mr='sm' position='right'>
+										<Button onClick={open} size='sm' compact><NewspaperClipping size='1rem' /> </Button>
+									</Group>
 								</Grid.Col>
-
 							</Grid>
+							<Drawer opened={drawer} onClose={close} position='right' size='lg' sc>
+								<EmpireNews />
+							</Drawer>
 							<TurnResultContainer />
 							<Outlet />
 						</>)}

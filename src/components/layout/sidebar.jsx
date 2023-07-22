@@ -8,7 +8,6 @@ const Sidebar = () =>
 	const infoLinks = [
 		'Summary',
 		'Overview',
-		'My News',
 		'Scores',
 		'Mailbox',
 		'World News',
