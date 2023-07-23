@@ -78,7 +78,7 @@ export default function Demolish()
 			demoFood: 0,
 			demoTroop: 0,
 			demoWiz: 0,
-			// demoDef: 0,
+			demoDef: 0,
 			// totalBuild: totalBuild,
 		},
 
@@ -132,7 +132,7 @@ export default function Demolish()
 	totalDemo = demoNumberArray
 		.filter(Number)
 		.reduce((partialSum, a) => partialSum + a, 0)
-	console.log(totalDemo)
+	// console.log(totalDemo)
 	// console.log(value)
 
 	function setErrors(error)
@@ -144,7 +144,7 @@ export default function Demolish()
 	{
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
-			console.log(res.data)
+			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
 			console.log(error)
@@ -156,7 +156,7 @@ export default function Demolish()
 		try {
 			const res = await Axios.post('/demolish', values)
 			// dispatch(setResult(res.data))
-			console.log(res.data)
+			// console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()
@@ -170,7 +170,7 @@ export default function Demolish()
 		try {
 			const res = await Axios.post('/drop', values)
 			// dispatch(setResult(res.data))
-			console.log(res.data)
+			// console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()
@@ -203,7 +203,7 @@ export default function Demolish()
 							totalDemo <= canDemolish
 								? form.onSubmit((values) =>
 								{
-									console.log(values)
+									// console.log(values)
 									dispatch(clearResult)
 									doDemolish(values)
 								})
@@ -251,7 +251,7 @@ export default function Demolish()
 												hideControls
 												min={0}
 												defaultValue={0}
-												max={empire.freeLand}
+												max={Math.min(canDemolish, empire.bldCash)}
 												{...form.getInputProps('demoCash')}
 												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} /><HalfButton formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} /></div>}
 											/>
@@ -269,7 +269,7 @@ export default function Demolish()
 												hideControls
 												min={0}
 												defaultValue={0}
-												max={empire.freeLand}
+												max={Math.min(canDemolish, empire.bldTroop)}
 												{...form.getInputProps('demoTroop')}
 												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} /><HalfButton formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} /></div>}
 											/>
@@ -287,7 +287,7 @@ export default function Demolish()
 												hideControls
 												min={0}
 												defaultValue={0}
-												max={empire.freeLand}
+												max={Math.min(canDemolish, empire.bldCost)}
 												{...form.getInputProps('demoCost')}
 												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} /><HalfButton formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} /></div>}
 											/>
@@ -305,7 +305,7 @@ export default function Demolish()
 												hideControls
 												min={0}
 												defaultValue={0}
-												max={empire.freeLand}
+												max={Math.min(canDemolish, empire.bldWiz)}
 												{...form.getInputProps('demoWiz')}
 												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
 													<MaxButton formName={form} fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} />
@@ -326,7 +326,7 @@ export default function Demolish()
 												type='number'
 												min={0}
 												defaultValue={0}
-												max={empire.freeLand}
+												max={Math.min(canDemolish, empire.bldFood)}
 												{...form.getInputProps('demoFood')}
 												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
 													<MaxButton formName={form} fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} />
@@ -335,23 +335,27 @@ export default function Demolish()
 											/>
 										</td>
 									</tr>
-									{/* <tr>
-									<td>{eraArray[empire.era].blddef}</td>
-									<td>
-										{empire.bldDef} (
-										{Math.round((empire.bldDef / empire.land) * 100)}%)
-									</td>
-									<td>{canBuild.toLocaleString()}</td>
-									<td>
-										<NumberInput
-											hideControls
-											min={0}
-											defaultValue={0}
-											max={empire.freeLand}
-											{...form.getInputProps('bldDef')}
-										/>
-									</td>
-								</tr> */}
+									<tr>
+										<td>{eraArray[empire.era].blddef}</td>
+										<td>
+											{empire.bldDef} (
+											{Math.round((empire.bldDef / empire.land) * 100)}%)
+										</td>
+										<td>{Math.min(canDemolish, empire.bldDef).toLocaleString()}</td>
+										<td>
+											<NumberInput
+												hideControls
+												min={0}
+												defaultValue={0}
+												max={Math.min(canDemolish, empire.bldDef)}
+												{...form.getInputProps('bldDef')}
+												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
+													<MaxButton formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />
+													<HalfButton formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />
+												</div>}
+											/>
+										</td>
+									</tr>
 									<tr>
 										<td>Unused Land</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()} (
