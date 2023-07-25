@@ -144,9 +144,18 @@ function App()
 		if (empireStatus === 'succeeded') {
 			checkForNews().then((data) =>
 			{
-				console.log(data)
+				// console.log(data)
 				setNews(data)
 			})
+		}
+	})
+
+	useEffect(() =>
+	{
+		if (empireStatus === 'succeeded') {
+			dispatch(fetchEffects({
+				id: empire.id
+			}))
 		}
 	})
 

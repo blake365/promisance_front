@@ -33,6 +33,7 @@ import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
 import Favorites from './components/useTurns/favorites'
 import WorldNews from './components/news/worldNews'
+import MagicAttack from './components/diplomacy/magicAttack'
 
 // import Guide from './components/guide/guide'
 
@@ -68,6 +69,7 @@ ReactDOM.render(
 							<Route path='Magic%20Center' element={<MagicCenter />} />
 							<Route path='Manage%20Empire' element={<ManageEmpire />} />
 							<Route path='War%20Council' element={<Attack />} />
+							<Route path='Mage%20Council' element={<MagicAttack />} />
 							<Route path='World%20News' element={<WorldNews />} />
 						</Route>
 					</Routes>

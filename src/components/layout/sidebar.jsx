@@ -35,7 +35,7 @@ const Sidebar = () =>
 	]
 	const foreignLinks = [
 		'War Council',
-		'Offensive Magic',
+		'Mage Council',
 		'Intel Center'
 	]
 	const managementLinks = [
@@ -51,9 +51,9 @@ const Sidebar = () =>
 				{infoLinks.map((link, index) => (
 					<Button
 						component={Link}
+						compact
 						to={`/app/${link}`}
 						variant='subtle'
-
 						key={index}
 					>
 						{link}
@@ -63,6 +63,7 @@ const Sidebar = () =>
 				{turnLinks.map((link, index) => (
 					<Button
 						component={Link}
+						compact
 						to={`/app/${link}`}
 						variant='subtle'
 						fullWidth
@@ -75,6 +76,7 @@ const Sidebar = () =>
 				{financeLinks.map((link, index) => (
 					<Button
 						component={Link}
+						compact
 						to={`/app/${link}`}
 						variant='subtle'
 						fullWidth
@@ -87,6 +89,7 @@ const Sidebar = () =>
 				{foreignLinks.map((link, index) => (
 					<Button
 						component={Link}
+						compact
 						to={`/app/${link}`}
 						variant='subtle'
 						fullWidth
@@ -99,6 +102,7 @@ const Sidebar = () =>
 				{managementLinks.map((link, index) => (
 					<Button
 						component={Link}
+						compact
 						to={`/app/${link}`}
 						variant='subtle'
 						fullWidth
