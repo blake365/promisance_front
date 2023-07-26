@@ -95,7 +95,6 @@ export default function MagicCenter()
     const SelectItem = forwardRef(
         ({ label, power, cost, ...others }, ref) => (
             <div ref={ref} {...others}>
-
                 <div>
                     <Text size='md'>{label}</Text>
                     <Text size='xs'>Power: {power}</Text>
@@ -161,13 +160,14 @@ export default function MagicCenter()
                                 required
                                 itemComponent={SelectItem}
                                 data={[
-                                    // { value: 0, label: 'Spell Shield' },
+                                    { value: 0, label: 'Spell Shield', power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
                                     { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17) },
                                     { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
+                                    { value: 5, label: 'Open Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 20) },
+                                    { value: 6, label: 'Close Time Gate', power: 80, cost: Math.ceil(baseCost(empire) * 14.5) },
                                     { value: 3, label: `Advance to ${nextEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
                                     { value: 4, label: `Regress to ${prevEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
-                                    // { value: 5, label: 'Open Time Gate' },
-                                    // { value: 6, label: 'Close Time Gate' },
+
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
@@ -182,7 +182,7 @@ export default function MagicCenter()
                             />
 
                             <Button color='grape' type='submit'>
-                                Cast Spells
+                                Cast Spell
                             </Button>
                         </Stack>
                     </form>

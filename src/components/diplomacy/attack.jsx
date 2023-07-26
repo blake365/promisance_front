@@ -66,6 +66,11 @@ export default function Attack()
         },
     })
 
+    const getPower = (empire) =>
+    {
+        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
+    }
+
     const loadEmpireTest = async () =>
     {
         try {
@@ -256,8 +261,8 @@ export default function Attack()
                                         <tr>
                                             <td>{eraArray[empire.era].trpwiz}</td>
                                             <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
-                                            <td align='right'>N/A</td>
-                                            <td align='right'>N/A</td>
+                                            <th align='center'>Power</th>
+                                            <td align='right'>{getPower(empire)}</td>
                                         </tr>
                                     </tbody>
                                 </Table>

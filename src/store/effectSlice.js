@@ -1,28 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
 
-// export const create = createAsyncThunk(
-// 	'empire/created',
-// 	async (values, thunkAPI) => {
-// 		try {
-// 			// console.log(values)
-// 			const res = await Axios.post('/empire/', values)
-// 			// console.log(res)
-// 			let data = res.data
-// 			return data
-// 		} catch (e) {
-// 			console.log(e)
-// 			return thunkAPI.rejectWithValue()
-// 		}
-// 	}
-// )
-
 export const fetchEffects = createAsyncThunk(
 	'effects/fetch',
 	async ({ id }, thunkAPI) => {
 		try {
 			const effects = await Axios.post(`/empire/effects`, { empireId: id })
-			console.log(effects.data)
+			// console.log(effects.data)
 			return {
 				effects: effects.data,
 			}

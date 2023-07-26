@@ -10,7 +10,7 @@ export default function EffectIcons()
     let effects = useSelector((state) => state.effects.effects)
     let now = new Date()
 
-    console.log(effects)
+    // console.log(effects)
     let activeEffects = []
     if (effects && effects.length > 0) {
         activeEffects = effects.map(effect => (effect.empireEffectName))
@@ -23,17 +23,17 @@ export default function EffectIcons()
                 (<Group spacing='xs' ml='sm'>
                     {effects.map(effect =>
                     {
-                        let effectAge = (now.valueOf() - new Date(effect.createdAt).getTime()) / 60000
+                        let effectAge = (now.valueOf() - new Date(effect.updatedAt).getTime()) / 60000
                         // age in minutes
                         // console.log(effectAge)
                         effectAge = Math.floor(effectAge)
 
-                        if (effectAge > effect.empireEffectValue) {
-                            console.log('expired')
-                        }
-                        else {
-                            console.log('active')
-                        }
+                        // if (effectAge > effect.empireEffectValue) {
+                        //      console.log('expired')
+                        // }
+                        // else {
+                        //      console.log('active')
+                        // }
 
                         let remaining = effect.empireEffectValue - effectAge
                         let percentRemaining = remaining / effect.empireEffectValue * 100
@@ -50,7 +50,7 @@ export default function EffectIcons()
                         return (
                             <Tooltip label={
                                 effect.empireEffectName
-                            } withArrow events={{ hover: true, focus: false, touch: true }}>
+                            } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
                                 <RingProgress
                                     thickness={4}
                                     sections={[{ value: percentRemaining, color: 'green' }]}
