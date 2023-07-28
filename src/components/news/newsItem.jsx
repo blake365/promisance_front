@@ -1,6 +1,6 @@
 import { Button, Center, Group, Card, Text, Loader, Box, Badge } from '@mantine/core'
 
-import { Sword, Shield, ShoppingCart } from '@phosphor-icons/react'
+import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand } from '@phosphor-icons/react'
 
 
 export default function NewsItem({ item, now })
@@ -26,6 +26,7 @@ export default function NewsItem({ item, now })
     let highlight = ''
     if (item.result === 'success') highlight = 'green'
     if (item.result === 'fail') highlight = 'red'
+    if (item.result === 'shielded') highlight = 'blue'
 
     const parseContent = (content) =>
     {
@@ -43,6 +44,9 @@ export default function NewsItem({ item, now })
         if (type === 'attack' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'attack' && result === 'fail') return <Sword size={24} color={highlight} weight='fill' />
         if (type === 'market' && result === 'success') return <ShoppingCart size={24} color={highlight} weight='fill' />
+        if (type === 'spell' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
+        if (type === 'spell' && result === 'fail') return <MagicWand size={24} color={highlight} weight='fill' />
+        if (type === 'spell' && result === 'shielded') return <ShieldStar size={24} color={highlight} weight='fill' />
     }
 
     return (

@@ -115,7 +115,7 @@ export default function WorldNews()
             type: null
         }
 
-        if (values.empire1) searchBody.empire = values.empire
+        if (values.empire) searchBody.empire = values.empire
         // if (values.empire2) searchBody.empire2 = values.empire2
         if (values.type !== 'all') searchBody.type = values.type
 
@@ -179,7 +179,7 @@ export default function WorldNews()
                                 { value: null, label: 'All' },
                                 { value: 'attack', label: 'Attack' },
                                 { value: 'market', label: 'Market' },
-                                { value: 'magic', label: 'Magic' },
+                                { value: 'spell', label: 'Magic' },
                             ]}
                             {...form.getInputProps('type')}
                             size='xs'

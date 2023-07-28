@@ -43,7 +43,8 @@ const attackResult = (result) =>
 
 const spellResult = (result) =>
 {
-	if (result.result === 'success') {
+	// console.log(result)
+	if (result.result === 'success' || result.result === 'shielded') {
 		if (result.food) {
 			return (<>
 				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> {result.food.toLocaleString()}</span> {result.descriptor}.</Text>
@@ -54,12 +55,16 @@ const spellResult = (result) =>
 			</>)
 		} else {
 			// covers time era changes
-			return (<>
-				<Text align='center' weight='bold'>{result.message}</Text>
-			</>)
+			let lines = result.message.split('/n')
+			return lines.map((line, index) =>
+			{
+				let weight = 'normal'
+				if (index === 0) weight = 'bold'
+				return <Text key={index} weight={weight} align='center'>{line}</Text>
+			})
 		}
 	} else if (result.result === 'fail') {
-		//TODO: untested
+		//untested
 		return (<>
 			<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
 		</>)
@@ -91,8 +96,6 @@ export default function TurnResultCard({ data })
 						{data.attack && attackResult(data.attack)}
 						{data.cast && spellResult(data.cast)}
 						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
-
-
 						<SimpleGrid
 							cols={3}
 							spacing='xs'

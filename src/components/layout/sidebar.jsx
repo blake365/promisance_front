@@ -35,7 +35,7 @@ const Sidebar = () =>
 	]
 	const foreignLinks = [
 		'War Council',
-		'Mage Council',
+		// 'Mage Council',
 		'Intel Center'
 	]
 	const managementLinks = [
