@@ -1,7 +1,6 @@
 import
 {
     Center,
-    Title,
     Button,
     Select,
     Text,
@@ -9,9 +8,9 @@ import
     Card,
     Table,
     Group,
-    Collapse,
+
 } from '@mantine/core'
-import { useEffect, useState, forwardRef } from 'react'
+import { useState, } from 'react'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,21 +18,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
 
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
 import { loadScores } from '../../store/scoresSlice'
-
-// TODO: build attacking page
-// show your army information
-// show attack and def value of your troops
-// get list of other empires
-// select empire to attack
-// show other empire id, name, era, networth, land...
-// select attack type
-// show attack type information (allow to hide?)
-// submit empire to attack and attack type
-// HERE --> figure out time gate situation
-// return results and update troop info
-
 
 export default function ScoresAttack({ enemy })
 {
@@ -51,11 +36,9 @@ export default function ScoresAttack({ enemy })
             defenderId: enemy.id,
             attackType: ''
         },
-
         validationRules: {
             number: (value) => empire.turns >= 2 && value > 0,
         },
-
         errorMessages: {
             number: "Can't attack that many times",
         },
@@ -173,12 +156,7 @@ export default function ScoresAttack({ enemy })
                                             <td align='right'>{eraArray[empire.era].o_trpsea}</td>
                                             <td align='right'>{eraArray[empire.era].d_trpsea}</td>
                                         </tr>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trpwiz}</td>
-                                            <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
-                                            <td align='right'>N/A</td>
-                                            <td align='right'>N/A</td>
-                                        </tr>
+
                                     </tbody>
                                 </Table>
                             </Card.Section>

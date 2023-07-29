@@ -82,10 +82,6 @@ export default function Attack()
         },
     })
 
-    const getPower = (empire) =>
-    {
-        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
-    }
 
     const loadEmpireTest = async () =>
     {
@@ -153,6 +149,29 @@ export default function Attack()
         loadOtherEmpires()
     }, [empire.offTotal])
 
+    const getPower = (empire) =>
+    {
+        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
+    }
+
+    function generalLog(number, base)
+    {
+        return Math.log(base) / Math.log(number)
+    }
+
+    const calcSizeBonus = ({ networth }) =>
+    {
+        let net = Math.max(networth, 1)
+        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
+        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
+        return size
+    }
+
+    const baseCost = (empire) =>
+    {
+        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
+    }
+
     const SelectItem = forwardRef(
         ({ land, era, empireId, name, race, networth, ...others }, ref) => (
             <div ref={ref} {...others}>
@@ -163,6 +182,16 @@ export default function Attack()
                     <Text size='sm'><Hourglass /> {era}</Text>
                     <Text size='sm'><Alien /> {race}</Text>
                 </div>
+            </div>
+        )
+    );
+
+    const SelectSpell = forwardRef(
+        ({ label, ratio, cost, ...others }, ref) => (
+            <div ref={ref} {...others}>
+                <Text size='md'>{label}</Text>
+                <Text size='xs'>Ratio: {ratio}</Text>
+                <Text size='xs'>Cost: {cost.toLocaleString()} {eraArray[empire.era].runes}</Text>
             </div>
         )
     );
@@ -178,10 +207,13 @@ export default function Attack()
                     <Title order={1} align='center'>
                         War Council
                     </Title>
-                    <div>
+                    <Text>
                         Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
-                    </div>
-                    <Group position='center' >
+                    </Text>
+                    <Text>
+                        Cast spells to capture land, steal resources, or destroy enemy resources. Spells take two turns.
+                    </Text>
+                    <Group position='center' align='flex-start'>
                         <Card sx={{ width: '300px' }}>
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
@@ -267,18 +299,18 @@ export default function Attack()
                                     <Select
                                         value={spellSelectedAttack}
                                         onChange={spellSetSelectedAttack}
-                                        label="Select an Attack Type"
+                                        label="Select a Spell"
                                         placeholder="Pick one"
                                         withAsterisk
                                         withinPortal
-                                        // itemComponent={SelectAttack}
+                                        itemComponent={SelectSpell}
                                         data={[
-                                            { value: 'fight', label: eraArray[empire.era].spell_fight },
-                                            { value: 'blast', label: eraArray[empire.era].spell_blast },
-                                            { value: 'steal', label: eraArray[empire.era].spell_steal },
-                                            { value: 'storm', label: eraArray[empire.era].spell_storm },
-                                            { value: 'runes', label: eraArray[empire.era].spell_runes },
-                                            { value: 'struct', label: eraArray[empire.era].spell_struct },
+                                            { value: 'fight', label: eraArray[empire.era].spell_fight, ratio: '2.2x', cost: Math.ceil(baseCost(empire) * 22.5) },
+                                            { value: 'blast', label: eraArray[empire.era].spell_blast, ratio: '1.15x', cost: Math.ceil(baseCost(empire) * 2.5) },
+                                            { value: 'steal', label: eraArray[empire.era].spell_steal, ratio: '1.75x', cost: Math.ceil(baseCost(empire) * 25.75) },
+                                            { value: 'storm', label: eraArray[empire.era].spell_storm, ratio: '1.21x', cost: Math.ceil(baseCost(empire) * 7.25) },
+                                            { value: 'runes', label: eraArray[empire.era].spell_runes, ratio: '1.3x', cost: Math.ceil(baseCost(empire) * 9.5) },
+                                            { value: 'struct', label: eraArray[empire.era].spell_struct, ratio: '1.7x', cost: Math.ceil(baseCost(empire) * 18) },
                                         ]}
                                         {...spellForm.getInputProps('spell')}
                                     />

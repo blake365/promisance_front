@@ -1,4 +1,4 @@
-import { Title, Card, Avatar, Badge, Text, Tooltip, Group, Indicator, Collapse, Button } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Tooltip, Group, Indicator, Collapse, Button } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
@@ -6,6 +6,8 @@ import { useState } from 'react'
 
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import ScoresAttack from './diplomacy/scoresAttack'
+import ScoresSpell from './diplomacy/scoresSpell'
+import ScoresNews from './news/scoresNews'
 
 
 
@@ -13,12 +15,15 @@ const ScoreCard = ({ empire, myId }) =>
 {
 
     const [opened, { toggle }] = useDisclosure(false);
-    const [openedAttack, setOpenedAttack] = useState(false);
-
 
     let bgColor = 'white'
     if (empire.id === myId) {
         bgColor = 'blue'
+    }
+
+    let disabled = false
+    if (empire.id === myId) {
+        disabled = true
     }
 
     return (
@@ -59,19 +64,43 @@ const ScoreCard = ({ empire, myId }) =>
                     </Group>
                 </Group>
             </Card.Section>
+
             <Collapse in={opened}>
                 <Text>{empire.profile}</Text>
-                <Group spacing='xs'>
-                    <Button size='xs' compact disabled={empire.id === myId}>Send Message</Button>
-                    <Button onClick={() => setOpenedAttack(!openedAttack)} size='xs' compact disabled={empire.id === myId}>Attack</Button>
-                    <Button size='xs' compact disabled={empire.id === myId}>Cast Spell</Button>
-                    <Button size='xs' compact disabled={empire.id === myId}>Trade</Button>
-                    <Button size='xs' compact disabled={empire.id === myId}>Send Aid</Button>
-                    <Button size='xs' compact>Recent News</Button>
-                </Group>
-                <Collapse in={openedAttack}>
-                    <ScoresAttack enemy={empire} />
-                </Collapse>
+                <Tabs defaultValue="">
+                    <Tabs.List>
+                        <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab>
+                        <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
+                        <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
+                        <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab>
+                        <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
+                        <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
+                    </Tabs.List>
+
+                    <Tabs.Panel value="Send Message" pt="xs">
+                        Send Message tab content
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Attack" pt="xs">
+                        <ScoresAttack enemy={empire} />
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Cast Spell" pt="xs">
+                        <ScoresSpell enemy={empire} />
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Trade" pt="xs">
+                        Trade tab content
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Send Aid" pt="xs">
+                        Send Aid tab content
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Recent News" pt="xs">
+                        <ScoresNews enemy={empire} />
+                    </Tabs.Panel>
+                </Tabs>
             </Collapse>
 
             <Card.Section sx={{ backgroundColor: 'white', height: '4px' }}>
