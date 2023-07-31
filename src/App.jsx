@@ -19,8 +19,6 @@ import
 	Title,
 	ScrollArea,
 	Button,
-	Tooltip,
-	ThemeIcon,
 	Indicator
 } from '@mantine/core'
 
@@ -36,13 +34,13 @@ import ThemeToggle from './components/utilities/themeToggle'
 import { useLocalStorage } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
-// import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
+import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 
 
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
+import { NewspaperClipping } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 
 

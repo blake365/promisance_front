@@ -1,27 +1,58 @@
 import { Paper, Grid, Text, Center } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
+import { useEffect, useState, useRef } from 'react'
+import './NumberChange.css';
+
+const AnimateNumberChange = ({ number, type }) =>
+{
+	const [prevNumber, setPrevNumber] = useState(number);
+	const numberDisplayRef = useRef(null);
+
+	useEffect(() =>
+	{
+		if (number !== prevNumber) {
+			const clas = getNumberClassName();
+			setPrevNumber(number);
+
+			// Apply the class to trigger the animation
+			numberDisplayRef.current.classList.add(clas);
+
+			// Remove the class after the animation duration to reset for the next change
+			setTimeout(() =>
+			{
+				numberDisplayRef.current.classList.remove(clas);
+			}, 1000); // Duration of the 'fadeBack' animation defined in CSS (1s)
+		}
+	}, [number, prevNumber]);
+
+	const getNumberClassName = () =>
+	{
+		if (number > prevNumber) {
+			return 'increased';
+		} else if (number < prevNumber) {
+			return 'decreased';
+		}
+		return 'same';
+	};
+
+	return (
+		<Text align='center' ref={numberDisplayRef} className={`number-display`}>
+			{type === 'networth' || type === 'cash' ? '$' : ''}{number.toLocaleString()}{type === 'health' ? '%' : ''}
+		</Text>
+	);
+};
+
+
 
 export default function InfoBar({ data })
 {
 	// console.log(data.empire)
 	const empire = data
+
 	return (
 		<Paper p='xs' shadow='xs' radius='xs' withBorder >
-			<Grid justify="space-between" grow columns={19}
-			// cols={7}
-			// spacing='xs'
-			// breakpoints={[
-			// 	{ maxWidth: 755, cols: 6 },
-			// 	{ maxWidth: 600, cols: 3 },
-			// ]}
-			>
-				{/* <div>
-					<Text weight='bold' align='center' color={eraArray[empire.era].color}>
-						Mail:
-					</Text>
-					<Text align='center'>Mail</Text>
-				</div> */}
+			<Grid justify="space-between" grow columns={19}>
 				<Grid.Col span={2}>
 					<Center>
 						<GitBranch size={20} color={eraArray[empire.era].color} />
@@ -29,7 +60,8 @@ export default function InfoBar({ data })
 							Turns
 						</Text>
 					</Center>
-					<Text align='center'>{empire.turns}</Text>
+
+					<AnimateNumberChange type='turns' number={empire.turns} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
@@ -38,7 +70,8 @@ export default function InfoBar({ data })
 							Net Worth
 						</Text>
 					</Center>
-					<Text align='center'>${empire.networth.toLocaleString()}</Text>
+
+					<AnimateNumberChange type='networth' number={empire.networth} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
@@ -47,7 +80,8 @@ export default function InfoBar({ data })
 							Land
 						</Text>
 					</Center>
-					<Text align='center'>{empire.land.toLocaleString()}</Text>
+
+					<AnimateNumberChange type='land' number={empire.land} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
@@ -57,7 +91,7 @@ export default function InfoBar({ data })
 						</Text>
 					</Center>
 
-					<Text align='center'>${empire.cash.toLocaleString()}</Text>
+					<AnimateNumberChange type='cash' number={empire.cash} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
@@ -66,7 +100,8 @@ export default function InfoBar({ data })
 							{eraArray[empire.era].food}
 						</Text>
 					</Center>
-					<Text align='center'>{empire.food.toLocaleString()}</Text>
+
+					<AnimateNumberChange type='food' number={empire.food} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
@@ -76,7 +111,7 @@ export default function InfoBar({ data })
 						</Text>
 					</Center>
 
-					<Text align='center'>{empire.runes.toLocaleString()}</Text>
+					<AnimateNumberChange type='runes' number={empire.runes} />
 				</Grid.Col>
 				<Grid.Col span={2}>
 					<Center>
@@ -85,8 +120,7 @@ export default function InfoBar({ data })
 							Health
 						</Text>
 					</Center>
-
-					<Text align='center'>{empire.health}%</Text>
+					<AnimateNumberChange type='health' number={empire.health} />
 				</Grid.Col>
 
 			</Grid>

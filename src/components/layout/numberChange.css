@@ -1,0 +1,24 @@
+/* NumberDisplay.css */
+.number-display {
+    transition: color 0.2s font-weight 0.2s;
+    /* Use an appropriate transition duration */
+}
+
+.increased {
+    color: green;
+    font-weight: bold;
+    animation: fadeBack 0.5s forwards;
+}
+
+.decreased {
+    color: red;
+    font-weight: bold;
+    animation: fadeBack 0.5s forwards;
+}
+
+@keyframes fadeBack {
+    to {
+        color: '';
+        font-weight: normal;
+    }
+}
