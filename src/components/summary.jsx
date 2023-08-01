@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
-import EmpireNews from './news/empireNews'
 
 export default function Summary()
 {
