@@ -68,9 +68,7 @@ export default function IntelCenter()
             try {
                 const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
                 let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth }) => ({ name, empireId, land, era, race, networth }))
-                // let dataFormat = otherEmpires.map((empire) =>
-                //     ({ value: empire.empireId.toLocaleString(), label: `(#${empire.empireId}) ${empire.name} - land: ${empire.land.toLocaleString()} era: ${eraArray[empire.era].name} race: ${raceArray[empire.race].name}` })
-                // )
+
                 let dataFormat = otherEmpires.map((empire) =>
                 ({
                     value: empire.empireId.toLocaleString(),
@@ -136,11 +134,6 @@ export default function IntelCenter()
         loadIntel().then((data) => setIntel(data))
     }, [empire.turns])
 
-
-    const getPower = (empire) =>
-    {
-        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
-    }
 
     function generalLog(number, base)
     {
@@ -213,7 +206,6 @@ export default function IntelCenter()
                         </form>
                     </Card>
                     {intel && intel.length > 0 ? (
-
                         <Accordion variant="separated" defaultValue={intel[0].uuid} sx={{
                             minWidth: 350, width: 700,
                             '@media (max-width: 650px)': {
@@ -238,7 +230,7 @@ export default function IntelCenter()
                             })}
 
                         </Accordion>
-                    ) : (<Loader />)}
+                    ) : (<div>None Available</div>)}
                 </Stack>
             </Center>
         </section>

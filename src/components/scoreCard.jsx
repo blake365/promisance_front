@@ -1,14 +1,13 @@
-import { Title, Card, Avatar, Tabs, Text, Tooltip, Group, Indicator, Collapse, Button } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Tooltip, Group, Indicator, Collapse } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { useState } from 'react'
 
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import ScoresAttack from './diplomacy/scoresAttack'
 import ScoresSpell from './diplomacy/scoresSpell'
 import ScoresNews from './news/scoresNews'
-
+import ScoresIntel from './diplomacy/scoresIntel'
 
 
 const ScoreCard = ({ empire, myId }) =>
@@ -67,11 +66,12 @@ const ScoreCard = ({ empire, myId }) =>
 
             <Collapse in={opened}>
                 <Text>{empire.profile}</Text>
-                <Tabs defaultValue="">
+                <Tabs defaultValue="" keepMounted={false}>
                     <Tabs.List>
                         <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab>
                         <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
                         <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
+                        <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
                         <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab>
                         <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
                         <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
@@ -87,6 +87,10 @@ const ScoreCard = ({ empire, myId }) =>
 
                     <Tabs.Panel value="Cast Spell" pt="xs">
                         <ScoresSpell enemy={empire} />
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="Intel" pt="xs">
+                        <ScoresIntel enemy={empire} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="Trade" pt="xs">
