@@ -46,6 +46,7 @@ export default function Attack()
     const [selectedAttack, setSelectedAttack] = useState('')
     const [spellSelectedEmpire, spellSetSelectedEmpire] = useState('')
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
+    const [error, setError] = useState('')
 
     const form = useForm({
         initialValues: {
@@ -96,11 +97,16 @@ export default function Attack()
 
     const sendAttack = async (values) =>
     {
+        setError('')
         try {
             const res = await Axios.post(`/attack`, values)
             // console.log(res.data)
-            dispatch(setResult(res.data))
-            loadEmpireTest()
+            if ("error" in res.data) {
+                setError(res.data.error)
+            } else {
+                dispatch(setResult(res.data))
+                loadEmpireTest()
+            }
         } catch (error) {
             console.log(error)
         }
@@ -108,13 +114,19 @@ export default function Attack()
 
     const sendSpellAttack = async (values) =>
     {
+        setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
             // console.log(res.data)
-            dispatch(setResult([res.data]))
-            loadEmpireTest()
+            if ("error" in res.data) {
+                setError(res.data.error)
+            } else {
+                dispatch(setResult([res.data]))
+                loadEmpireTest()
+            }
         } catch (error) {
             console.log(error)
+            setError(error)
         }
     }
 
@@ -213,6 +225,7 @@ export default function Attack()
                     <Text>
                         Cast spells to capture land, steal resources, or destroy enemy resources. Spells take two turns.
                     </Text>
+                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     <Group position='center' align='flex-start'>
                         <Card sx={{ width: '300px' }}>
                             <Card.Section withBorder inheritPadding py="xs">
@@ -323,7 +336,7 @@ export default function Attack()
                         </Card>
                         <Card>
                             <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                                <Text weight={500}>Your Army:</Text><Badge>{eraArray[empire.era].name}</Badge>
+                                <Text weight={500}>Your Army:</Text><Badge color={eraArray[empire.era].color}>{eraArray[empire.era].name}</Badge>
                             </Card.Section>
                             <Card.Section inheritPadding py="xs">
                                 <Table striped>

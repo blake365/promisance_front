@@ -27,6 +27,7 @@ export default function ScoresSpell({ enemy })
     const dispatch = useDispatch()
 
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
+    const [error, setError] = useState('')
 
     const spellForm = useForm({
         initialValues: {
@@ -81,12 +82,17 @@ export default function ScoresSpell({ enemy })
 
     const sendSpellAttack = async (values) =>
     {
+        setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
             // console.log(res.data)
-            dispatch(setResult([res.data]))
-            loadEmpireTest()
-            dispatch(loadScores())
+            if ("error" in res.data) {
+                setError(res.data.error)
+            } else {
+                dispatch(setResult([res.data]))
+                loadEmpireTest()
+                dispatch(loadScores())
+            }
         } catch (error) {
             console.log(error)
         }
@@ -107,6 +113,8 @@ export default function ScoresSpell({ enemy })
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
+                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
+
                     <Group position='center'>
                         <Card sx={{ width: '300px' }} py='lg'>
                             <Card.Section>

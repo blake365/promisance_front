@@ -15,9 +15,9 @@ const ScoreCard = ({ empire, myId }) =>
 
     const [opened, { toggle }] = useDisclosure(false);
 
-    let bgColor = 'white'
+    let color = ''
     if (empire.id === myId) {
-        bgColor = 'blue'
+        color = 'cyan'
     }
 
     let disabled = false
@@ -27,7 +27,7 @@ const ScoreCard = ({ empire, myId }) =>
 
     return (
         <Card shadow="sm" radius="xs" sx={{ width: '100%', }} key={empire.id}  >
-            <Card.Section sx={{ backgroundColor: bgColor, height: '4px' }}>
+            <Card.Section sx={{ height: '4px' }}>
             </Card.Section>
 
             <Card.Section onClick={toggle} sx={{ cursor: 'pointer' }}>
@@ -38,7 +38,7 @@ const ScoreCard = ({ empire, myId }) =>
                     <Indicator color='blue' position='top-start' disabled>
                         <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
                             <Avatar size="md" />
-                            <Title order={4} >
+                            <Title order={4} color={color}>
                                 {empire.name}(#{empire.id})
                             </Title>
                         </Group>
@@ -107,7 +107,7 @@ const ScoreCard = ({ empire, myId }) =>
                 </Tabs>
             </Collapse>
 
-            <Card.Section sx={{ backgroundColor: 'white', height: '4px' }}>
+            <Card.Section sx={{ height: '4px' }}>
             </Card.Section>
         </Card>
     )

@@ -26,6 +26,7 @@ export default function ScoresIntel({ enemy })
 
     const { empire } = useSelector((state) => state.empire)
     const [intel, setIntel] = useState()
+    const [error, setError] = useState('')
 
     const dispatch = useDispatch()
 
@@ -34,8 +35,8 @@ export default function ScoresIntel({ enemy })
         spiedEmpireId: enemy.id,
     }
 
-    console.log(typeof body.spiedEmpireId)
-    console.log(typeof body.ownerId)
+    // console.log(typeof body.spiedEmpireId)
+    // console.log(typeof body.ownerId)
     // load intel
     useEffect(() =>
     {
@@ -106,12 +107,17 @@ export default function ScoresIntel({ enemy })
 
     const sendSpellAttack = async (values) =>
     {
+        setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
             // console.log(res.data)
-            dispatch(setResult([res.data]))
-            loadEmpireTest()
-            dispatch(loadScores())
+            if ("error" in res.data) {
+                setError(res.data.error)
+            } else {
+                dispatch(setResult([res.data]))
+                loadEmpireTest()
+                dispatch(loadScores())
+            }
         } catch (error) {
             console.log(error)
         }
@@ -121,7 +127,10 @@ export default function ScoresIntel({ enemy })
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
+                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
+
                     <Group position='center'>
+
                         <Card py='lg'>
                             <Card.Section>
                                 <Text align='center'>Magic Power: {getPower(empire)}</Text>
@@ -135,7 +144,7 @@ export default function ScoresIntel({ enemy })
                                 })}>
                                     <Stack spacing='sm' align='center'>
                                         <Button color='indigo' type='submit'>
-                                            Get Intel
+                                            Cast Spell
                                         </Button>
                                     </Stack>
                                 </form>

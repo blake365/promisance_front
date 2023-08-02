@@ -27,6 +27,7 @@ export default function ScoresAttack({ enemy })
     const dispatch = useDispatch()
 
     const [selectedAttack, setSelectedAttack] = useState('')
+    const [error, setError] = useState('')
 
     const form = useForm({
         initialValues: {
@@ -57,12 +58,17 @@ export default function ScoresAttack({ enemy })
 
     const sendAttack = async (values) =>
     {
+        setError('')
         try {
             const res = await Axios.post(`/attack`, values)
             // console.log(res.data)
-            dispatch(setResult(res.data))
-            loadEmpireTest()
-            dispatch(loadScores())
+            if ("error" in res.data) {
+                setError(res.data.error)
+            } else {
+                dispatch(setResult(res.data))
+                loadEmpireTest()
+                dispatch(loadScores())
+            }
         } catch (error) {
             console.log(error)
         }
@@ -73,6 +79,7 @@ export default function ScoresAttack({ enemy })
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
+                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     <Group position='center'>
                         <Card sx={{ width: '300px' }}>
 
