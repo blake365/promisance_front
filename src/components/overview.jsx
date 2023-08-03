@@ -79,8 +79,9 @@ export default function Overview()
 		empire.trpWiz * 0.5
 	)
 
-	let loanpayed = Math.min(Math.round(empire.loan / 200), empire.cash)
-
+	console.log(empire.loan)
+	let loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
+	console.log(loanpayed)
 	//TODO: set up race/era modifier
 	let expensesBonus = Math.min(0.5, empire.bldCost / Math.max(empire.land, 1))
 

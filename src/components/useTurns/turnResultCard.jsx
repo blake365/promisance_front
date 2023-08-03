@@ -75,7 +75,7 @@ const spellResult = (result) =>
 
 export default function TurnResultCard({ data })
 {
-	// console.log(data)
+	console.log(data)
 	return (
 		<>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
@@ -93,6 +93,7 @@ export default function TurnResultCard({ data })
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 						},
 					})}>
+						{data?.messages?.desertion && <Text align='center' color='red' weight='bold'>{data.messages.desertion}</Text>}
 						{data.attack && attackResult(data.attack)}
 						{data.cast && spellResult(data.cast)}
 						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}

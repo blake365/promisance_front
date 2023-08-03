@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
+import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
 
 function generalLog(number, base)
 {
@@ -35,12 +36,14 @@ export default function WorldBank()
     }
 
     const size = calcSizeBonus(empire.networth)
-    const loanRate = (7.5 + size) / 100
-    const savingRate = (4 + size) / 100
+    const loanRate = (BANK_LOANRATE + size) / 100
+    const savingRate = (BANK_SAVERATE + size) / 100
     const maxLoan = empire.networth * 50
     let maxSavings = empire.networth * 100
     let canSave = maxSavings
     if (empire.cash < maxSavings) canSave = empire.cash
+
+    let canLoan = maxLoan - empire.loan < 0 ? 0 : maxLoan - empire.loan
 
 
     let depositAmount = maxSavings - empire.bank
@@ -206,7 +209,7 @@ export default function WorldBank()
                             </Group>
                             <Group spacing='xs' noWrap grow>
                                 <Text>Available to Borrow:</Text>
-                                <Text align='right'>${maxLoan.toLocaleString()}</Text>
+                                <Text align='right'>${canLoan.toLocaleString()}</Text>
                             </Group>
                             <Group spacing='xs' noWrap grow>
                                 <Text>Interest Rate: </Text>
@@ -240,7 +243,7 @@ export default function WorldBank()
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
-                                        max={maxLoan}
+                                        max={maxLoan - empire.loan}
                                         {...loanForm.getInputProps('loanAmt')}
                                         rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={maxLoan} />}
                                     />
