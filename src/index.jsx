@@ -25,6 +25,7 @@ import Scores from './components/scores'
 import Demolish from './components/useTurns/demolish'
 import Attack from './components/diplomacy/attack'
 import Heal from './components/useTurns/heal'
+import Mailbox from './components/mail/mailbox'
 
 import Home from './components/pages/Home'
 
@@ -71,6 +72,7 @@ ReactDOM.render(
 							<Route path='War%20Council' element={<Attack />} />
 							<Route path='Intel%20Center' element={<IntelCenter />} />
 							<Route path='World%20News' element={<WorldNews />} />
+							<Route path='Mailbox' element={<Mailbox />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

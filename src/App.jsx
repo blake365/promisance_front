@@ -183,7 +183,7 @@ function App()
 							padding='sm'
 							hiddenBreakpoint='sm'
 							hidden={!opened}
-							width={{ sm: 200 }}
+							width={{ sm: 200, base: 200 }}
 							zIndex={100}
 						>
 							<Navbar.Section
