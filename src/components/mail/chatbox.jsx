@@ -6,12 +6,12 @@
 // component will render a form for sending a new message
 // component will refresh when a new message is sent
 
-import { Button, TextInput, Group, Card, Text, Loader, Stack, Box } from '@mantine/core'
+import { Button, Group, Card, Text, Loader, Stack, Box, Textarea } from '@mantine/core'
 import { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import { useForm } from '@mantine/form'
 
-// import { } from '@phosphor-icons/react'
+import { PaperPlaneRight } from '@phosphor-icons/react'
 
 const getMessages = async (body) =>
 {
@@ -91,10 +91,17 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     }
 
     return (
-        <Card radius='sm' mx='sm' p='xs' w='500px' h='70vh'>
+        <Card radius='sm' mx='xs' p='xs' h='70vh' sx={{
+            '@media (max-width: 800px)': {
+                width: '94%',
+            },
+            '@media (min-width: 800px)': {
+                width: '500px',
+            }
+        }}>
             <Stack gap='sm' justify='space-between' h='100%'>
                 {loading ? (<Loader />) : (
-                    <Box mt='auto' justify='flex-end' sx={{ overflow: 'auto' }} pb='xs' ref={messageContainerRef}>
+                    <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
                         {messages.map((message, index) =>
                         {
                             let now = new Date()
@@ -123,7 +130,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                             let fontColor = ''
                             if (message.empireIdSource === source) fontColor = 'black'
                             return (
-                                <Card key={index} radius='sm' my='xs' p='xs' maw='70%' ml={ml} withBorder shadow='sm' bg={color} >
+                                <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                     <Group position='apart'>
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
@@ -141,12 +148,12 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                     sendMessage(values)
                     form.reset()
                 })}>
-                    <Group >
-                        <TextInput {...form.getInputProps('message')} w='80%' />
-                        <Button type='submit' loading={loading} size='sm'>Send</Button>
+                    <Group position='right' noWrap>
+                        <Textarea minRows={2} w='100%' {...form.getInputProps('message')} />
+                        <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
             </Stack>
-        </Card>
+        </Card >
     )
 }
