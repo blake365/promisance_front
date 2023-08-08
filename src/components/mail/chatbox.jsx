@@ -19,6 +19,7 @@ const getMessages = async (body) =>
         const res = await Axios.post(`/messages/messages`, body)
         const data = res.data
         // console.log(data)
+        await Axios.get(`/messages/${body.conversationId}/read`)
         return data
     } catch (error) {
         console.error('Error fetching messages:', error)

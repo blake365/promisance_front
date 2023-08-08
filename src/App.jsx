@@ -40,7 +40,7 @@ import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { NewspaperClipping } from '@phosphor-icons/react'
+import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 
 
@@ -52,6 +52,7 @@ function App()
 	const [modalOpened, setModalOpened] = useState(false);
 	const [drawer, { open, close }] = useDisclosure(false)
 	const [news, setNews] = useState()
+	const [mail, setMail] = useState()
 
 	let location = useLocation()
 	// console.log(location)
@@ -93,6 +94,17 @@ function App()
 	{
 		try {
 			const res = await Axios.get(`/news/${empire.id}/check`)
+			// console.log(res.data.new)
+			return res.data.new
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const checkForMail = async () =>
+	{
+		try {
+			const res = await Axios.get(`messages/${empire.id}/check`)
 			// console.log(res.data.new)
 			return res.data.new
 		} catch (error) {
@@ -144,6 +156,11 @@ function App()
 			{
 				// console.log(data)
 				setNews(data)
+			})
+			checkForMail().then((data) =>
+			{
+				// console.log(data)
+				setMail(data)
 			})
 		}
 	})
@@ -252,6 +269,9 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={1}>
 									<Group spacing='xs' mr='sm' position='right'>
+										<Indicator color="green" processing disabled={!mail} zIndex={3}>
+											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
+										</Indicator>
 										<Indicator color="green" processing disabled={!news} zIndex={3}>
 											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /> </Button>
 										</Indicator>
