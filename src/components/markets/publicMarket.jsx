@@ -24,8 +24,8 @@ export default function PublicMarket()
         setLoading(true)
         if (empire) {
             let marketValues = { empireId: empire.id }
-            dispatch(fetchMyItems(marketValues))
             dispatch(fetchOtherItems(marketValues))
+            dispatch(fetchMyItems(marketValues))
             setLoading(false)
         }
     }, [empire, dispatch])
@@ -40,7 +40,7 @@ export default function PublicMarket()
                     <div>
                         Purchase or sell goods between other players on the Public Market
                     </div>
-                    {loading ? (<Loader />) : (
+                    {marketStatus !== 'succeeded' ? (<Loader />) : (
                         <Tabs defaultValue="Buy" styles={{
                             tabLabel: { fontSize: '1.2rem' },
                         }}>

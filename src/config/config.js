@@ -21,7 +21,7 @@ export const BASE_LANGUAGE = 'en-US' // Base language pack, used for anything no
 
 export const EMPIRES_PER_USER = 1 // How many empires can be owned at once by a particular user?
 export const TURNS_PROTECTION = 200 // Duration of protection
-export const TURNS_INITIAL = 100 // Turns given on signup
+export const TURNS_INITIAL = 250 // Turns given on signup
 export const TURNS_MAXIMUM = 250 // Max accumulated turns
 export const TURNS_STORED = 100 // Max stored turns
 export const TURNS_VALIDATE = 150 // How long before validation is necessary
@@ -81,6 +81,7 @@ export const PVTM_TRPLND = 1000
 export const PVTM_TRPFLY = 2000
 export const PVTM_TRPSEA = 3000
 export const PVTM_FOOD = 30
+export const PVTM_RUNES = 1000
 
 export const INDUSTRY_MULT = 2.5 // Industry output multiplier
 export const MAX_ATTACKS = 30 // Maximum number of attacks

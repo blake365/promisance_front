@@ -6,7 +6,7 @@ export const fetchMyItems = createAsyncThunk(
 	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.post('/market/pubSellMine', values)
+			const res = await Axios.post('/publicmarket/pubSellMine', values)
 			// console.log(res)
 			let data = res.data
 			return data
@@ -22,7 +22,7 @@ export const fetchOtherItems = createAsyncThunk(
 	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.post('/market/pubSellOthers', values)
+			const res = await Axios.post('/publicmarket/pubSellOthers', values)
 			let data = res.data
 			// console.log(data)
 			return data
@@ -38,7 +38,14 @@ export const pubMarketSlice = createSlice({
 	initialState: {
 		status: 'idle',
 		myItems: [],
-		otherItems: [],
+		otherItems: {
+			arm: [{ amount: 0, price: 0, type: 0 }],
+			lnd: [{ amount: 0, price: 0, type: 0 }],
+			fly: [{ amount: 0, price: 0, type: 0 }],
+			sea: [{ amount: 0, price: 0, type: 0 }],
+			food: [{ amount: 0, price: 0, type: 0 }],
+			runes: [{ amount: 0, price: 0, type: 0 }],
+		},
 	},
 	reducers: {
 		myItemsLoaded: (state, { payload }) => ({

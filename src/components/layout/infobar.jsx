@@ -70,7 +70,6 @@ export default function InfoBar({ data })
 							Net Worth
 						</Text>
 					</Center>
-
 					<AnimateNumberChange type='networth' number={empire.networth} />
 				</Grid.Col>
 				<Grid.Col span={3}>

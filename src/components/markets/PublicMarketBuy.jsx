@@ -1,14 +1,13 @@
-import { Button, Center, Group, Card, Text, Loader } from '@mantine/core'
+import { Center, Loader, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
-// import { useForm } from '@mantine/form'
-import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
+
 import { useState } from 'react'
 import { eraArray } from '../../config/eras'
-// import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
-// import { MaxButton } from '../utilities/maxbutton'
-// import { fetchOtherItems } from '../../store/pubMarketSlice'
+import { PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_FOOD, PVTM_RUNES } from '../../config/config'
 
+import PubBuyCard from './pubBuyCard'
+
+import { MaxButton } from '../utilities/maxbutton'
 // TODO: make it mobile friendly
 
 export default function PublicMarketBuy({ empire })
@@ -16,7 +15,7 @@ export default function PublicMarketBuy({ empire })
     // Public Market Workflow:
     // get other items from redux store
     // search for lowest price troops of each type
-    //TODO: organize market items to simplify display
+    // organize market items to simplify display
     // display in market view
     // on purchase, add items to current empire, deduct cash spent
     // allow for partial purchases, update entry in db
@@ -26,96 +25,41 @@ export default function PublicMarketBuy({ empire })
     //TODO: custom ordering view (show orders on sell side so they can be filled)
 
     const { otherItems } = useSelector((state) => state.market)
+    let marketStatus = useSelector(state => state.market.status)
 
     const [result, setResult] = useState(null)
 
     // const { empire } = useSelector((state) => state.empire)
 
-    console.log(otherItems)
+    // console.log(marketStatus)
+    // console.log(otherItems)
+
     const dispatch = useDispatch()
-    // console.log(result)
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const buyItem = async (values) =>
-    {
-        try {
-            console.log(values)
-            const res = await Axios.post('/market/pubBuy', values)
-            // setResult(res.data)
-            loadEmpireTest()
-            // dispatch(fetchOtherItems())
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    let now = new Date()
-
-    let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food]
-
-    function truncate(value, precision)
-    {
-        var step = Math.pow(10, precision || 0);
-        var temp = Math.trunc(step * value);
-
-        return temp / step;
-    }
-
-    const itemsToBuy = otherItems?.map((item) =>
-    {
-        let createdAt = new Date(item.createdAt)
-        createdAt = createdAt.getTime()
-        let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
-
-        let values = {
-            id: item.id,
-            amount: parseInt(item.amount, 10),
-            // price: item.price,
-            cost: item.amount * item.price,
-            sellerId: item.empire_id,
-            buyerId: empire.id
-        }
-
-        let status = 'red'
-        let disable = true
-
-        if (empire.cash >= item.amount * item.price) {
-            status = 'green'
-            disable = false
-        }
-
-        return (
-            <Card key={item.id} shadow='sm' padding='sm'>
-                <Text size="lg">{unitArray[item.type]}</Text>
-                <Text><b>amount:</b>{parseInt(item.amount, 0).toLocaleString()}</Text>
-                <Text><b>price:</b> ${item.price.toLocaleString()}</Text>
-                <Text><b>total:</b> ${(item.amount * item.price).toLocaleString()}</Text>
-                <Text><b>age: </b>{hoursOnMarket} hours</Text>
-                <Button color={status} fullWidth style={{ marginTop: 14 }} disabled={disable} onClick={() => buyItem(values)}>Buy All</Button>
-            </Card>
-        )
-    })
 
     return (
         <main>
             <Center my={10}>
-                {!otherItems ?
+                {marketStatus !== 'succeeded' ?
                     (<Loader />) : (
-                        <Group spacing='sm' align='center'>
-                            {itemsToBuy}
-                        </Group>
-                    )}
-            </Center>
-        </main>
+
+                        <Stack spacing='sm' align='center'>
+
+                            <PubBuyCard eraItem={eraArray[empire.era].trparm} type='arm' owned={empire.trpArm} item={otherItems} base={PVTM_TRPARM} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                            <PubBuyCard eraItem={eraArray[empire.era].trplnd} type='lnd' owned={empire.trpLnd} item={otherItems} base={PVTM_TRPLND} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                            <PubBuyCard eraItem={eraArray[empire.era].trpfly} type='fly' owned={empire.trpFly} item={otherItems} base={PVTM_TRPFLY} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                            <PubBuyCard eraItem={eraArray[empire.era].trpsea} type='sea' owned={empire.trpSea} item={otherItems} base={PVTM_TRPSEA} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                            <PubBuyCard eraItem={eraArray[empire.era].food} type='food' owned={empire.food} item={otherItems} base={PVTM_FOOD} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                            <PubBuyCard eraItem={eraArray[empire.era].runes} type='runes' owned={empire.runes} item={otherItems} base={PVTM_RUNES} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+
+                        </Stack>
+                    )
+                }
+            </Center >
+        </main >
     )
 }

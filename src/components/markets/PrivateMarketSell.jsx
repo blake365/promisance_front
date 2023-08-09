@@ -103,7 +103,7 @@ export default function PrivateMarketSell()
     const doSell = async (values) =>
     {
         try {
-            const res = await Axios.post('/market/sell', values)
+            const res = await Axios.post('/privatemarket/sell', values)
             setResult(res.data)
             loadEmpireTest()
         } catch (error) {

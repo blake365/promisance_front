@@ -10,9 +10,9 @@ import { MaxButton, HalfButton, FavoriteButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 
-// TODO: clear form on submit
-// TODO: fix styling of button, unused land, top alignment, text alignment in cells
-// TODO: build demolish feature
+// clear form on submit
+// fix styling of button, unused land, top alignment, text alignment in cells
+// build demolish feature
 
 
 export default function Build()

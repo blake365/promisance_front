@@ -79,11 +79,18 @@ export default function Overview()
 		empire.trpWiz * 0.5
 	)
 
-	console.log(empire.loan)
-	let loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
-	console.log(loanpayed)
-	//TODO: set up race/era modifier
-	let expensesBonus = Math.min(0.5, empire.bldCost / Math.max(empire.land, 1))
+	// console.log(empire.loan)
+	let loanpayed = 0
+	if (empire.loan > 0) {
+		loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
+	}
+	// console.log(loanpayed)
+	let expensesBonus = Math.min(
+		0.5,
+		(raceArray[empire.race].mod_expenses + 100) / 100 -
+		1 +
+		empire.bldCost / Math.max(empire.land, 1)
+	)
 
 	expenses -= Math.round(expenses * expensesBonus)
 
@@ -93,7 +100,8 @@ export default function Overview()
 		empire.bldFood *
 		85 *
 		Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
-	// production *= food production modifier
+	production *= (100 + raceArray[empire.race].mod_foodpro) / 100
+
 	let foodpro = Math.round(production)
 
 	let consumption =
@@ -103,7 +111,9 @@ export default function Overview()
 		empire.trpSea * 0.01 +
 		empire.peasants * 0.01 +
 		empire.trpWiz * 0.25
-	// consumption *= food consumption modifier
+
+	consumption *= (100 + raceArray[empire.race].mod_foodcon) / 100
+
 	let foodcon = Math.round(consumption)
 
 	// offensive power
@@ -116,6 +126,8 @@ export default function Overview()
 		eraArray[empire.era].d_trplnd * empire.trpLnd +
 		eraArray[empire.era].d_trpfly * empire.trpFly +
 		eraArray[empire.era].d_trpsea * empire.trpSea
+
+
 	return (
 		<main>
 			<Title order={1} align='center' mb='sm'>
@@ -185,7 +197,7 @@ export default function Overview()
 							Land Division
 						</Text>
 						<Grid columns={16}>
-							<Col span={6}>
+							<Col span={8}>
 								<Text>{eraArray[empire.era].bldpop}:</Text>
 								<Text>{eraArray[empire.era].bldcash}:</Text>
 								<Text>{eraArray[empire.era].bldcost}:</Text>
@@ -196,7 +208,7 @@ export default function Overview()
 								<Text>Unused Land:</Text>
 								<Text>Total Land:</Text>
 							</Col>
-							<Col span={7}>
+							<Col span={5}>
 								<Text align='right'>{empire.bldPop.toLocaleString()}</Text>
 								<Text align='right'>{empire.bldCash.toLocaleString()}</Text>
 								<Text align='right'>{empire.bldCost.toLocaleString()}</Text>
@@ -208,15 +220,15 @@ export default function Overview()
 								<Text align='right'>{empire.land.toLocaleString()}</Text>
 							</Col>
 							<Col span={3}>
-								<Text align='center'>({Math.round(empire.bldPop / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldCash / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldCost / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldTroop / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldWiz / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldFood / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.bldDef / empire.land * 100)}%)</Text>
-								<Text align='center'>({Math.round(empire.freeLand / empire.land * 100)}%)</Text>
-								<Text align='left'> </Text>
+								<Text align='right'>{Math.round(empire.bldPop / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldCash / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldCost / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldTroop / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldWiz / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldFood / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldDef / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.freeLand / empire.land * 100)}%</Text>
+								<Text align='right'> </Text>
 							</Col>
 						</Grid>
 					</Card>
@@ -262,16 +274,16 @@ export default function Overview()
 
 								<Text mt='sm'>Offensive Actions:</Text>
 								<Text>Defenses:</Text>
-								<Text>Kills:</Text>
+								{/* <Text>Kills:</Text> */}
 							</Col>
 							<Col span={7}>
 								<Text align='right'>None</Text>
 								<Text align='right'>None</Text>
 								<Text align='right'>None</Text>
 
-								<Text align='right' mt='sm'>{empire.offSucc} ({Math.round(empire.offSucc / empire.offTotal * 100)})</Text>
-								<Text align='right'>{empire.defSucc} ({Math.round(empire.defSucc / empire.defTotal * 100)})</Text>
-								<Text align='right'>{empire.kills}</Text>
+								<Text align='right' mt='sm'>{empire.offSucc} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>
+								<Text align='right'>{empire.defSucc} ({Math.round(empire.defSucc / empire.defTotal * 100)}%)</Text>
+								{/* <Text align='right'>{empire.kills}</Text> */}
 							</Col>
 
 						</Grid>
