@@ -35,7 +35,6 @@ const MapComponents = (title) =>
     else if (title === 'Heal') {
         return <Heal />
     }
-
 }
 
 // TODO: ability to reorder favorites

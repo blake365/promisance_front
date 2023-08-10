@@ -146,6 +146,7 @@ export default function Build()
 		<main>
 			<Center mb={10}>
 				<Stack spacing='sm' align='center'>
+					<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
 					<Title order={1} align='center'>
 						Build <FavoriteButton empire={empire} title='Build' />
 					</Title>

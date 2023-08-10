@@ -14,6 +14,8 @@ export default function Meditate()
 			item='mana'
 			color='grape'
 			empire={empire}
+			imglink='/images/meditate.webp'
+
 		/>
 	)
 }

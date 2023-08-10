@@ -60,6 +60,7 @@ export default function Cash()
 				item='money'
 				color='yellow'
 				empire={empire}
+				imglink='/images/cash.webp'
 			/>
 			<Divider size='lg' style={{ marginTop: '1rem' }} />
 			<Center mt={10}>

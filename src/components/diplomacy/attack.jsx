@@ -216,6 +216,7 @@ export default function Attack()
         <section style={{ paddingTop: '1rem' }}>
             <Center>
                 <Stack spacing='sm' align='center'>
+                    <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
                     <Title order={1} align='center'>
                         War Council
                     </Title>

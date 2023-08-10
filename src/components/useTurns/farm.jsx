@@ -14,6 +14,7 @@ export default function Farm()
 		item='food'
 		color='green'
 		empire={empire}
+		imglink='/images/farm.webp'
 	/>)
 
 }

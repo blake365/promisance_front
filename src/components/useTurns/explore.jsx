@@ -15,7 +15,9 @@ export default function Explore()
 	return (
 		<main>
 			<GeneralAction title='Explore' type='explore' flavor='exploring' explore={newLand}
-				item='acres' color='blue' empire={empire} />
+				item='acres' color='blue' empire={empire}
+				imglink='/images/explore.webp'
+			/>
 		</main>
 	)
 }

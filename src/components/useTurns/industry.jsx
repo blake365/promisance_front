@@ -82,7 +82,8 @@ export default function Industry()
 	return (
 		<main style={{ paddingBottom: '1rem' }}>
 			<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
-				item='troops' color='red' empire={empire} />
+				item='troops' color='red' empire={empire} imglink='/images/industry.webp'
+			/>
 			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
 			<Center mt={5}>
 				<Stack spacing='sm' align='center'>

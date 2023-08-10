@@ -34,6 +34,7 @@ export default function PublicMarket()
         <main>
             <Center mb={10}>
                 <Stack spacing='sm' align='center'>
+                    <img src='/images/pm.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='public market' />
                     <Title order={1} align='center'>
                         Public Market
                     </Title>

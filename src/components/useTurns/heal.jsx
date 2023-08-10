@@ -14,6 +14,7 @@ export default function Heal()
 		item='health'
 		color='red'
 		empire={empire}
+		imglink='/images/heal.webp'
 	/>)
 
 }
