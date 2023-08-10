@@ -61,6 +61,8 @@ export const PUBMKT_MINSELL = 0 // Minimum percentage of troops, per shipment, t
 export const PUBMKT_MAXSELL = 50 // Maximum percentage of troops, total, that can be sold on public market (0-100)
 export const PUBMKT_MINFOOD = 0 // Same as MINSELL, except for food
 export const PUBMKT_MAXFOOD = 90 // Same as MAXSELL, except for food
+export const PUBMKT_MINRUNES = 0 // Same as MINSELL, except for runes
+export const PUBMKT_MAXRUNES = 90 // Same as MAXSELL, except for runes
 
 export const CLAN_ENABLE = true // Master enable for clans
 export const CLAN_MINJOIN = 72 // Empires can't leave clans until they've been a member for this many hours

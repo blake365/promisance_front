@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 
@@ -27,19 +27,11 @@ export default function PublicMarketSell({ empire })
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
 
-    console.log(myItems)
+    // console.log(myItems)
 
     const getCost = (emp, base) =>
     {
         let cost = base
-        // let costBonus = 1 - ((1 - PVTM_SHOPBONUS) * (emp.bldCost / emp.land) + PVTM_SHOPBONUS * (emp.bldCash / emp.land))
-
-        // cost *= costBonus
-        // cost *= (2 - ((100 + raceArray[emp.race].mod_market) / 100))
-
-        // if (cost < base * 0.6) {
-        //     cost = base * 0.6
-        // }
 
         return Math.round(cost)
     }
@@ -62,7 +54,9 @@ export default function PublicMarketSell({ empire })
             sellSea: 0,
             priceSea: trpSeaCost,
             sellFood: 0,
-            priceFood: PVTM_FOOD
+            priceFood: PVTM_FOOD,
+            sellRunes: 0,
+            priceRunes: PVTM_RUNES,
         },
 
         validationRules: {
@@ -71,7 +65,7 @@ export default function PublicMarketSell({ empire })
             sellFly: (value) => value <= empire.trpFly * (PUBMKT_MAXSELL / 100),
             sellSea: (value) => value <= empire.trpSea * (PUBMKT_MAXSELL / 100),
             sellFood: (value) => value <= empire.food * (PUBMKT_MAXFOOD / 100),
-
+            sellRunes: (value) => value <= empire.food * (PUBMKT_MAXRUNES / 100)
         },
 
         errorMessages: {
@@ -80,6 +74,7 @@ export default function PublicMarketSell({ empire })
             sellFly: `You can't sell that many ${eraArray[empire.era].trpfly}`,
             sellSea: `You can't sell that many ${eraArray[empire.era].trpsea}`,
             sellFood: `You can't sell that many ${eraArray[empire.era].food}`,
+            sellRunes: `You can't sell that many ${eraArray[empire.era].runes}`
         },
     })
 
@@ -98,6 +93,9 @@ export default function PublicMarketSell({ empire })
     if (form.values['sellFood'] === undefined) {
         form.setFieldValue('sellFood', 0)
     }
+    if (form.values['sellRunes'] === undefined) {
+        form.setFieldValue('sellRunes', 0)
+    }
     if (form.values['priceArm'] === undefined) {
         form.setFieldValue('priceArm', 0)
     }
@@ -113,6 +111,9 @@ export default function PublicMarketSell({ empire })
     if (form.values['priceFood'] === undefined) {
         form.setFieldValue('priceFood', 0)
     }
+    if (form.values['priceRunes'] === undefined) {
+        form.setFieldValue('priceRunes', 0)
+    }
 
     // console.log(result)
 
@@ -127,21 +128,10 @@ export default function PublicMarketSell({ empire })
         }
     }
 
-    // const loadMarketItems = async () =>
-    // {
-    //     try {
-    //         const res = await Axios.get(`/market/${empire.uuid}`)
-
-    //     }
-    //     catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     const doSell = async (values) =>
     {
         try {
-            const res = await Axios.post('/market/pubSell', values)
+            const res = await Axios.post('/publicmarket/pubSell', values)
             dispatch(fetchMyItems())
             // setResult(res.data)
             // console.log(values)
@@ -156,7 +146,7 @@ export default function PublicMarketSell({ empire })
     let now = new Date()
     // console.log(now.getTime())
 
-    let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food]
+    let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food, eraArray[empire.era].runes]
 
     function truncate(value, precision)
     {
@@ -171,11 +161,14 @@ export default function PublicMarketSell({ empire })
         let createdAt = new Date(element.createdAt)
         createdAt = createdAt.getTime()
         let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
+        let timeRemaining = PUBMKT_START - hoursOnMarket
+        if (hoursOnMarket < 6) {
+            hoursOnMarket = `${timeRemaining} hours remaining`
+        }
         return (
             <tr tr key={element.id}>
-
                 <td>{unitArray[element.type]}</td>
-                <td>{element.amount}</td>
+                <td>{parseInt(element.amount).toLocaleString()}</td>
                 <td>${element.price.toLocaleString()}</td>
                 <td>{hoursOnMarket}</td>
             </tr>
@@ -186,13 +179,16 @@ export default function PublicMarketSell({ empire })
     return (
         <main>
             <Center my={10}>
+
                 {!myItems ? (
                     <Loader />) : (
+
                     <Stack spacing='sm' align='center'>
+                        <Text weight='bold' align='center'>Items you sell will take {PUBMKT_START} hours to appear on the market.</Text>
                         <form
                             onSubmit={form.onSubmit((values) =>
                             {
-                                console.log(values)
+                                // console.log(values)
                                 doSell(values)
                             })
                             }
@@ -205,7 +201,7 @@ export default function PublicMarketSell({ empire })
                                 >
                                     <Group direction='row' spacing='md' noWrap grow>
                                         <Text weight='bold' align='center'>
-                                            Unit:
+                                            Item:
                                         </Text>
                                         <Text weight='bold' align='center'>
                                             Owned:
@@ -415,6 +411,46 @@ export default function PublicMarketSell({ empire })
                                             }
                                         />
                                     </Group>
+                                    <Group direction='row' spacing='md' noWrap grow>
+                                        <Text align='center'>
+                                            {eraArray[empire.era].runes}
+                                        </Text>
+                                        <Text align='center'>
+                                            {empire.runes.toLocaleString()}
+                                        </Text>
+
+                                        <Text align='center'>
+                                            <NumberInput
+                                                hideControls
+                                                min={1}
+
+                                                {...form.getInputProps(`priceRunes`)}
+                                                styles={{ input: { textAlign: 'center' } }}
+                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                                formatter={(value) =>
+                                                    !Number.isNaN(parseFloat(value))
+                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                        : '$ '
+                                                }
+                                            />
+                                        </Text>
+                                        <Text align='center'>
+                                            {Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100)).toLocaleString()}
+                                        </Text>
+                                        <NumberInput
+                                            hideControls
+                                            min={0}
+                                            max={Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100))}
+                                            {...form.getInputProps(`sellRunes`)}
+                                            rightSection={<MaxButton formName={form} fieldName='sellRunes' maxValue={empire.runes * (PUBMKT_MAXRUNES / 100)} />}
+                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                            formatter={(value) =>
+                                                !Number.isNaN(parseFloat(value))
+                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                    : ''
+                                            }
+                                        />
+                                    </Group>
                                 </SimpleGrid>
                                 <Button type='submit'> Sell Goods </Button>
                             </Stack>
@@ -422,7 +458,7 @@ export default function PublicMarketSell({ empire })
                         <Table>
                             <thead>
                                 <tr>
-                                    <th>Unit</th>
+                                    <th>Item</th>
                                     <th>Amount</th>
                                     <th>Price</th>
                                     <th>Hours On Market</th>
