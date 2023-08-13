@@ -20,6 +20,8 @@ import { setResult } from '../../store/turnResultsSlice'
 import { eraArray } from '../../config/eras'
 import { loadScores } from '../../store/scoresSlice'
 
+import { MAX_ATTACKS } from '../../config/config'
+
 export default function ScoresAttack({ enemy })
 {
 
@@ -112,6 +114,7 @@ export default function ScoresAttack({ enemy })
                                     <Button color='red' type='submit'>
                                         Attack
                                     </Button>
+                                    <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
                                 </Stack>
                             </form>
 
@@ -163,7 +166,6 @@ export default function ScoresAttack({ enemy })
                                             <td align='right'>{eraArray[empire.era].o_trpsea}</td>
                                             <td align='right'>{eraArray[empire.era].d_trpsea}</td>
                                         </tr>
-
                                     </tbody>
                                 </Table>
                             </Card.Section>

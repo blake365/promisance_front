@@ -21,6 +21,7 @@ import { setResult, clearResult } from '../../store/turnResultsSlice'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
+import { MAX_ATTACKS, MAX_SPELLS } from '../../config/config'
 
 // TODO: build attacking page
 // show your army information
@@ -265,8 +266,8 @@ export default function Attack()
                                         withinPortal
                                         // itemComponent={SelectAttack}
                                         data={[
-                                            { value: 'standard', label: 'Standard Attack' },
-                                            { value: 'surprise', label: 'Surprise Attack' },
+                                            // { value: 'standard', label: 'Standard Attack' },
+                                            // { value: 'surprise', label: 'Surprise Attack' },
                                             { value: 'trparm', label: 'Guerilla Strike' },
                                             { value: 'trplnd', label: 'Lay Siege' },
                                             { value: 'trpfly', label: 'Air Strike' },
@@ -278,6 +279,7 @@ export default function Attack()
                                     <Button color='red' type='submit'>
                                         Attack
                                     </Button>
+                                    <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
                                 </Stack>
                             </form>
 
@@ -332,6 +334,7 @@ export default function Attack()
                                     <Button color='indigo' type='submit'>
                                         Cast Spell
                                     </Button>
+                                    <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>
                                 </Stack>
                             </form>
                         </Card>

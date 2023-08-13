@@ -242,22 +242,24 @@ export default function Overview()
 								<Text>{eraArray[empire.era].trplnd}:</Text>
 								<Text>{eraArray[empire.era].trpfly}:</Text>
 								<Text>{eraArray[empire.era].trpsea}:</Text>
-								<Text>{eraArray[empire.era].trpwiz}:</Text>
+
 								<Text> </Text>
 								<Text mt='sm'>Offensive Power:</Text>
 								<Text>Defensive Power:</Text>
-								<Text mt='sm'>{eraArray[empire.era].runes}:</Text>
+								<Text mt='sm'>{eraArray[empire.era].trpwiz}:</Text>
+								<Text>{eraArray[empire.era].runes}:</Text>
 							</Col>
 							<Col span={7}>
 								<Text align='right'>{empire.trpArm.toLocaleString()}</Text>
 								<Text align='right'>{empire.trpLnd.toLocaleString()}</Text>
 								<Text align='right'>{empire.trpFly.toLocaleString()}</Text>
 								<Text align='right'>{empire.trpSea.toLocaleString()}</Text>
-								<Text align='right'>{empire.trpWiz.toLocaleString()}</Text>
+
 								<Text align='right'> </Text>
 								<Text align='right' mt='sm'>{oPower.toLocaleString()}</Text>
 								<Text align='right'>{dPower.toLocaleString()}</Text>
-								<Text align='right' mt='sm'>{empire.runes.toLocaleString()}</Text>
+								<Text align='right' mt='sm'>{empire.trpWiz.toLocaleString()}</Text>
+								<Text align='right' >{empire.runes.toLocaleString()}</Text>
 							</Col>
 
 						</Grid>

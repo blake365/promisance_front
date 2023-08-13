@@ -39,7 +39,7 @@ const ScoreCard = ({ empire, myId }) =>
                         <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
                             <Avatar size="md" />
                             <Title order={4} color={color}>
-                                {empire.name}(#{empire.id})
+                                {empire.name} (#{empire.id})
                             </Title>
                         </Group>
                     </Indicator>
@@ -57,9 +57,7 @@ const ScoreCard = ({ empire, myId }) =>
                             <Alien size={22} weight='regular' />
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
-                        <Group ml='sm' spacing='xs' noWrap>
-                            <Text>{empire.turnsUsed.toLocaleString()}</Text>
-                        </Group>
+
                     </Group>
                 </Group>
             </Card.Section>
@@ -68,13 +66,13 @@ const ScoreCard = ({ empire, myId }) =>
                 <Text>{empire.profile}</Text>
                 <Tabs defaultValue="" keepMounted={false}>
                     <Tabs.List>
-                        <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab>
+                        {/* <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab> */}
+                        <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
+                        <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
                         <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
                         <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
-                        <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
-                        <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab>
-                        <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
-                        <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
+                        {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
+                        {/* <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab> */}
                     </Tabs.List>
 
                     <Tabs.Panel value="Send Message" pt="xs">

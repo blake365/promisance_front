@@ -19,6 +19,7 @@ import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { loadScores } from '../../store/scoresSlice'
 
+import { MAX_SPELLS } from '../../config/config'
 
 export default function ScoresSpell({ enemy })
 {
@@ -149,6 +150,7 @@ export default function ScoresSpell({ enemy })
                                         <Button color='indigo' type='submit'>
                                             Cast Spell
                                         </Button>
+                                        <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>
                                     </Stack>
                                 </form>
                             </Card.Section>
