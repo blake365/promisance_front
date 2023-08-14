@@ -8,7 +8,6 @@ import
     Card,
     Table,
     Group,
-
 } from '@mantine/core'
 import { useState, } from 'react'
 import { useForm } from '@mantine/form'
@@ -24,7 +23,6 @@ import { MAX_ATTACKS } from '../../config/config'
 
 export default function ScoresAttack({ enemy })
 {
-
     const { empire } = useSelector((state) => state.empire)
     const dispatch = useDispatch()
 
@@ -101,8 +99,8 @@ export default function ScoresAttack({ enemy })
                                         withinPortal
                                         // itemComponent={SelectAttack}
                                         data={[
-                                            { value: 'standard', label: 'Standard Attack' },
-                                            { value: 'surprise', label: 'Surprise Attack' },
+                                            // { value: 'standard', label: 'Standard Attack' },
+                                            // { value: 'surprise', label: 'Surprise Attack' },
                                             { value: 'trparm', label: 'Guerilla Strike' },
                                             { value: 'trplnd', label: 'Lay Siege' },
                                             { value: 'trpfly', label: 'Air Strike' },

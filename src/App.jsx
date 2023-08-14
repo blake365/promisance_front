@@ -19,7 +19,8 @@ import
 	Title,
 	ScrollArea,
 	Button,
-	Indicator
+	Indicator,
+	ActionIcon
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -40,7 +41,7 @@ import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
+import { NewspaperClipping, Envelope, Globe } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 
 
@@ -118,7 +119,7 @@ function App()
 		{
 			try {
 				const res = await Axios.get('auth/me')
-				console.log(res.data)
+				// console.log(res.data)
 				if (res.status !== 200) {
 					navigate('/')
 				} else if (res.data) {
@@ -233,8 +234,14 @@ function App()
 										size='sm'
 									/>
 								</MediaQuery>
-								<Title order={1}>Solo Promisance</Title>
-								<ThemeToggle />
+								<Title order={1}>NeoPromisance</Title>
+								<Group>
+									<Button size='xs'>Collect Bonus Turns</Button>
+									<ActionIcon variant="outline" color='blue'>
+										<Globe weight="fill" />
+									</ActionIcon>
+									<ThemeToggle />
+								</Group>
 							</Group>
 						</Header>
 					}

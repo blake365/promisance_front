@@ -41,6 +41,8 @@ import IntelCenter from './components/diplomacy/intelCenter'
 Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
 
+
+
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>

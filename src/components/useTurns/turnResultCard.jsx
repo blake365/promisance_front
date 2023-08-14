@@ -75,7 +75,7 @@ const spellResult = (result) =>
 
 export default function TurnResultCard({ data })
 {
-	console.log(data)
+	// console.log(data)
 	return (
 		<>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
@@ -86,7 +86,7 @@ export default function TurnResultCard({ data })
 			})}>
 				<Text align='center' color='red'>{data.error}</Text>
 			</Card>) :
-				(<div style={{ margin: 'auto', marginTop: '1rem' }}>
+				(<div style={{ margin: 'auto', marginBottom: '1rem' }}>
 					<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
 						backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
 						'&:hover': {

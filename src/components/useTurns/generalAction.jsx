@@ -73,8 +73,8 @@ export default function GeneralAction(props)
 
 
 	return (
-		<section>
-			<Center>
+		<section >
+			<Center pt='xs'>
 				<Stack spacing='sm' align='center'>
 					<img src={props.imglink} height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt={props.title} />
 					<Title order={1} align='center' sx={{ display: 'inline-block', width: '200px' }}>
