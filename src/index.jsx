@@ -28,6 +28,8 @@ import Heal from './components/useTurns/heal'
 import Mailbox from './components/mail/mailbox'
 
 import Home from './components/pages/Home'
+import NewLogin from './components/pages/NewLogin'
+import Signup from './components/layout/Signup'
 
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
@@ -50,6 +52,8 @@ ReactDOM.render(
 				<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Home />} />
+						<Route path='/login' element={<NewLogin />} />
+						<Route path='/register' element={<Signup />} />
 						<Route path='/createEmpire' element={<CreateEmpire />} />
 						<Route path='/app/' element={<App />}>
 							{/* <Route path='guide' element={<Guide />} /> */}

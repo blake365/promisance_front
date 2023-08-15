@@ -1,4 +1,4 @@
-import { Card, Group, Header, Title, Text, Button, TextInput, Select, Modal, Center, Stack, ActionIcon } from '@mantine/core'
+import { Card, Group, Box, Title, Text, Button, TextInput, Select, Modal, Center, Stack, ActionIcon, Container } from '@mantine/core'
 import Login from '../layout/Login'
 import Signup from '../layout/Signup'
 
@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 import { demo } from '../../store/userSlice'
 import { create } from '../../store/empireSlice'
 
-import { Globe } from '@phosphor-icons/react'
 import { HeroImageRight } from './homeHero'
 
 // TODO: form validation
@@ -61,7 +60,7 @@ export default function Home()
 
     return (
 
-        <main>
+        <main style={{ backgroundColor: '#F1F3F5' }}>
             {/* <CreateEmpire opened={opened} /> */}
             <Modal
                 opened={opened}
@@ -112,44 +111,32 @@ export default function Home()
                     </Stack>
                 </Center>
             </Modal>
-            <Header height={60} p='sm'>
+            {/* <Header height={60} p='sm'>
                 <Group position='apart' spacing='sm'>
                     <Title order={1}>NeoPromisance</Title>
                     <Group>
                     </Group>
                 </Group>
-            </Header>
+            </Header> */}
+            <HeroImageRight />
+            <Container size='lg' align='center'>
+                <Box align='left' my='lg'>
+                    <Title order={1}>About the game</Title>
+                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. </Text>
+                    <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is still in development and is not yet feature complete. Upcoming features include clans, foreign aid, and new ideas from community feedback. Join us today! </Text>
+                </Box>
 
-            <section>
-                <HeroImageRight />
-                <Group position='center' spacing='xl' sx={{ padding: '2rem' }}>
-                    <Card withBorder sx={{ minHeight: '300px', width: '600px' }} shadow='md'>
-                        <div>
-                            <Title>About the game</Title>
-                            <Text>Promisance is a classic browser based game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players can use turns to explore for land, build different types of buildings, buy and sell goods, cast spells, and raise an army. </Text>
-                            <Text>This is a single player version of the game. The game has been ported from its original PHP origins to a modern node.js and React codebase. In the future a full featured version of the game is planned with multiplayer features such as public markets, attacking, clans, foreign aid, and much more. </Text>
-                        </div>
-                    </Card>
-                </Group>
-                <Group position='center' spacing='xl' sx={{ padding: '2rem' }}>
-                    <Card withBorder sx={{ height: '500px', width: '275px' }} shadow='md'>
-                        <Stack spacing='sm' align='center'>
-                            <Title order={1} align='center'>
-                                Demo Account
-                            </Title>
-                            <Text>Demo accounts receive 2,000 turns and are unable to be accessed once the session expires or is closed. Register an account to play the traditional game. </Text>
-                            <Button onClick={demoRegister}>Create Demo Account</Button>
-                        </Stack>
-                    </Card>
-                    <Card withBorder sx={{ height: '350px', width: '275px' }} shadow='md'>
-                        <Login />
-                    </Card>
-                    <Card withBorder sx={{ height: '500px', width: '275px' }} shadow='md'>
-                        <Signup />
-                    </Card>
+                <Card withBorder shadow='md'>
+                    <Stack spacing='sm' align='center'>
+                        <Title order={1} align='center'>
+                            Demo Account
+                        </Title>
+                        <Text>Demo accounts receive 2,000 turns and are unable to be accessed once the session expires or is closed. Register an account to play the traditional game. </Text>
+                        <Button onClick={demoRegister}>Create Demo Account</Button>
+                    </Stack>
+                </Card>
 
-                </Group>
-            </section>
+            </Container>
         </main>
     )
 }

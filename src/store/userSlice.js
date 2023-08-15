@@ -17,6 +17,7 @@ export const register = createAsyncThunk(
 			const response = await Axios.post('/auth/register', values)
 			let data = await response.json()
 			// console.log('data', data)
+			history.push('/login')
 			return { data }
 			// redirect to login page
 		} catch (e) {

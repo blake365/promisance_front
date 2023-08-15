@@ -1,76 +1,22 @@
-import { createStyles, Container, Title, Text, Button } from '@mantine/core';
+import { createStyles, Container, Title, Text, Button, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
     root: {
-        backgroundColor: '#11284b',
+        backgroundColor: '#000000',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundImage:
-            'linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 70%), url(/images/military.webp)',
-        paddingTop: `calc(${theme.spacing.xl} * 3)`,
-        paddingBottom: `calc(${theme.spacing.xl} * 3)`,
+            'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/military2.webp)',
+        paddingTop: '3rem',
+        paddingBottom: '3rem',
     },
 
     inner: {
         display: 'flex',
         justifyContent: 'space-between',
-
-        [theme.fn.smallerThan('md')]: {
-            flexDirection: 'column',
-        },
     },
 
-    image: {
-        [theme.fn.smallerThan('md')]: {
-            display: 'none',
-        },
-    },
 
-    content: {
-        paddingTop: `calc(${theme.spacing.xl} * 2)`,
-        paddingBottom: `calc(${theme.spacing.xl} * 2)`,
-        marginRight: `calc(${theme.spacing.xl} * 3)`,
-
-        [theme.fn.smallerThan('md')]: {
-            marginRight: 0,
-        },
-    },
-
-    title: {
-        color: theme.white,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        fontWeight: 900,
-        lineHeight: 1.05,
-        maxWidth: 500,
-        fontSize: 48,
-
-        [theme.fn.smallerThan('md')]: {
-            maxWidth: '100%',
-            fontSize: 34,
-            lineHeight: 1.15,
-        },
-    },
-
-    description: {
-        color: theme.white,
-        opacity: 0.75,
-        maxWidth: '50rem',
-
-        [theme.fn.smallerThan('md')]: {
-            maxWidth: '100%',
-        },
-    },
-
-    control: {
-        paddingLeft: 50,
-        paddingRight: 50,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        fontSize: 22,
-
-        [theme.fn.smallerThan('md')]: {
-            width: '100%',
-        },
-    },
 }));
 
 export function HeroImageRight()
@@ -80,36 +26,34 @@ export function HeroImageRight()
         <div className={classes.root}>
             <Container size="lg">
                 <div className={classes.inner}>
-                    <div className={classes.content}>
-                        <Title className={classes.title}>
-                            A{' '}
-                            <Text
-                                component="span"
-                                inherit
-                                variant="gradient"
-                                gradient={{ from: 'pink', to: 'yellow' }}
-                            >
-                                fully featured
-                            </Text>{' '}
-                            React components library
-                        </Title>
-
-                        <Text className={classes.description} mt={30}>
-                            Build fully functional accessible web applications with ease – Mantine includes more
-                            than 100 customizable components and hooks to cover you in any situation
+                    <div >
+                        <Text color='white'>
+                            Welcome to
                         </Text>
-
-                        <Button
-                            variant="gradient"
-                            gradient={{ from: 'pink', to: 'yellow' }}
-                            size="xl"
-                            className={classes.control}
-                            mt={40}
-                        >
-                            Get started
-                        </Button>
+                        <Title color='white' sx={{
+                            '@media (max-width: 400px)': {
+                                fontSize: '2.8rem',
+                            },
+                            '@media (min-width: 700px)': {
+                                fontSize: '5rem',
+                            },
+                            fontSize: '4rem',
+                        }} mb='lg'>
+                            NeoPromisance
+                        </Title>
+                        <Title color='white' size='h3' maw='24rem' mb='lg'>
+                            A free browser game of empire building and conquest
+                        </Title>
+                        <Text color='white' maw='24rem'>
+                            Build your empire, plan your expansion, find your niche, and conquer your enemies in this multiplayer game of diplomacy, strategy, and war.
+                        </Text>
                     </div>
                 </div>
+                <Group mt='lg' spacing='lg'>
+                    <Button size='lg' component='a' href='/register'>Register</Button>
+                    <Button size='lg' color='teal' component='a' href='/login'>Login</Button>
+                    {/* <Button color='blue'>Demo Account</Button> */}
+                </Group>
             </Container>
         </div>
     );

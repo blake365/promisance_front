@@ -14,17 +14,6 @@ export default function Login()
 		},
 	})
 
-	// const { isLoggedIn } = useSelector((state) => state.user)
-
-	// let navigate = useNavigate()
-
-	// useEffect(() =>
-	// {
-	// 	if (isLoggedIn) {
-	// 		return navigate('app/summary')
-	// 	}
-	// }, [isLoggedIn])
-
 	return (
 		<main>
 			<Center>
