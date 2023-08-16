@@ -4,7 +4,6 @@ import Axios from 'axios'
 import WorldNewsItem from '../../components/news/worldNewsItem'
 
 
-// finish scores page
 export default function HomeNews()
 {
     let body = {
@@ -16,7 +15,6 @@ export default function HomeNews()
     // news is a list of recent events ordered by date, newest to oldest
     // each event has a type, a date, and a message
     // types: attack, market, clan, etc
-    // search by empire ids, time, type, etc
 
     const [loading, setLoading] = useState(true)
     const [news, setNews] = useState([])
@@ -52,12 +50,12 @@ export default function HomeNews()
     }, []);
 
     return (
-        <main>
-            <Stack spacing='sm' align='center'>
+        <section>
+            <Stack spacing='sm' align='center' maw={500}>
                 <Title order={1} align='center'>
-                    World News
+                    Recent World News
                 </Title>
-                <Stack spacing={0}>
+                <Stack spacing='xs'>
                     {loading ? <Loader /> : (
                         news.map(item =>
                         {
@@ -66,6 +64,6 @@ export default function HomeNews()
                     {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
                 </Stack>
             </Stack>
-        </main>
+        </section>
     )
 }

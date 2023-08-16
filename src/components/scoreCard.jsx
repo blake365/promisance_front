@@ -15,8 +15,6 @@ const ScoreCard = ({ empire, myId, home }) =>
 {
 
     const [active, setActive] = useState(false)
-
-
     const [opened, { toggle }] = useDisclosure(false);
     // console.log(empire)
 
@@ -36,6 +34,7 @@ const ScoreCard = ({ empire, myId, home }) =>
         const now = new Date()
         const actionDate = new Date(empire.lastAction.replace(' ', 'T'))
 
+        // console.log(now - actionDate)
         if (now - actionDate < 1200000) {
             setActive(true)
         }
@@ -46,9 +45,6 @@ const ScoreCard = ({ empire, myId, home }) =>
                 setActive(true)
             }
         })
-
-
-
     }, [])
 
 
@@ -70,7 +66,7 @@ const ScoreCard = ({ empire, myId, home }) =>
     // console.log(actionDate)
 
     return (
-        <Card shadow="sm" radius="xs" sx={{ width: '100%', }} key={empire.id}  >
+        <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder >
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
 

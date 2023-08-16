@@ -50,7 +50,7 @@ export default function WorldNewsItem({ item, now })
     }
 
     return (
-        <Card shadow='sm' radius='sm' m={2} p='xs' withBorder>
+        <Card shadow='sm' radius='sm' p='xs' withBorder>
             <Card.Section p='xs'>
                 <Group position='apart'>
                     <Text size='xs'>{eventTime.toLocaleString()} ({timeSince})</Text>

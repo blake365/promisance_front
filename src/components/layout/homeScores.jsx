@@ -2,11 +2,11 @@ import { Button, Stack, Title, Loader } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { loadScores } from '../store/scoresSlice'
+import { loadScores } from '../../store/scoresSlice'
 
-import ScoreCard from './scoreCard'
+import ScoreCard from '../../components/scoreCard'
 
-// TODO: finish scores page
+// finish scores page
 export default function HomeScores()
 {
 
@@ -17,11 +17,11 @@ export default function HomeScores()
 
     // design empire card
     // add actions to card
-    // TODO: add online indicator
+    // add online indicator
 
     const [loading, setLoading] = useState(false)
 
-    const { scores } = useSelector((state) => state.scores)
+    let { scores } = useSelector((state) => state.scores)
     // console.log(scores)
 
     useEffect(() =>
@@ -33,19 +33,22 @@ export default function HomeScores()
         setLoading(false)
     }, [])
 
+    scores = scores.slice(0, 10)
 
     return (
-        <main>
-            <Stack spacing='sm' align='center'>
+        <section>
+            <Stack spacing='sm' align='center' maw={500}>
                 <Title order={1} align='center'>
-                    Scores
+                    Top Ten
                 </Title>
-                {loading && <Loader />}
-                {scores && scores.map(empire =>
-                {
-                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home='true' />
-                })}
+                <Stack spacing='xs'>
+                    {loading && <Loader />}
+                    {scores && scores.map(empire =>
+                    {
+                        return <ScoreCard empire={empire} myId={null} key={empire.id} home={true} />
+                    })}
+                </Stack>
             </Stack>
-        </main>
+        </section>
     )
 }

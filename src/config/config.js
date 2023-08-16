@@ -22,15 +22,16 @@ export const BASE_LANGUAGE = 'en-US' // Base language pack, used for anything no
 export const EMPIRES_PER_USER = 1 // How many empires can be owned at once by a particular user?
 export const TURNS_PROTECTION = 200 // Duration of protection
 export const TURNS_INITIAL = 250 // Turns given on signup
-export const TURNS_MAXIMUM = 250 // Max accumulated turns
-export const TURNS_STORED = 100 // Max stored turns
+export const TURNS_MAXIMUM = 300 // Max accumulated turns
+export const TURNS_STORED = 150 // Max stored turns
 export const TURNS_VALIDATE = 150 // How long before validation is necessary
 export const TURNS_ERA = 500 // Minimum number of turns that must be spent in an era before one can advance or regress
+export const TURNS_DEMO = 1200 // How many turns to give to demo accounts
 
 export const VACATION_START = 12 // Delay before empire is protected
 export const VACATION_LIMIT = 72 // Minimum vacation length (not including start delay)
 
-export const TURNS_FREQ = 10 // how often to give turns
+export const TURNS_FREQ = 5 // how often to give turns
 export const TURNS_OFFSET = 0 // offset (in minutes) for giving turns, relative to round start
 export const TURNS_OFFSET_HOURLY = 0 // offset (in minutes) for performing hourly events, relative to round start
 export const TURNS_OFFSET_DAILY = 60 * 12 // offset (in minutes) for performing daily events, relative to round start

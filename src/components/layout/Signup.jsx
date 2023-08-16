@@ -1,4 +1,4 @@
-import { Button, createStyles, Stack, TextInput, Title, Paper, PasswordInput } from '@mantine/core'
+import { Button, createStyles, Anchor, TextInput, Title, Paper, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDispatch } from 'react-redux'
 import { register, } from '../../store/userSlice'
@@ -92,6 +92,9 @@ export default function Signup()
 					/>
 					<Button fullWidth mt="xl" size="md" type='submit'>Register</Button>
 				</form>
+				<Text ta="center" mt="md">
+					Already have an account? <Anchor href='/login'>Login</Anchor>
+				</Text>
 			</Paper>
 		</main>
 	)
