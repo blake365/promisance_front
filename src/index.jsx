@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 
 import { persistor, store } from './store/store'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Farm from './components/useTurns/farm'
 import Cash from './components/useTurns/cash'
 import Explore from './components/useTurns/explore'
@@ -30,6 +30,7 @@ import Mailbox from './components/mail/mailbox'
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
 import Signup from './components/layout/Signup'
+import { NothingFoundBackground } from './components/pages/404'
 
 import Axios from 'axios'
 import CreateEmpire from './components/pages/CreateEmpire'
@@ -44,18 +45,19 @@ Axios.defaults.baseURL = 'http://localhost:5001/api'
 Axios.defaults.withCredentials = true
 
 
-
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<BrowserRouter>
+
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/login' element={<NewLogin />} />
 						<Route path='/register' element={<Signup />} />
 						<Route path='/createEmpire' element={<CreateEmpire />} />
 						<Route path='/app/' element={<App />}>
+							<Route path='*' element={<NothingFoundBackground />} />
 							{/* <Route path='guide' element={<Guide />} /> */}
 							<Route path='' element={<Scores />} />
 							<Route path='summary' element={<Summary />} />
@@ -81,6 +83,7 @@ ReactDOM.render(
 							<Route path='Mailbox' element={<Mailbox />} />
 						</Route>
 					</Routes>
+
 				</BrowserRouter>
 			</PersistGate>
 		</Provider>

@@ -1,4 +1,4 @@
-import { Button, Center, Group, Card, Text, Loader, Box, Badge } from '@mantine/core'
+import { Group, Card, Text, Box } from '@mantine/core'
 
 import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand } from '@phosphor-icons/react'
 
@@ -60,7 +60,7 @@ export default function WorldNewsItem({ item, now })
                 <Box>
                     {selectIcon(item.type, item.result)}
                 </Box>
-                <Box>
+                <Box ta='left'>
                     {parseContent(item.publicContent)}
                 </Box>
             </Group>

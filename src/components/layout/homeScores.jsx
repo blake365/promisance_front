@@ -7,7 +7,7 @@ import { loadScores } from '../store/scoresSlice'
 import ScoreCard from './scoreCard'
 
 // TODO: finish scores page
-export default function Scores()
+export default function HomeScores()
 {
 
     const dispatch = useDispatch()
@@ -20,10 +20,6 @@ export default function Scores()
     // TODO: add online indicator
 
     const [loading, setLoading] = useState(false)
-
-    const { empire } = useSelector((state) => state.empire)
-
-    let myId = empire.id
 
     const { scores } = useSelector((state) => state.scores)
     // console.log(scores)
@@ -47,9 +43,8 @@ export default function Scores()
                 {loading && <Loader />}
                 {scores && scores.map(empire =>
                 {
-                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home={false} />
+                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home='true' />
                 })}
-
             </Stack>
         </main>
     )

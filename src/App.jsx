@@ -202,7 +202,7 @@ function App()
 							hiddenBreakpoint='sm'
 							hidden={!opened}
 							width={{ sm: 200, base: 200 }}
-							zIndex={100}
+							zIndex={110}
 						>
 							<Navbar.Section
 								grow
@@ -225,7 +225,7 @@ function App()
 						</Navbar>
 					}
 					header={
-						<Header height={60} p='sm'>
+						<Header height={60} p='sm' zIndex={120}>
 							<Group position='apart' spacing='sm'>
 								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
 									<Burger
@@ -236,10 +236,10 @@ function App()
 								</MediaQuery>
 								<Title order={1}>NeoPromisance</Title>
 								<Group>
-									<Button size='xs'>Collect Bonus Turns</Button>
+									{/* <Button size='xs'>Collect Bonus Turns</Button>
 									<ActionIcon variant="outline" color='blue'>
 										<Globe weight="fill" />
-									</ActionIcon>
+									</ActionIcon> */}
 									<ThemeToggle />
 								</Group>
 							</Group>

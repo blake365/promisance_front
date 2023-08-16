@@ -10,6 +10,8 @@ import { demo } from '../../store/userSlice'
 import { create } from '../../store/empireSlice'
 
 import { HeroImageRight } from './homeHero'
+import HomeNews from '../layout/homeNews'
+import Scores from '../scores'
 
 // TODO: form validation
 export default function Home()
@@ -136,6 +138,10 @@ export default function Home()
                     </Stack>
                 </Card>
 
+                <Group position='apart'>
+                    <HomeNews />
+                    {/* <Scores /> */}
+                </Group>
             </Container>
         </main>
     )
