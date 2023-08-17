@@ -24,7 +24,6 @@ import
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
-
 import './App.css'
 import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,7 +35,6 @@ import { useLocalStorage } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
 import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
-
 
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
@@ -65,8 +63,11 @@ function App()
 	const { empire } = useSelector((state) => state.empire)
 	// console.log(empire)
 
+
 	const navigate = useNavigate()
 	// console.log(empire)
+
+
 	const loadEmpireTest = async () =>
 	{
 		try {
@@ -152,7 +153,12 @@ function App()
 
 	useEffect(() =>
 	{
+		dispatch(setPage(pageState))
+
 		if (empireStatus === 'succeeded') {
+			dispatch(fetchEffects({
+				id: empire.id
+			}))
 			checkForNews().then((data) =>
 			{
 				// console.log(data)
@@ -164,20 +170,7 @@ function App()
 				setMail(data)
 			})
 		}
-	})
 
-	useEffect(() =>
-	{
-		if (empireStatus === 'succeeded') {
-			dispatch(fetchEffects({
-				id: empire.id
-			}))
-		}
-	})
-
-	useEffect(() =>
-	{
-		dispatch(setPage(pageState))
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorage({

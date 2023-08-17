@@ -1,6 +1,6 @@
 import { Button, Stack, Title } from '@mantine/core'
 import { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 const Sidebar = () =>
@@ -13,7 +13,6 @@ const Sidebar = () =>
 		'World News',
 		// 'Graveyard',
 		// 'Empire Search',
-		// 'News Search',
 		// 'Discord',
 	]
 	const turnLinks = [
@@ -30,7 +29,7 @@ const Sidebar = () =>
 	const financeLinks = [
 		'Black Market',
 		'Public Market',
-		'World Bank',
+		'The Bank',
 		// 'Lottery',
 	]
 	const foreignLinks = [
@@ -39,78 +38,130 @@ const Sidebar = () =>
 		'Intel Center'
 	]
 	const managementLinks = [
-		'Manage Empire',
+		'Empire Settings',
 	]
 
 
+	let location = useLocation()
+
+	// console.log(location.pathname.split('/app/')[1])
+
+	let locationString = location.pathname.split('/app/')[1]
+
+	// console.log(locationString.split('%').length > 1)
 
 	return (
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
 				<Title order={4}>Information</Title>
-				{infoLinks.map((link, index) => (
-					<Button
-						component={Link}
-						compact
-						to={`/app/${link}`}
-						variant='subtle'
-						key={index}
-					>
-						{link}
-					</Button>
-				))}
+				{infoLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							key={index}
+						>
+							{link}
+						</Button>)
+				})}
 				<Title order={4}>Use Turns</Title>
-				{turnLinks.map((link, index) => (
-					<Button
-						component={Link}
-						compact
-						to={`/app/${link}`}
-						variant='subtle'
-						fullWidth
-						key={index}
-					>
-						{link}
-					</Button>
-				))}
+				{turnLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							fullWidth
+							key={index}
+						>
+							{link}
+						</Button>
+					)
+				})}
 				<Title order={4}>Finance</Title>
-				{financeLinks.map((link, index) => (
-					<Button
-						component={Link}
-						compact
-						to={`/app/${link}`}
-						variant='subtle'
-						fullWidth
-						key={index}
-					>
-						{link}
-					</Button>
-				))}
+				{financeLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							fullWidth
+							key={index}
+						>
+							{link}
+						</Button>
+					)
+				})}
 				<Title order={4}>Diplomacy</Title>
-				{foreignLinks.map((link, index) => (
-					<Button
-						component={Link}
-						compact
-						to={`/app/${link}`}
-						variant='subtle'
-						fullWidth
-						key={index}
-					>
-						{link}
-					</Button>
-				))}
+				{foreignLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							fullWidth
+							key={index}
+						>
+							{link}
+						</Button>
+					)
+				})}
 				<Title order={4}>Settings</Title>
-				{managementLinks.map((link, index) => (
-					<Button
-						component={Link}
-						compact
-						to={`/app/${link}`}
-						variant='subtle'
-						fullWidth
-						key={index}
-					>
-						{link}
-					</Button>
-				))}
+				{managementLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							fullWidth
+							key={index}
+						>
+							{link}
+						</Button>
+					)
+				})}
 
 			</Stack>
 		</Fragment>

@@ -44,7 +44,6 @@ const useStyles = createStyles(() => ({
         backgroundImage:
             `url(${bg})`,
     },
-
     form: {
         minHeight: '100vh',
         maxWidth: 450,
@@ -54,9 +53,7 @@ const useStyles = createStyles(() => ({
             maxWidth: '100%',
         },
     },
-
 }));
-
 
 
 export default function NewLogin()
@@ -70,8 +67,8 @@ export default function NewLogin()
     {
         // console.log(user)
         // console.log(user.empires)
-        if (isLoggedIn && user.empires.length === 0) {
-            setOpened(true)
+        if ((isLoggedIn && user.empires?.length === 0) || (isLoggedIn && user.empires === undefined)) {
+            return navigate('/create')
         } else if (isLoggedIn && user.empires.length > 0) {
             // dispatch(empireLoaded(user.empires[0]))
             return navigate('/app/')
@@ -95,7 +92,6 @@ export default function NewLogin()
                     Welcome back to NeoPromisance!
                 </Title>
                 <form onSubmit={form.onSubmit((values) =>
-
                     dispatch(login(values)))
                 }>
                     <TextInput label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />

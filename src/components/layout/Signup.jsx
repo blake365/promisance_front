@@ -1,9 +1,9 @@
 import { Button, createStyles, Anchor, TextInput, Title, Paper, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { useDispatch } from 'react-redux'
-import { register, } from '../../store/userSlice'
-
-
+import { register } from '../../store/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -34,7 +34,23 @@ export default function Signup()
 	const dispatch = useDispatch()
 	const { classes } = useStyles();
 
-	//TODO: set up server side validation response
+
+	const { isLoggedIn, user } = useSelector((state) => state.user)
+	// let { empire } = useSelector((state) => state.empire)
+
+	const navigate = useNavigate()
+
+	useEffect(() =>
+	{
+		// console.log(user)
+		// console.log(user.empires)
+		if ((isLoggedIn && user.empires?.length === 0) || (isLoggedIn && user.empires === undefined)) {
+			return navigate('/create')
+		} else if (isLoggedIn && user.empires.length > 0) {
+			// dispatch(empireLoaded(user.empires[0]))
+			return navigate('/app/')
+		}
+	}, [isLoggedIn, user, navigate])
 
 	const form = useForm({
 		initialValues: {

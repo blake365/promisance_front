@@ -30,10 +30,10 @@ import Mailbox from './components/mail/mailbox'
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
 import Signup from './components/layout/Signup'
+import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
 
 import Axios from 'axios'
-import CreateEmpire from './components/pages/CreateEmpire'
 import { PersistGate } from 'redux-persist/integration/react'
 import Favorites from './components/useTurns/favorites'
 import WorldNews from './components/news/worldNews'
@@ -55,7 +55,7 @@ ReactDOM.render(
 						<Route path='/' element={<Home />} />
 						<Route path='/login' element={<NewLogin />} />
 						<Route path='/register' element={<Signup />} />
-						<Route path='/createEmpire' element={<CreateEmpire />} />
+						<Route path='/create' element={<CreateEmpire />} />
 						<Route path='/app/' element={<App />}>
 							<Route path='*' element={<NothingFoundBackground />} />
 							{/* <Route path='guide' element={<Guide />} /> */}
@@ -74,7 +74,7 @@ ReactDOM.render(
 							<Route path='Heal' element={<Heal />} />
 							<Route path='Black%20Market' element={<PrivateMarket />} />
 							<Route path='Public%20Market' element={<PublicMarket />} />
-							<Route path='World%20Bank' element={<WorldBank />} />
+							<Route path='The%20Bank' element={<WorldBank />} />
 							<Route path='Magic%20Center' element={<MagicCenter />} />
 							<Route path='Manage%20Empire' element={<ManageEmpire />} />
 							<Route path='War%20Council' element={<Attack />} />

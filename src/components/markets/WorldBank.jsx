@@ -132,7 +132,7 @@ export default function WorldBank()
                 <Stack spacing='sm' align='center' grow>
                     <img src='/images/bank.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='world bank' />
                     <Title order={1} align='center'>
-                        World Bank
+                        The Bank
                     </Title>
                     <div>
                         Access your savings and loan accounts.
