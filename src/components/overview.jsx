@@ -30,7 +30,10 @@ const NetProduced = (props) =>
 	)
 }
 
-// TODO: finish overview page
+// finish overview page
+// Show race details
+// Show era details
+
 export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)

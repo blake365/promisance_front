@@ -76,7 +76,7 @@ ReactDOM.render(
 							<Route path='Public%20Market' element={<PublicMarket />} />
 							<Route path='The%20Bank' element={<WorldBank />} />
 							<Route path='Magic%20Center' element={<MagicCenter />} />
-							<Route path='Manage%20Empire' element={<ManageEmpire />} />
+							<Route path='Empire%20Settings' element={<ManageEmpire />} />
 							<Route path='War%20Council' element={<Attack />} />
 							<Route path='Intel%20Center' element={<IntelCenter />} />
 							<Route path='World%20News' element={<WorldNews />} />

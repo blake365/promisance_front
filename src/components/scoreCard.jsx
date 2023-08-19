@@ -77,7 +77,7 @@ const ScoreCard = ({ empire, myId, home }) =>
                     </Text>
                     <Indicator color='blue' position='top-start' processing disabled={!active}>
                         <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
-                            <Avatar size="md" />
+                            <Avatar size="sm" src={empire.profileIcon} />
                             <Title order={4} color={color}>
                                 {empire.name} (#{empire.id})
                             </Title>
