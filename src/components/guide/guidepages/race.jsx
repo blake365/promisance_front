@@ -59,10 +59,10 @@ export default function RaceGuide({ empire })
                         </tr>
                     </thead>
                     <tbody>
-                        {raceArray.map(race => 
+                        {raceArray.map((race, index) => 
                         {
                             return (
-                                <tr>
+                                <tr key={index}>
                                     <td>{race.name}</td>
                                     <td style={race.mod_offense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_offense}%</td>
                                     <td style={race.mod_defense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_defense}%</td>

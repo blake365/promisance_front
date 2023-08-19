@@ -191,7 +191,7 @@ export default function WorldNews()
                         <Button type='submit' size='xs'>Search</Button>
                     </Group>
                 </form>
-                <Stack spacing={0}>
+                <Stack spacing='xs'>
                     {loading ? <Loader /> : (
                         news.map(item =>
                         {

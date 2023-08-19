@@ -7,17 +7,34 @@ import
 
 const NetProduced = (props) =>
 {
+	let abs = Math.abs(props.value)
+	let display = ''
+
+	if (props.money) {
+		if (props.value < 0) {
+			display = `-$${abs.toLocaleString()}`
+		} else {
+			display = `+$${abs.toLocaleString()}`
+		}
+	} else if (props.percent) {
+		display = `${props.value.toLocaleString()}%`
+	} else {
+		if (props.value < 0) {
+			display = `-${abs.toLocaleString()}`
+		} else {
+			display = `+${abs.toLocaleString()}`
+		}
+	}
+
 	return (
 		<>
-			<Text>{props.title}:</Text>
+			<Text weight={700}>{props.title}:</Text>
 			<Text
 				align='right'
 				style={props.value >= 0 ? { color: 'green' } : { color: 'red' }}
-				weight={600}
+				weight={700}
 			>
-				{props.value <= 0 ? '' : '+'}
-				{props.money && '$'}
-				{props.value.toLocaleString()}
+				{display}
 			</Text>
 		</>
 	)

@@ -1,10 +1,7 @@
 import { Stack, Title, Button, TextInput, Group, Avatar, Text, Select, } from '@mantine/core'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from '@mantine/form'
-// import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
-import { eraArray } from '../config/eras'
-import { raceArray } from '../config/races'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import Axios from 'axios'
 import { empireLoaded } from '../store/empireSlice'
 
@@ -86,10 +83,8 @@ export default function ManageEmpire()
 		}
 	}
 
-	// Edit empire profile form
-	// Set profile icon form
-	// Change empire race form
 
+	// Change empire race form
 	// Rename empire form?
 
 	return (
@@ -106,7 +101,7 @@ export default function ManageEmpire()
 				})}>
 					<Stack spacing='sm' align='center'>
 						<TextInput
-							label='Edit Your Profile'
+							label='Edit Your Public Profile'
 							placeholder={empire.profile ? empire.profile : 'Enter your profile here'}
 							required
 							w='350px'
@@ -124,7 +119,7 @@ export default function ManageEmpire()
 				})}>
 					<Stack spacing='sm' align='center'>
 						<Group align='flex-end'>
-							<Avatar src={empire.profileIcon} size='md' />
+							<Avatar size="md" src={empire.profileIcon} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }} />
 							<Select
 								label="Choose Your Icon"
 								placeholder="Pick one"
