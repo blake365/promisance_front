@@ -20,7 +20,6 @@ import
 	ScrollArea,
 	Button,
 	Indicator,
-	ActionIcon
 } from '@mantine/core'
 
 import Sidebar from './components/layout/sidebar'
@@ -41,7 +40,7 @@ import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
 import { NewspaperClipping, Envelope, Globe } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
-
+import BonusTurns from './components/layout/bonusTurns';
 
 
 function App()
@@ -269,6 +268,7 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
+										<BonusTurns />
 										<Indicator color="green" processing disabled={!mail} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
 										</Indicator>

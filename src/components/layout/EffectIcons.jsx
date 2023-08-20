@@ -11,10 +11,11 @@ export default function EffectIcons()
     let now = new Date()
 
     // console.log(effects)
-    let activeEffects = []
-    if (effects && effects.length > 0) {
-        activeEffects = effects.map(effect => (effect.empireEffectName))
-    }
+    // let activeEffects = []
+    // if (effects && effects.length > 0) {
+    //     activeEffects = effects.map(effect => (effect.empireEffectName))
+    // }
+    // activeEffects = activeEffects.filter(effect => (effect.empireEffectName !== 'bonus turns'))
 
     // console.log(activeEffects)
     return (
@@ -43,11 +44,15 @@ export default function EffectIcons()
                             icon = <HourglassMedium />
                             color = 'red'
                         }
+                        if (effect.empireEffectName === 'bonus turns') {
+                            return
+                        }
 
                         return (
-                            <Tooltip label={
-                                effect.empireEffectName
-                            } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
+                            <Tooltip
+                                label={
+                                    effect.empireEffectName
+                                } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
                                 <RingProgress
                                     thickness={4}
                                     sections={[{ value: percentRemaining, color: color }]}
@@ -62,9 +67,7 @@ export default function EffectIcons()
                             </Tooltip>
                         )
                     })}
-
                 </Group>)}
-
         </div>
     )
 }

@@ -1,5 +1,5 @@
 export const GAME_VERSION = 0.1
-export const GAME_TITLE = 'NeoPromisance.' + GAME_VERSION // server title, may customize to liking
+export const GAME_TITLE = 'NeoPromisance' + ' ' + GAME_VERSION // server title, may customize to liking
 export const URL_BASE = 'http://www.yoursite.com/promisance/' // the path in which Promisance is installed
 export const URL_HOMEPAGE = 'http://www.yoursite.com/' // where users will be sent when they logout
 export const URL_FORUMS = 'http://www.yoursite.com/forums/viewforum.php?f=N' // where your site's forums are located
