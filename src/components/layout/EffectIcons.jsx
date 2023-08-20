@@ -1,6 +1,6 @@
 import { Group, ThemeIcon, Tooltip, RingProgress, Center } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { ShieldStar, Sword, CalendarCheck, NewspaperClipping, Envelope } from '@phosphor-icons/react'
+import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 
 // add a whole new redux slice for empire effects
 
@@ -28,16 +28,10 @@ export default function EffectIcons()
                         // console.log(effectAge)
                         effectAge = Math.floor(effectAge)
 
-                        // if (effectAge > effect.empireEffectValue) {
-                        //      console.log('expired')
-                        // }
-                        // else {
-                        //      console.log('active')
-                        // }
-
                         let remaining = effect.empireEffectValue - effectAge
                         let percentRemaining = remaining / effect.empireEffectValue * 100
 
+                        let color = 'green'
                         let icon = ''
                         if (effect.empireEffectName === 'spell shield') {
                             icon = <ShieldStar />
@@ -45,6 +39,9 @@ export default function EffectIcons()
                             icon = <Sword />
                         } else if (effect.empireEffectName === 'time gate') {
                             icon = <CalendarCheck />
+                        } else if (effect.empireEffectName === 'era delay') {
+                            icon = <HourglassMedium />
+                            color = 'red'
                         }
 
                         return (
@@ -53,11 +50,11 @@ export default function EffectIcons()
                             } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
                                 <RingProgress
                                     thickness={4}
-                                    sections={[{ value: percentRemaining, color: 'green' }]}
+                                    sections={[{ value: percentRemaining, color: color }]}
                                     size={39}
                                     label={
                                         <Center>
-                                            <ThemeIcon size="sm" radius="lg" color={activeEffects.includes(effect.empireEffectName) ? "green" : 'gray'}>
+                                            <ThemeIcon size="sm" radius="lg" color={color}>
                                                 {icon}
                                             </ThemeIcon>
                                         </Center>

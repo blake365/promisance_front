@@ -254,10 +254,10 @@ function App()
 								<Guide empire={empire} />
 							</Modal>
 							<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-								<Grid.Col span={1}>
+								<Grid.Col span={3}>
 									<EffectIcons />
 								</Grid.Col>
-								<Grid.Col span={6}>
+								<Grid.Col span={2}>
 									<Group spacing='xs' position='center'>
 										<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
 										<Button compact variant='light' onClick={() =>
@@ -267,7 +267,7 @@ function App()
 										}}>Refresh</Button>
 									</Group>
 								</Grid.Col>
-								<Grid.Col span={1}>
+								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<Indicator color="green" processing disabled={!mail} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
