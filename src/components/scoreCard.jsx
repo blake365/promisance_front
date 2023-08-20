@@ -49,11 +49,20 @@ const ScoreCard = ({ empire, myId, home }) =>
 
 
     let color = ''
+    let disabled = false
+
+    if (empire.turnsUsed <= 200) {
+        color = 'lightgreen'
+        disabled = true
+    }
+    if (empire.mode === 'demo') {
+        color = 'lightpink'
+    }
     if (empire.id === myId) {
         color = 'cyan'
     }
 
-    let disabled = false
+
     if (empire.id === myId) {
         disabled = true
     }

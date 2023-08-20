@@ -2,7 +2,7 @@ import { Table } from "@mantine/core"
 import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
 
-import '../guide.css'
+import classes from '../guide.module.css'
 
 export default function EraGuide({ empire })
 {
@@ -21,19 +21,21 @@ export default function EraGuide({ empire })
                 <dt>Exploration</dt>
                 <dd>How much land you gain per turn spent <GuideLink page='Explore' text='exploring' />.</dd>
             </dl>
-            <div className="guideTable">
-                <Table highlightOnHover striped style={{ width: 400 }}>
+            <div className={classes.guideTable}>
+                <Table highlightOnHover striped>
                     <thead>
-                        <tr><th>Era</th>
+                        <tr>
+                            <th>Era</th>
                             <th>Industry</th>
                             <th>Energy</th>
-                            <th>Exploration</th></tr>
+                            <th>Exploration</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {eraArray.map(era => 
                         {
                             return (
-                                <tr>
+                                <tr key={era.name}>
                                     <td>{era.name}</td>
                                     <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
 

@@ -8,7 +8,7 @@ export default function OverviewGuide({ empire })
             <GuideLink text='Return to Index' page='Index' />
 
             <h2>Detailed Status</h2>
-            <p>This page provides detailed statistics about your empire and its economy, divided into 6 overall sections:</p>
+            <p>This page provides detailed statistics about your empire and its economy, divided into 6 overall sections. The red or green numbers indicate how your stats have been effected by Race or Era modifiers.</p>
             <h3>Empire</h3>
             <dl>
                 <dt>Turns Used</dt>
@@ -28,28 +28,19 @@ export default function OverviewGuide({ empire })
             </dl>
             <h3>Agriculture</h3>
             <dl>
-                <dt>Est. Production</dt>
+                <dt>Production</dt>
                 <dd>{eraArray[empire.era].bldfood} and unused land both help to produce {eraArray[empire.era].food} with which to feed your citizens and army. This number indicates approximately how much they will produce each turn.</dd>
-                <dt>Est. Consumption</dt>
+                <dt>Consumption</dt>
                 <dd>Your military, {eraArray[empire.era].peasants}, and {eraArray[empire.era].trpwiz} all require {eraArray[empire.era].food} to survive. This number shows your estimated consumption per turn.</dd>
                 <dt>Net</dt>
                 <dd>This number indicates whether you are gaining or losing {eraArray[empire.era].food} overall per turn. It is usually a good idea to keep an eye on this number, lest you run out and your people starve.</dd>
             </dl>
-            <h3>Relations</h3>
+            <h3>Other</h3>
             <dl>
-                <dt>Member of Clan</dt>
-                <dd>If you are in a clan, its name is indicated here.  If you are independent, this will simply say "None."</dd>
-                <dt>Allies</dt>
-                <dd>If you are in a clan, other clans which you are allied with will be listed here.</dd>
-                <dt>Enemies</dt>
-                <dd>If you are in a clan, clans you are at war with are listed here.</dd>
-
-                <dt>Offensive Actions</dt>
-                <dd>Indicates how many times you have attacked other empires, as well as the percentage of successful attacks (in parentheses).</dd>
-                <dt>Defenses</dt>
-                <dd>Indicates how many times your empire has been attacked by others, as well as the percentage of attacks that have been successfully resisted (in parentheses).</dd>
-                <dt>Kills</dt>
-                <dd>This indicates the number of empires you have destroyed.</dd>
+                <dt>Exploration</dt>
+                <dd>How much land you will gain from one turn exploring</dd>
+                <dt>Black Market</dt>
+                <dd>Shows you racial bonus relating to price discounts on your Black Market</dd>
             </dl>
             <h3>Land Division</h3>
             <p>Each row in this table indicates the number of each type of structure your empire has built on its land, as well as how many acres are currently unused.</p>
@@ -57,9 +48,9 @@ export default function OverviewGuide({ empire })
             <dl>
                 <dt>Per Cap Income</dt>
                 <dd>This is your empire's per capita income, indicating how much money each of its {eraArray[empire.era].peasants} make each turn.  A percentage of this income is gained based on tax rate.</dd>
-                <dt>Est. Income</dt>
+                <dt>Income</dt>
                 <dd>Your empire's income is determined by the number of {eraArray[empire.era].peasants} it has, its per capita income, its tax rate, and its overall health.</dd>
-                <dt>Est. Expenses</dt>
+                <dt>Expenses</dt>
                 <dd>Your empire's expenses consist mainly of military upkeep and land taxes. {eraArray[empire.era].bldcost}can help to lower these expenses.</dd>
                 <dt>Loan Payment</dt>
                 <dd>If you have borrowed any money from the World Bank, 0.5% of your loan is paid off each turn.  Your loan payment for the next turn you take is indicated here.</dd>
@@ -79,6 +70,19 @@ export default function OverviewGuide({ empire })
                     for more information).</dd>
                 <dt>Defensive Power</dt>
                 <dd>Your empire's total calculated defensive power is shown here.</dd>
+            </dl>
+            <h3>Relations</h3>
+            <dl>
+                <dt>Member of Clan</dt>
+                <dd>If you are in a clan, its name is indicated here.  If you are independent, this will simply say "None."</dd>
+                <dt>Allies</dt>
+                <dd>If you are in a clan, other clans which you are allied with will be listed here.</dd>
+                <dt>Enemies</dt>
+                <dd>If you are in a clan, clans you are at war with are listed here.</dd>
+                <dt>Offensive Actions</dt>
+                <dd>Indicates how many times you have attacked other empires, as well as the percentage of successful attacks (in parentheses).</dd>
+                <dt>Defenses</dt>
+                <dd>Indicates how many times your empire has been attacked by others, as well as the percentage of attacks that have been successfully resisted (in parentheses).</dd>
             </dl>
         </div>
     )

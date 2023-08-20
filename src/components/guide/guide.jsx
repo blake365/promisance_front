@@ -20,6 +20,10 @@ import MagicCenterGuide from "./guidepages/magicCenter";
 import GuideIndex from "./guidepages/guideIndex";
 import AttackGuide from "./guidepages/attack";
 import HealGuide from "./guidepages/heal";
+import NewsGuide from "./guidepages/news";
+import MailGuide from "./guidepages/mail";
+import IntelGuide from "./guidepages/intel";
+import SettingsGuide from "./guidepages/settings";
 
 export default function Guide(props)
 {
@@ -62,13 +66,20 @@ export default function Guide(props)
             return <BuildingsGuide empire={props.empire} />
         case 'Black%20Market':
             return <BlackMarketGuide empire={props.empire} />
-        case 'World%20Bank':
+        case 'The%20Bank':
             return <WorldBankGuide />
         case 'Magic%20Center':
             return <MagicCenterGuide empire={props.empire} />
         case 'War%20Council':
             return <AttackGuide empire={props.empire} />
-        case 'Manage%20Empire':
+        case 'Empire%20Settings':
+            return <SettingsGuide />
+        case 'World%20News':
+            return <NewsGuide />
+        case 'Mailbox':
+            return <MailGuide />
+        case 'Intel%20Center':
+            return <IntelGuide empire={props.empire} />
         case 'Index':
             return <GuideIndex />
         default:

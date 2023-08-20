@@ -15,7 +15,7 @@ export default function BuildingsGuide({ empire })
                 <dt>{eraArray[empire.era].bldcash}</dt>
                 <dd>These allow your empire's economy to grow, helping to increase your Per Capita Income, as well as directly producing money themselves.</dd>
                 <dt>{eraArray[empire.era].bldtrp}</dt>
-                <dd>These produce your military units; the percentage of resources allocated to each unit type produced is controlled through <GuideLink page='Manage%20Empire' text='empire management' />.</dd>
+                <dd>These produce your military units; the percentage of resources allocated to each unit type produced is controlled through the industry settings on the industrial focus page.</dd>
                 <dt>{eraArray[empire.era].bldcost}</dt>
                 <dd>These allow you to reduce your military expenses by more efficiently housing your units. They will also lower the price of all military units purchased from the Private Market. These also increase the rate at which your Private Market refills.</dd>
                 <dt>{eraArray[empire.era].bldwiz}</dt>

@@ -8,10 +8,12 @@ export default function SummaryGuide({ empire })
             <GuideLink text='Return to Index' page='Index' />
 
             <h2>Empire Summary</h2>
-            <p>This is the first page you will see each time you login. On it is displayed brief statistics for your empire, any recent events, and when you should expect to receive your next set of turns.</p>
+            <p>This is the first page you will see each time you login. On it is displayed brief statistics for your empire and when you should expect to receive your next set of turns.</p>
 
             <p>In the center of the page, a table will display the following vital statistics of your empire:</p>
             <dl>
+                <dt>Empire Name and Icon</dt>
+                <dd>Your display name, icon, and public profile that show on the <GuideLink page='Scores' text='Scores' /> page. You can change your icon and profile text in the <GuideLink page='Settings' text='Empire Settings' />.</dd>
                 <dt>Turns</dt>
                 <dd>The number of turns you currently have available to use (and the maximum you are allowed to accumulate).</dd>
                 <dt>Stored Turns</dt>
@@ -44,9 +46,7 @@ export default function SummaryGuide({ empire })
                 <dd>The number of spellcasters your empire has at its disposal.</dd>
             </dl>
             <p>Below this table is displayed the game server's current time (in your configured time zone) and the state of the current round (e.g. how long before it starts or ends), as well as the rate at which turns are given out and how long you should expect to wait before receiving additional turns.</p>
-            <p>If you are currently in a clan, the latest post in the clan's News thread will be displayed as a reminder.</p>
-            <p>A Personal Notes section can be found on this page, allowing you to store pieces of information relevant to your gameplay strategy or any tasks you need to perform.</p>
-            <p>A summary of your <GuideLink page='Mail' text='Mail Box' />  is displayed below, indicating how many new messages you have received lately and how many old messages are remaining in your mailbox.</p>
+            {/* <p>If you are currently in a clan, the latest post in the clan's News thread will be displayed as a reminder.</p> */}
             <p>If any other empires have interacted with you recently, whether it be via the public market, your clan, or a rival empire attacking you, a list of events will be displayed. Clicking the "Mark News as Read" link will dismiss all recent events, and clicking the "View New Archive" link will allow you to re-examine any events which have occurred during the past few days.</p>
         </div>
     )

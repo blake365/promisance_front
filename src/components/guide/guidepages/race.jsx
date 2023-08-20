@@ -2,7 +2,7 @@ import { Table } from "@mantine/core"
 import { eraArray } from "../../../config/eras"
 import { raceArray } from "../../../config/races"
 import GuideLink from "../../utilities/guidelink"
-import '../guide.css'
+import classes from '../guide.module.css'
 
 export default function RaceGuide({ empire })
 {
@@ -38,9 +38,9 @@ export default function RaceGuide({ empire })
                 <dt>Agriculture</dt>
                 <dd>The rate at which your {eraArray[empire.era].bldfood} produce {eraArray[empire.era].food}.</dd>
             </dl>
-            <i>Scroll to see more attributes</i>
-            <div className="guideTable">
-                <Table highlightOnHover striped style={{ width: 1300 }}>
+            <i>Scroll left and right to see more attributes</i>
+            <div className={classes.guideTable}>
+                <Table highlightOnHover striped >
                     <thead>
                         <tr>
                             <th>Race</th>

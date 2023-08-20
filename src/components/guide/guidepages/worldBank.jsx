@@ -8,8 +8,8 @@ export default function WorldBankGuide()
         <div>
             <GuideLink text='Return to Index' page='Index' />
 
-            <h2>The World Bank</h2>
-            <p>The world bank provides a place for empires both to store their excess funds and to take out loans during emergencies.</p>
+            <h2>The Bank</h2>
+            <p>The bank provides a place for empires both to store their excess funds and to take out loans during emergencies.</p>
             <p>The maximum size of an empire's savings account and the most it can loan at once is determined mainly by the empire's networth.</p>
             <p>Savings account interest rates begin at {BANK_SAVERATE}% and gradually decrease as your empire grows larger and begins to deposit more of its funds.</p>
             <p>Loan interest rates begin at {BANK_LOANRATE}% and gradually increase as your empire grows larger and becomes more easily able to pay off loans.</p>
