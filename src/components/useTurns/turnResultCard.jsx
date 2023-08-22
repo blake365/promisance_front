@@ -96,9 +96,9 @@ export default function TurnResultCard({ data })
 	return (
 		<>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
-				backgroundColor: theme.colors.gray[1],
+				backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
 				'&:hover': {
-					backgroundColor: theme.colors.gray[2],
+					backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 				},
 			})}>
 				<Text align='center' color='red'>{data.error}</Text>

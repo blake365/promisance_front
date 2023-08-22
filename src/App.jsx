@@ -20,7 +20,10 @@ import
 	ScrollArea,
 	Button,
 	Indicator,
+	Image,
 } from '@mantine/core'
+
+import neoIcon from './icons/neoIcon.svg'
 
 import Sidebar from './components/layout/sidebar'
 import './App.css'
@@ -184,7 +187,9 @@ function App()
 			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
 				<AppShell
 					styles={(theme) => ({
-						main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1] },
+						main: {
+							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+						},
 					})}
 					navbarOffsetBreakpoint='sm'
 					fixed
@@ -218,7 +223,7 @@ function App()
 					}
 					header={
 						<Header height={60} p='sm' zIndex={120}>
-							<Group position='apart' spacing='sm'>
+							<Group position='apart' spacing={2}>
 								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
 									<Burger
 										opened={opened}
@@ -226,12 +231,15 @@ function App()
 										size='sm'
 									/>
 								</MediaQuery>
-								<Title order={1}>NeoPromisance</Title>
+								<Group align='center' spacing={4}>
+									<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
+										<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+									</MediaQuery>
+									<Title order={1} ml={0}>
+										NeoPromisance
+									</Title>
+								</Group>
 								<Group>
-									{/* <Button size='xs'>Collect Bonus Turns</Button>
-									<ActionIcon variant="outline" color='blue'>
-										<Globe weight="fill" />
-									</ActionIcon> */}
 									<ThemeToggle />
 								</Group>
 							</Group>
@@ -248,7 +256,6 @@ function App()
 								centered
 								overflow="inside"
 								size="xl"
-
 							>
 								<Guide empire={empire} />
 							</Modal>

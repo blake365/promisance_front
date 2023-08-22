@@ -1,4 +1,5 @@
 import { createStyles, Container, Title, Text, Button, Group } from '@mantine/core';
+import neoIcon from '../../icons/neoIcon.svg'
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -16,6 +17,30 @@ const useStyles = createStyles((theme) => ({
         justifyContent: 'space-between',
     },
 
+    svg: {
+        filter: 'invert(1)',
+        marginBottom: '1rem',
+        '@media (max-width: 400px)': {
+            height: '2.6rem',
+
+        },
+        '@media (min-width: 700px)': {
+            height: '5rem',
+        },
+        height: '3.2rem',
+    },
+
+    title: {
+        color: 'white',
+        fill: 'white',
+        '@media (max-width: 400px)': {
+            fontSize: '2.5rem',
+        },
+        '@media (min-width: 700px)': {
+            fontSize: '5rem',
+        },
+        fontSize: '3rem',
+    }
 
 }));
 
@@ -30,17 +55,12 @@ export function HeroImageRight()
                         <Text color='white'>
                             Welcome to
                         </Text>
-                        <Title color='white' sx={{
-                            '@media (max-width: 400px)': {
-                                fontSize: '2.8rem',
-                            },
-                            '@media (min-width: 700px)': {
-                                fontSize: '5rem',
-                            },
-                            fontSize: '4rem',
-                        }} mb='lg'>
-                            NeoPromisance
-                        </Title>
+                        <Group align='center' spacing={4}>
+                            <img src={neoIcon} className={classes.svg} />
+                            <Title className={classes.title} mb='lg'>
+                                NeoPromisance
+                            </Title>
+                        </Group>
                         <Title color='white' size='h3' maw='24rem' mb='lg'>
                             A free browser game of empire building and conquest
                         </Title>
