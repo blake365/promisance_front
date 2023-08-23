@@ -6,11 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
 import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
-
-function generalLog(number, base)
-{
-    return Math.log(base) / Math.log(number)
-}
+import { calcSizeBonus } from '../../functions/functions'
 
 // DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
 // DONE: form validation
@@ -27,15 +23,7 @@ export default function WorldBank()
     // let loanDefault = empire.loan
     const dispatch = useDispatch()
 
-    const calcSizeBonus = (networth) =>
-    {
-        let net = Math.max(networth, 1)
-        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-        return size
-    }
-
-    const size = calcSizeBonus(empire.networth)
+    const size = calcSizeBonus(empire)
     const loanRate = (BANK_LOANRATE + size) / 100
     const savingRate = (BANK_SAVERATE + size) / 100
     const maxLoan = empire.networth * 50
@@ -44,7 +32,6 @@ export default function WorldBank()
     if (empire.cash < maxSavings) canSave = empire.cash
 
     let canLoan = maxLoan - empire.loan < 0 ? 0 : maxLoan - empire.loan
-
 
     let depositAmount = maxSavings - empire.bank
     if (depositAmount < 0) depositAmount = 0
@@ -163,7 +150,7 @@ export default function WorldBank()
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Est. Interest Gain:</Text>
-                                <Text align='right'>${Math.floor(empire.bank * savingRate / 52).toLocaleString()}</Text>
+                                <Text align='right'>${Math.round(empire.bank * savingRate / 52).toLocaleString()}</Text>
                             </Group>
                             <form
                                 onSubmit={
@@ -254,21 +241,20 @@ export default function WorldBank()
                         </Card>
                     </SimpleGrid>
 
-                    {/* TODO: figure out how to solve warning */}
                     {result &&
-                        result.map(item =>
+                        result.map((item, index) =>
                         {
                             if (item.action === 'deposit') {
-                                return <div>You deposited ${item.amount.toLocaleString()} into the bank.</div>
+                                return <div key={index}>You deposited ${item.amount.toLocaleString()} into the bank.</div>
                             }
                             if (item.action === 'withdraw') {
-                                return <div>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
+                                return <div key={index}>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
                             }
                             if (item.action === 'loan') {
-                                return <div>You took out a loan for ${item.amount.toLocaleString()}.</div>
+                                return <div key={index}>You took out a loan for ${item.amount.toLocaleString()}.</div>
                             }
                             if (item.action === 'repay') {
-                                return <div>You repaid ${item.amount.toLocaleString()} toward your loan.</div>
+                                return <div key={index}>You repaid ${item.amount.toLocaleString()} toward your loan.</div>
                             }
                         })
                     }

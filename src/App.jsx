@@ -41,9 +41,10 @@ import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { NewspaperClipping, Envelope, Globe } from '@phosphor-icons/react'
+import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 import BonusTurns from './components/layout/bonusTurns';
+import { loadScores } from './store/scoresSlice';
 
 
 function App()
@@ -93,6 +94,8 @@ function App()
 			console.log(error)
 		}
 	}
+
+
 
 	const checkForNews = async () =>
 	{
@@ -270,6 +273,7 @@ function App()
 										{
 											loadEmpireTest()
 											loadMarket()
+											dispatch(loadScores())
 										}}>Refresh</Button>
 									</Group>
 								</Grid.Col>

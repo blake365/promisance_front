@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux'
 import WorldNewsItem from './worldNewsItem'
 import { useForm } from '@mantine/form'
 
-
-// TODO: finish scores page
 export default function WorldNews()
 {
     let body = {

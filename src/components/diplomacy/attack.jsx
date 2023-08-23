@@ -17,6 +17,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult, clearResult } from '../../store/turnResultsSlice'
+import { baseCost, getPower_self } from '../../functions/functions'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
@@ -162,28 +163,6 @@ export default function Attack()
         loadOtherEmpires()
     }, [empire.offTotal])
 
-    const getPower = (empire) =>
-    {
-        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
-    }
-
-    function generalLog(number, base)
-    {
-        return Math.log(base) / Math.log(number)
-    }
-
-    const calcSizeBonus = ({ networth }) =>
-    {
-        let net = Math.max(networth, 1)
-        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-        return size
-    }
-
-    const baseCost = (empire) =>
-    {
-        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
-    }
 
     const SelectItem = forwardRef(
         ({ land, era, empireId, name, race, networth, ...others }, ref) => (
@@ -388,7 +367,7 @@ export default function Attack()
                                         <tr>
                                             <td>{eraArray[empire.era].trpwiz}</td>
                                             <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
-                                            <td colSpan={2} align='center'>Power: {getPower(empire)}</td>
+                                            <td colSpan={2} align='center'>Power: {getPower_self(empire)}</td>
                                         </tr>
                                     </tbody>
                                 </Table>

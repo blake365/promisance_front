@@ -16,10 +16,9 @@ import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
 
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
 import { loadScores } from '../../store/scoresSlice'
 import Intel from './intel'
-
+import { getPower_self, baseCost } from '../../functions/functions'
 
 export default function ScoresIntel({ enemy })
 {
@@ -71,29 +70,6 @@ export default function ScoresIntel({ enemy })
         },
     })
 
-    const getPower = (empire) =>
-    {
-        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
-    }
-
-    function generalLog(number, base)
-    {
-        return Math.log(base) / Math.log(number)
-    }
-
-    const calcSizeBonus = ({ networth }) =>
-    {
-        let net = Math.max(networth, 1)
-        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-        return size
-    }
-
-    const baseCost = (empire) =>
-    {
-        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
-    }
-
     const loadEmpireTest = async () =>
     {
         try {
@@ -133,7 +109,7 @@ export default function ScoresIntel({ enemy })
 
                         <Card py='lg'>
                             <Card.Section>
-                                <Text align='center'>Magic Power: {getPower(empire)}</Text>
+                                <Text align='center'>Magic Power: {getPower_self(empire)}</Text>
                                 <Text align='center'>Cost: {Math.ceil(baseCost(empire))} {eraArray[empire.era].runes}</Text>
                             </Card.Section>
                             <Card.Section>

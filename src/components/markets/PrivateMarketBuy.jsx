@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { PVTM_FOOD, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+import { PVTM_FOOD, PVTM_RUNES, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
 // DONE: build sell side of market
@@ -48,9 +48,9 @@ export default function PrivateMarketBuy()
     const trpFlyCost = getCost(empire, PVTM_TRPFLY)
     const trpSeaCost = getCost(empire, PVTM_TRPSEA)
 
-    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD]
+    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD, PVTM_RUNES]
 
-    let availArray = [empire.mktArm, empire.mktLnd, empire.mktFly, empire.mktSea, empire.mktFood]
+    let availArray = [empire.mktArm, empire.mktLnd, empire.mktFly, empire.mktSea, empire.mktFood, empire.mktRunes]
 
     availArray = availArray.map((item, index) =>
     {
@@ -73,6 +73,7 @@ export default function PrivateMarketBuy()
             buyFly: 0,
             buySea: 0,
             buyFood: 0,
+            buyRunes: 0,
         },
 
         validationRules: {
@@ -81,6 +82,7 @@ export default function PrivateMarketBuy()
             buyFly: (value) => value <= empire.cash / trpFlyCost,
             buySea: (value) => value <= empire.cash / trpSeaCost,
             buyFood: (value) => value <= empire.cash / PVTM_FOOD,
+            buyRunes: (value) => value <= empire.cash / PVTM_RUNES,
         },
 
         errorMessages: {
@@ -89,6 +91,7 @@ export default function PrivateMarketBuy()
             buyFly: 'Not Enough Money',
             buySea: 'Not Enough Money',
             buyFood: 'Not Enough Money',
+            buyRunes: 'Not Enough Money',
         },
     })
 
@@ -106,6 +109,9 @@ export default function PrivateMarketBuy()
     }
     if (form.values['buyFood'] === undefined) {
         form.setFieldValue('buyFood', 0)
+    }
+    if (form.values['buyRunes'] === undefined) {
+        form.setFieldValue('buyRunes', 0)
     }
 
     buyNumberArray = Object.values(form.values).slice(2)
@@ -320,6 +326,30 @@ export default function PrivateMarketBuy()
                                         rightSection={<MaxButton formName={form} fieldName='buyFood' maxValue={availArray[4]} />}
                                     />
                                 </Group>
+                                <Group direction='row' spacing='md' noWrap grow>
+                                    <Text align='center'>
+                                        {eraArray[empire.era].runes}
+                                    </Text>
+                                    <Text align='center'>
+                                        {empire.runes.toLocaleString()}
+                                    </Text>
+                                    <Text align='center'>
+                                        {empire.mktRunes.toLocaleString()}
+                                    </Text>
+                                    <Text align='center'>
+                                        ${PVTM_RUNES}
+                                    </Text>
+                                    <Text align='center'>
+                                        {availArray[5].toLocaleString()}
+                                    </Text>
+                                    <NumberInput
+                                        hideControls
+                                        min={0}
+                                        max={availArray[5]}
+                                        {...form.getInputProps(`buyRunes`)}
+                                        rightSection={<MaxButton formName={form} fieldName='buyRunes' maxValue={availArray[5]} />}
+                                    />
+                                </Group>
                             </SimpleGrid>
                             <div style={{ color: 'red' }}>{errors.error}</div>
                             {errors.error ? (
@@ -346,6 +376,7 @@ export default function PrivateMarketBuy()
                                 {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
                                 {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyRunes.amount > 0 ? <div>You purchased {result.resultBuyRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultBuyRunes.price.toLocaleString()}</div> : ''}
                             </Stack>
                         </Card>
                     }

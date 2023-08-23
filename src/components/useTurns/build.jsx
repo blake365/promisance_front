@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { MaxButton, HalfButton, FavoriteButton } from '../utilities/maxbutton'
+import { FavoriteButton, HalfAndAll } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 
@@ -199,7 +199,9 @@ export default function Build()
 												defaultValue={0}
 												max={canBuild}
 												{...form.getInputProps('bldPop')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldPop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldPop' maxValue={canBuild} /></div>}
+												rightSection={
+													<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldPop' maxValue={canBuild} />
+												}
 											/>
 										</td>
 									</tr>
@@ -217,7 +219,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldCash')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCash' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCash' maxValue={canBuild} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldCash' maxValue={canBuild} />}
 											/>
 										</td>
 									</tr>
@@ -235,7 +237,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldTroop')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldTroop' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldTroop' maxValue={canBuild} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldTroop' maxValue={canBuild} />}
 											/>
 										</td>
 									</tr>
@@ -253,7 +255,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldCost')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldCost' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldCost' maxValue={canBuild} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldCost' maxValue={canBuild} />}
 											/>
 										</td>
 									</tr>
@@ -271,8 +273,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldWiz')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldWiz' maxValue={canBuild} /><HalfButton formName={form} fieldName='bldWiz' maxValue={canBuild} />
-												</div>} />
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldWiz' maxValue={canBuild} />} />
 										</td>
 									</tr>
 									<tr>
@@ -290,9 +291,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldFood')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldFood' maxValue={canBuild} />
-													<HalfButton formName={form} fieldName='bldFood' maxValue={canBuild} />
-												</div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldFood' maxValue={canBuild} />}
 											/>
 										</td>
 									</tr>
@@ -310,8 +309,7 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldDef')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='bldDef' maxValue={canBuild} />
-													<HalfButton formName={form} fieldName='bldDef' maxValue={canBuild} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldDef' maxValue={canBuild} />}
 											/>
 										</td>
 									</tr>

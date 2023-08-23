@@ -6,12 +6,9 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { MaxButton, HalfButton } from '../utilities/maxbutton'
+import { HalfAndAll } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
-
-// TODO: clear form on submit
-// TODO: fix styling of button, unused land, top alignment, text alignment in cells
-// TODO: build demolish feature
+import { Drop } from '@phosphor-icons/react'
 
 
 export default function Demolish()
@@ -41,7 +38,10 @@ export default function Demolish()
 	{
 		let dropRate = Math.max(Math.ceil((empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100) / 10), 50)
 
-		// TODO: empire effect to restrict land dropping
+		if (empire.attacks !== 0) {
+			dropRate = dropRate / empire.attacks
+		}
+
 		let canDrop = Math.min(dropRate * empire.turns, empire.freeLand, Math.max(0, empire.land - 1000))
 
 		return { dropRate, canDrop }
@@ -235,7 +235,9 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldPop)}
 												{...form.getInputProps('demoPop')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} /><HalfButton formName={form} fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} /></div>}
+												rightSection={
+													<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} />
+												}
 											/>
 										</td>
 									</tr>
@@ -253,7 +255,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCash)}
 												{...form.getInputProps('demoCash')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} /><HalfButton formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} />}
 											/>
 										</td>
 									</tr>
@@ -271,7 +273,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldTroop)}
 												{...form.getInputProps('demoTroop')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} /><HalfButton formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} />}
 											/>
 										</td>
 									</tr>
@@ -289,7 +291,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCost)}
 												{...form.getInputProps('demoCost')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}><MaxButton formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} /><HalfButton formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} /></div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} />}
 											/>
 										</td>
 									</tr>
@@ -307,10 +309,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldWiz)}
 												{...form.getInputProps('demoWiz')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
-													<MaxButton formName={form} fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} />
-													<HalfButton formName={form} fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} />
-												</div>} />
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} />} />
 										</td>
 									</tr>
 									<tr>
@@ -328,10 +327,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldFood)}
 												{...form.getInputProps('demoFood')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
-													<MaxButton formName={form} fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} />
-													<HalfButton formName={form} fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} />
-												</div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} />}
 											/>
 										</td>
 									</tr>
@@ -349,10 +345,7 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldDef)}
 												{...form.getInputProps('bldDef')}
-												rightSection={<div style={{ marginRight: '2rem', display: "flex" }}>
-													<MaxButton formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />
-													<HalfButton formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />
-												</div>}
+												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />}
 											/>
 										</td>
 									</tr>
@@ -379,7 +372,7 @@ export default function Demolish()
 					<form onSubmit={
 						dropForm.onSubmit((values) =>
 						{
-							console.log(values)
+							// console.log(values)
 							dispatch(clearResult)
 							doDrop(values)
 						})

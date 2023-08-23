@@ -1,12 +1,10 @@
-import { Button, Stack, Title, Loader } from '@mantine/core'
+import { Stack, Title, Loader } from '@mantine/core'
 import { useState, useEffect } from 'react'
-import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadScores } from '../store/scoresSlice'
 
 import ScoreCard from './scoreCard'
 
-// TODO: finish scores page
 export default function Scores()
 {
 
@@ -17,7 +15,7 @@ export default function Scores()
 
     // design empire card
     // add actions to card
-    // TODO: add online indicator
+    // add online indicator
 
     const [loading, setLoading] = useState(false)
 

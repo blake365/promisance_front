@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { PVTM_FOOD, PVTM_MAXSELL, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
+import { PVTM_FOOD, PVTM_MAXSELL, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_RUNES } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
 // TODO: make it mobile friendly
@@ -40,6 +40,7 @@ export default function PrivateMarketSell()
     const trpFlyCost = getCost(empire, PVTM_TRPFLY, 0.36)
     const trpSeaCost = getCost(empire, PVTM_TRPSEA, 0.38)
     const foodCost = Math.round(PVTM_FOOD * 0.40)
+    const runesCost = Math.round(PVTM_RUNES * 0.20)
 
     // const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, foodCost]
 
@@ -52,6 +53,7 @@ export default function PrivateMarketSell()
             sellFly: 0,
             sellSea: 0,
             sellFood: 0,
+            sellRunes: 0,
         },
 
         validationRules: {
@@ -60,6 +62,7 @@ export default function PrivateMarketSell()
             sellFly: (value) => value <= empire.trpFly * (PVTM_MAXSELL / 10000),
             sellSea: (value) => value <= empire.trpSea * (PVTM_MAXSELL / 10000),
             sellFood: (value) => value <= empire.food,
+            sellRunes: (value) => value <= empire.runes,
         },
 
         errorMessages: {
@@ -68,6 +71,7 @@ export default function PrivateMarketSell()
             sellFly: `You can't sell that many ${eraArray[empire.era].trpfly}`,
             sellSea: `You can't sell that many ${eraArray[empire.era].trpsea}`,
             sellFood: `You can't sell that many ${eraArray[empire.era].food}`,
+            sellRunes: `You can't sell that many ${eraArray[empire.era].runes}`,
         },
     })
 
@@ -85,6 +89,9 @@ export default function PrivateMarketSell()
     }
     if (form.values['sellFood'] === undefined) {
         form.setFieldValue('sellFood', 0)
+    }
+    if (form.values['sellRunes'] === undefined) {
+        form.setFieldValue('sellRunes', 0)
     }
 
     // console.log(result)
@@ -256,6 +263,28 @@ export default function PrivateMarketSell()
                                         rightSection={<MaxButton formName={form} fieldName='sellFood' maxValue={empire.food} />}
                                     />
                                 </Group>
+                                <Group direction='row' spacing='md' noWrap grow>
+                                    <Text align='center'>
+                                        {eraArray[empire.era].runes}
+                                    </Text>
+                                    <Text align='center'>
+                                        {empire.runes.toLocaleString()}
+                                    </Text>
+
+                                    <Text align='center'>
+                                        ${runesCost}
+                                    </Text>
+                                    <Text align='center'>
+                                        {Math.floor(empire.runes).toLocaleString()}
+                                    </Text>
+                                    <NumberInput
+                                        hideControls
+                                        min={0}
+                                        max={empire.runes}
+                                        {...form.getInputProps(`sellRunes`)}
+                                        rightSection={<MaxButton formName={form} fieldName='sellRunes' maxValue={empire.runes} />}
+                                    />
+                                </Group>
                             </SimpleGrid>
                             <Button type='submit'> Sell Goods </Button>
                         </Stack>
@@ -273,6 +302,7 @@ export default function PrivateMarketSell()
                                 {result?.resultSellFly.amount > 0 ? <div>You Sold {result.resultSellFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultSellFly.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellSea.amount > 0 ? <div>You Sold {result.resultSellSea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultSellSea.price.toLocaleString()}</div> : ''}
                                 {result?.resultSellFood.amount > 0 ? <div>You Sold {result.resultSellFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultSellFood.price.toLocaleString()}</div> : ''}
+                                {result?.resultSellRunes.amount > 0 ? <div>You Sold {result.resultSellRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultSellRunes.price.toLocaleString()}</div> : ''}
                             </Stack>
                         </Card>
                     }

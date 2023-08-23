@@ -22,6 +22,7 @@ import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Intel from './intel'
 
+import { baseCost } from '../../functions/functions'
 
 export default function IntelCenter()
 {
@@ -134,25 +135,6 @@ export default function IntelCenter()
         loadIntel().then((data) => setIntel(data))
     }, [empire.turns])
 
-
-    function generalLog(number, base)
-    {
-        return Math.log(base) / Math.log(number)
-    }
-
-    const calcSizeBonus = ({ networth }) =>
-    {
-        let net = Math.max(networth, 1)
-        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-        return size
-    }
-
-    const baseCost = (empire) =>
-    {
-        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
-    }
-
     // console.log(intel)
 
     return (
@@ -173,7 +155,7 @@ export default function IntelCenter()
                             </Group>
                         </Card.Section>
                         <Text align='left' py='xs'>
-                            Ratio: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()}
+                            Ratio: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
                         </Text>
                         <Text align='center'>
 

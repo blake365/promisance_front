@@ -14,12 +14,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { forwardRef } from 'react'
+import { getPower_self, baseCost } from '../../functions/functions'
 
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
 import { FavoriteButton } from '../utilities/maxbutton'
 
-// TODO: move advance and regress out of select form into separate ui?
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
 export default function MagicCenter()
@@ -67,30 +66,7 @@ export default function MagicCenter()
         }
     }
 
-    const getPower = (empire) =>
-    {
-        return Math.floor(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100) / Math.max(empire.bldWiz, 1))
-    }
-
-    function generalLog(number, base)
-    {
-        return Math.log(base) / Math.log(number)
-    }
-
-    const calcSizeBonus = ({ networth }) =>
-    {
-        let net = Math.max(networth, 1)
-        let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-        size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-        return size
-    }
-
-    const baseCost = (empire) =>
-    {
-        return (empire.land * 0.10) + 100 + (empire.bldWiz * 0.20) * ((100 + raceArray[empire.race].mod_magic) / 100) * calcSizeBonus(empire)
-    }
-
-    const magicPower = getPower(empire)
+    const magicPower = getPower_self(empire)
 
     const SelectItem = forwardRef(
         ({ label, power, cost, ...others }, ref) => (
@@ -100,7 +76,6 @@ export default function MagicCenter()
                     <Text size='xs'>Power: {power}</Text>
                     <Text size='xs'>Cost: {cost.toLocaleString()} {eraArray[empire.era].runes}</Text>
                 </div>
-
             </div>
         )
     );
@@ -150,7 +125,7 @@ export default function MagicCenter()
                     </div>
                     <form onSubmit={form.onSubmit((values) =>
                     {
-                        console.log(values)
+                        // console.log(values)
                         dispatch(clearResult)
                         doMagic(values)
                     })}>

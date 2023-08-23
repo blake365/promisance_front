@@ -5,47 +5,15 @@ import
 	SimpleGrid,
 	Grid,
 	Text,
-	Group, Col, Avatar, Table
+	Group, Col, Avatar
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
 
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 
-const NetProduced = (props) =>
-{
-	let abs = Math.abs(props.value)
-	let display = ''
-
-	if (props.money) {
-		if (props.value < 0) {
-			display = `-$${abs.toLocaleString()}`
-		} else {
-			display = `+$${abs.toLocaleString()}`
-		}
-	} else if (props.percent) {
-		display = `${props.value.toLocaleString()}%`
-	} else {
-		if (props.value < 0) {
-			display = `-${abs.toLocaleString()}`
-		} else {
-			display = `+${abs.toLocaleString()}`
-		}
-	}
-
-	return (
-		<>
-			<Text weight={700}>{props.title}:</Text>
-			<Text
-				align='right'
-				style={props.value >= 0 ? { color: 'green' } : { color: 'red' }}
-				weight={700}
-			>
-				{display}
-			</Text>
-		</>
-	)
-}
+import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
+import NetProduced from './utilities/NetProduced'
 
 const RaceBonus = ({ value }) =>
 {
@@ -68,99 +36,76 @@ export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
 
-	function generalLog(number, base)
-	{
-		return Math.log(base) / Math.log(number)
-	}
-
-	const calcSizeBonus = ({ networth }) =>
-	{
-		let net = Math.max(networth, 1)
-		let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-		size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
-		return size
-	}
-
 	let size = calcSizeBonus(empire)
 	// console.log(size)
 
-	const calcPCI = (empire) =>
-	{
-		const { bldCash, land } = empire
-		return Math.round(25 * (1 + bldCash / Math.max(land, 1)))
-	}
-
 	let cpi = calcPCI(empire)
 
-	// takes place of calcFinances function
-	let income = Math.round(
-		(cpi *
-			(empire.tax / 100) *
-			(empire.health / 100) *
-			empire.peasants +
-			empire.bldCash * 500) / size
-	)
+	const newLand = explore(empire)
 
-	// let loan = Math.round(empire.loan / 200)
+	const { income, expenses, loanpayed } = calcFinances(cpi, empire, size)
 
-	let expenses = Math.round(
-		empire.trpArm * 1 +
-		empire.trpLnd * 2.5 +
-		empire.trpFly * 4 +
-		empire.trpSea * 7 +
-		empire.land * 8 +
-		empire.trpWiz * 0.5
-	)
+	// // takes place of calcFinances function
+	// let income = Math.round(
+	// 	(cpi *
+	// 		(empire.tax / 100) *
+	// 		(empire.health / 100) *
+	// 		empire.peasants +
+	// 		empire.bldCash * 500) / size
+	// )
 
-	// console.log(empire.loan)
-	let loanpayed = 0
-	if (empire.loan > 0) {
-		loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
-	}
+	// // let loan = Math.round(empire.loan / 200)
+
+	// let expenses = Math.round(
+	// 	empire.trpArm * 1 +
+	// 	empire.trpLnd * 2.5 +
+	// 	empire.trpFly * 4 +
+	// 	empire.trpSea * 7 +
+	// 	empire.land * 8 +
+	// 	empire.trpWiz * 0.5
+	// )
+
+	// // console.log(empire.loan)
+	// let loanpayed = 0
+	// if (empire.loan > 0) {
+	// 	loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
+	// }
 	// console.log(loanpayed)
-	let expensesBonus = Math.min(
-		0.5,
-		(raceArray[empire.race].mod_expenses + 100) / 100 -
-		1 +
-		empire.bldCost / Math.max(empire.land, 1)
-	)
+	// let expensesBonus = Math.min(
+	// 	0.5,
+	// 	(raceArray[empire.race].mod_expenses + 100) / 100 -
+	// 	1 +
+	// 	empire.bldCost / Math.max(empire.land, 1)
+	// )
 
-	expenses -= Math.round(expenses * expensesBonus)
+	// expenses -= Math.round(expenses * expensesBonus)
 
 	// takes place of calcProvisions function
-	let production =
-		10 * empire.freeLand +
-		empire.bldFood *
-		85 *
-		Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
-	production *= (100 + raceArray[empire.race].mod_foodpro) / 100
+	// let production =
+	// 	10 * empire.freeLand +
+	// 	empire.bldFood *
+	// 	85 *
+	// 	Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
+	// production *= (100 + raceArray[empire.race].mod_foodpro) / 100
 
-	let foodpro = Math.round(production)
+	// let foodpro = Math.round(production)
 
-	let consumption =
-		empire.trpArm * 0.05 +
-		empire.trpLnd * 0.03 +
-		empire.trpFly * 0.02 +
-		empire.trpSea * 0.01 +
-		empire.peasants * 0.01 +
-		empire.trpWiz * 0.25
+	// let consumption =
+	// 	empire.trpArm * 0.05 +
+	// 	empire.trpLnd * 0.03 +
+	// 	empire.trpFly * 0.02 +
+	// 	empire.trpSea * 0.01 +
+	// 	empire.peasants * 0.01 +
+	// 	empire.trpWiz * 0.25
 
-	consumption *= (100 + raceArray[empire.race].mod_foodcon) / 100
+	// consumption *= (100 + raceArray[empire.race].mod_foodcon) / 100
 
-	let foodcon = Math.round(consumption)
+	// let foodcon = Math.round(consumption)
+	const { foodpro, foodcon } = calcProvisions(empire)
 
-	// offensive power
-	let oPower = eraArray[empire.era].o_trparm * empire.trpArm +
-		eraArray[empire.era].o_trplnd * empire.trpLnd +
-		eraArray[empire.era].o_trpfly * empire.trpFly +
-		eraArray[empire.era].o_trpsea * empire.trpSea
-	// defensive power
-	let dPower = eraArray[empire.era].d_trparm * empire.trpArm +
-		eraArray[empire.era].d_trplnd * empire.trpLnd +
-		eraArray[empire.era].d_trpfly * empire.trpFly +
-		eraArray[empire.era].d_trpsea * empire.trpSea
+	const oPower = offense(empire)
 
-	const newLand = Math.ceil((1 / (empire.land * 0.00019 + 0.25)) * 40 * ((100 + eraArray[empire.era].mod_explore + raceArray[empire.race].mod_explore) / 100))
+	const dPower = defense(empire)
 
 	const race = raceArray[empire.race]
 	const era = eraArray[empire.era]
