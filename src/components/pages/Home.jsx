@@ -5,13 +5,36 @@ import HomeNews from '../layout/homeNews'
 import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
 import { TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
+import { demo } from '../../store/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-// TODO: form validation
 export default function Home()
 {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [error, setError] = useState(null)
+
+    // const { isLoggedIn, user } = useSelector((state) => state.user)
+
+    // useEffect(() =>
+    // {
+    //     if (isLoggedIn && user.role === 'demo' && user.empires.length === 0) {
+    //         navigate('/demo')
+    //     }
+    // }, [user])
+
+    const demoRegister = () =>
+    {
+        dispatch(demo()).unwrap().then(() => navigate('/demo')).catch((err) =>
+        {
+            console.log(err)
+            setError(err)
+        })
+    }
 
     return (
-
         <main style={{ backgroundColor: '#F1F3F5' }}>
             <HeroImageRight />
             <Container size='lg' align='center' mt='lg'>
@@ -82,7 +105,8 @@ export default function Home()
                         </Card>
                         <Card maw={380} h={220} p='lg' withBorder >
                             <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
-                            <Button size='md' sx={{ marginTop: 10 }} component='a' href='/demo'>Demo Account</Button>
+                            <Button size='md' sx={{ marginTop: 10 }} component='a' onClick={demoRegister}>Demo Account</Button>
+                            <Text color='red' align='center' size='sm'>{error && error.error}</Text>
                         </Card>
                     </Flex>
                 </Box>

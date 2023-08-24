@@ -12,7 +12,7 @@ import
 import { useForm } from '@mantine/form'
 import { login } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const bgArray = [
@@ -60,6 +60,7 @@ export default function NewLogin()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
+    const [error, setError] = useState(null)
 
     const navigate = useNavigate()
 
@@ -92,10 +93,19 @@ export default function NewLogin()
                     Welcome back to NeoPromisance!
                 </Title>
                 <form onSubmit={form.onSubmit((values) =>
-                    dispatch(login(values)))
+                    dispatch(login(values))
+                        .unwrap()
+                        .then(() => navigate('/app'))
+                        .catch((error) =>
+                        {
+                            console.log(error)
+                            setError(error)
+                        })
+                )
                 }>
-                    <TextInput label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
-                    <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
+                    <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
+                    <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
+                    <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>

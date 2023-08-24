@@ -33,9 +33,8 @@ const useStyles = createStyles(() => ({
 	}
 }));
 
-export default function CreateEmpire()
+export default function CreateDemoEmpire()
 {
-
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	let { status } = useSelector((state) => state.empire.status)
 
@@ -44,12 +43,11 @@ export default function CreateEmpire()
 
 	useEffect(() =>
 	{
-		if (isLoggedIn && user.empires.length < 1) {
-			navigate('/create')
-		} else
-			if (!isLoggedIn || !user) {
-				navigate('/')
-			}
+		if (isLoggedIn && user.empires.length < 1 && user.role === 'demo') {
+			navigate('/demo')
+		} else if (!isLoggedIn || !user) {
+			navigate('/')
+		}
 
 		if (status = 'succeeded') {
 			navigate('/app/')

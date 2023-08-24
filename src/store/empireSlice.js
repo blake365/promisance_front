@@ -12,7 +12,7 @@ export const create = createAsyncThunk(
 			return data
 		} catch (e) {
 			console.log(e)
-			return thunkAPI.rejectWithValue()
+			return thunkAPI.rejectWithValue(e.response.data)
 		}
 	}
 )
@@ -29,7 +29,7 @@ export const fetchEmpire = createAsyncThunk(
 			}
 		} catch (e) {
 			console.log(e)
-			return thunkAPI.rejectWithValue()
+			return thunkAPI.rejectWithValue(e.response.data)
 		}
 	}
 )

@@ -1,8 +1,8 @@
-import { Button, createStyles, Anchor, TextInput, Title, Paper, Text } from '@mantine/core'
+import { Button, createStyles, Anchor, TextInput, Title, Paper, Text, PasswordInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { register } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const useStyles = createStyles(() => ({
@@ -34,7 +34,7 @@ export default function Signup()
 	const dispatch = useDispatch()
 	const { classes } = useStyles();
 
-
+	const [error, setError] = useState(null)
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	// let { empire } = useSelector((state) => state.empire)
 
@@ -80,11 +80,19 @@ export default function Signup()
 					Register An Account
 				</Title>
 				<form
-					onSubmit={form.onSubmit((values) => dispatch(register(values)))}
+					onSubmit={form.onSubmit((values) => dispatch(register(values))
+						.unwrap()
+						.then(() => navigate('/login'))
+						.catch((error) =>
+						{
+							console.log(error)
+							setError(error)
+						})
+					)}
 				>
 					<TextInput
 						label='Email'
-						placeholder='me@email.com'
+						placeholder='my@email.com'
 						type='email'
 						required
 						size='md'
@@ -98,15 +106,15 @@ export default function Signup()
 						size='md'
 						{...form.getInputProps('username')}
 					/>
-					<TextInput
+					<PasswordInput
 						label='Password'
 						placeholder=''
-						type='password'
-						required
+						withAsterisk
 						size='md'
 						{...form.getInputProps('password')}
 					/>
-					<Button fullWidth mt="xl" size="md" type='submit'>Register</Button>
+					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
+					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
 				</form>
 				<Text ta="center" mt="md">
 					Already have an account? <Anchor href='/login'>Login</Anchor>

@@ -32,6 +32,7 @@ import NewLogin from './components/pages/NewLogin'
 import Signup from './components/layout/Signup'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
+import CreateDemoEmpire from './components/pages/CreateDemoEmpire'
 
 import Axios from 'axios'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -50,12 +51,12 @@ ReactDOM.render(
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<BrowserRouter>
-
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/login' element={<NewLogin />} />
 						<Route path='/register' element={<Signup />} />
 						<Route path='/create' element={<CreateEmpire />} />
+						<Route path='/demo' element={<CreateDemoEmpire />} />
 						<Route path='/app/' element={<App />}>
 							<Route path='*' element={<NothingFoundBackground />} />
 							{/* <Route path='guide' element={<Guide />} /> */}

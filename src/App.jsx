@@ -146,9 +146,6 @@ function App()
 					uuid: user.empires[0].uuid,
 				}
 			))
-			dispatch(fetchEffects({
-				id: user.empires[0].empireId
-			}))
 		}
 	})
 

@@ -15,28 +15,27 @@ export const register = createAsyncThunk(
 	async (values, thunkAPI) => {
 		try {
 			const response = await Axios.post('/auth/register', values)
-			let data = await response.json()
-			// console.log('data', data)
-			history.push('/login')
+			// console.log(response)
+			let data = response.data
+			console.log('data', data)
 			return { data }
 			// redirect to login page
 		} catch (e) {
 			console.log(e)
-			return thunkAPI.rejectWithValue()
+			return thunkAPI.rejectWithValue(e.response.data)
 		}
 	}
 )
 
-export const demo = createAsyncThunk('user/demo', async (thunkAPI) => {
+export const demo = createAsyncThunk('user/demo', async (values, thunkAPI) => {
 	try {
 		const res = await Axios.post('/auth/demo')
 		// console.log(res)
 		let data = res.data
 		return { user: data }
-		// redirect to login page
 	} catch (e) {
-		console.log(e)
-		return thunkAPI.rejectWithValue()
+		console.log(e.response.data)
+		return thunkAPI.rejectWithValue(e.response.data)
 	}
 })
 
@@ -51,7 +50,7 @@ export const login = createAsyncThunk(
 			return { user: data }
 		} catch (e) {
 			console.log(e)
-			return thunkAPI.rejectWithValue()
+			return thunkAPI.rejectWithValue(e.response.data)
 		}
 	}
 )
@@ -64,7 +63,7 @@ export const load = createAsyncThunk('user/load', async (thunkAPI) => {
 		return { user: data }
 	} catch (e) {
 		console.log(e)
-		return thunkAPI.rejectWithValue()
+		return thunkAPI.rejectWithValue(e.response.data)
 	}
 })
 
