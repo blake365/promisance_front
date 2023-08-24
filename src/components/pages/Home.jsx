@@ -6,8 +6,8 @@ import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
 import { TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Home()
@@ -29,7 +29,7 @@ export default function Home()
     {
         dispatch(demo()).unwrap().then(() => navigate('/demo')).catch((err) =>
         {
-            console.log(err)
+            // console.log(err)
             setError(err)
         })
     }
@@ -40,7 +40,7 @@ export default function Home()
             <Container size='lg' align='center' mt='lg'>
                 <Box align='left' my='lg'>
                     <Title order={1}>About the Game</Title>
-                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. </Text>
+                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vy for power. </Text>
                     <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is still in development and is not yet feature complete. Upcoming features include clans, foreign aid, and new ideas from community feedback. Join us today! </Text>
                 </Box>
                 <Box>

@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
+import { load } from '../../store/userSlice'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -36,23 +37,20 @@ const useStyles = createStyles(() => ({
 export default function CreateDemoEmpire()
 {
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-	let { status } = useSelector((state) => state.empire.status)
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	useEffect(() =>
 	{
-		if (isLoggedIn && user.empires.length < 1 && user.role === 'demo') {
-			navigate('/demo')
-		} else if (!isLoggedIn || !user) {
+		if (!isLoggedIn || !user) {
+			navigate('/')
+		}
+		if (user && user.role !== 'demo') {
 			navigate('/')
 		}
 
-		if (status = 'succeeded') {
-			navigate('/app/')
-		}
-	}, [user, dispatch, status])
+	}, [user, dispatch])
 
 	// set up server side validation response
 	const form = useForm({
@@ -79,13 +77,29 @@ export default function CreateDemoEmpire()
 				<Paper className={classes.form} radius={0} >
 					<Stack align='left'>
 						<Title order={1} align='center'>
-							Create Your Empire
+							Create Demo Empire
 						</Title>
 						<form
 							onSubmit={form.onSubmit((values) =>
 							{
 								// console.log(values)
 								dispatch(create(values))
+									.unwrap()
+									.then(() =>
+									{
+										// console.log('created')
+										dispatch(load())
+											.then(() =>
+											{
+												// console.log('loaded user')
+												navigate('/app/')
+											})
+									})
+									.catch((error) =>
+									{
+										console.log(error)
+										// setError(error)
+									})
 							})}
 						>
 							<Stack spacing='sm' align='center'>
@@ -111,6 +125,7 @@ export default function CreateDemoEmpire()
 										{ value: 7, label: 'Drow' },
 										{ value: 8, label: 'Goblin' },
 									]}
+									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>
 							</Stack>

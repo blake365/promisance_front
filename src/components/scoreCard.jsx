@@ -56,10 +56,10 @@ const ScoreCard = ({ empire, myId, home }) =>
         disabled = true
     }
     if (empire.mode === 'demo') {
-        color = 'lightpink'
+        color = 'brown'
     }
     if (empire.id === myId) {
-        color = 'cyan'
+        color = 'deepskyblue'
     }
 
 

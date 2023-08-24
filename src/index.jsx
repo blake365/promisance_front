@@ -60,7 +60,7 @@ ReactDOM.render(
 						<Route path='/app/' element={<App />}>
 							<Route path='*' element={<NothingFoundBackground />} />
 							{/* <Route path='guide' element={<Guide />} /> */}
-							<Route path='' element={<Scores />} />
+							<Route path='' element={<Summary />} />
 							<Route path='summary' element={<Summary />} />
 							<Route path='overview' element={<Overview />} />
 							<Route path='scores' element={<Scores />} />

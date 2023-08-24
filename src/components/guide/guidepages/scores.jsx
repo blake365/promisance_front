@@ -12,7 +12,7 @@ export default function ScoresGuide()
             <dl>
                 <dt><span style={{ color: 'lightgreen' }}>Protected</span></dt>
                 <dd>Empires in this color are protected from being attacked by other empires.</dd>
-                <dt><span style={{ color: 'lightpink' }}>Demo Accounts</span></dt>
+                <dt><span style={{ color: 'brown' }}>Demo Accounts</span></dt>
                 <dd>Empires in this color are demo accounts.</dd>
                 {/* <dt><span className="mclan">Clanmate</span></dt>
                 <dd>Denotes empires which are members of your current clan.</dd>
@@ -20,11 +20,11 @@ export default function ScoresGuide()
                 <dd>Empires belonging to a clan allied with your own appear in this color.</dd>
                 <dt><span className="mwar">War</span></dt>
                 <dd>If your clan has declared war on another clan, its members will be listed in this color.</dd>*/}
-                <dt><span style={{ color: 'brown' }}>Locked</span></dt>
+                <dt><span style={{ color: 'red' }}>Locked</span></dt>
                 <dd>These empires have been disabled by the Administration for violating the established Rules.</dd>
                 <dt><span style={{ color: 'orange' }}>Administrator</span></dt>
                 <dd>These empires are responsible for keeping the game running smoothly. To preserve game balance, they cannot be attacked, nor can they interact with others (aside from private messaging). If you're experiencing technical difficulties playing the game, these are the people to talk to.</dd>
-                <dt><span style={{ color: 'cyan' }}>Yourself</span></dt>
+                <dt><span style={{ color: 'deepskyblue' }}>Yourself</span></dt>
                 <dd>Your own empire is always displayed in this color, making it easier to locate yourself in the score list.</dd>
             </dl>
             <p>Each empire is listed in the table with the following statistics displayed:</p>

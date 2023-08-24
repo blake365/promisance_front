@@ -1,4 +1,4 @@
-import { Group, ThemeIcon, Tooltip, RingProgress, Center } from '@mantine/core'
+import { Group, ThemeIcon, Tooltip, RingProgress, Center, Stack } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 
@@ -51,7 +51,10 @@ export default function EffectIcons()
                         return (
                             <Tooltip
                                 label={
-                                    effect.empireEffectName
+                                    <Stack spacing={0} align='center'>
+                                        <div>{effect.empireEffectName.toUpperCase()}</div>
+                                        <div>{Math.round(remaining / 60) + ' hours remaining'}</div>
+                                    </Stack>
                                 } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
                                 <RingProgress
                                     thickness={4}

@@ -75,7 +75,7 @@ export function HalfButton(props)
 export function HalfAndAll(props)
 {
     return (
-        <div {...props}>
+        <div style={props.style}>
             <ActionIcon size='md' color='blue' onClick={() =>
             {
                 props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue))

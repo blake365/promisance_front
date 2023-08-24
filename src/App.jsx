@@ -140,13 +140,22 @@ function App()
 			loadUser()
 		}
 
-		if (isLoggedIn && empireStatus === 'idle') {
+
+		if (isLoggedIn && user.empires.length > 0 && empireStatus === 'idle') {
 			dispatch(fetchEmpire(
 				{
 					uuid: user.empires[0].uuid,
 				}
 			))
+		} else if (isLoggedIn && user.empires.length === 0) {
+			if (user.role === 'demo') {
+				navigate('/demo')
+			} else {
+				navigate('/create')
+			}
 		}
+
+
 	})
 
 	let locationArr = location.pathname.split('/')

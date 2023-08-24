@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
+import { load } from '../../store/userSlice'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -37,24 +38,21 @@ export default function CreateEmpire()
 {
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-	let { status } = useSelector((state) => state.empire.status)
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	useEffect(() =>
 	{
-		if (isLoggedIn && user.empires.length < 1) {
-			navigate('/create')
-		} else
-			if (!isLoggedIn || !user) {
-				navigate('/')
-			}
-
-		if (status = 'succeeded') {
-			navigate('/app/')
+		if (!isLoggedIn || !user) {
+			navigate('/')
 		}
-	}, [user, dispatch, status])
+
+		if (user && user.role === 'demo') {
+			navigate('/demo')
+		}
+
+	}, [user, dispatch])
 
 	// set up server side validation response
 	const form = useForm({
@@ -88,6 +86,22 @@ export default function CreateEmpire()
 							{
 								// console.log(values)
 								dispatch(create(values))
+									.unwrap()
+									.then(() =>
+									{
+										console.log('created')
+										dispatch(load())
+											.then(() =>
+											{
+												console.log('loaded user')
+												navigate('/app/')
+											})
+									})
+									.catch((error) =>
+									{
+										console.log(error)
+										// setError(error)
+									})
 							})}
 						>
 							<Stack spacing='sm' align='center'>
@@ -113,6 +127,7 @@ export default function CreateEmpire()
 										{ value: 7, label: 'Drow' },
 										{ value: 8, label: 'Goblin' },
 									]}
+									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>
 							</Stack>

@@ -8,7 +8,7 @@ import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
 import { HalfAndAll } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
-import { Drop } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
 
 
 export default function Demolish()
@@ -356,19 +356,14 @@ export default function Demolish()
 									</tr>
 								</tbody>
 							</Table>
-							<div style={{ color: 'red' }}>{errors.error}</div>
-							{errors.error ? (
-								<Button type='submit' disabled>
-									Begin Demolition
-								</Button>
-							) : (
-								<Button type='submit'>
-									Begin Demolition
-								</Button>
-							)}
+
+							<Button type='submit' color='orange' disabled={errors?.error}>
+								Begin Demolition
+							</Button>
+
 						</Stack>
 					</form>
-
+					<Button component={Link} to='/app/build' compact variant='outline' color='blue' sx={{ marginTop: '1rem' }}>Build Buildings</Button>
 					<form onSubmit={
 						dropForm.onSubmit((values) =>
 						{
