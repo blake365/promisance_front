@@ -1,4 +1,4 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Stack } from '@mantine/core'
+import { Button, Center, NumberInput, Card, Stack } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -9,8 +9,11 @@ import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_RUNES, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
+import classes from './markets.module.css'
+
+
 // DONE: build sell side of market
-// TODO: make it mobile friendly
+// make it mobile friendly
 // DONE: add buy max buttons
 // FIXED: max buy can be higher than available
 
@@ -43,6 +46,9 @@ export default function PrivateMarketBuy()
         return Math.round(cost)
     }
 
+    const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
+
+
     const trpArmCost = getCost(empire, PVTM_TRPARM)
     const trpLndCost = getCost(empire, PVTM_TRPLND)
     const trpFlyCost = getCost(empire, PVTM_TRPFLY)
@@ -60,6 +66,8 @@ export default function PrivateMarketBuy()
             return Math.floor(empire.cash / priceArray[index])
         }
     })
+
+
 
     // console.log(availArray)
     // console.log(priceArray)
@@ -180,177 +188,83 @@ export default function PrivateMarketBuy()
                                 : setErrors("Not Enough Money")
                         }
                     >
-                        <Stack spacing='sm' align='center'>
-                            <SimpleGrid
-                                cols={1}
-                                spacing='xs'
-                                sx={{ width: '99%' }}
-                            >
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text weight='bold' align='center'>
-                                        Unit:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Owned:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Available:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Price:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Can Buy:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Buy:
-                                    </Text>
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trparm}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpArm.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktArm.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${trpArmCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[0].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[0]}
-                                        {...form.getInputProps(`buyArm`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyArm' maxValue={availArray[0]} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trplnd}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpLnd.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktLnd.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${trpLndCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[1].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[1]}
-                                        {...form.getInputProps(`buyLnd`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyLnd' maxValue={availArray[1]} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trpfly}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpFly.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktFly.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${trpFlyCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[2].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[2]}
-                                        {...form.getInputProps(`buyFly`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyFly' maxValue={availArray[2]} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trpsea}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpSea.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktSea.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${trpSeaCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[3].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[3]}
-                                        {...form.getInputProps(`buySea`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buySea' maxValue={availArray[3]} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].food}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.food.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktFood.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${PVTM_FOOD}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[4].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[4]}
-                                        {...form.getInputProps(`buyFood`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyFood' maxValue={availArray[4]} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].runes}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.runes.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.mktRunes.toLocaleString()}
-                                    </Text>
-                                    <Text align='center'>
-                                        ${PVTM_RUNES}
-                                    </Text>
-                                    <Text align='center'>
-                                        {availArray[5].toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={availArray[5]}
-                                        {...form.getInputProps(`buyRunes`)}
-                                        rightSection={<MaxButton formName={form} fieldName='buyRunes' maxValue={availArray[5]} />}
-                                    />
-                                </Group>
-                            </SimpleGrid>
+                        <div className={classes.tablecontainer}>
+                            <table className={classes.widetable}>
+                                <thead>
+                                    <tr>
+                                        <th weight='bold' align='center'>
+                                            Unit:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Owned:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Available:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Price:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Can Buy:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Buy:
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {units.map((unit, index) =>
+                                    {
+                                        let eraTroop = 'trp' + unit.toLocaleLowerCase()
+                                        let troop = `trp${unit}`
+                                        let mktTroop = `mkt${unit}`
+                                        let price = priceArray[index]
+                                        let avail = availArray[index]
+                                        let buy = `buy${unit}`
+
+                                        if (unit === 'Food') {
+                                            troop = 'food'
+                                            eraTroop = 'food'
+                                        } else if (unit === 'Runes') {
+                                            troop = 'runes'
+                                            eraTroop = 'runes'
+                                        }
+
+                                        return (
+                                            <tr key={index}>
+                                                <td align='center'>
+                                                    {eraArray[empire.era][eraTroop]}
+                                                </td>
+                                                <td align='center'>
+                                                    {empire[troop].toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    {empire[mktTroop].toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    ${price}
+                                                </td>
+                                                <td align='center'>
+                                                    {avail.toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    <NumberInput
+                                                        hideControls
+                                                        min={0}
+                                                        max={avail}
+                                                        {...form.getInputProps(buy)}
+                                                        rightSection={<MaxButton formName={form} fieldName={buy} maxValue={avail} />}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <Center mt='md'>
                             <div style={{ color: 'red' }}>{errors.error}</div>
                             {errors.error ? (
                                 <Button color='black' type='submit' disabled>
@@ -361,7 +275,7 @@ export default function PrivateMarketBuy()
                                     Buy Goods
                                 </Button>
                             )}
-                        </Stack>
+                        </Center>
                     </form>
                     {result &&
                         <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({

@@ -1,4 +1,4 @@
-import { Button, Center, Group, NumberInput, SimpleGrid, Text, Table, Stack, Loader } from '@mantine/core'
+import { Button, Center, NumberInput, Text, Table, Stack, Loader } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -9,7 +9,10 @@ import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PV
 import { MaxButton } from '../utilities/maxbutton'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 
-// TODO: make it mobile friendly
+import classes from './markets.module.css'
+
+
+// make it mobile friendly
 
 export default function PublicMarketSell({ empire })
 {
@@ -146,6 +149,8 @@ export default function PublicMarketSell({ empire })
     let now = new Date()
     // console.log(now.getTime())
 
+    const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
+
     let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food, eraArray[empire.era].runes]
 
     function truncate(value, precision)
@@ -176,6 +181,9 @@ export default function PublicMarketSell({ empire })
     });
 
 
+
+
+
     return (
         <main>
             <Center my={10}>
@@ -193,267 +201,93 @@ export default function PublicMarketSell({ empire })
                             })
                             }
                         >
-                            <Stack spacing='sm' align='center'>
-                                <SimpleGrid
-                                    cols={1}
-                                    spacing='xs'
-                                    sx={{ width: '99%' }}
-                                >
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text weight='bold' align='center'>
-                                            Item:
-                                        </Text>
-                                        <Text weight='bold' align='center'>
-                                            Owned:
-                                        </Text>
-                                        <Text weight='bold' align='center'>
-                                            Price:
-                                        </Text>
-                                        <Text weight='bold' align='center'>
-                                            Can Sell:
-                                        </Text>
-                                        <Text weight='bold' align='center'>
-                                            Sell:
-                                        </Text>
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].trparm}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.trpArm.toLocaleString()}
-                                        </Text>
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-                                                {...form.getInputProps(`priceArm`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.trpArm * (PUBMKT_MAXSELL / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.trpArm * (PUBMKT_MAXSELL / 100))}
-                                            {...form.getInputProps(`sellArm`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellArm' maxValue={empire.trpArm * (PUBMKT_MAXSELL / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
+
+                            <div className={classes.tablecontainer}>
+                                <table className={classes.widetable}>
+                                    <thead>
+                                        <tr>
+                                            <th weight='bold' align='center'>
+                                                Item:
+                                            </th>
+                                            <th weight='bold' align='center'>
+                                                Owned:
+                                            </th>
+                                            <th weight='bold' align='center'>
+                                                Price:
+                                            </th>
+                                            <th weight='bold' align='center'>
+                                                Can Sell:
+                                            </th>
+                                            <th weight='bold' align='center'>
+                                                Sell:
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {units.map((unit, index) =>
+                                        {
+                                            let eraTroop = 'trp' + unit.toLowerCase()
+                                            let troop = `trp${unit}`
+                                            let price = `price${unit}`
+                                            let sell = `sell${unit}`
+
+                                            if (unit === 'Food') {
+                                                troop = 'food'
+                                                eraTroop = 'food'
+                                            } else if (unit === 'Runes') {
+                                                troop = 'runes'
+                                                eraTroop = 'runes'
                                             }
-                                        />
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].trplnd}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.trpLnd.toLocaleString()}
-                                        </Text>
 
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-                                                {...form.getInputProps(`priceLnd`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.trpLnd * (PUBMKT_MAXSELL / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.trpLnd * (PUBMKT_MAXSELL / 100))}
-                                            {...form.getInputProps(`sellLnd`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellLnd' maxValue={empire.trpLnd * (PUBMKT_MAXSELL / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
-                                            }
-                                        />
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].trpfly}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.trpFly.toLocaleString()}
-                                        </Text>
+                                            return (
+                                                <tr key={index}>
+                                                    <td align='center'>
+                                                        {eraArray[empire.era][eraTroop]}
+                                                    </td>
+                                                    <td align='center'>
+                                                        {empire[troop].toLocaleString()}
+                                                    </td>
+                                                    <td align='center'>
+                                                        <NumberInput
+                                                            hideControls
+                                                            min={1}
+                                                            {...form.getInputProps(`${price}`)}
+                                                            styles={{ input: { textAlign: 'center' } }}
+                                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                                            formatter={(value) =>
+                                                                !Number.isNaN(parseFloat(value))
+                                                                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                                    : '$ '
+                                                            }
+                                                        />
+                                                    </td>
+                                                    <td align='center'>
+                                                        {Math.floor(empire[troop] * (PUBMKT_MAXSELL / 100)).toLocaleString()}
+                                                    </td>
+                                                    <td>
+                                                        <NumberInput
+                                                            hideControls
+                                                            min={0}
+                                                            max={Math.floor(empire[troop] * (PUBMKT_MAXSELL / 100))}
+                                                            {...form.getInputProps(`${sell}`)}
+                                                            rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PUBMKT_MAXSELL / 100)} />}
+                                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                                            formatter={(value) =>
+                                                                !Number.isNaN(parseFloat(value))
+                                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                                    : ''
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>)
+                                        })}
 
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-                                                {...form.getInputProps(`priceFly`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.trpFly * (PUBMKT_MAXSELL / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.trpFly * (PUBMKT_MAXSELL / 100))}
-                                            {...form.getInputProps(`sellFly`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellFly' maxValue={empire.trpFly * (PUBMKT_MAXSELL / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
-                                            }
-                                        />
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].trpsea}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.trpSea.toLocaleString()}
-                                        </Text>
-
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-                                                {...form.getInputProps(`priceSea`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.trpSea * (PUBMKT_MAXSELL / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.trpSea * (PUBMKT_MAXSELL / 100))}
-                                            {...form.getInputProps(`sellSea`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellSea' maxValue={empire.trpSea * (PUBMKT_MAXSELL / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
-                                            }
-                                        />
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].food}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.food.toLocaleString()}
-                                        </Text>
-
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-
-                                                {...form.getInputProps(`priceFood`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.food * (PUBMKT_MAXFOOD / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.food * (PUBMKT_MAXFOOD / 100))}
-                                            {...form.getInputProps(`sellFood`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellFood' maxValue={empire.food * (PUBMKT_MAXFOOD / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
-                                            }
-                                        />
-                                    </Group>
-                                    <Group direction='row' spacing='md' noWrap grow>
-                                        <Text align='center'>
-                                            {eraArray[empire.era].runes}
-                                        </Text>
-                                        <Text align='center'>
-                                            {empire.runes.toLocaleString()}
-                                        </Text>
-
-                                        <Text align='center'>
-                                            <NumberInput
-                                                hideControls
-                                                min={1}
-
-                                                {...form.getInputProps(`priceRunes`)}
-                                                styles={{ input: { textAlign: 'center' } }}
-                                                parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                                formatter={(value) =>
-                                                    !Number.isNaN(parseFloat(value))
-                                                        ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                        : '$ '
-                                                }
-                                            />
-                                        </Text>
-                                        <Text align='center'>
-                                            {Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100)).toLocaleString()}
-                                        </Text>
-                                        <NumberInput
-                                            hideControls
-                                            min={0}
-                                            max={Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100))}
-                                            {...form.getInputProps(`sellRunes`)}
-                                            rightSection={<MaxButton formName={form} fieldName='sellRunes' maxValue={empire.runes * (PUBMKT_MAXRUNES / 100)} />}
-                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                                            formatter={(value) =>
-                                                !Number.isNaN(parseFloat(value))
-                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                    : ''
-                                            }
-                                        />
-                                    </Group>
-                                </SimpleGrid>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <Center mt='md'>
                                 <Button type='submit'> Sell Goods </Button>
-                            </Stack>
+                            </Center>
                         </form>
                         <Table>
                             <thead>

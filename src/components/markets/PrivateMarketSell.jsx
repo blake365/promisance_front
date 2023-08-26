@@ -9,8 +9,11 @@ import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_MAXSELL, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_RUNES } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
+import classes from './markets.module.css'
+
+
 // TODO: make it mobile friendly
-// TODO: add sell max buttons
+// add sell max buttons
 
 export default function PrivateMarketSell()
 {
@@ -35,6 +38,9 @@ export default function PrivateMarketSell()
         return Math.round(cost)
     }
 
+    const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
+
+
     const trpArmCost = getCost(empire, PVTM_TRPARM, 0.32)
     const trpLndCost = getCost(empire, PVTM_TRPLND, 0.34)
     const trpFlyCost = getCost(empire, PVTM_TRPFLY, 0.36)
@@ -42,7 +48,7 @@ export default function PrivateMarketSell()
     const foodCost = Math.round(PVTM_FOOD * 0.40)
     const runesCost = Math.round(PVTM_RUNES * 0.20)
 
-    // const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, foodCost]
+    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, foodCost, runesCost]
 
     const form = useForm({
         initialValues: {
@@ -130,164 +136,76 @@ export default function PrivateMarketSell()
                         })
                         }
                     >
-                        <Stack spacing='sm' align='center'>
-                            <SimpleGrid
-                                cols={1}
-                                spacing='xs'
-                                sx={{ width: '99%' }}
+                        <div className={classes.tablecontainer}>
+                            <table
+                                className={classes.widetable}
                             >
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text weight='bold' align='center'>
-                                        Unit:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Owned:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Price:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Can Sell:
-                                    </Text>
-                                    <Text weight='bold' align='center'>
-                                        Sell:
-                                    </Text>
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trparm}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpArm.toLocaleString()}
-                                    </Text>
+                                <thead>
+                                    <tr>
+                                        <th weight='bold' align='center'>
+                                            Unit:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Owned:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Price:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Can Sell:
+                                        </th>
+                                        <th weight='bold' align='center'>
+                                            Sell:
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {units.map((unit, index) =>
+                                    {
+                                        let eraTroop = 'trp' + unit.toLowerCase()
+                                        let troop = `trp${unit}`
+                                        let sell = `sell${unit}`
 
-                                    <Text align='center'>
-                                        ${trpArmCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.trpArm * (PVTM_MAXSELL / 10000)).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.trpArm * (PVTM_MAXSELL / 10000)}
-                                        {...form.getInputProps(`sellArm`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellArm' maxValue={empire.trpArm * (PVTM_MAXSELL / 10000)} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trplnd}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpLnd.toLocaleString()}
-                                    </Text>
+                                        if (unit === 'Food') {
+                                            troop = 'food'
+                                            eraTroop = 'food'
+                                        } else if (unit === 'Runes') {
+                                            troop = 'runes'
+                                            eraTroop = 'runes'
+                                        }
 
-                                    <Text align='center'>
-                                        ${trpLndCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.trpLnd * (PVTM_MAXSELL / 10000)).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.trpLnd * (PVTM_MAXSELL / 10000)}
-                                        {...form.getInputProps(`sellLnd`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellLnd' maxValue={empire.trpLnd * (PVTM_MAXSELL / 10000)} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trpfly}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpFly.toLocaleString()}
-                                    </Text>
-
-                                    <Text align='center'>
-                                        ${trpFlyCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.trpFly * (PVTM_MAXSELL / 10000)).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.trpFly * (PVTM_MAXSELL / 10000)}
-                                        {...form.getInputProps(`sellFly`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellFly' maxValue={empire.trpFly * (PVTM_MAXSELL / 10000)} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].trpsea}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.trpSea.toLocaleString()}
-                                    </Text>
-
-                                    <Text align='center'>
-                                        ${trpSeaCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.trpSea * (PVTM_MAXSELL / 10000)).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.trpSea * (PVTM_MAXSELL / 10000)}
-                                        {...form.getInputProps(`sellSea`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellSea' maxValue={empire.trpSea * (PVTM_MAXSELL / 10000)} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].food}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.food.toLocaleString()}
-                                    </Text>
-
-                                    <Text align='center'>
-                                        ${foodCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.food).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.food}
-                                        {...form.getInputProps(`sellFood`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellFood' maxValue={empire.food} />}
-                                    />
-                                </Group>
-                                <Group direction='row' spacing='md' noWrap grow>
-                                    <Text align='center'>
-                                        {eraArray[empire.era].runes}
-                                    </Text>
-                                    <Text align='center'>
-                                        {empire.runes.toLocaleString()}
-                                    </Text>
-
-                                    <Text align='center'>
-                                        ${runesCost}
-                                    </Text>
-                                    <Text align='center'>
-                                        {Math.floor(empire.runes).toLocaleString()}
-                                    </Text>
-                                    <NumberInput
-                                        hideControls
-                                        min={0}
-                                        max={empire.runes}
-                                        {...form.getInputProps(`sellRunes`)}
-                                        rightSection={<MaxButton formName={form} fieldName='sellRunes' maxValue={empire.runes} />}
-                                    />
-                                </Group>
-                            </SimpleGrid>
+                                        return (
+                                            <tr key={index}>
+                                                <td align='center'>
+                                                    {eraArray[empire.era][eraTroop]}
+                                                </td>
+                                                <td align='center'>
+                                                    {empire[troop].toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    ${Math.floor(priceArray[index]).toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    {Math.floor(empire[troop] * (PVTM_MAXSELL / 10000)).toLocaleString()}
+                                                </td>
+                                                <td align='center'>
+                                                    <NumberInput
+                                                        hideControls
+                                                        min={0}
+                                                        max={empire[troop] * (PVTM_MAXSELL / 10000)}
+                                                        {...form.getInputProps(sell)}
+                                                        rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PVTM_MAXSELL / 10000)} />}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        <Center mt='md'>
                             <Button type='submit'> Sell Goods </Button>
-                        </Stack>
+                        </Center>
                     </form>
                     {result &&
                         <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({

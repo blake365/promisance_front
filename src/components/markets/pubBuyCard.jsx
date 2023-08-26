@@ -121,9 +121,9 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={4}>
-                    <Text align='center'>
+                    {/* <Text align='center'>
                         Buy:
-                    </Text>
+                    </Text> */}
 
                     <form onSubmit={form.onSubmit((values) =>
                     {
