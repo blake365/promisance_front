@@ -11,8 +11,8 @@ export const fetchEffects = createAsyncThunk(
 				effects: effects.data,
 			}
 		} catch (e) {
-			console.log(e)
-			return thunkAPI.rejectWithValue()
+			// console.log(e.response.data)
+			return thunkAPI.rejectWithValue(e.response.data)
 		}
 	}
 )

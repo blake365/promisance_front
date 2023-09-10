@@ -123,10 +123,13 @@ function App()
 	{
 		async function loadUser()
 		{
+			console.log('loading user')
 			try {
 				const res = await Axios.get('auth/me')
-				// console.log(res.data)
-				if (res.status !== 200) {
+				console.log('status', res.status)
+				if (res.status === 401) {
+					navigate('/')
+				} else if (res.status !== 200) {
 					navigate('/')
 				} else if (res.data) {
 					dispatch(load())
@@ -154,8 +157,6 @@ function App()
 				navigate('/create')
 			}
 		}
-
-
 	})
 
 	let locationArr = location.pathname.split('/')
@@ -167,19 +168,33 @@ function App()
 		dispatch(setPage(pageState))
 
 		if (empireStatus === 'succeeded') {
-			dispatch(fetchEffects({
-				id: empire.id
-			}))
-			checkForNews().then((data) =>
-			{
-				// console.log(data)
-				setNews(data)
-			})
-			checkForMail().then((data) =>
-			{
-				// console.log(data)
-				setMail(data)
-			})
+			try {
+				dispatch(fetchEffects({
+					id: empire.id
+				})).then((data) =>
+				{
+					// console.log(data)
+					if (data.meta.requestStatus === 'rejected') {
+						navigate('/')
+					}
+				}
+				)
+
+				checkForNews().then((data) =>
+				{
+					// console.log(data)
+					setNews(data)
+				})
+				checkForMail().then((data) =>
+				{
+					// console.log(data)
+					setMail(data)
+				})
+			}
+			catch (error) {
+				// console.log(error)
+				navigate('/')
+			}
 		}
 
 	})
