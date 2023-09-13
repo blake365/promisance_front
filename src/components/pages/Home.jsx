@@ -4,7 +4,7 @@ import { HeroImageRight } from './homeHero'
 import HomeNews from '../layout/homeNews'
 import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
-import { TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
+import { ROUND_END, ROUND_START, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
@@ -40,12 +40,12 @@ export default function Home()
             <Container size='lg' align='center' mt='lg'>
                 <Box align='left' my='lg'>
                     <Title order={1}>About the Game</Title>
-                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vy for power. </Text>
+                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vie for power. </Text>
                     <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is still in development and is not yet feature complete. Upcoming features include clans, foreign aid, and new ideas from community feedback. Join us today! </Text>
                 </Box>
                 <Box>
                     <Title order={1} ta='left'>Choose Your Strategy</Title>
-                    <Text ta='left' mb='md' size='lg'>There are many ways to play Promisance. Use your turns to build structures that produce different resources. As your empire grows, you will need to attack other players to acquire the land needed to grow even larger. It is common to be attacked in this game but there are limits to try and prevent anyone from taking too much damage. Be sure to protect yourself from enemy spells by using a spell shield. Below are the Big Four strategies you can choose from, but feel free to get creative and find a strategy that works for you!</Text>
+                    <Text ta='left' mb='md' size='lg'>There are many ways to play Promisance. Use your turns to build structures and take actions to produce different resources. As your empire grows, you will need to attack other players to acquire the land needed to grow even larger. It is common to be attacked in this game but there are limits to try and prevent anyone from taking too much damage. Be sure to protect yourself from enemy spells by using a spell shield. Below are the Big Four strategies you can choose from, but feel free to get creative and find a strategy that works for you!</Text>
                     <Group spacing='sm' position='center' >
                         <Card ta='left' w={350} mih={440} withBorder>
                             <Card.Section>
@@ -152,7 +152,7 @@ export default function Home()
                                         Round Start Date
                                     </Text>
                                 </Center>
-                                <Text>TBD</Text>
+                                <Text>{ROUND_START.toLocaleDateString()}</Text>
                             </Grid.Col>
                             <Grid.Col span={3}>
                                 <Center h={50} miw={100} >
@@ -160,7 +160,7 @@ export default function Home()
                                         Round End Date
                                     </Text>
                                 </Center>
-                                <Text>TBD</Text>
+                                <Text>{ROUND_END.toLocaleDateString()}</Text>
                             </Grid.Col>
                         </Grid>
                     </Card>

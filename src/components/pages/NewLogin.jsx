@@ -109,6 +109,8 @@ export default function NewLogin()
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
+                    <Text size='sm' color='gray' align='center'>You will stay logged in for 1 hour</Text>
+
                 </form>
                 <Text ta="center" mt="md">
                     Don&apos;t have an account? <Anchor href='/register'>Register</Anchor>

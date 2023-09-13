@@ -1,8 +1,9 @@
-import { Paper, Grid, Text, Center } from '@mantine/core'
+import { Paper, Grid, Text, Center, Progress } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
 import './NumberChange.css';
+import { ROUND_END, ROUND_START } from '../../config/config'
 
 const AnimateNumberChange = ({ number, type }) =>
 {
@@ -43,7 +44,11 @@ const AnimateNumberChange = ({ number, type }) =>
 	);
 };
 
-
+const now = new Date()
+let roundLength = ROUND_END - ROUND_START
+let roundProgress = now.getTime() - ROUND_START
+let roundPercent = roundProgress / roundLength * 100
+// console.log(roundPercent)
 
 export default function InfoBar({ data })
 {
@@ -51,7 +56,8 @@ export default function InfoBar({ data })
 	const empire = data
 
 	return (
-		<Paper p='xs' shadow='xs' radius='xs' withBorder >
+		<Paper shadow='xs' radius='xs' withBorder pb='xs' >
+			<Progress color={eraArray[empire.era].color} value={roundPercent} size='xs' radius={0} mb='xs' />
 			<Grid justify="space-between" grow columns={19}>
 				<Grid.Col span={2}>
 					<Center>

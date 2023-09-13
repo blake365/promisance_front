@@ -1,6 +1,6 @@
 import { Card, Grid, Stack, Table, Title, Group, Text, Avatar } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
+import { ROUND_END, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 
@@ -53,6 +53,9 @@ export default function Summary()
 	// } else {
 	// 	bgimage = '/images/summaries/default.webp'
 	// }
+	let remaining = ROUND_END - now.getTime()
+	let days = Math.floor(remaining / (1000 * 60 * 60 * 24))
+	let hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
 
 	return (
 		<main>
@@ -70,7 +73,7 @@ export default function Summary()
 									{empire?.name} (#{empire?.id})
 								</Title>
 							</Group>
-							<Text align='center' mb='sm'>{empire.profile ? empire.profile : 'Set your public profile on the empire settings page'}</Text>
+							<Text align='center' mb='sm'>{empire.profile ? empire.profile : '~set your public profile on the empire settings page~'}</Text>
 							<Grid justify='space-between' grow>
 								<Grid.Col sm={6} md={6}>
 									<Table
@@ -172,14 +175,11 @@ export default function Summary()
 								</Grid.Col>
 							</Grid>
 						</Card>) : ('')}
-					<Stack align='center' spacing={0}>
-						<div>{now.toISOString()}</div>
-						<div>You get {TURNS_COUNT} turns every {TURNS_FREQ} minutes</div>
-						<div>Next {TURNS_COUNT} turns in XX minutes, XX seconds</div>
-						<div>The current round will end in X days, XX hours</div>
+					<Stack align='center' spacing={0} mt='xs'>
+						<div>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</div>
+						<div>The current round will end in {days} days and {hours} hours.</div>
 					</Stack>
 				</div>
-
 			</Stack>
 		</main>
 	)

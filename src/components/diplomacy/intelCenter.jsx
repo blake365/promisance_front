@@ -138,7 +138,7 @@ export default function IntelCenter()
     // console.log(intel)
 
     return (
-        <section style={{ paddingTop: '1rem' }}>
+        <section>
             <Center>
                 <Stack spacing='sm' align='center'>
                     <img src='/images/intel.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='intel center' />
