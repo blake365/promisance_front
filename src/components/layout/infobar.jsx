@@ -2,7 +2,7 @@ import { Paper, Grid, Text, Center, Progress } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
-import classes from './NumberChange.module.css';
+import classes from './numberChange.module.css';
 import { ROUND_END, ROUND_START } from '../../config/config'
 
 const AnimateNumberChange = ({ number, type }) =>
