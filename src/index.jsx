@@ -42,7 +42,13 @@ import IntelCenter from './components/diplomacy/intelCenter'
 
 // import Guide from './components/guide/guide'
 
-Axios.defaults.baseURL = 'http://localhost:5001/api'
+if (import.meta.env.PROD) {
+	Axios.defaults.baseURL = 'https://neopromisance.onrender.com'
+} else {
+	Axios.defaults.baseURL = 'http://localhost:5001/api'
+}
+
+console.log(import.meta.env.PROD)
 Axios.defaults.withCredentials = true
 
 
