@@ -2,7 +2,7 @@ import { Paper, Grid, Text, Center, Progress } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
-import './NumberChange.css';
+import classes from './NumberChange.module.css';
 import { ROUND_END, ROUND_START } from '../../config/config'
 
 const AnimateNumberChange = ({ number, type }) =>
@@ -30,15 +30,15 @@ const AnimateNumberChange = ({ number, type }) =>
 	const getNumberClassName = () =>
 	{
 		if (number > prevNumber) {
-			return 'increased';
+			return classes.increased;
 		} else if (number < prevNumber) {
-			return 'decreased';
+			return classes.decreased;
 		}
 		return 'same';
 	};
 
 	return (
-		<Text align='center' ref={numberDisplayRef} className={`number-display`}>
+		<Text align='center' ref={numberDisplayRef} className={classes.numberDisplay}>
 			{type === 'networth' || type === 'cash' ? '$' : ''}{number.toLocaleString()}{type === 'health' ? '%' : ''}
 		</Text>
 	);

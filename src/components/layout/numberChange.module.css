@@ -1,5 +1,5 @@
 /* NumberDisplay.css */
-.number-display {
+.numberDisplay {
     transition: color 0.2s font-weight 0.2s;
     /* Use an appropriate transition duration */
 }
