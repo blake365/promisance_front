@@ -43,7 +43,7 @@ import IntelCenter from './components/diplomacy/intelCenter'
 // import Guide from './components/guide/guide'
 
 if (import.meta.env.PROD) {
-	Axios.defaults.baseURL = 'https://neopromisance.onrender.com'
+	Axios.defaults.baseURL = 'https://neopromisance.onrender.com/api'
 } else {
 	Axios.defaults.baseURL = 'http://localhost:5001/api'
 }
