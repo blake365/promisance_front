@@ -48,9 +48,10 @@ const useStyles = createStyles(() => ({
         minHeight: '100vh',
         maxWidth: 450,
         padding: 80,
-
+        background: 'rgba(255,255,255,0.85)',
         '@media (max-width: 400)': {
             maxWidth: '100%',
+            padding: 60,
         },
     },
 }));
@@ -89,7 +90,7 @@ export default function NewLogin()
     return (
         <div className={classes.wrapper}>
             <Paper className={classes.form} radius={0} >
-                <Title order={2} ta="center" mt={150} mb={50}>
+                <Title order={2} ta="center" mt={90} mb={50}>
                     Welcome back to NeoPromisance!
                 </Title>
                 <form onSubmit={form.onSubmit((values) =>
@@ -109,11 +110,11 @@ export default function NewLogin()
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
-                    <Text size='sm' color='gray' align='center'>You will stay logged in for 1 hour</Text>
+                    <Text size='sm' mt='xs' color='dark' align='center'>You will stay logged in for 1 hour</Text>
 
                 </form>
                 <Text ta="center" mt="md">
-                    Don&apos;t have an account? <Anchor href='/register'>Register</Anchor>
+                    Need an account? <Anchor href='/register'>Register</Anchor>
                 </Text>
             </Paper>
         </div >

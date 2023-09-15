@@ -80,7 +80,7 @@ export default function GeneralAction(props)
 					<Title order={1} align='center' sx={{ display: 'inline-block', width: '200px' }}>
 						{props.title} <FavoriteButton title={props.title} empire={props.empire} />
 					</Title>
-					<Text>
+					<Text align='center'>
 						{flavorText}
 					</Text>
 					<form onSubmit={form.onSubmit((values) =>

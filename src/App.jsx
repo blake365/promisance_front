@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useColorScheme } from '@mantine/hooks';
 import
 {
 	ColorSchemeProvider,
@@ -26,7 +26,6 @@ import
 import neoIcon from './icons/neoIcon.svg'
 
 import Sidebar from './components/layout/sidebar'
-import './App.css'
 import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
@@ -199,12 +198,19 @@ function App()
 
 	})
 
-	const [colorScheme, setColorScheme] = useLocalStorage({
-		key: 'prom-color-scheme',
-		defaultValue: 'light'
-	});
+	const preferredColorScheme = useColorScheme()
+	// console.log(preferredColorScheme)
+	const [colorScheme, setColorScheme] = useState(preferredColorScheme);
 	const toggleColorScheme = (value) =>
-		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+	{
+		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+		setColorScheme(nextColorScheme);
+	}
+
+	useEffect(() =>
+	{
+		setColorScheme(preferredColorScheme);
+	}, [preferredColorScheme])
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -224,6 +230,7 @@ function App()
 							hidden={!opened}
 							width={{ sm: 200, base: 200 }}
 							zIndex={110}
+							sx={{ paddingBottom: 'calc(1em + env(safe-area-inset-bottom))' }}
 						>
 							<Navbar.Section
 								grow
@@ -270,7 +277,7 @@ function App()
 						</Header>
 					}
 				>
-					<main style={{ paddingBottom: 15 }}>
+					<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }}>
 						{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 							<InfoBar data={empire} />
 							<Modal

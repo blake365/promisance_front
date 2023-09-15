@@ -1,4 +1,4 @@
-import { Button, createStyles, Anchor, TextInput, Title, Paper, Text, PasswordInput } from '@mantine/core'
+import { Button, createStyles, Anchor, TextInput, Title, Box, Text, PasswordInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { register } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,9 +21,10 @@ const useStyles = createStyles(() => ({
 		minHeight: '100vh',
 		maxWidth: 450,
 		padding: 80,
-
+		background: 'rgba(255,255,255,0.85)',
 		'@media (max-width: 400)': {
 			maxWidth: '100%',
+			padding: 60,
 		},
 	},
 
@@ -75,8 +76,8 @@ export default function Signup()
 
 	return (
 		<main className={classes.wrapper}>
-			<Paper className={classes.form} radius={0} >
-				<Title order={2} ta="center" mt={150} mb={50}>
+			<Box className={classes.form} radius={0} >
+				<Title order={2} ta="center" mt={90} mb={50}>
 					Register An Account
 				</Title>
 				<form
@@ -119,7 +120,7 @@ export default function Signup()
 				<Text ta="center" mt="md">
 					Already have an account? <Anchor href='/login'>Login</Anchor>
 				</Text>
-			</Paper>
+			</Box>
 		</main>
 	)
 }

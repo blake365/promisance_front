@@ -4,7 +4,6 @@ import './index.css'
 import App from './App'
 // import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-
 import { persistor, store } from './store/store'
 
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
@@ -90,7 +89,6 @@ ReactDOM.render(
 							<Route path='Mailbox' element={<Mailbox />} />
 						</Route>
 					</Routes>
-
 				</BrowserRouter>
 			</PersistGate>
 		</Provider>

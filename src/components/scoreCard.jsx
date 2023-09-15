@@ -84,7 +84,7 @@ const ScoreCard = ({ empire, myId, home }) =>
                     <Text mx='xs' align='center' sx={{ width: 25 }} weight='bolder'>
                         {empire.rank}
                     </Text>
-                    <Indicator color='blue' position='top-start' processing disabled={!active}>
+                    <Indicator color='blue' position='top-start' disabled={!active}>
                         <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
                             <Avatar size="sm" src={empire.profileIcon} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }} />
                             <Title order={4} color={color}>

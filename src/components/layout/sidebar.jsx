@@ -162,7 +162,6 @@ const Sidebar = () =>
 						</Button>
 					)
 				})}
-
 			</Stack>
 		</Fragment>
 	)

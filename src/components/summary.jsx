@@ -176,8 +176,8 @@ export default function Summary()
 							</Grid>
 						</Card>) : ('')}
 					<Stack align='center' spacing={0} mt='xs'>
-						<div>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</div>
-						<div>The current round will end in {days} days and {hours} hours.</div>
+						<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
+						<Text align='center'>The current round will end in {days} days and {hours} hours.</Text>
 					</Stack>
 				</div>
 			</Stack>
