@@ -150,17 +150,17 @@ export default function Build()
 					<Title order={1} align='center'>
 						Build <FavoriteButton empire={empire} title='Build' />
 					</Title>
-					<div>
+					<Text align='center'>
 						Each structure consumes one acre of unused land and costs $
 						{buildCost.toLocaleString()} to build.
-					</div>
-					<div>
+					</Text>
+					<Text align='center'>
 						You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
-					</div>
-					<div>
+					</Text>
+					<Text align='center'>
 						With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
 						structures
-					</div>
+					</Text>
 
 					<form
 						onSubmit={

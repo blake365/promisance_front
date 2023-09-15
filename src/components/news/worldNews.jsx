@@ -195,7 +195,7 @@ export default function WorldNews()
                         {
                             return <WorldNewsItem item={item} key={item.id} now={new Date()} />
                         }))}
-                    {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
+                    {news.length === 0 && <Text m='sm' p='xs' align='center'>No news to display</Text>}
                 </Stack>
                 <Button onClick={() => loadMore()}>Load More</Button>
             </Stack>

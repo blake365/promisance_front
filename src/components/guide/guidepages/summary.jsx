@@ -45,9 +45,9 @@ export default function SummaryGuide({ empire })
                 <dt>{eraArray[empire.era].trpwiz}</dt>
                 <dd>The number of spellcasters your empire has at its disposal.</dd>
             </dl>
-            <p>Below this table is displayed the game server's current time (in your configured time zone) and the state of the current round (e.g. how long before it starts or ends), as well as the rate at which turns are given out and how long you should expect to wait before receiving additional turns.</p>
+            <p>Below this table is displayed the state of the current round (e.g. how long before it starts or ends), as well as the rate at which turns are given out and how long you should expect to wait before receiving additional turns.</p>
             {/* <p>If you are currently in a clan, the latest post in the clan's News thread will be displayed as a reminder.</p> */}
-            <p>If any other empires have interacted with you recently, whether it be via the public market, your clan, or a rival empire attacking you, a list of events will be displayed. Clicking the "Mark News as Read" link will dismiss all recent events, and clicking the "View New Archive" link will allow you to re-examine any events which have occurred during the past few days.</p>
+            <p>If any other empires have interacted with you recently, whether it be via the public market,  or a rival empire attacking you, an indicator on the news clipping button will be displayed. Clicking the "Mark News as Read" link will dismiss the indicator.</p>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { Button, Center, NumberInput, Stack, Table, Title } from '@mantine/core'
+import { Button, Center, NumberInput, Stack, Table, Title, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -186,17 +186,17 @@ export default function Demolish()
 					<Title order={1} align='center'>
 						Demolish
 					</Title>
-					<div>
+					<Text align='center'>
 						Each structure demolished frees up one acre of land and
 						${demolishCost.toLocaleString()} will be salvaged.
-					</div>
-					<div>
+					</Text>
+					<Text align='center'>
 						You can demolish {demolishRate.toLocaleString()} structures per turn.
-					</div>
-					<div>
+					</Text>
+					<Text align='center'>
 						With your resources, you can demolish {canDemolish.toLocaleString()}{' '}
 						structures.
-					</div>
+					</Text>
 
 					<form
 						onSubmit={
@@ -374,7 +374,7 @@ export default function Demolish()
 
 					}>
 						<Stack spacing='sm' align='center' sx={{ marginTop: '2rem' }}>
-							<div>You can drop up to {canDrop} unused acres of land, at {dropRate} acres per turn.</div>
+							<Text align='center'>You can drop up to {canDrop} unused acres of land, at {dropRate} acres per turn.</Text>
 							<Table>
 								<thead>
 									<tr>

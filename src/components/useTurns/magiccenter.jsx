@@ -117,12 +117,12 @@ export default function MagicCenter()
                     <Title order={1} align='center'>
                         Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
                     </Title>
-                    <div>
+                    <Text align='center'>
                         Cast spells on yourself to generate food, money, and change eras. Spells take two turns to cast.
-                    </div>
-                    <div>
+                    </Text>
+                    <Text align='center'>
                         Your current magic power is {magicPower}.
-                    </div>
+                    </Text>
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         // console.log(values)

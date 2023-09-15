@@ -145,9 +145,9 @@ export default function IntelCenter()
                     <Title order={1} align='center'>
                         Intel Center
                     </Title>
-                    <div>
+                    <Text align='center'>
                         Cast a spell to view another empire's stats. This will take two turns.
-                    </div>
+                    </Text>
                     <Card sx={{ width: '300px' }}>
                         <Card.Section withBorder inheritPadding py="xs">
                             <Group position='apart'>

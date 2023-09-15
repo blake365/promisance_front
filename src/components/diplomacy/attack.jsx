@@ -200,10 +200,10 @@ export default function Attack()
                     <Title order={1} align='center'>
                         War Council
                     </Title>
-                    <Text>
+                    <Text align='center'>
                         Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
                     </Text>
-                    <Text>
+                    <Text align='center'>
                         Cast spells to capture land, steal resources, or destroy enemy resources. Spells take two turns.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}

@@ -21,23 +21,23 @@ export default function IntroGuide({ empire })
             <h2>The Status Bar</h2>
             <p>At the top and bottom of every page is your Status Bar. This allows you to quickly check the crucial statistics of your empire:</p>
             <dl>
-                <dt>Mail Box</dt>
-                <dd>A shortcut link to <GuideLink page='Mail' text='mail box' /> - the text of this link will change to "<b>New Mail</b>" if you have unread messages waiting.</dd>
                 <dt>Turns</dt>
                 <dd>How many turns you have available to use.</dd>
-                <dt>Cash</dt>
-                <dd>The amount of money your empire has on hand, not counting any funds you may have stored in the <GuideLink page='World%20Bank' text='world bank' />.</dd>
-                <dt>Land</dt>
-                <dd>The current size of your empire.</dd>
-                <dt>{eraArray[empire.era].runes}</dt>
-                <dd>The amount of {eraArray[empire.era].runes} your empire's {eraArray[empire.era].trpwiz} have available for casting spells.</dd>
-                <dt>{eraArray[empire.era].food}</dt>
-                <dd>The amount of food your empire has stockpiled.</dd>
-                <dt>Health</dt>
-                <dd>The health and happiness of your empire's citizens and army.</dd>
                 <dt>Networth</dt>
                 <dd>The estimated value of your empire, taking all significant assets into account.</dd>
+                <dt>Land</dt>
+                <dd>The current size of your empire.</dd>
+                <dt>Cash</dt>
+                <dd>The amount of money your empire has on hand, not counting any funds you may have stored in the <GuideLink page='World%20Bank' text='world bank' />.</dd>
+                <dt>{eraArray[empire.era].food}</dt>
+                <dd>The amount of food your empire has stockpiled.</dd>
+                <dt>{eraArray[empire.era].runes}</dt>
+                <dd>The amount of {eraArray[empire.era].runes} your empire's {eraArray[empire.era].trpwiz} have available for casting spells.</dd>
+                <dt>Health</dt>
+                <dd>The health and happiness of your empire's citizens and army.</dd>
             </dl>
+            <h2>Other Icons</h2>
+            <p>Below the status bar icons for any status effects your empire is facing will be shown. The icons will show how much time is left and show the name and time remaining when hovered or tapped on. There are also links to your <GuideLink page='Mail' text='mail box' /> and News which will show an indicator if there is something new. </p>
         </div>
     )
 }
