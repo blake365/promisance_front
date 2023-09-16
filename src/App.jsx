@@ -69,7 +69,6 @@ function App()
 	const navigate = useNavigate()
 	// console.log(empire)
 
-
 	const loadEmpireTest = async () =>
 	{
 		try {
@@ -93,8 +92,6 @@ function App()
 			console.log(error)
 		}
 	}
-
-
 
 	const checkForNews = async () =>
 	{
@@ -271,6 +268,7 @@ function App()
 									</Title>
 								</Group>
 								<Group>
+									{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
 									<ThemeToggle />
 								</Group>
 							</Group>

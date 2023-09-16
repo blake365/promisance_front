@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-// import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
 
@@ -33,13 +32,21 @@ import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
 import CreateDemoEmpire from './components/pages/CreateDemoEmpire'
 
+import Admin from './components/pages/admin'
+import AdminSummary from './components/admin/adminSummary'
+import AdminUsers from './components/admin/adminUsers'
+import AdminEmpires from './components/admin/adminEmpires'
+import AdminMail from './components/admin/adminMail'
+import AdminMarket from './components/admin/adminMarket'
+import AdminNews from './components/admin/adminNews'
+
 import Axios from 'axios'
 import { PersistGate } from 'redux-persist/integration/react'
 import Favorites from './components/useTurns/favorites'
 import WorldNews from './components/news/worldNews'
 import IntelCenter from './components/diplomacy/intelCenter'
-import { inject } from '@vercel/analytics';
 
+import { inject } from '@vercel/analytics';
 inject();
 // import Guide from './components/guide/guide'
 
@@ -64,6 +71,16 @@ ReactDOM.render(
 						<Route path='/register' element={<Signup />} />
 						<Route path='/create' element={<CreateEmpire />} />
 						<Route path='/demo' element={<CreateDemoEmpire />} />
+						<Route path='/admin/' element={<Admin />} >
+							<Route path='*' element={<NothingFoundBackground />} />
+							<Route path='' element={<AdminSummary />} />
+							<Route path='Summary' element={<AdminSummary />} />
+							<Route path='Users' element={<AdminUsers />} />
+							<Route path='Empires' element={<AdminEmpires />} />
+							<Route path='Mail' element={<AdminMail />} />
+							<Route path='Market' element={<AdminMarket />} />
+							<Route path='News' element={<AdminNews />} />
+						</Route>
 						<Route path='/app/' element={<App />}>
 							<Route path='*' element={<NothingFoundBackground />} />
 							{/* <Route path='guide' element={<Guide />} /> */}
