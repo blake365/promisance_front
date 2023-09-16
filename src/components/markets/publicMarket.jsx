@@ -1,4 +1,4 @@
-import { Tabs, Title, Center, Stack, Loader } from "@mantine/core"
+import { Tabs, Title, Center, Stack, Loader, Text } from "@mantine/core"
 import PublicMarketBuy from "./PublicMarketBuy"
 import PublicMarketSell from "./PublicMarketSell"
 
@@ -38,9 +38,9 @@ export default function PublicMarket()
                     <Title order={1} align='center'>
                         Public Market
                     </Title>
-                    <div>
+                    <Text align="center">
                         Purchase or sell goods between other players on the Public Market
-                    </div>
+                    </Text>
                     {marketStatus !== 'succeeded' ? (<Loader />) : (
                         <Tabs defaultValue="Buy" styles={{
                             tabLabel: { fontSize: '1.2rem' },

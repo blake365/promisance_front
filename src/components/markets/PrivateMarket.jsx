@@ -1,4 +1,4 @@
-import { Tabs, Title, Center, Stack } from "@mantine/core"
+import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
 
@@ -13,9 +13,9 @@ export default function PrivateMarket()
                     <Title order={1} align='center'>
                         Black Market
                     </Title>
-                    <div>
+                    <Text align='center'>
                         Purchase or sell goods on the Black Market
-                    </div>
+                    </Text>
                     <Tabs defaultValue="Buy"
                         styles={{
                             tabLabel: { fontSize: '1.2rem' },

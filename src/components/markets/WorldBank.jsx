@@ -121,12 +121,12 @@ export default function WorldBank()
                     <Title order={1} align='center'>
                         The Bank
                     </Title>
-                    <div>
+                    <Text align='center'>
                         Access your savings and loan accounts.
-                    </div>
-                    <div>
+                    </Text>
+                    <Text align='center'>
                         Interest is calculated per turn, 52 turns is one APR year.
-                    </div>
+                    </Text>
                     <SimpleGrid
                         cols={2}
                         spacing="lg"
