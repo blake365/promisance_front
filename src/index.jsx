@@ -38,7 +38,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Favorites from './components/useTurns/favorites'
 import WorldNews from './components/news/worldNews'
 import IntelCenter from './components/diplomacy/intelCenter'
+import { inject } from '@vercel/analytics';
 
+inject();
 // import Guide from './components/guide/guide'
 
 if (import.meta.env.PROD) {
