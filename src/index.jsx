@@ -51,7 +51,7 @@ inject();
 // import Guide from './components/guide/guide'
 
 if (import.meta.env.PROD) {
-	Axios.defaults.baseURL = 'https://neopromisance.onrender.com/api'
+	Axios.defaults.baseURL = 'https://api.neopromisance.com'
 } else {
 	Axios.defaults.baseURL = 'http://localhost:5001/api'
 }

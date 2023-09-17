@@ -52,8 +52,8 @@ function App()
 	const dispatch = useDispatch()
 	const [modalOpened, setModalOpened] = useState(false);
 	const [drawer, { open, close }] = useDisclosure(false)
-	const [news, setNews] = useState()
-	const [mail, setMail] = useState()
+	const [news, setNews] = useState(true)
+	const [mail, setMail] = useState(true)
 
 	let location = useLocation()
 	// console.log(location)
@@ -64,7 +64,6 @@ function App()
 	// const empire = useSelector((state) => state.empire)
 	const { empire } = useSelector((state) => state.empire)
 	// console.log(empire)
-
 
 	const navigate = useNavigate()
 	// console.log(empire)
@@ -122,7 +121,7 @@ function App()
 			console.log('loading user')
 			try {
 				const res = await Axios.get('auth/me')
-				console.log('status', res.status)
+				// console.log('status', res.data)
 				if (res.status === 401) {
 					navigate('/')
 				} else if (res.status !== 200) {
@@ -294,8 +293,8 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={2}>
 									<Group spacing='xs' position='center'>
-										<Button compact variant='light' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
-										<Button compact variant='light' onClick={() =>
+										<Button compact variant='outline' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
+										<Button compact variant='outline' onClick={() =>
 										{
 											loadEmpireTest()
 											loadMarket()
@@ -306,10 +305,10 @@ function App()
 								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
-										<Indicator color="green" processing disabled={!mail} zIndex={3}>
+										<Indicator color="green" disabled={!mail} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
 										</Indicator>
-										<Indicator color="green" processing disabled={!news} zIndex={3}>
+										<Indicator color="green" disabled={!news} zIndex={3}>
 											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /> </Button>
 										</Indicator>
 									</Group>

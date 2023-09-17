@@ -45,62 +45,6 @@ export default function Overview()
 
 	const { income, expenses, loanpayed } = calcFinances(cpi, empire, size)
 
-	// // takes place of calcFinances function
-	// let income = Math.round(
-	// 	(cpi *
-	// 		(empire.tax / 100) *
-	// 		(empire.health / 100) *
-	// 		empire.peasants +
-	// 		empire.bldCash * 500) / size
-	// )
-
-	// // let loan = Math.round(empire.loan / 200)
-
-	// let expenses = Math.round(
-	// 	empire.trpArm * 1 +
-	// 	empire.trpLnd * 2.5 +
-	// 	empire.trpFly * 4 +
-	// 	empire.trpSea * 7 +
-	// 	empire.land * 8 +
-	// 	empire.trpWiz * 0.5
-	// )
-
-	// // console.log(empire.loan)
-	// let loanpayed = 0
-	// if (empire.loan > 0) {
-	// 	loanpayed = Math.min(Math.round(empire.loan / 200), (income - expenses))
-	// }
-	// console.log(loanpayed)
-	// let expensesBonus = Math.min(
-	// 	0.5,
-	// 	(raceArray[empire.race].mod_expenses + 100) / 100 -
-	// 	1 +
-	// 	empire.bldCost / Math.max(empire.land, 1)
-	// )
-
-	// expenses -= Math.round(expenses * expensesBonus)
-
-	// takes place of calcProvisions function
-	// let production =
-	// 	10 * empire.freeLand +
-	// 	empire.bldFood *
-	// 	85 *
-	// 	Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
-	// production *= (100 + raceArray[empire.race].mod_foodpro) / 100
-
-	// let foodpro = Math.round(production)
-
-	// let consumption =
-	// 	empire.trpArm * 0.05 +
-	// 	empire.trpLnd * 0.03 +
-	// 	empire.trpFly * 0.02 +
-	// 	empire.trpSea * 0.01 +
-	// 	empire.peasants * 0.01 +
-	// 	empire.trpWiz * 0.25
-
-	// consumption *= (100 + raceArray[empire.race].mod_foodcon) / 100
-
-	// let foodcon = Math.round(consumption)
 	const { foodpro, foodcon } = calcProvisions(empire)
 
 	const oPower = offense(empire)
@@ -109,6 +53,9 @@ export default function Overview()
 
 	const race = raceArray[empire.race]
 	const era = eraArray[empire.era]
+
+	const baseLuck = 5
+	let luck = baseLuck * size * 2
 
 	return (
 		<main>
@@ -161,6 +108,8 @@ export default function Overview()
 								</Text>
 								<Text align='right'>+{newLand} acres</Text>
 								<Text align='left'>Black Market: <RaceBonus value={race.mod_market} /></Text>
+								<Text></Text>
+								<Text align='left'>Luck: <RaceBonus value={luck} /></Text>
 							</SimpleGrid>
 						</Card>
 

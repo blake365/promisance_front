@@ -40,7 +40,9 @@ export default function OverviewGuide({ empire })
                 <dt>Exploration</dt>
                 <dd>How much land you will gain from one turn exploring</dd>
                 <dt>Black Market</dt>
-                <dd>Shows you racial bonus relating to price discounts on your Black Market</dd>
+                <dd>Shows your racial bonus relating to price discounts or penalties on your Black Market</dd>
+                <dt>Luck</dt>
+                <dd>Luck is the percent chance to have a turn yield 1.5x production. This applies to new land when exploring, {eraArray[empire.era].food} when farming, income when cashing, troop production when doing industry, and {eraArray[empire.era].runes} when meditating. </dd>
             </dl>
             <h3>Land Division</h3>
             <p>Each row in this table indicates the number of each type of structure your empire has built on its land, as well as how many acres are currently unused.</p>
