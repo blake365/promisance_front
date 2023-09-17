@@ -56,7 +56,7 @@ if (import.meta.env.PROD) {
 	Axios.defaults.baseURL = 'http://localhost:5001/api'
 }
 
-console.log(import.meta.env.PROD)
+// console.log(import.meta.env.PROD)
 Axios.defaults.withCredentials = true
 
 

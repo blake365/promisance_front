@@ -14,6 +14,7 @@ import { raceArray } from '../config/races'
 
 import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
+import { BASE_LUCK } from '../config/config'
 
 const RaceBonus = ({ value }) =>
 {
@@ -38,6 +39,14 @@ export default function Overview()
 
 	let size = calcSizeBonus(empire)
 	// console.log(size)
+	// let sizeTest1 = calcSizeBonus({ networth: 1000000 })
+	// console.log(sizeTest1)
+	// let sizeTest2 = calcSizeBonus({ networth: 11347620 })
+	// console.log(sizeTest2)
+	// let sizeTest3 = calcSizeBonus({ networth: 1348927109 })
+	// console.log(sizeTest3)
+	// let sizeTest4 = calcSizeBonus({ networth: 1000000000 })
+	// console.log(sizeTest4)
 
 	let cpi = calcPCI(empire)
 
@@ -54,8 +63,8 @@ export default function Overview()
 	const race = raceArray[empire.race]
 	const era = eraArray[empire.era]
 
-	const baseLuck = 5
-	let luck = baseLuck * size * 2
+	let luck = Math.round(BASE_LUCK / size)
+
 
 	return (
 		<main>
