@@ -9,6 +9,7 @@ import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { DiscordLogo } from '@phosphor-icons/react'
 
 export default function Home()
 {
@@ -41,7 +42,7 @@ export default function Home()
                 <Box align='left' my='lg'>
                     <Title order={1}>About the Game</Title>
                     <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vie for power. </Text>
-                    <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is still in development and is not yet feature complete. Upcoming features include clans, foreign aid, and new ideas from community feedback. Join us today! </Text>
+                    <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is still in development and is not yet feature complete. Upcoming features include clans, foreign aid, and new ideas from community feedback. Join us today! <a href='https://discord.gg/bnuVy2pdgM' target='_blank'>Discord</a></Text>
                 </Box>
                 <Box>
                     <Title order={1} ta='left'>Choose Your Strategy</Title>

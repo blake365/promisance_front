@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { ROUND_END, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
+import { Link } from 'react-router-dom'
 
 export default function Summary()
 {
@@ -73,7 +74,7 @@ export default function Summary()
 									{empire?.name} (#{empire?.id})
 								</Title>
 							</Group>
-							<Text align='center' mb='sm'>{empire.profile ? empire.profile : '~set your public profile on the empire settings page~'}</Text>
+							<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>
 							<Grid justify='space-between' grow>
 								<Grid.Col sm={6} md={6}>
 									<Table

@@ -24,8 +24,8 @@ export default function WorldBank()
     const dispatch = useDispatch()
 
     const size = calcSizeBonus(empire)
-    const loanRate = (BANK_LOANRATE + size) / 100
-    const savingRate = (BANK_SAVERATE + size) / 100
+    const loanRate = Math.round((BANK_LOANRATE + size) * 100) / 100 / 100
+    const savingRate = Math.round((BANK_SAVERATE + size) * 100) / 100 / 100
     const maxLoan = empire.networth * 50
     let maxSavings = empire.networth * 100
     let canSave = maxSavings

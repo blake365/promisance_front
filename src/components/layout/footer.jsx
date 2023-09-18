@@ -1,18 +1,22 @@
 import { Container, Group, ActionIcon, Title } from '@mantine/core';
-import { IconBrandGithub } from '@tabler/icons-react';
+import { IconBrandDiscord, IconBrandGithub } from '@tabler/icons-react';
 
 
 export default function FooterSocial()
 {
-
     return (
         <div>
             <Container size='lg' py='lg'>
                 <Group spacing={0} position="apart" noWrap>
                     <Title order={1}>NeoPromisance</Title>
-                    <ActionIcon size="lg">
-                        <IconBrandGithub size="1.05rem" stroke={1.5} />
-                    </ActionIcon>
+                    <Group>
+                        <ActionIcon size="lg" component='a' href='https://discord.gg/bnuVy2pdgM'>
+                            <IconBrandDiscord size="2rem" stroke={1.5} />
+                        </ActionIcon>
+                        <ActionIcon size="lg" component='a' href='https://github.com/blake365/typescript_promisance'>
+                            <IconBrandGithub size="2rem" stroke={1.5} />
+                        </ActionIcon>
+                    </Group>
                 </Group>
             </Container>
         </div>

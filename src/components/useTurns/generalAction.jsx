@@ -55,6 +55,7 @@ export default function GeneralAction(props)
 			const res = await Axios.post('/useturns', values)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
+			form.reset()
 		} catch (error) {
 			console.log(error)
 		}

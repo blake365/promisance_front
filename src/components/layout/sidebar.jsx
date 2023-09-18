@@ -1,7 +1,7 @@
 import { Button, Stack, Title } from '@mantine/core'
 import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
+import { ArrowSquareOut } from '@phosphor-icons/react'
 
 const Sidebar = () =>
 {
@@ -74,6 +74,7 @@ const Sidebar = () =>
 							{link}
 						</Button>)
 				})}
+				<Button component='a' compact href='https://discord.gg/bnuVy2pdgM' target='_blank' variant='subtle' rightIcon={<ArrowSquareOut />}>Discord</Button>
 				<Title order={4}>Use Turns</Title>
 				{turnLinks.map((link, index) =>
 				{
