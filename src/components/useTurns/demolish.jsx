@@ -160,6 +160,7 @@ export default function Demolish()
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()
+			window.scroll({ top: 0, behavior: 'smooth' })
 		} catch (error) {
 			console.log(error)
 		}

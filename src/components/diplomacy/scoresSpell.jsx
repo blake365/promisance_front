@@ -67,6 +67,7 @@ export default function ScoresSpell({ enemy })
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
+                window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult([res.data]))
                 loadEmpireTest()
                 dispatch(loadScores())
@@ -103,6 +104,7 @@ export default function ScoresSpell({ enemy })
                                 {
                                     // console.log(values)
                                     sendSpellAttack(values)
+                                    // window.scroll({ top: 0, behavior: 'smooth' })
                                 })}>
                                     <Stack spacing='sm' align='center'>
                                         <Select

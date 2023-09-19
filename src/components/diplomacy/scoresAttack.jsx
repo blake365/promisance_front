@@ -65,6 +65,7 @@ export default function ScoresAttack({ enemy })
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
+                window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
                 loadEmpireTest()
                 dispatch(loadScores())
@@ -85,8 +86,9 @@ export default function ScoresAttack({ enemy })
 
                             <form onSubmit={form.onSubmit((values) =>
                             {
-                                console.log(values)
+                                // console.log(values)
                                 sendAttack(values)
+                                // window.scroll({ top: 0, behavior: 'smooth' })
                                 // dispatch(clearResult)
                             })}>
                                 <Stack spacing='sm' align='center'>

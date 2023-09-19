@@ -58,8 +58,9 @@ export default function MagicCenter()
     {
         try {
             const res = await Axios.post('/magic', values)
-            console.log(res.data)
+            // console.log(res.data)
             dispatch(setResult(res.data))
+            window.scroll({ top: 0, behavior: 'smooth' })
             loadEmpireTest()
         } catch (error) {
             console.log(error)

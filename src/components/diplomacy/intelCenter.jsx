@@ -164,6 +164,7 @@ export default function IntelCenter()
                         {
                             console.log(values)
                             sendSpellAttack(values)
+                            window.scroll({ top: 0, behavior: 'smooth' })
                             // dispatch(clearResult)
                         })}>
                             <Stack spacing='sm' align='center'>

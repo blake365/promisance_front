@@ -90,6 +90,7 @@ export default function ScoresIntel({ enemy })
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
+                window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult([res.data]))
                 loadEmpireTest()
                 dispatch(loadScores())
@@ -117,6 +118,7 @@ export default function ScoresIntel({ enemy })
                                 {
                                     // console.log(values)
                                     sendSpellAttack(values)
+                                    window.scroll({ top: 0, behavior: 'smooth' })
                                 })}>
                                     <Stack spacing='sm' align='center'>
                                         <Button color='indigo' type='submit'>
@@ -150,7 +152,6 @@ export default function ScoresIntel({ enemy })
                                         </Accordion.Panel>
                                     </Accordion.Item>)
                                 })}
-
                             </Accordion>
                         ) : ('')}
                     </Group>

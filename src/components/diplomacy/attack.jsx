@@ -106,6 +106,7 @@ export default function Attack()
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
+                window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
                 loadEmpireTest()
             }
@@ -123,6 +124,7 @@ export default function Attack()
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
+                window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult([res.data]))
                 loadEmpireTest()
             }
@@ -216,9 +218,10 @@ export default function Attack()
                             </Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
                             {
-                                console.log(values)
+                                // console.log(values)
                                 sendAttack(values)
                                 // dispatch(clearResult)
+                                // window.scroll({ top: 0, behavior: 'smooth' })
                             })}>
                                 <Stack spacing='sm' align='center'>
                                     {otherEmpires && (
@@ -273,7 +276,8 @@ export default function Attack()
                             {
                                 // console.log(values)
                                 sendSpellAttack(values)
-                                dispatch(clearResult)
+                                // dispatch(clearResult)
+                                // window.scroll({ top: 0, behavior: 'smooth' })
                             })}>
                                 <Stack spacing='sm' align='center'>
                                     {otherEmpires && (
