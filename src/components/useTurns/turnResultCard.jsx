@@ -96,14 +96,23 @@ export default function TurnResultCard({ data })
 									<Text align='right'>${data.income.toLocaleString()}</Text>
 									<Text>Expenses:</Text>
 									<Text align='right'>${data.expenses.toLocaleString()}</Text>
-									{data.loanpayed > 0 ? (
+									{data.loanpayed !== 0 ? (
 										<>
 											<Text>Loan Payment:</Text>
-											<Text align='right'>${data.loanpayed.toLocaleString()}</Text>
+											<Text align='right'>${(data.loanpayed).toLocaleString()}</Text>
 										</>
 									) : (
 										''
 									)}
+									{data.loanInterest > 0 ? (
+										<>
+											<Text>Loan Interest:</Text>
+											<Text align='right'>${(data.loanInterest).toLocaleString()}</Text>
+										</>
+									) : (
+										''
+									)}
+
 
 									<NetProduced title='Net' value={data.money} money />
 								</SimpleGrid>

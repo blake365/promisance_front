@@ -1,6 +1,6 @@
 import { Card, Grid, Stack, Table, Title, Group, Text, Avatar } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { ROUND_END, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../config/config'
+import { ROUND_END, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
@@ -75,6 +75,7 @@ export default function Summary()
 								</Title>
 							</Group>
 							<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>
+
 							<Grid justify='space-between' grow>
 								<Grid.Col sm={6} md={6}>
 									<Table
@@ -177,6 +178,7 @@ export default function Summary()
 							</Grid>
 						</Card>) : ('')}
 					<Stack align='center' spacing={0} mt='xs'>
+						{empire.turnsUsed < TURNS_PROTECTION ? (<Text align='center' mb='sm' color='green'>You are under new player protection for {TURNS_PROTECTION - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {TURNS_PROTECTION} turns.</Text>) : ('')}
 						<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
 						<Text align='center'>The current round will end in {days} days and {hours} hours.</Text>
 					</Stack>

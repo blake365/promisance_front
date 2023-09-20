@@ -67,7 +67,7 @@ export function defense(empire) {
 export function explore(empire) {
 	const newLand = Math.ceil(
 		(1 / (empire.land * 0.00019 + 0.25)) *
-			40 *
+			100 *
 			((100 +
 				eraArray[empire.era].mod_explore +
 				raceArray[empire.race].mod_explore) /

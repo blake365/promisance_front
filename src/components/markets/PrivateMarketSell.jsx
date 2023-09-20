@@ -208,19 +208,14 @@ export default function PrivateMarketSell()
                         </Center>
                     </form>
                     {result &&
-                        <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
-                            backgroundColor: theme.colors.gray[1],
-                            '&:hover': {
-                                backgroundColor: theme.colors.gray[2],
-                            },
-                        })}>
+                        <Card shadow='sm' padding='sm' withBorder >
                             <Stack spacing='xs' align='center'>
-                                {result?.resultSellArm.amount > 0 ? <div>You Sold {result.resultSellArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultSellArm.price.toLocaleString()}</div> : ''}
-                                {result?.resultSellLnd.amount > 0 ? <div>You Sold {result.resultSellLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultSellLnd.price.toLocaleString()}</div> : ''}
-                                {result?.resultSellFly.amount > 0 ? <div>You Sold {result.resultSellFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultSellFly.price.toLocaleString()}</div> : ''}
-                                {result?.resultSellSea.amount > 0 ? <div>You Sold {result.resultSellSea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultSellSea.price.toLocaleString()}</div> : ''}
-                                {result?.resultSellFood.amount > 0 ? <div>You Sold {result.resultSellFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultSellFood.price.toLocaleString()}</div> : ''}
-                                {result?.resultSellRunes.amount > 0 ? <div>You Sold {result.resultSellRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultSellRunes.price.toLocaleString()}</div> : ''}
+                                {result?.resultSellArm.amount > 0 ? <Text>You Sold {result.resultSellArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultSellArm.price.toLocaleString()}</Text> : ''}
+                                {result?.resultSellLnd.amount > 0 ? <Text>You Sold {result.resultSellLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultSellLnd.price.toLocaleString()}</Text> : ''}
+                                {result?.resultSellFly.amount > 0 ? <Text>You Sold {result.resultSellFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultSellFly.price.toLocaleString()}</Text> : ''}
+                                {result?.resultSellSea.amount > 0 ? <Text>You Sold {result.resultSellSea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultSellSea.price.toLocaleString()}</Text> : ''}
+                                {result?.resultSellFood.amount > 0 ? <Text>You Sold {result.resultSellFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultSellFood.price.toLocaleString()}</Text> : ''}
+                                {result?.resultSellRunes.amount > 0 ? <Text>You Sold {result.resultSellRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultSellRunes.price.toLocaleString()}</Text> : ''}
                             </Stack>
                         </Card>
                     }

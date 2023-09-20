@@ -1,4 +1,4 @@
-import { Button, Center, NumberInput, Card, Stack } from '@mantine/core'
+import { Button, Center, NumberInput, Card, Stack, Text } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -278,19 +278,14 @@ export default function PrivateMarketBuy()
                         </Center>
                     </form>
                     {result &&
-                        <Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
-                            backgroundColor: theme.colors.gray[1],
-                            '&:hover': {
-                                backgroundColor: theme.colors.gray[2],
-                            },
-                        })}>
+                        <Card shadow='sm' padding='sm' withBorder >
                             <Stack spacing='xs' align='center'>
-                                {result?.resultBuyArm.amount > 0 ? <div>You purchased {result.resultBuyArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultBuyArm.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyLnd.amount > 0 ? <div>You purchased {result.resultBuyLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultBuyLnd.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyFly.amount > 0 ? <div>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuySea.amount > 0 ? <div>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyFood.amount > 0 ? <div>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</div> : ''}
-                                {result?.resultBuyRunes.amount > 0 ? <div>You purchased {result.resultBuyRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultBuyRunes.price.toLocaleString()}</div> : ''}
+                                {result?.resultBuyArm.amount > 0 ? <Text>You purchased {result.resultBuyArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultBuyArm.price.toLocaleString()}</Text> : ''}
+                                {result?.resultBuyLnd.amount > 0 ? <Text>You purchased {result.resultBuyLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultBuyLnd.price.toLocaleString()}</Text> : ''}
+                                {result?.resultBuyFly.amount > 0 ? <Text>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</Text> : ''}
+                                {result?.resultBuySea.amount > 0 ? <Text>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</Text> : ''}
+                                {result?.resultBuyFood.amount > 0 ? <Text>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</Text> : ''}
+                                {result?.resultBuyRunes.amount > 0 ? <Text>You purchased {result.resultBuyRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultBuyRunes.price.toLocaleString()}</Text> : ''}
                             </Stack>
                         </Card>
                     }

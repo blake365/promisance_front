@@ -134,8 +134,8 @@ export default function Overview()
 								<Text>Expenses: <RaceBonus value={race.mod_expenses} /></Text>
 								<Text align='right'>${expenses.toLocaleString()}</Text>
 								<Text>Loan Payment:</Text>
-								<Text align='right'>${loanpayed.toLocaleString()}</Text>
-								<NetProduced title='Net' value={income - expenses - loanpayed} money />
+								<Text align='right'>${Math.abs(loanpayed).toLocaleString()}</Text>
+								<NetProduced title='Net' value={income - expenses - Math.abs(loanpayed)} money />
 								<Text>Savings Balance:</Text>
 								<Text align='right'>${empire.bank.toLocaleString()}</Text>
 								<Text>Loan Balance:</Text>
@@ -242,8 +242,8 @@ export default function Overview()
 									<Text align='right'>None</Text>
 									<Text align='right'>None</Text>
 
-									<Text align='right' mt='sm'>{empire.offSucc} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>
-									<Text align='right'>{empire.defSucc} ({Math.round(empire.defSucc / empire.defTotal * 100)}%)</Text>
+									<Text align='right' mt='sm'>{empire.offTotal} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>
+									<Text align='right'>{empire.defTotal} ({Math.round(empire.defSucc / empire.defTotal * 100)}%)</Text>
 									{/* <Text align='right'>{empire.kills}</Text> */}
 								</Col>
 							</Grid>
