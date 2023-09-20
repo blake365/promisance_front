@@ -9,32 +9,35 @@ export function randomIntFromInterval(min, max) {
 }
 
 export function generalLog(number, base) {
-	let log = Math.log(base) / Math.log(number)
+	let log = Math.log(number) / Math.log(base)
 	console.log(log)
 	return log
 }
 
 // general
 export function calcSizeBonus({ networth }) {
-	// let net = Math.max(networth, 1)
-	// let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
-	// size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
+	// Calculates empire size bonus/penalty, mainly used for interest rates
+	// Ranges from 0.5 to 1.7, rounded to 3 decimal places
+	// console.log(networth)
+	let net = Math.max(networth, 1)
+	let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
+	size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
 
 	// console.log(size)
-	let size = 0
-	if (networth <= 1000000) {
-		size = 0.524
-	} else if (networth <= 25000000) {
-		size = 0.887
-	} else if (networth <= 50000000) {
-		size = 1.145
-	} else if (networth <= 100000000) {
-		size = 1.294
-	} else if (networth <= 150000000) {
-		size = 1.454
-	} else {
-		size = 1.674
-	}
+	// let size = 0
+	// if (networth <= 1000000) {
+	// 	size = 0.524
+	// } else if (networth <= 25000000) {
+	// 	size = 0.887
+	// } else if (networth <= 50000000) {
+	// 	size = 1.145
+	// } else if (networth <= 100000000) {
+	// 	size = 1.294
+	// } else if (networth <= 150000000) {
+	// 	size = 1.454
+	// } else {
+	// 	size = 1.674
+	// }
 	return size
 }
 

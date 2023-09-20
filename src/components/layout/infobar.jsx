@@ -3,7 +3,7 @@ import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
-import { ROUND_END, ROUND_START } from '../../config/config'
+import { ROUND_END, ROUND_START, TURNS_PROTECTION } from '../../config/config'
 
 const AnimateNumberChange = ({ number, type }) =>
 {
@@ -56,7 +56,15 @@ export default function InfoBar({ data })
 	const empire = data
 
 	return (
-		<Paper shadow='xs' radius='xs' withBorder pb='xs' >
+		<Paper shadow='xs' radius='xs' withBorder pb='xs' sx={(theme) =>
+		{
+			if (empire.turnsUsed <= TURNS_PROTECTION) {
+				return {
+					border: '1px solid #40c057',
+					boxShadow: '0 0 7px 1px #40c057',
+				}
+			}
+		}}>
 			<Progress color={eraArray[empire.era].color} value={roundPercent} size='xs' radius={0} mb='xs' />
 			<Grid justify="space-between" grow columns={19}>
 				<Grid.Col span={2}>

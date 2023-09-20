@@ -44,7 +44,7 @@ import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 import BonusTurns from './components/layout/bonusTurns';
 import { loadScores } from './store/scoresSlice';
-
+import { TURNS_PROTECTION } from './config/config';
 
 function App()
 {
@@ -293,7 +293,18 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={2}>
 									<Group spacing='xs' position='center'>
-										<Button compact variant='outline' onClick={() => { setModalOpened(true) }}>Game Guide</Button>
+										<Button compact variant='outline' onClick={() => { setModalOpened(true) }}
+											sx={(theme) =>
+											{
+												if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
+													return {
+														border: '1px solid #40c057',
+														boxShadow: '0 0 2px 1px #40c057',
+														color: '#40c057',
+													}
+												}
+											}
+											}>Game Guide</Button>
 										<Button compact variant='outline' onClick={() =>
 										{
 											loadEmpireTest()
