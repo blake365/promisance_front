@@ -27,17 +27,19 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
         formType = 5
     }
 
+    // console.log(type, item[0])
+
     const form = useForm({
         initialValues: {
             empireId: empireId,
             action: 'buy',
             type: formType,
             buy: 0,
-            item: item[type][0],
+            item: item[0],
         },
 
         validationRules: {
-            buy: (value) => value <= cash / item[type][0].price,
+            buy: (value) => value <= cash / item[0].price,
         },
 
         errorMessages: {
@@ -93,7 +95,7 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                         Available:
                     </Text>
                     <Text align='center' weight='bold'>
-                        {parseInt(item[type][0].amount).toLocaleString()}
+                        {parseInt(item[0].amount).toLocaleString()}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={2}>
@@ -109,7 +111,7 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                         Price:
                     </Text>
                     <Text align='center' weight='bold'>
-                        ${item[type][0].price.toLocaleString()}
+                        ${item[0].price.toLocaleString()}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={2}>
@@ -117,7 +119,7 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                         Can Buy:
                     </Text>
                     <Text align='center' weight='bold'>
-                        {cash / item[type][0].price > parseInt(item[type][0].amount) ? parseInt(item[type][0].amount).toLocaleString() : Math.floor(cash / item[type][0].price).toLocaleString()}
+                        {cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={4}>
@@ -128,7 +130,9 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         console.log(values)
-                        buyItem(values)
+                        if (values.buy > 0) {
+                            buyItem(values)
+                        }
                     })}>
                         <Center>
                             <NumberInput
@@ -136,9 +140,9 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                                 align='center'
                                 w='50%'
                                 min={0}
-                                max={cash / item[type][0].price > parseInt(item[type][0].amount) ? parseInt(item[type][0].amount) : Math.floor(cash / item[type][0].price)}
+                                max={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)}
                                 {...form.getInputProps(`buy`)}
-                                rightSection={<MaxButton formName={form} fieldName='buy' maxValue={cash / item[type][0].price > parseInt(item[type][0].amount) ? parseInt(item[type][0].amount) : Math.floor(cash / item[type][0].price)} />}
+                                rightSection={<MaxButton formName={form} fieldName='buy' maxValue={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)} />}
                             />
                             <Button type='submit' ml='sm'>Buy</Button>
                         </Center>

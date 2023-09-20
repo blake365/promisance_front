@@ -69,7 +69,7 @@ export function defense(empire) {
 // explore
 export function explore(empire) {
 	const newLand = Math.ceil(
-		(1 / (empire.land * 0.00019 + 0.25)) *
+		(2 / (empire.land * 0.00019 + 0.25)) *
 			100 *
 			((100 +
 				eraArray[empire.era].mod_explore +

@@ -23,17 +23,17 @@ export default function PublicMarketBuy({ empire })
 
                         <Stack spacing='sm' align='center'>
 
-                            <PubBuyCard eraItem={eraArray[empire.era].trparm} type='arm' owned={empire.trpArm} item={otherItems} base={PVTM_TRPARM} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].trparm} type='arm' owned={empire.trpArm} item={otherItems['arm']} base={PVTM_TRPARM} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                            <PubBuyCard eraItem={eraArray[empire.era].trplnd} type='lnd' owned={empire.trpLnd} item={otherItems} base={PVTM_TRPLND} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].trplnd} type='lnd' owned={empire.trpLnd} item={otherItems['lnd']} base={PVTM_TRPLND} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                            <PubBuyCard eraItem={eraArray[empire.era].trpfly} type='fly' owned={empire.trpFly} item={otherItems} base={PVTM_TRPFLY} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].trpfly} type='fly' owned={empire.trpFly} item={otherItems['fly']} base={PVTM_TRPFLY} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                            <PubBuyCard eraItem={eraArray[empire.era].trpsea} type='sea' owned={empire.trpSea} item={otherItems} base={PVTM_TRPSEA} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].trpsea} type='sea' owned={empire.trpSea} item={otherItems['sea']} base={PVTM_TRPSEA} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                            <PubBuyCard eraItem={eraArray[empire.era].food} type='food' owned={empire.food} item={otherItems} base={PVTM_FOOD} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].food} type='food' owned={empire.food} item={otherItems['food']} base={PVTM_FOOD} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                            <PubBuyCard eraItem={eraArray[empire.era].runes} type='runes' owned={empire.runes} item={otherItems} base={PVTM_RUNES} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
+                            <PubBuyCard eraItem={eraArray[empire.era].runes} type='runes' owned={empire.runes} item={otherItems['runes']} base={PVTM_RUNES} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
                         </Stack>
                     )
