@@ -1,9 +1,10 @@
-import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
 
-import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
+
+import { Mountains, Scales, Hourglass } from "@phosphor-icons/react"
 import ScoresAttack from './diplomacy/scoresAttack'
 import ScoresSpell from './diplomacy/scoresSpell'
 import ScoresNews from './news/scoresNews'
@@ -62,7 +63,6 @@ const ScoreCard = ({ empire, myId, home }) =>
         color = 'deepskyblue'
     }
 
-
     if (empire.id === myId) {
         disabled = true
     }
@@ -103,7 +103,8 @@ const ScoreCard = ({ empire, myId, home }) =>
                             <Hourglass size={22} weight='regular' />
                             <Text>{eraArray[empire.era].name}</Text></Group>
                         <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
-                            <Alien size={22} weight='regular' />
+                            <Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+                            {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
 
