@@ -10,6 +10,8 @@ import Industry from './industry'
 import Meditate from './meditate'
 import MagicCenter from './magiccenter'
 import Heal from './heal'
+import AttackMini from '../diplomacy/attackMini'
+import SpellMini from '../diplomacy/spellMini'
 
 const MapComponents = (title) =>
 {
@@ -34,6 +36,10 @@ const MapComponents = (title) =>
     }
     else if (title === 'Heal') {
         return <Heal />
+    } else if (title === 'Attack') {
+        return <AttackMini />
+    } else if (title === 'Spell') {
+        return <SpellMini />
     }
 }
 

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult, clearResult } from '../../store/turnResultsSlice'
 import { baseCost, getPower_self } from '../../functions/functions'
+import { FavoriteButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
@@ -213,7 +214,7 @@ export default function Attack()
                         <Card sx={{ width: '300px' }}>
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
-                                    <Text weight={500}>Attack:</Text>
+                                    <Text weight={500}>Attack:</Text><FavoriteButton title='Attack' empire={empire} />
                                 </Group>
                             </Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
@@ -270,6 +271,7 @@ export default function Attack()
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
                                     <Text weight={500}>Cast Spell:</Text>
+                                    <FavoriteButton title='Spell' empire={empire} />
                                 </Group>
                             </Card.Section>
                             <form onSubmit={spellForm.onSubmit((values) =>

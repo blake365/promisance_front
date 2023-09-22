@@ -1,4 +1,4 @@
-import { Button, Center, NumberInput, Stack, Table, Title, Text } from '@mantine/core'
+import { Button, Center, NumberInput, Stack, Table, Title, Text, Group } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { FavoriteButton, HalfAndAll } from '../utilities/maxbutton'
+import { FavoriteButton, HalfAndAll, HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 
@@ -183,6 +183,7 @@ export default function Build()
 										<th>Owned</th>
 										{/* <th>Can Build</th> */}
 										<th>Build</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -200,10 +201,15 @@ export default function Build()
 												defaultValue={0}
 												max={canBuild}
 												{...form.getInputProps('bldPop')}
-												rightSection={
-													<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldPop' maxValue={canBuild} />
-												}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldPop' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldPop' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldPop' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -220,8 +226,14 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldCash')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldCash' maxValue={canBuild} />}
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldCash' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldCash' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldCash' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -238,8 +250,15 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldTroop')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldTroop' maxValue={canBuild} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldTroop' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldTroop' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldTroop' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -256,8 +275,15 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldCost')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldCost' maxValue={canBuild} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldCost' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldCost' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldCost' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -274,7 +300,14 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldWiz')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldWiz' maxValue={canBuild} />} />
+											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldWiz' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldWiz' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldWiz' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -292,8 +325,15 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldFood')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldFood' maxValue={canBuild} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldFood' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldFood' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldFood' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -310,8 +350,15 @@ export default function Build()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...form.getInputProps('bldDef')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='bldDef' maxValue={canBuild} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='bldDef' value={buildRate} formName={form} />
+												<HalfButton fieldName='bldDef' maxValue={canBuild} formName={form} />
+												<MaxButton fieldName='bldDef' maxValue={canBuild} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>

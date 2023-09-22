@@ -6,7 +6,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { HalfAndAll } from '../utilities/maxbutton'
+import { OneTurn, MaxButton, HalfButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 
@@ -84,13 +84,13 @@ export default function Demolish()
 
 		validationRules: {
 			// totalBuild: (value) => value < canBuild,
-			demoPop: (value) => value <= canDemolish,
-			demoCash: (value) => value <= canDemolish,
-			demoCost: (value) => value <= canDemolish,
-			demoFood: (value) => value <= canDemolish,
-			demoTroop: (value) => value <= canDemolish,
-			demoWiz: (value) => value <= canDemolish,
-			demoDef: (value) => value <= canDemolish,
+			demoPop: (value) => value < min(empire.bldPop, canDemolish),
+			demoCash: (value) => value < min(empire.bldCash, canDemolish),
+			demoCost: (value) => value < min(empire.bldCost, canDemolish),
+			demoFood: (value) => value < min(empire.bldFood, canDemolish),
+			demoTroop: (value) => value < min(empire.bldTroop, canDemolish),
+			demoWiz: (value) => value < min(empire.bldWiz, canDemolish),
+			demoDef: (value) => value < min(empire.bldDef, canDemolish),
 		},
 
 		errorMessages: {
@@ -219,6 +219,7 @@ export default function Demolish()
 										<th>Owned</th>
 										<th>Can Demolish</th>
 										<th>Demolish</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -236,10 +237,14 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldPop)}
 												{...form.getInputProps('demoPop')}
-												rightSection={
-													<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} />
-												}
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoPop' value={Math.min(demolishRate, empire.bldPop)} formName={form} />
+												<HalfButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
+												<MaxButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -256,8 +261,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCash)}
 												{...form.getInputProps('demoCash')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoCash' value={Math.min(demolishRate, empire.bldCash)} formName={form} />
+												<HalfButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
+												<MaxButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -274,8 +286,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldTroop)}
 												{...form.getInputProps('demoTroop')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoTroop' value={Math.min(demolishRate, empire.bldTroop)} formName={form} />
+												<HalfButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
+												<MaxButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -292,8 +311,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCost)}
 												{...form.getInputProps('demoCost')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoCost' value={Math.min(demolishRate, empire.bldCost)} formName={form} />
+												<HalfButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
+												<MaxButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -310,7 +336,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldWiz)}
 												{...form.getInputProps('demoWiz')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} />} />
+
+											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoWiz' value={Math.min(demolishRate, empire.bldWiz)} formName={form} />
+												<HalfButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
+												<MaxButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -328,8 +362,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldFood)}
 												{...form.getInputProps('demoFood')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} />}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoFood' value={Math.min(demolishRate, empire.bldFood)} formName={form} />
+												<HalfButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
+												<MaxButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
@@ -345,9 +386,16 @@ export default function Demolish()
 												min={0}
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldDef)}
-												{...form.getInputProps('bldDef')}
-												rightSection={<HalfAndAll style={{ marginRight: '2rem', display: 'flex' }} formName={form} fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} />}
+												{...form.getInputProps('demoDef')}
+
 											/>
+										</td>
+										<td>
+											<div style={{ display: 'flex' }}>
+												<OneTurn fieldName='demoDef' value={Math.min(demolishRate, empire.bldDef)} formName={form} />
+												<HalfButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
+												<MaxButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
+											</div>
 										</td>
 									</tr>
 									<tr>
