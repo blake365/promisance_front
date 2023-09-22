@@ -5,6 +5,7 @@ import
 	SimpleGrid,
 } from '@mantine/core'
 
+import { eraArray } from '../../config/eras'
 import NetProduced from '../utilities/NetProduced'
 
 const attackResult = (result) =>
@@ -55,10 +56,9 @@ const spellResult = (result) =>
 	}
 }
 
-
-
 export default function TurnResultCard({ data })
 {
+
 	// console.log(data)
 	return (
 		<>
@@ -77,6 +77,7 @@ export default function TurnResultCard({ data })
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 						},
 					})}>
+						{data.type === 'explore' && <Text align='center' weight='bold' color='green'>You gained {data.result.toLocaleString()} acres while exploring</Text>}
 						{data?.messages?.desertion && <Text align='center' color='red' weight='bold'>{data.messages.desertion}</Text>}
 						{data.attack && attackResult(data.attack)}
 						{data.cast && spellResult(data.cast)}

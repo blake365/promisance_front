@@ -38,7 +38,7 @@ export default function Overview()
 	const { empire } = useSelector((state) => state.empire)
 
 	let size = calcSizeBonus(empire)
-	console.log(size)
+	// console.log(size)
 	// let sizeTest1 = calcSizeBonus({ networth: 1000000 })
 	// console.log(sizeTest1)
 	// let sizeTest2 = calcSizeBonus({ networth: 11347620 })

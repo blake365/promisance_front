@@ -10,7 +10,7 @@ export function randomIntFromInterval(min, max) {
 
 export function generalLog(number, base) {
 	let log = Math.log(number) / Math.log(base)
-	console.log(log)
+	// console.log(log)
 	return log
 }
 
@@ -69,7 +69,7 @@ export function defense(empire) {
 // explore
 export function explore(empire) {
 	const newLand = Math.ceil(
-		(2 / (empire.land * 0.00019 + 0.25)) *
+		(1.5 / (empire.land * 0.00019 + 0.25)) *
 			100 *
 			((100 +
 				eraArray[empire.era].mod_explore +

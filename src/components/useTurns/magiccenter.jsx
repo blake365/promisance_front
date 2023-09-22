@@ -56,6 +56,7 @@ export default function MagicCenter()
 
     const doMagic = async (values) =>
     {
+        // console.log(values)
         try {
             const res = await Axios.post('/magic', values)
             // console.log(res.data)

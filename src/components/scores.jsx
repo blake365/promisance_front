@@ -29,9 +29,7 @@ export default function Scores()
     useEffect(() =>
     {
         setLoading(true)
-        if (scores.length < 1) {
-            dispatch(loadScores())
-        }
+        dispatch(loadScores())
         setLoading(false)
     }, [])
 

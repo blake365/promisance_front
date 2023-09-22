@@ -27,14 +27,17 @@ export default function WorldBank()
     const loanRate = Math.round((BANK_LOANRATE + size) * 100) / 100 / 100
     const savingRate = Math.round((BANK_SAVERATE + size) * 100) / 100 / 100
     const maxLoan = empire.networth * 50
-    let maxSavings = empire.networth * 100
-    let canSave = maxSavings
-    if (empire.cash < maxSavings) canSave = empire.cash
+
+    let bankCapacity = empire.networth * 100
+    let remainingBankCapacity = bankCapacity - empire.bank
+
+    let canSave = remainingBankCapacity
+    if (remainingBankCapacity > empire.cash) {
+        canSave = empire.cash
+    }
+
 
     let canLoan = maxLoan - empire.loan < 0 ? 0 : maxLoan - empire.loan
-
-    let depositAmount = maxSavings - empire.bank
-    if (depositAmount < 0) depositAmount = 0
 
     const savingsForm = useForm({
         initialValues: {
@@ -105,6 +108,7 @@ export default function WorldBank()
             const res = await Axios.post(`/empire/${empire.uuid}/bank`, values)
             // console.log(res.data)
             setResult(res.data)
+            savingsForm.reset()
             loadEmpireTest()
         } catch (error) {
             console.log(error)
@@ -138,7 +142,7 @@ export default function WorldBank()
                             <Title order={2} align='center'>Savings</Title>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Max Balance: </Text>
-                                <Text align='right'>${maxSavings.toLocaleString()}</Text>
+                                <Text align='right'>${bankCapacity.toLocaleString()}</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
                                 <Text>Current Balance:</Text>
@@ -158,6 +162,7 @@ export default function WorldBank()
                                     {
                                         doBanking(values)
                                     })
+
                                 }
                             >
                                 <Stack align='center' spacing='sm'>
@@ -168,10 +173,10 @@ export default function WorldBank()
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
-                                        max={canSave - empire.bank}
+                                        max={canSave}
                                         {...savingsForm.getInputProps('depositAmt')}
                                         rightSection={
-                                            <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={canSave - empire.bank > 0 ? canSave - empire.bank : 0} />
+                                            <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={canSave} />
                                         }
                                     />
                                     <NumberInput
