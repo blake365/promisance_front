@@ -36,8 +36,10 @@ export default function WorldBank()
         canSave = empire.cash
     }
 
+    let remainingLoanCapacity = maxLoan - empire.loan
+    let canLoan = remainingLoanCapacity
+    if (maxLoan - empire.loan < 0) { canLoan = 0 }
 
-    let canLoan = maxLoan - empire.loan < 0 ? 0 : maxLoan - empire.loan
 
     const savingsForm = useForm({
         initialValues: {
@@ -197,13 +199,14 @@ export default function WorldBank()
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
                             <Title order={2} align='center'>Loans</Title>
                             <Group spacing='xs' noWrap grow>
+                                <Text>Max Loan:</Text>
+                                <Text align='right'>${maxLoan.toLocaleString()}</Text>
+                            </Group>
+                            <Group spacing='xs' noWrap grow>
                                 <Text>Loan Balance:</Text>
                                 <Text align='right'>${empire.loan.toLocaleString()}</Text>
                             </Group>
-                            <Group spacing='xs' noWrap grow>
-                                <Text>Available to Borrow:</Text>
-                                <Text align='right'>${canLoan.toLocaleString()}</Text>
-                            </Group>
+
                             <Group spacing='xs' noWrap grow>
                                 <Text>Interest Rate: </Text>
                                 <Text align='right'>{loanRate * 100}%</Text>
@@ -236,9 +239,9 @@ export default function WorldBank()
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
-                                        max={maxLoan - empire.loan}
+                                        max={canLoan}
                                         {...loanForm.getInputProps('loanAmt')}
-                                        rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={maxLoan} />}
+                                        rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={canLoan} />}
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Stack>
