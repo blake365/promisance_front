@@ -55,7 +55,7 @@ export default function Mailbox()
         const loadEmpires = async () =>
         {
             try {
-                const res = await Axios.get(`/empire/`)
+                const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
                 let empires = res.data.map(({ name, empireId }) => ({ name, empireId }))
                 let dataFormat = empires.map((empire) =>
                 ({
@@ -145,7 +145,7 @@ export default function Mailbox()
                         <Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
                             {
-                                console.log(values)
+                                // console.log(values)
                                 startConversation(values)
                             })}>
                                 <Group align='flex-end' position='center' spacing='sm' m='sm'>
