@@ -119,6 +119,7 @@ export default function PrivateMarketSell()
             const res = await Axios.post('/privatemarket/sell', values)
             setResult(res.data)
             loadEmpireTest()
+            form.reset()
         } catch (error) {
             console.log(error)
         }

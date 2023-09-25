@@ -54,6 +54,20 @@ export default function Industry()
 		},
 	})
 
+	if (form.values['indArmy'] === undefined) {
+		form.setFieldValue('indArmy', 0)
+	}
+	if (form.values['indLnd'] === undefined) {
+		form.setFieldValue('indLnd', 0)
+	}
+	if (form.values['indFly'] === undefined) {
+		form.setFieldValue('indFly', 0)
+	}
+	if (form.values['indSea'] === undefined) {
+		form.setFieldValue('indSea', 0)
+	}
+
+
 	industryNumberArray = Object.values(form.values).slice(1)
 
 	totalIndustry = industryNumberArray
