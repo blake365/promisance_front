@@ -105,7 +105,7 @@ export default function Overview()
 							<SimpleGrid cols={2} spacing={1}>
 								<Text>Food:</Text>
 								<Text align='right'>{empire.food.toLocaleString()}</Text>
-								<Text>Production: <RaceBonus value={race.mod_foodpro} /></Text>
+								<Text>Production: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Text>
 								<Text align='right'>{foodpro.toLocaleString()}</Text>
 								<Text>Consumption: <RaceBonus value={race.mod_foodcon} /></Text>
 								<Text align='right'>{foodcon.toLocaleString()}</Text>
@@ -129,7 +129,7 @@ export default function Overview()
 								<Text align='right'>${empire.cash.toLocaleString()}</Text>
 								<Text>Per Capita Income:</Text>
 								<Text align='right'>${cpi.toLocaleString()}</Text>
-								<Text>Income: <RaceBonus value={race.mod_income} /></Text>
+								<Text>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Text>
 								<Text align='right'>${income.toLocaleString()}</Text>
 								<Text>Expenses: <RaceBonus value={race.mod_expenses} /></Text>
 								<Text align='right'>${expenses.toLocaleString()}</Text>

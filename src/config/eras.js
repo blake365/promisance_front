@@ -34,8 +34,10 @@ const ERA_PAST = {
 		'Your wizards have formed a magical barrier around your empire, reducing the effectiveness of magical attacks against you',
 	effectname_gate: 'Time Gate',
 	mod_explore: 0,
-	mod_industry: -5,
+	mod_industry: -10,
 	mod_runepro: 20,
+	mod_foodpro: -5,
+	mod_cashpro: -5,
 	o_trparm: 1,
 	d_trparm: 2,
 	o_trplnd: 3,
@@ -46,7 +48,6 @@ const ERA_PAST = {
 	d_trpsea: 6,
 	era_prev: -1,
 	era_next: 1,
-	color: 'royalblue',
 }
 
 const ERA_PRESENT = {
@@ -84,9 +85,11 @@ const ERA_PRESENT = {
 	effectdesc_shield:
 		'Your telepaths are projecting a barrier around your empire, reducing the effectiveness of magical attacks against you',
 	effectname_gate: 'Time Gate',
-	mod_explore: 40,
-	mod_industry: 0,
+	mod_explore: 20,
+	mod_industry: 5,
 	mod_runepro: 0,
+	mod_foodpro: 15,
+	mod_cashpro: 0,
 	o_trparm: 2,
 	d_trparm: 1,
 	o_trplnd: 2,
@@ -97,7 +100,6 @@ const ERA_PRESENT = {
 	d_trpsea: 8,
 	era_prev: 0,
 	era_next: 2,
-	color: 'green',
 }
 
 const ERA_FUTURE = {
@@ -135,9 +137,11 @@ const ERA_FUTURE = {
 	effectdesc_shield:
 		'A thin layer of ionized particles surrounds your empire, reducing the effectiveness of magical attacks against you.',
 	effectname_gate: 'Time Gate',
-	mod_explore: 80,
+	mod_explore: 40,
 	mod_industry: 15,
-	mod_runepro: 0,
+	mod_runepro: -20,
+	mod_foodpro: -5,
+	mod_cashpro: 15,
 	o_trparm: 1,
 	d_trparm: 2,
 	o_trplnd: 5,
@@ -148,7 +152,6 @@ const ERA_FUTURE = {
 	d_trpsea: 7,
 	era_prev: 1,
 	era_next: -1,
-	color: 'orange',
 }
 
 export const eraArray = [ERA_PAST, ERA_PRESENT, ERA_FUTURE]

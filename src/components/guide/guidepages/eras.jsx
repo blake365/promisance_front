@@ -14,8 +14,12 @@ export default function EraGuide({ empire })
             <p>Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open Time Gate.</p>
             <p>The offensive and defensive power of <GuideLink page='Military' text='military units' /> varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:</p>
             <dl>
+                <dt>Economy</dt>
+                <dd>Affects the per capita income of your citizens.</dd>
+                <dt>Food Production</dt>
+                <dd>Affects how productive your {eraArray[empire.era].bldfood} are.</dd>
                 <dt>Industry</dt>
-                <dd>Your ability to produce military units.</dd>
+                <dd>Affects your ability to produce military units.</dd>
                 <dt>Energy</dt>
                 <dd>The rate at which your {eraArray[empire.era].trpwiz} produce {eraArray[empire.era].runes}.</dd>
                 <dt>Exploration</dt>
@@ -26,6 +30,8 @@ export default function EraGuide({ empire })
                     <thead>
                         <tr>
                             <th>Era</th>
+                            <th>Economy</th>
+                            <th>Food Production</th>
                             <th>Industry</th>
                             <th>Energy</th>
                             <th>Exploration</th>
@@ -37,6 +43,9 @@ export default function EraGuide({ empire })
                             return (
                                 <tr key={era.name}>
                                     <td>{era.name}</td>
+
+                                    <td style={era.mod_cashpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_cashpro}%</td>
+                                    <td style={era.mod_foodpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_foodpro}%</td>
                                     <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
 
                                     <td style={era.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_runepro}%</td>

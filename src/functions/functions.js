@@ -86,7 +86,11 @@ export function calcProvisions(empire) {
 		empire.bldFood *
 			85 *
 			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
-	production *= (100 + raceArray[empire.race].mod_foodpro) / 100
+	production *=
+		(100 +
+			raceArray[empire.race].mod_foodpro +
+			eraArray[empire.era].mod_foodpro) /
+		100
 
 	let foodpro = Math.round(production)
 
@@ -107,8 +111,12 @@ export function calcProvisions(empire) {
 
 // money
 export function calcPCI(empire) {
-	const { bldCash, land } = empire
-	return Math.round(30 * (1 + bldCash / Math.max(land, 1)))
+	const { bldCash, land, race, era } = empire
+	return Math.round(
+		30 *
+			(1 + bldCash / Math.max(land, 1)) *
+			((100 + raceArray[race].mod_income + eraArray[era].mod_cashpro) / 100)
+	)
 }
 
 // takes place of calcFinances function
