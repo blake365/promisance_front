@@ -31,7 +31,7 @@ export default function MagicCenter()
         initialValues: {
             empireId: empire.id,
             type: 'magic',
-            number: 0,
+            number: 1,
         },
 
         validationRules: {

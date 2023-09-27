@@ -217,7 +217,7 @@ export default function ForeignAid()
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1}>
+                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>

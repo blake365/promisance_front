@@ -51,8 +51,8 @@ function App()
 	const dispatch = useDispatch()
 	const [modalOpened, setModalOpened] = useState(false);
 	const [drawer, { open, close }] = useDisclosure(false)
-	const [news, setNews] = useState(true)
-	const [mail, setMail] = useState(true)
+	const [news, setNews] = useState(0)
+	const [mail, setMail] = useState(0)
 
 	let location = useLocation()
 	// console.log(location)
@@ -94,9 +94,9 @@ function App()
 	const checkForNews = async () =>
 	{
 		try {
-			const res = await Axios.get(`/news/${empire.id}/check`)
-			// console.log(res.data.new)
-			return res.data.new
+			const res = await Axios.get(`/news/${empire.id}/count`)
+			console.log(res.data.count)
+			return res.data.count
 		} catch (error) {
 			console.log(error)
 		}
@@ -105,9 +105,9 @@ function App()
 	const checkForMail = async () =>
 	{
 		try {
-			const res = await Axios.get(`messages/${empire.id}/check`)
-			// console.log(res.data.new)
-			return res.data.new
+			const res = await Axios.get(`messages/${empire.id}/count`)
+			console.log(res.data.count)
+			return res.data.count
 		} catch (error) {
 			console.log(error)
 		}
@@ -308,11 +308,11 @@ function App()
 								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
-										<Indicator color="green" disabled={!mail} zIndex={3}>
+										<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
 										</Indicator>
-										<Indicator color="green" disabled={!news} zIndex={3}>
-											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /> </Button>
+										<Indicator color="green" disabled={news < 1} label={news} size={20} overflowCount={50} zIndex={3}>
+											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /></Button>
 										</Indicator>
 									</Group>
 								</Grid.Col>
