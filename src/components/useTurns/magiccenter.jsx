@@ -141,18 +141,17 @@ export default function MagicCenter()
                                     { value: 0, label: 'Spell Shield', power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
                                     { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17) },
                                     { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
-                                    { value: 5, label: 'Open Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 20) },
-                                    { value: 6, label: 'Close Time Gate', power: 80, cost: Math.ceil(baseCost(empire) * 14.5) },
-                                    { value: 3, label: `Advance to ${nextEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
-                                    { value: 4, label: `Regress to ${prevEra}`, power: 90, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
-
+                                    { value: 5, label: 'Open Time Gate', power: 65, cost: Math.ceil(baseCost(empire) * 20) },
+                                    { value: 6, label: 'Close Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 14.5) },
+                                    { value: 3, label: `Advance to ${nextEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
+                                    { value: 4, label: `Regress to ${prevEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
                             <NumberInput
                                 label={`Cast Spell How Many Times?`}
-                                min={0}
-                                defaultValue={0}
+                                min={1}
+                                defaultValue={1}
                                 stepHoldDelay={500}
                                 stepHoldInterval={100}
                                 max={empire.turns / 2}

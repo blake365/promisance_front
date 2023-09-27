@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
-import { useDisclosure, useColorScheme } from '@mantine/hooks';
+import { useDisclosure, useColorScheme, useLocalStorage } from '@mantine/hooks';
 import
 {
 	ColorSchemeProvider,
@@ -32,7 +32,6 @@ import TurnResultContainer from './components/useTurns/TurnResultContainer'
 import { fetchEmpire, empireLoaded } from './store/empireSlice'
 import { load, logout } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
-import { useLocalStorage } from '@mantine/hooks'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
 import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
@@ -118,7 +117,7 @@ function App()
 	{
 		async function loadUser()
 		{
-			console.log('loading user')
+			// console.log('loading user')
 			try {
 				const res = await Axios.get('auth/me')
 				// console.log('status', res.data)
@@ -194,19 +193,12 @@ function App()
 
 	})
 
-	const preferredColorScheme = useColorScheme()
-	// console.log(preferredColorScheme)
-	const [colorScheme, setColorScheme] = useState(preferredColorScheme);
+	const [colorScheme, setColorScheme] = useLocalStorage({
+		key: 'prom-color-scheme',
+		defaultValue: 'light'
+	});
 	const toggleColorScheme = (value) =>
-	{
-		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
-		setColorScheme(nextColorScheme);
-	}
-
-	useEffect(() =>
-	{
-		setColorScheme(preferredColorScheme);
-	}, [preferredColorScheme])
+		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>

@@ -86,7 +86,7 @@ const ScoreCard = ({ empire, myId, home }) =>
                     </Text>
                     <Indicator color='blue' position='top-start' disabled={!active}>
                         <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
-                            <Avatar size="sm" src={empire.profileIcon} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }} />
+                            <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                             <Title order={4} color={color}>
                                 {empire.name} (#{empire.id})
                             </Title>

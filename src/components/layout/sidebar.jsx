@@ -33,6 +33,7 @@ const Sidebar = () =>
 		// 'Lottery',
 	]
 	const foreignLinks = [
+		'Foreign Aid',
 		'War Council',
 		// 'Mage Council',
 		'Intel Center'

@@ -1,0 +1,35 @@
+.tablecontainer {
+    overflow-x: auto;
+    width: auto;
+}
+
+.widetable {
+    width: auto;
+    border-collapse: collapse;
+}
+
+.widetable th,
+.widetable td {
+    width: 120px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@media screen and (max-width: 400px) {
+
+    .tablecontainer {
+        overflow-x: auto;
+        width: 360px;
+    }
+
+    .widetable {
+        width: 500px;
+    }
+
+    .widetable th,
+    .widetable td {
+        max-width: 80px;
+        padding-left: 8px;
+    }
+
+}

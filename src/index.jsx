@@ -24,6 +24,7 @@ import Demolish from './components/useTurns/demolish'
 import Attack from './components/diplomacy/attack'
 import Heal from './components/useTurns/heal'
 import Mailbox from './components/mail/mailbox'
+import ForeignAid from './components/diplomacy/foreignAid'
 
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
@@ -106,6 +107,7 @@ ReactDOM.render(
 							<Route path='Intel%20Center' element={<IntelCenter />} />
 							<Route path='World%20News' element={<WorldNews />} />
 							<Route path='Mailbox' element={<Mailbox />} />
+							<Route path='Foreign%20Aid' element={<ForeignAid />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

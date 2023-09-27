@@ -69,7 +69,7 @@ export default function Summary()
 					{empire ? (
 						<Card opacity='80%'>
 							<Group position='center' align='center'>
-								<Avatar size="sm" src={empire.profileIcon} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }} />
+								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Title order={2} align='center' >
 									{empire?.name} (#{empire?.id})
 								</Title>

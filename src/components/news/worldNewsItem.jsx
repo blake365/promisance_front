@@ -1,6 +1,6 @@
 import { Group, Card, Text, Box } from '@mantine/core'
 
-import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand } from '@phosphor-icons/react'
+import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid } from '@phosphor-icons/react'
 
 
 export default function WorldNewsItem({ item, now })
@@ -47,6 +47,8 @@ export default function WorldNewsItem({ item, now })
         if (type === 'spell' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'fail') return <MagicWand size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'shielded') return <ShieldStar size={24} color={highlight} weight='fill' />
+        if (type === 'aid' && result === 'success') return <FirstAid size={24} color={highlight} weight='fill' />
+
     }
 
     return (

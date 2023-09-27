@@ -77,7 +77,7 @@ export default function Overview()
 					<Group spacing='sm' align='center' position='center' mb='sm'>
 						<Card sx={{ width: '400px', minHeight: '285px' }}>
 							<Group position='left' spacing={4}>
-								<Avatar size="xs" src={empire.profileIcon} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }} />
+								<Avatar size="xs" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Text weight={800} size='lg'>
 									{empire.name} (#{empire.id})
 								</Text>
