@@ -10,14 +10,7 @@ export default function EffectIcons()
     let effects = useSelector((state) => state.effects.effects)
     let now = new Date()
 
-    // console.log(effects)
-    // let activeEffects = []
-    // if (effects && effects.length > 0) {
-    //     activeEffects = effects.map(effect => (effect.empireEffectName))
-    // }
-    // activeEffects = activeEffects.filter(effect => (effect.empireEffectName !== 'bonus turns'))
 
-    // console.log(activeEffects)
     return (
         <div>
             {effects &&
@@ -44,9 +37,10 @@ export default function EffectIcons()
                             icon = <HourglassMedium />
                             color = 'red'
                         }
-                        if (effect.empireEffectName === 'bonus turns') {
+                        if (effect.empireEffectName === 'bonus turns' || effect.empireEffectName === 'join clan' || effect.empireEffectName === 'leave clan') {
                             return
                         }
+
 
                         return (
                             <Tooltip

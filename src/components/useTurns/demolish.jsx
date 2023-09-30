@@ -26,7 +26,7 @@ export default function Demolish()
 	{
 		let demolishCost = Math.round((BUILD_COST + empire.land * 0.1) / 5)
 
-		let demolishRate = Math.min(Math.floor(empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100), 200)
+		let demolishRate = Math.round(Math.min(Math.floor(empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100), 200))
 
 		let canDemolish = Math.min(
 			demolishRate * empire.turns, empire.land - empire.freeLand)
@@ -39,10 +39,10 @@ export default function Demolish()
 		let dropRate = Math.max(Math.ceil((empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100) / 10), 50)
 
 		if (empire.attacks !== 0) {
-			dropRate = dropRate / empire.attacks
+			dropRate = Math.round(dropRate / empire.attacks)
 		}
 
-		let canDrop = Math.min(dropRate * empire.turns, empire.freeLand, Math.max(0, empire.land - 1000))
+		let canDrop = Math.round(Math.min(dropRate * empire.turns, empire.freeLand, Math.max(0, empire.land - 1000)))
 
 		return { dropRate, canDrop }
 	}
@@ -217,9 +217,9 @@ export default function Demolish()
 									<tr>
 										<th>Structure</th>
 										<th>Owned</th>
-										<th>Can Demolish</th>
+										{/* <th>Can Demolish</th> */}
 										<th>Demolish</th>
-										<th></th>
+
 									</tr>
 								</thead>
 								<tbody>
@@ -229,7 +229,7 @@ export default function Demolish()
 											{empire.bldPop} (
 											{Math.round((empire.bldPop / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldPop).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldPop).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -237,15 +237,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldPop)}
 												{...form.getInputProps('demoPop')}
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoPop' value={Math.min(demolishRate, empire.bldPop)} formName={form} />
+													<HalfButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
+													<MaxButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoPop' value={Math.min(demolishRate, empire.bldPop)} formName={form} />
-												<HalfButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
-												<MaxButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].bldcash}</td>
@@ -253,7 +253,7 @@ export default function Demolish()
 											{empire.bldCash} (
 											{Math.round((empire.bldCash / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldCash).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldCash).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -261,16 +261,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCash)}
 												{...form.getInputProps('demoCash')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoCash' value={Math.min(demolishRate, empire.bldCash)} formName={form} />
+													<HalfButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
+													<MaxButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoCash' value={Math.min(demolishRate, empire.bldCash)} formName={form} />
-												<HalfButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
-												<MaxButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].bldtrp}</td>
@@ -278,7 +277,7 @@ export default function Demolish()
 											{empire.bldTroop} (
 											{Math.round((empire.bldTroop / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldTroop).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldTroop).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -286,16 +285,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldTroop)}
 												{...form.getInputProps('demoTroop')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoTroop' value={Math.min(demolishRate, empire.bldTroop)} formName={form} />
+													<HalfButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
+													<MaxButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoTroop' value={Math.min(demolishRate, empire.bldTroop)} formName={form} />
-												<HalfButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
-												<MaxButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].bldcost}</td>
@@ -303,7 +301,7 @@ export default function Demolish()
 											{empire.bldCost} (
 											{Math.round((empire.bldCost / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldCost).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldCost).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -311,16 +309,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldCost)}
 												{...form.getInputProps('demoCost')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoCost' value={Math.min(demolishRate, empire.bldCost)} formName={form} />
+													<HalfButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
+													<MaxButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoCost' value={Math.min(demolishRate, empire.bldCost)} formName={form} />
-												<HalfButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
-												<MaxButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].bldwiz}</td>
@@ -328,7 +325,7 @@ export default function Demolish()
 											{empire.bldWiz} (
 											{Math.round((empire.bldWiz / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldWiz).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldWiz).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -336,16 +333,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldWiz)}
 												{...form.getInputProps('demoWiz')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoWiz' value={Math.min(demolishRate, empire.bldWiz)} formName={form} />
+													<HalfButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
+													<MaxButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoWiz' value={Math.min(demolishRate, empire.bldWiz)} formName={form} />
-												<HalfButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
-												<MaxButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].bldfood}</td>
@@ -353,7 +349,7 @@ export default function Demolish()
 											{empire.bldFood} (
 											{Math.round((empire.bldFood / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldFood).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldFood).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -362,16 +358,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldFood)}
 												{...form.getInputProps('demoFood')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoFood' value={Math.min(demolishRate, empire.bldFood)} formName={form} />
+													<HalfButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
+													<MaxButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoFood' value={Math.min(demolishRate, empire.bldFood)} formName={form} />
-												<HalfButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
-												<MaxButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].blddef}</td>
@@ -379,7 +374,7 @@ export default function Demolish()
 											{empire.bldDef} (
 											{Math.round((empire.bldDef / empire.land) * 100)}%)
 										</td>
-										<td>{Math.min(canDemolish, empire.bldDef).toLocaleString()}</td>
+										{/* <td>{Math.min(canDemolish, empire.bldDef).toLocaleString()}</td> */}
 										<td>
 											<NumberInput
 												hideControls
@@ -387,16 +382,15 @@ export default function Demolish()
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldDef)}
 												{...form.getInputProps('demoDef')}
-
+												rightSection={<div style={{ display: 'flex' }}>
+													<OneTurn fieldName='demoDef' value={Math.min(demolishRate, empire.bldDef)} formName={form} />
+													<HalfButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
+													<MaxButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
+												</div>}
+												rightSectionWidth={70}
 											/>
 										</td>
-										<td>
-											<div style={{ display: 'flex' }}>
-												<OneTurn fieldName='demoDef' value={Math.min(demolishRate, empire.bldDef)} formName={form} />
-												<HalfButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
-												<MaxButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
-											</div>
-										</td>
+
 									</tr>
 									<tr>
 										<td>Unused Land</td>

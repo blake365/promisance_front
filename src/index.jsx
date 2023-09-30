@@ -48,6 +48,9 @@ import WorldNews from './components/news/worldNews'
 import IntelCenter from './components/diplomacy/intelCenter'
 
 import { inject } from '@vercel/analytics';
+import CreateClan from './components/diplomacy/clans/createClan'
+import ClanPage from './components/diplomacy/clans/clanPage'
+
 inject();
 // import Guide from './components/guide/guide'
 
@@ -108,6 +111,7 @@ ReactDOM.render(
 							<Route path='World%20News' element={<WorldNews />} />
 							<Route path='Mailbox' element={<Mailbox />} />
 							<Route path='Foreign%20Aid' element={<ForeignAid />} />
+							<Route path='Clans' element={<ClanPage />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

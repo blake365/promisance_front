@@ -56,7 +56,7 @@ export function FavoriteButton(props)
 export function MaxButton(props)
 {
     return (
-        <ActionIcon size='md' color='blue' onClick={() =>
+        <ActionIcon variant="transparent" size='sm' color='blue' onClick={() =>
         {
             props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue))
         }}><IconArrowBarToUp /></ActionIcon>)
@@ -66,7 +66,7 @@ export function MaxButton(props)
 export function HalfButton(props)
 {
     return (
-        <ActionIcon size='md' color='blue' onClick={() =>
+        <ActionIcon variant="transparent" size='sm' color='blue' onClick={() =>
         {
             props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue / 2))
         }}>½</ActionIcon>)
@@ -76,7 +76,7 @@ export function HalfAndAll(props)
 {
     return (
         <div style={props.style}>
-            <ActionIcon size='md' color='blue' onClick={() =>
+            <ActionIcon variant="transparent" size='md' color='blue' onClick={() =>
             {
                 props.formName.setFieldValue(props.fieldName, Math.floor(props.maxValue))
             }}><IconArrowBarToUp /></ActionIcon>
@@ -90,7 +90,7 @@ export function HalfAndAll(props)
 export function OneTurn(props)
 {
     return (
-        <ActionIcon size='md' color='blue' onClick={() =>
+        <ActionIcon size='sm' color='blue' variant="transparent" onClick={() =>
         {
             props.formName.setFieldValue(props.fieldName, props.value)
         }}>1</ActionIcon>)

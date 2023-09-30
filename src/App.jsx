@@ -95,7 +95,7 @@ function App()
 	{
 		try {
 			const res = await Axios.get(`/news/${empire.id}/count`)
-			console.log(res.data.count)
+			// console.log(res.data.count)
 			return res.data.count
 		} catch (error) {
 			console.log(error)
@@ -106,7 +106,7 @@ function App()
 	{
 		try {
 			const res = await Axios.get(`messages/${empire.id}/count`)
-			console.log(res.data.count)
+			// console.log(res.data.count)
 			return res.data.count
 		} catch (error) {
 			console.log(error)
