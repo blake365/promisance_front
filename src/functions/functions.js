@@ -20,7 +20,7 @@ export function calcSizeBonus({ networth }) {
 	// Ranges from 0.5 to 1.7, rounded to 3 decimal places
 	// console.log(networth)
 	let net = Math.max(networth, 1)
-	let size = Math.atan(generalLog(net, 1000) - 1) * 2.1 - 0.65
+	let size = Math.atan(generalLog(net, 10000) - 1.3) * 2.6 - 0.6
 	size = Math.round(Math.min(Math.max(0.5, size), 1.7) * 1000) / 1000
 
 	// console.log(size)

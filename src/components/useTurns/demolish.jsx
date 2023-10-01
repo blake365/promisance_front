@@ -9,6 +9,7 @@ import { eraArray } from '../../config/eras'
 import { OneTurn, MaxButton, HalfButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
+import { calcSizeBonus } from '../../functions/functions'
 
 
 export default function Demolish()
@@ -24,7 +25,8 @@ export default function Demolish()
 
 	const getDemolishAmounts = (empire) =>
 	{
-		let demolishCost = Math.round((BUILD_COST + empire.land * 0.1) / 5)
+		let size = calcSizeBonus(empire)
+		let demolishCost = Math.round(((BUILD_COST + empire.land * 0.2) * (size / 3)) / 5)
 
 		let demolishRate = Math.round(Math.min(Math.floor(empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100), 200))
 

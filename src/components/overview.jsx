@@ -38,15 +38,6 @@ export default function Overview()
 	const { empire } = useSelector((state) => state.empire)
 
 	let size = calcSizeBonus(empire)
-	// console.log(size)
-	// let sizeTest1 = calcSizeBonus({ networth: 1000000 })
-	// console.log(sizeTest1)
-	// let sizeTest2 = calcSizeBonus({ networth: 11347620 })
-	// console.log(sizeTest2)
-	// let sizeTest3 = calcSizeBonus({ networth: 1348927109 })
-	// console.log(sizeTest3)
-	// let sizeTest4 = calcSizeBonus({ networth: 1000000000 })
-	// console.log(sizeTest4)
 
 	let cpi = calcPCI(empire)
 

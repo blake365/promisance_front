@@ -50,6 +50,7 @@ import IntelCenter from './components/diplomacy/intelCenter'
 import { inject } from '@vercel/analytics';
 import CreateClan from './components/diplomacy/clans/createClan'
 import ClanPage from './components/diplomacy/clans/clanPage'
+import ClanStats from './components/diplomacy/clans/clanStats'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -112,6 +113,7 @@ ReactDOM.render(
 							<Route path='Mailbox' element={<Mailbox />} />
 							<Route path='Foreign%20Aid' element={<ForeignAid />} />
 							<Route path='Clans' element={<ClanPage />} />
+							<Route path='Clan%20Stats' element={<ClanStats />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

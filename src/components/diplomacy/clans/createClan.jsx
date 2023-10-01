@@ -14,7 +14,7 @@ import { useState } from 'react'
 import Axios from 'axios';
 
 
-export default function CreateClan()
+export default function CreateClan({ disabled })
 {
     const { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
@@ -52,10 +52,11 @@ export default function CreateClan()
             )
             }>
                 <Card >
+                    {disabled && <Text align='center' color='red'>You cannot create a clan while in new player protection</Text>}
                     <TextInput required label="Clan Name" placeholder="name" size="md" {...form.getInputProps('clanName')} />
                     <TextInput required label="Clan Password" placeholder="password" mt="md" size="md" {...form.getInputProps('clanPassword')} />
                     <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-                    <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
+                    <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
                         Create Clan
                     </Button>
                 </Card>

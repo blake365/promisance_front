@@ -15,14 +15,13 @@ import { useState, forwardRef, useEffect } from 'react'
 import Axios from 'axios';
 
 
-export default function JoinClan()
+export default function JoinClan({ disabled })
 {
     const { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
-    const [clans, setClans] = useState()
+    const [clans, setClans] = useState([])
     const [selectedClan, setSelectedClan] = useState('')
 
-    const dispatch = useDispatch()
 
     const form = useForm({
         initialValues: {
@@ -39,16 +38,19 @@ export default function JoinClan()
             try {
                 const res = await Axios.get(`/clans/getClans`)
                 console.log(res.data)
-                let clans = res.data.map(({ clanName, id }) => ({ clanName, id }))
-                let dataFormat = clans.map((clan) =>
-                ({
-                    name: clan.clanName,
-                    value: clan.clanName,
-                    label: clan.clanName
-                })
-                )
-                console.log(dataFormat)
-                setClans(dataFormat)
+                if (res.data.length > 0) {
+                    let clans = res.data.map(({ clanName, id }) => ({ clanName, id }))
+                    let dataFormat = clans.map((clan) =>
+                    ({
+                        name: clan.clanName,
+                        value: clan.clanName,
+                        label: clan.clanName
+                    })
+                    )
+                    console.log(dataFormat)
+                    setClans(dataFormat)
+                }
+
             } catch (error) {
                 console.log(error)
             }
@@ -83,12 +85,12 @@ export default function JoinClan()
                 Join a Clan
             </Title>
 
-            <form onSubmit={form.onSubmit((values) =>
+            {clans.length > 0 ? (<form onSubmit={form.onSubmit((values) =>
                 // console.log(values)
                 joinClan(values)
-            )
-            }>
-                <Card >
+            )}>
+                <Card>
+                    {disabled && <Text align='center' color='red'>You cannot join a clan while in new player protection</Text>}
                     <Select
                         searchable
                         searchValue={selectedClan}
@@ -104,11 +106,12 @@ export default function JoinClan()
                     />
                     <TextInput required label="Clan Password" placeholder="password" mt="md" size="md" {...form.getInputProps('clanPassword')} />
                     <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-                    <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
+                    <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
                         Join Clan
                     </Button>
                 </Card>
-            </form>
+            </form>) : (<Text align='center'>No clans have been created yet.</Text>)}
+
 
         </Paper>
     );

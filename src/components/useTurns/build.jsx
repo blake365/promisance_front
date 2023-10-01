@@ -9,6 +9,7 @@ import { eraArray } from '../../config/eras'
 import { FavoriteButton, HalfAndAll, HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
+import { calcSizeBonus } from '../../functions/functions'
 
 // clear form on submit
 // fix styling of button, unused land, top alignment, text alignment in cells
@@ -28,7 +29,9 @@ export default function Build()
 
 	const getBuildAmounts = (empire) =>
 	{
-		let buildCost = Math.round(BUILD_COST + empire.land)
+		let size = calcSizeBonus(empire)
+		console.log(size)
+		let buildCost = Math.round((BUILD_COST + empire.land * 0.2) * (size / 3))
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
 		buildRate = Math.round((100 + raceArray[empire.race].mod_buildrate) / 100 * buildRate)

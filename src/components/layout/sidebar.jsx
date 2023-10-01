@@ -9,6 +9,7 @@ const Sidebar = () =>
 		'Summary',
 		'Overview',
 		'Scores',
+		// 'Clan Stats',
 		'Mailbox',
 		'World News',
 		// 'Graveyard',
@@ -36,7 +37,8 @@ const Sidebar = () =>
 		'Foreign Aid',
 		'War Council',
 		// 'Mage Council',
-		'Intel Center'
+		'Intel Center',
+		// 'Clans'
 	]
 	const managementLinks = [
 		'Empire Settings',
