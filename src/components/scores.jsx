@@ -24,7 +24,7 @@ export default function Scores()
     let myId = empire.id
 
     const { scores } = useSelector((state) => state.scores)
-    // console.log(scores)
+    console.log(scores)
 
     useEffect(() =>
     {
@@ -43,7 +43,20 @@ export default function Scores()
                 {loading && <Loader />}
                 {scores && scores.map(empire =>
                 {
-                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home={false} />
+
+                    let role = ''
+                    let clanString = null
+                    if (empire.clan) {
+                        if (empire.id === empire.clan.empireIdLeader) {
+                            role = 'Leader'
+                        } else if (empire.id === empire.clan.empireIdAssistant) {
+                            role = 'Assistant'
+                        } else if (empire.id === empire.clan.empireIdAgent1 || empire.id === empire.clan.empireIdAgent2) {
+                            role = 'Agent'
+                        }
+                        clanString = `${role} of ${empire.clan.clanName}`
+                    }
+                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home={false} clan={clanString} />
                 })}
 
             </Stack>

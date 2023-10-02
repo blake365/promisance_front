@@ -12,7 +12,7 @@ import ScoresIntel from './diplomacy/scoresIntel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 
-const ScoreCard = ({ empire, myId, home }) =>
+const ScoreCard = ({ empire, myId, home, clan }) =>
 {
 
     const [active, setActive] = useState(false)
@@ -73,25 +73,27 @@ const ScoreCard = ({ empire, myId, home }) =>
 
     let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
+    // console.log(clan)
 
     return (
         <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder >
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
-
             <Card.Section onClick={toggle} sx={{ cursor: 'pointer' }}>
                 <Group spacing="xs" my='xs'>
-                    <Text mx='xs' align='center' sx={{ width: 25 }} weight='bolder'>
-                        {empire.rank}
-                    </Text>
-                    <Indicator color='blue' position='top-start' disabled={!active}>
-                        <Group spacing='xs' sx={{ width: '250px', overflow: 'scroll' }} noWrap>
-                            <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-                            <Title order={4} color={color}>
-                                {empire.name} (#{empire.id})
-                            </Title>
-                        </Group>
-                    </Indicator>
+                    <Group w='100%' noWrap>
+                        <Text mx='xs' align='center' sx={{ width: 25 }} weight='bolder'>
+                            {empire.rank}
+                        </Text>
+                        <Indicator color='blue' position='top-start' disabled={!active}>
+                            <Group spacing='xs' noWrap>
+                                <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+                                <Title order={4} color={color}>
+                                    {empire.name} (#{empire.id}) {clan && clan}
+                                </Title>
+                            </Group>
+                        </Indicator>
+                    </Group>
                     <Group spacing='lg'>
                         <Group ml='sm' sx={{ width: '180px' }} noWrap>
                             <Scales size={22} weight='fill' />

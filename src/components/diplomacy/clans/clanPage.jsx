@@ -3,6 +3,7 @@ import { Group, Title, Text } from "@mantine/core"
 
 import CreateClan from "./createClan"
 import JoinClan from "./joinClan"
+import MyClan from "./myClan"
 import { useSelector } from "react-redux"
 import { TURNS_PROTECTION } from "../../../config/config"
 
@@ -17,10 +18,10 @@ function ClanPage()
     }
     return (
         <main>
-            <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
-            <Text align="center">Create or join a clan to team up with other players</Text>
-            {empire.clanId === 0 ? <Group position="center" mt={10}><CreateClan disabled={disabled} />
-                <JoinClan disabled={disabled} /></Group> : <h1>In a clan</h1>}
+            {empire.clanId === 0 ? (<div><Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
+                <Text align="center">Create or join a clan to team up with other players</Text>
+                <Group position="center" mt={10}><CreateClan disabled={disabled} />
+                    <JoinClan disabled={disabled} /></Group></div>) : (<MyClan />)}
         </main>
     )
 }
