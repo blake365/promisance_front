@@ -5,7 +5,10 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
 
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import
+{
+	BrowserRouter, Routes, Route,
+} from 'react-router-dom'
 import Farm from './components/useTurns/farm'
 import Cash from './components/useTurns/cash'
 import Explore from './components/useTurns/explore'
@@ -48,7 +51,7 @@ import WorldNews from './components/news/worldNews'
 import IntelCenter from './components/diplomacy/intelCenter'
 
 import { inject } from '@vercel/analytics';
-import CreateClan from './components/diplomacy/clans/createClan'
+
 import ClanPage from './components/diplomacy/clans/clanPage'
 import ClanStats from './components/diplomacy/clans/clanStats'
 

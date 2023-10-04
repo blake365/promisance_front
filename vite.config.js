@@ -15,7 +15,7 @@ function renderChunks(deps) {
 export default defineConfig(() => {
 	return {
 		build: {
-			sourcemap: false,
+			sourcemap: true,
 			rollupOptions: {
 				output: {
 					manualChunks: {

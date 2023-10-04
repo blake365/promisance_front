@@ -5,13 +5,12 @@ import { raceArray } from '../../config/races'
 
 function Intel({ empire })
 {
-
     // console.log(empire)
     // console.log(typeof empire.era)
     return (
         <Card>
             <Title order={2} align='center' mb='sm'>
-                {empire?.name}(#{empire?.spiedEmpireId})
+                {empire?.name}
             </Title>
             <Grid justify='space-between' grow>
                 <Grid.Col sm={6} md={6}>

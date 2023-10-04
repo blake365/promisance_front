@@ -1,42 +1,38 @@
 import
 {
     Center,
-    Title,
     Button,
-    Select,
     Text,
     Stack,
     Card,
     NumberInput,
 } from '@mantine/core'
-import { useEffect, useState, forwardRef } from 'react'
+import { useState } from 'react'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
 import { MaxButton } from '../utilities/maxbutton'
+import { loadScores } from '../../store/scoresSlice'
 
 import { eraArray } from '../../config/eras'
-import { Scales } from "@phosphor-icons/react"
 import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
 
-export default function ForeignAid()
+export default function ScoresAid({ friend })
 {
     const { empire } = useSelector((state) => state.empire)
 
     const dispatch = useDispatch()
 
-    const [otherEmpires, setOtherEmpires] = useState()
-    const [selectedEmpire, setSelectedEmpire] = useState('')
     const [error, setError] = useState('')
 
     const form = useForm({
         initialValues: {
             empireId: empire.id,
             type: 'aid',
-            receiverId: '',
+            receiverId: friend.id,
             trpArm: 0,
             trpLnd: 0,
             trpFly: 0,
@@ -98,54 +94,13 @@ export default function ForeignAid()
                 dispatch(setResult(res.data))
                 loadEmpireTest()
                 form.reset()
+                dispatch(loadScores())
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-
-    useEffect(() =>
-    {
-        const loadOtherEmpires = async () =>
-        {
-            try {
-                const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
-                let otherEmpires = res.data.map(({ name, empireId, networth, mode }) => ({ name, empireId, networth, mode }))
-
-                let dataFormat = otherEmpires.map((empire) =>
-                {
-                    if (empire.mode !== 'demo') {
-                        return {
-                            value: empire.empireId.toLocaleString(),
-                            networth: empire.networth.toLocaleString(),
-                            name: empire.name,
-                            empireId: empire.empireId,
-                            label: `(#${empire.empireId}) ${empire.name}`
-                        }
-                    }
-                }
-                ).filter((empire) => empire !== undefined)
-                // console.log(dataFormat)
-                setOtherEmpires(dataFormat)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        loadOtherEmpires()
-    }, [empire.networth])
-
-
-    const SelectItem = forwardRef(
-        ({ empireId, name, networth, mode, ...others }, ref) => (
-            <div ref={ref} {...others}>
-                <div>
-                    <Text size='sm' weight='bold'>{name} (#{empireId}) </Text>
-                    <Text size='sm'><Scales /> ${networth}</Text>
-                </div>
-            </div>
-        )
-    );
 
     let shipsNeeded = Math.round(empire.trpSea * 0.02)
     if (shipsNeeded < 10000) {
@@ -156,43 +111,19 @@ export default function ForeignAid()
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
-                    <img src='/images/aid.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='foreign aid' />
-                    <Title order={1} align='center'>
-                        Foreign Aid
-                    </Title>
-                    <Text align='center'>
-                        Send resources and troops to other players.
-                    </Text>
-                    <Text align='center'>
-                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given each hour, up to a maximum of 4.
-                    </Text>
+
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
                     <Card>
                         <form onSubmit={form.onSubmit((values) =>
                         {
-                            console.log(values)
+                            // console.log(values)
                             sendAid(values)
                             // dispatch(clearResult)
-                            window.scroll({ top: 0, behavior: 'smooth' })
+                            // window.scroll({ top: 0, behavior: 'smooth' })
                         })}>
                             <Stack spacing='sm' align='center'>
-                                {otherEmpires && (
-                                    <Select
-                                        searchable
-                                        searchValue={selectedEmpire}
-                                        onSearchChange={setSelectedEmpire}
-                                        label="Select an Empire to Aid"
-                                        placeholder="Pick one"
-                                        withAsterisk
-                                        itemComponent={SelectItem}
-                                        data={otherEmpires}
-                                        withinPortal
-
-                                        {...form.getInputProps('receiverId')}
-                                    />
-                                )}
                                 <div className={classes.tablecontainer}>
                                     <table className={classes.widetable}>
                                         <thead>
