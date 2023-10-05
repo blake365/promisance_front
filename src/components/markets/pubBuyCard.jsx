@@ -68,13 +68,15 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
             // console.log(values)
             const res = await Axios.post('/publicmarket/pubBuy2', values)
             // setResult(res.data)
-            console.log(res.data)
+            // console.log(res.data)
             loadEmpireTest()
             // dispatch(fetchOtherItems())
         } catch (error) {
             console.log(error)
         }
     }
+
+    // console.log(item[0])
 
     return (
         <Card>
@@ -129,7 +131,7 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
 
                     <form onSubmit={form.onSubmit((values) =>
                     {
-                        console.log(values)
+                        // console.log(values)
                         if (values.buy > 0) {
                             buyItem(values)
                         }

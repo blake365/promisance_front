@@ -47,7 +47,13 @@ export function defense(empire) {
 		eraArray[empire.era].d_trpfly * empire.trpFly +
 		eraArray[empire.era].d_trpsea * empire.trpSea
 
-	return dPower
+	let newTowerDef = 1 + empire.bldDef / empire.land
+	if (newTowerDef > 1.5) {
+		newTowerDef = 1.5
+	}
+
+	dPower *= newTowerDef
+	return Math.round(dPower)
 }
 
 // explore

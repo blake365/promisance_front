@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 const AdminSidebar = () =>
 {
     const infoLinks = [
+        'Return to Game',
         'Summary',
         'Users',
         'Empires',
@@ -35,16 +36,30 @@ const AdminSidebar = () =>
                         variant = 'filled'
                     }
 
-                    return (
-                        <Button
+                    if (link === 'Return to Game') {
+                        return (<Button
                             component={Link}
                             compact
-                            to={`/admin/${link}`}
+                            to={`/app/`}
                             variant={variant}
                             key={index}
                         >
                             {link}
                         </Button>)
+
+                    } else {
+
+                        return (
+                            <Button
+                                component={Link}
+                                compact
+                                to={`/admin/${link}`}
+                                variant={variant}
+                                key={index}
+                            >
+                                {link}
+                            </Button>)
+                    }
                 })}
             </Stack>
         </Fragment>

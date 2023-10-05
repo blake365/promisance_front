@@ -34,11 +34,13 @@ const Sidebar = () =>
 		// 'Lottery',
 	]
 	const foreignLinks = [
-		'Foreign Aid',
+		'Clans',
 		'War Council',
 		// 'Mage Council',
 		'Intel Center',
-		'Clans'
+		'Foreign Aid',
+
+
 	]
 	const managementLinks = [
 		'Empire Settings',

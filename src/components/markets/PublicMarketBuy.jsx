@@ -12,13 +12,14 @@ export default function PublicMarketBuy({ empire })
     const { otherItems } = useSelector((state) => state.market)
     let marketStatus = useSelector(state => state.market.status)
 
+    // console.log(otherItems)
     const [result, setResult] = useState(null)
 
 
     return (
         <main>
             <Center my={10}>
-                {marketStatus !== 'succeeded' ?
+                {!otherItems ?
                     (<Loader />) : (
 
                         <Stack spacing='sm' align='center'>

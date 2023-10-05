@@ -110,6 +110,11 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
+                        <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
+
+                            {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
+                            <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100} %</Text>
+                        </Group>
 
                     </Group>
                 </Group>
