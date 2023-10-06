@@ -7,7 +7,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { eraArray } from '../../config/eras'
 import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
-import { fetchMyItems } from '../../store/pubMarketSlice'
+import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
 import classes from './markets.module.css'
 
@@ -135,7 +135,7 @@ export default function PublicMarketSell({ empire })
     {
         try {
             const res = await Axios.post('/publicmarket/pubSell', values)
-            dispatch(fetchMyItems())
+            // dispatch(fetchMyItems())
             // setResult(res.data)
             // console.log(values)
             loadEmpireTest()
@@ -161,8 +161,46 @@ export default function PublicMarketSell({ empire })
         return temp / step;
     }
 
+    const recallItem = async (id) =>
+    {
+        const body = { itemId: id, empireId: empire.id }
+        try {
+            const res = await Axios.post('/publicmarket/pubRecall', body)
+            // setResult(res.data)
+            // console.log(values)
+            // dispatch(fetchMyItems())
+            // dispatch(fetchOtherItems(marketValues))
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editForm = useForm({
+        initialValues: {
+            empireId: empire.id,
+            type: 'edit',
+            price: 1,
+            itemId: null
+        }
+    })
+
+    const doEdit = async (values) =>
+    {
+        try {
+            const res = await Axios.post('/publicmarket/pubEditPrice', values)
+            // dispatch(fetchMyItems())
+            // setResult(res.data)
+            // console.log(values)
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const myItemsRows = myItems.map((element) =>
     {
+        // console.log(element)
         let createdAt = new Date(element.createdAt)
         createdAt = createdAt.getTime()
         let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
@@ -172,10 +210,42 @@ export default function PublicMarketSell({ empire })
         }
         return (
             <tr tr key={element.id}>
-                <td>{unitArray[element.type]}</td>
-                <td>{parseInt(element.amount).toLocaleString()}</td>
-                <td>${element.price.toLocaleString()}</td>
-                <td>{hoursOnMarket}</td>
+                <td align='center'>{unitArray[element.type]}</td>
+                <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
+                <td align='center'>${element.price.toLocaleString()}</td>
+                <td align='center'>{hoursOnMarket}</td>
+                <td align='center'>
+                    <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
+                        editForm.onSubmit((values) =>
+                        {
+                            // console.log(values)
+                            const body = {
+                                itemId: element.id,
+                                empireId: empire.id,
+                                price: values.price
+                            }
+                            // console.log(body)
+                            doEdit(body)
+
+                        })}>
+                        <NumberInput
+                            hideControls
+                            min={1}
+                            {...editForm.getInputProps('price')}
+                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                            formatter={(value) =>
+                                !Number.isNaN(parseFloat(value))
+                                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                    : '$ '
+                            }
+                            sx={{ maxWidth: '80px' }}
+                        />
+                        <Button size='xs' compact type='submit'>Edit</Button>
+                        <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
+                    </form>
+
+                </td>
+
             </tr>
         )
     });
@@ -285,17 +355,23 @@ export default function PublicMarketSell({ empire })
                                 <Button type='submit'> Sell Goods </Button>
                             </Center>
                         </form>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Amount</th>
-                                    <th>Price</th>
-                                    <th>Hours On Market</th>
-                                </tr>
-                            </thead>
-                            <tbody>{myItemsRows}</tbody>
-                        </Table>
+
+
+                        <div className={classes.tablecontainer}>
+                            <table className={classes.widetable}>
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Amount</th>
+                                        <th>Price</th>
+                                        <th>Hours On Market</th>
+                                        <th>Edit Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>{myItemsRows}</tbody>
+                            </table>
+                        </div>
+                        <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount. If you recall items, only 75% will be returned to you. </Text>
                     </Stack>
                 )}
             </Center>

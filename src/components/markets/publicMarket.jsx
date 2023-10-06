@@ -30,6 +30,9 @@ export default function PublicMarket()
         }
     }, [empire, dispatch])
 
+    const [activeTab, setActiveTab] = useState('Buy');
+
+
     return (
         <main>
             <Center mb={10}>
@@ -42,9 +45,9 @@ export default function PublicMarket()
                         Purchase or sell goods between other players on the Public Market
                     </Text>
                     {marketStatus !== 'succeeded' ? (<Loader />) : (
-                        <Tabs defaultValue="Buy" styles={{
+                        <Tabs styles={{
                             tabLabel: { fontSize: '1.2rem' },
-                        }}>
+                        }} value={activeTab} onTabChange={setActiveTab}>
                             <Tabs.List grow position="center">
                                 <Tabs.Tab value="Buy">Buy</Tabs.Tab>
                                 <Tabs.Tab value="Sell">Sell</Tabs.Tab>
