@@ -37,7 +37,10 @@ export function offense(empire) {
 		eraArray[empire.era].o_trpfly * empire.trpFly +
 		eraArray[empire.era].o_trpsea * empire.trpSea
 
-	return oPower
+	oPower *= (100 + raceArray[empire.race].mod_offense) / 100
+
+	oPower *= empire.health / 100
+	return Math.round(oPower)
 }
 // defensive power
 export function defense(empire) {
@@ -46,6 +49,10 @@ export function defense(empire) {
 		eraArray[empire.era].d_trplnd * empire.trpLnd +
 		eraArray[empire.era].d_trpfly * empire.trpFly +
 		eraArray[empire.era].d_trpsea * empire.trpSea
+
+	dPower *= (100 + raceArray[empire.race].mod_defense) / 100
+
+	dPower *= empire.health / 100
 
 	let newTowerDef = 1 + empire.bldDef / empire.land
 	if (newTowerDef > 1.5) {

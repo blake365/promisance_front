@@ -7,6 +7,7 @@ import Axios from "axios"
 import ScoreCard from "../../scoreCard"
 import MemberCard from "./memberCard"
 import ClanIntel from "./clanIntel"
+import ClanNews from "./clanNews"
 
 // show clan info, clan members, clan chat
 function MyClan()
@@ -69,10 +70,6 @@ function MyClan()
 
                 {/* option to share defenses with clan mates */}
 
-                {/* show combined news of all clan members */}
-
-                {/* show intel of clan members */}
-
                 <Paper mt={20}>
                     <Tabs p='md' keepMounted='false'>
                         <Tabs.List>
@@ -92,12 +89,13 @@ function MyClan()
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan News' pt="xs">
-                            Clan News
+                            {/* show combined news of all clan members */}
+                            {intelMembers ? (<ClanNews memberIds={intelMembers} />) : <Loader />}
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan Intel' pt="xs">
+                            {/* show intel of clan members */}
                             {intelMembers ? (<ClanIntel members={intelMembers} />) : <Loader />}
-
                         </Tabs.Panel>
 
                     </Tabs>

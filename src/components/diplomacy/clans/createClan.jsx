@@ -12,6 +12,7 @@ import { useForm } from '@mantine/form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import Axios from 'axios';
+import { empireLoaded } from '../../../store/empireSlice'
 
 
 export default function CreateClan({ disabled })
@@ -29,11 +30,23 @@ export default function CreateClan({ disabled })
         },
     })
 
+    const loadEmpireTest = async () =>
+    {
+        try {
+            const res = await Axios.get(`/empire/${empire.uuid}`)
+            // console.log(res.data)
+            dispatch(empireLoaded(res.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const createClan = async (values) =>
     {
         try {
             const res = await Axios.post('/clans/create', values)
-            console.log(res)
+            // console.log(res)
+            loadEmpireTest()
         } catch (err) {
             setError(err.response.data)
             console.log(err)

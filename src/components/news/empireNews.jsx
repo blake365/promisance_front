@@ -16,7 +16,7 @@ export default function EmpireNews()
     {
         try {
             const res = await Axios.get(`/news/${empire.id}`)
-            console.log(res.data)
+            // console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)
@@ -27,7 +27,7 @@ export default function EmpireNews()
     {
         try {
             const res = await Axios.get(`/news/${empire.id}/read`)
-            console.log(res.data)
+            // console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)

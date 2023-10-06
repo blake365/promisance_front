@@ -16,9 +16,9 @@ export default function PublicMarket()
 
     const dispatch = useDispatch()
 
-    let marketStatus = useSelector(state => state.market.status)
+    let marketStatus = useSelector(state => state.market.statusOthers)
 
-    console.log(marketStatus)
+    // console.log(marketStatus)
     useEffect(() =>
     {
         setLoading(true)

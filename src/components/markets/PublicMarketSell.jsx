@@ -180,10 +180,6 @@ export default function PublicMarketSell({ empire })
         )
     });
 
-
-
-
-
     return (
         <main>
             <Center my={10}>

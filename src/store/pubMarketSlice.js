@@ -36,7 +36,8 @@ export const fetchOtherItems = createAsyncThunk(
 export const pubMarketSlice = createSlice({
 	name: 'market',
 	initialState: {
-		status: 'idle',
+		statusMine: 'idle',
+		statusOthers: 'idle',
 		myItems: [],
 		otherItems: {
 			arm: [{ amount: 0, price: 0, type: 0 }],
@@ -50,26 +51,26 @@ export const pubMarketSlice = createSlice({
 	reducers: {
 		myItemsLoaded: (state, { payload }) => ({
 			myItems: payload,
-			status: 'succeeded',
+			statusMine: 'succeeded',
 		}),
 		otherItemsLoaded: (state, { payload }) => ({
 			otherItems: payload,
-			status: 'succeeded',
+			statusOthers: 'succeeded',
 		}),
 	},
 	extraReducers: {
 		[fetchMyItems.pending]: (state, action) => {
-			state.status = 'loading'
+			state.statusMine = 'loading'
 		},
 		[fetchMyItems.fulfilled]: (state, action) => {
-			state.status = 'succeeded'
+			state.statusMine = 'succeeded'
 			state.myItems = action.payload
 		},
 		[fetchOtherItems.pending]: (state, action) => {
-			state.status = 'loading'
+			state.statusOthers = 'loading'
 		},
 		[fetchOtherItems.fulfilled]: (state, action) => {
-			state.status = 'succeeded'
+			state.statusOthers = 'succeeded'
 			state.otherItems = action.payload
 		},
 	},

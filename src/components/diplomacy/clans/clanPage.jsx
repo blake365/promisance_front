@@ -16,12 +16,18 @@ function ClanPage()
     if (empire.turnsUsed < TURNS_PROTECTION) {
         disabled = true
     }
+
     return (
         <main>
-            {empire.clanId === 0 ? (<div><Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
-                <Text align="center">Create or join a clan to team up with other players</Text>
-                <Group position="center" mt={10}><CreateClan disabled={disabled} />
-                    <JoinClan disabled={disabled} /></Group></div>) : (<MyClan />)}
+            {empire.clanId === 0 ? (
+                <div>
+                    <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
+                    <Text align="center">Create or join a clan to team up with other players</Text>
+                    <Group position="center" mt={10}>
+                        <CreateClan disabled={disabled} />
+                        <JoinClan disabled={disabled} />
+                    </Group>
+                </div>) : (<MyClan />)}
         </main>
     )
 }

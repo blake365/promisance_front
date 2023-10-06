@@ -37,6 +37,7 @@ export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
 
+	// console.log(empire)
 	let size = calcSizeBonus(empire)
 
 	let cpi = calcPCI(empire)

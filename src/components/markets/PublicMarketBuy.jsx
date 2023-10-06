@@ -10,7 +10,8 @@ import PubBuyCard from './pubBuyCard'
 export default function PublicMarketBuy({ empire })
 {
     const { otherItems } = useSelector((state) => state.market)
-    let marketStatus = useSelector(state => state.market.status)
+    let marketStatus = useSelector(state => state.market.statusOthers)
+    // console.log(marketStatus)
 
     // console.log(otherItems)
     const [result, setResult] = useState(null)
@@ -19,7 +20,7 @@ export default function PublicMarketBuy({ empire })
     return (
         <main>
             <Center my={10}>
-                {!otherItems ?
+                {marketStatus !== 'succeeded' ?
                     (<Loader />) : (
 
                         <Stack spacing='sm' align='center'>
