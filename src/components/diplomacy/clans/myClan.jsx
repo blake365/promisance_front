@@ -22,11 +22,11 @@ function MyClan()
         async function getClan()
         {
             const clan = await Axios.post('/clans/get', { clanId: empire.clanId })
-            console.log(clan.data)
+            // console.log(clan.data)
             setClan(clan.data)
 
             const members = await Axios.post('/clans/getMembers', { clanId: empire.clanId })
-            console.log(members.data)
+            // console.log(members.data)
             setMembers(members.data)
         }
 
@@ -34,7 +34,7 @@ function MyClan()
     }, [empire.networth])
 
     let intelMembers = members && members.map((member) => member.id)
-    console.log(intelMembers)
+    // console.log(intelMembers)
 
     return (
         <section>
@@ -54,9 +54,12 @@ function MyClan()
                                 role = 'Assistant'
                             } else if (member.id === clan.empireIdAgent1 || member.id === clan.empireIdAgent2) {
                                 role = 'Agent'
+                            } else {
+                                role = 'member'
                             }
-                            let clanString = `${role} of ${clan.clanName}`
+                            let clanString = ` - ${role} of ${clan.clanName}`
 
+                            {/* show active effects for each member */ }
                             return <MemberCard empire={member} myId={empire.id} key={member.id} clan={clanString} />
                         })}
                     </Stack>
@@ -68,7 +71,12 @@ function MyClan()
 
                 {/* leader and assistant can declare war or peace */}
 
-                {/* option to share defenses with clan mates */}
+                {/* mandatory shared defense with clan mates */}
+
+                {/* leader and assistant can invite members */}
+
+                {/* option to leave clan */}
+
 
                 <Paper mt={20}>
                     <Tabs p='md' keepMounted='false'>
@@ -81,6 +89,9 @@ function MyClan()
                             </Tabs.Tab>
                             <Tabs.Tab value="Clan Intel">
                                 Shared Intel
+                            </Tabs.Tab>
+                            <Tabs.Tab value="Clan Relations">
+                                Clan Relations
                             </Tabs.Tab>
                         </Tabs.List>
 
@@ -96,6 +107,10 @@ function MyClan()
                         <Tabs.Panel value='Clan Intel' pt="xs">
                             {/* show intel of clan members */}
                             {intelMembers ? (<ClanIntel members={intelMembers} />) : <Loader />}
+                        </Tabs.Panel>
+
+                        <Tabs.Panel value='Clan Relations' pt="xs">
+                            Clan Relations
                         </Tabs.Panel>
 
                     </Tabs>

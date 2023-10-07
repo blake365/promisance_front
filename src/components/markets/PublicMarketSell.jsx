@@ -176,30 +176,31 @@ export default function PublicMarketSell({ empire })
         }
     }
 
-    const editForm = useForm({
-        initialValues: {
-            empireId: empire.id,
-            type: 'edit',
-            price: 1,
-            itemId: null
-        }
-    })
 
-    const doEdit = async (values) =>
-    {
-        try {
-            const res = await Axios.post('/publicmarket/pubEditPrice', values)
-            // dispatch(fetchMyItems())
-            // setResult(res.data)
-            // console.log(values)
-            loadEmpireTest()
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const myItemsRows = myItems.map((element) =>
     {
+        const editForm = useForm({
+            initialValues: {
+                empireId: empire.id,
+                type: 'edit',
+                price: 1,
+                itemId: null
+            }
+        })
+
+        const doEdit = async (values) =>
+        {
+            try {
+                const res = await Axios.post('/publicmarket/pubEditPrice', values)
+                // dispatch(fetchMyItems())
+                // setResult(res.data)
+                // console.log(values)
+                loadEmpireTest()
+            } catch (error) {
+                console.log(error)
+            }
+        }
         // console.log(element)
         let createdAt = new Date(element.createdAt)
         createdAt = createdAt.getTime()

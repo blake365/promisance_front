@@ -15,6 +15,8 @@ import { raceArray } from '../config/races'
 import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
 import { BASE_LUCK } from '../config/config'
+import { useEffect, useState } from 'react'
+import Axios from 'axios'
 
 const RaceBonus = ({ value }) =>
 {
@@ -57,6 +59,37 @@ export default function Overview()
 
 	let luck = Math.round(BASE_LUCK / size)
 
+	const [clan, setClan] = useState({})
+
+	const getClan = async () =>
+	{
+		const res = await Axios.post('/clans/get', { clanId: empire.clanId })
+		// console.log(res.data)
+		setClan(res.data)
+	}
+
+	useEffect(() =>
+	{
+		// console.log(empire.clanId)
+		if (empire.clanId !== 0) {
+			getClan()
+		}
+	}, [])
+
+	// console.log(clan)
+	const clanRole = (empireId, clan) =>
+	{
+		let role = 'None'
+		if (empireId === clan.empireIdLeader) {
+			role = 'Leader'
+		} else if (empireId === clan.empireIdAssistant) {
+			role = 'Assistant'
+		} else {
+			role = 'Member'
+		}
+
+		return role
+	}
 
 	return (
 		<main>
@@ -222,7 +255,7 @@ export default function Overview()
 							<Grid columns={14}>
 								<Col span={7}>
 									<Text>Member of Clan:</Text>
-									<Text>Allies:</Text>
+									<Text>Role:</Text>
 									<Text>Enemies:</Text>
 
 									<Text mt='sm'>Offensive Actions:</Text>
@@ -230,8 +263,8 @@ export default function Overview()
 									{/* <Text>Kills:</Text> */}
 								</Col>
 								<Col span={7}>
-									<Text align='right'>None</Text>
-									<Text align='right'>None</Text>
+									<Text align='right'>{clan ? (clan.clanName) : ('None')}</Text>
+									<Text align='right'>{clan ? (clanRole(empire.id, clan)) : 'None'}</Text>
 									<Text align='right'>None</Text>
 
 									<Text align='right' mt='sm'>{empire.offTotal} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>

@@ -24,7 +24,7 @@ export default function Scores()
     let myId = empire.id
 
     const { scores } = useSelector((state) => state.scores)
-    console.log(scores)
+    // console.log(scores)
 
     useEffect(() =>
     {
@@ -53,8 +53,10 @@ export default function Scores()
                             role = 'Assistant'
                         } else if (empire.id === empire.clan.empireIdAgent1 || empire.id === empire.clan.empireIdAgent2) {
                             role = 'Agent'
+                        } else {
+                            role = 'member'
                         }
-                        clanString = `${role} of ${empire.clan.clanName}`
+                        clanString = ` - ${role} of ${empire.clan.clanName}`
                     }
                     return <ScoreCard empire={empire} myId={myId} key={empire.id} home={false} clan={clanString} />
                 })}

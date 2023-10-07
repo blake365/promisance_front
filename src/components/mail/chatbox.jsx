@@ -10,16 +10,23 @@ import { Button, Group, Card, Text, Loader, Stack, Box, Textarea } from '@mantin
 import { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import { useForm } from '@mantine/form'
-
+import { useSelector } from 'react-redux'
 import { PaperPlaneRight } from '@phosphor-icons/react'
 
 const getMessages = async (body) =>
 {
+    // console.log(body)
+
     try {
         const res = await Axios.post(`/messages/messages`, body)
         const data = res.data
+        const lastMessage = data[data.length - 1]
+        // console.log(lastMessage)
+        // console.log(body.reader === lastMessage.empireIdDestination)
         // console.log(data)
-        await Axios.get(`/messages/${body.conversationId}/read`)
+        if (body.reader === lastMessage.empireIdDestination) {
+            await Axios.get(`/messages/${body.conversationId}/read`)
+        }
         return data
     } catch (error) {
         console.error('Error fetching messages:', error)
@@ -29,35 +36,38 @@ const getMessages = async (body) =>
 export default function Chatbox({ conversation, source, sourceName, destinationId, destinationName })
 {
 
+    const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
     const messageContainerRef = useRef(null)
 
     let body = {
         conversationId: conversation.conversationId,
-        empireId: source
+        empireId: source,
+        reader: empire.id
     }
 
     // console.log(body)
 
     useEffect(() =>
     {
-        getMessages(body)
-            .then((data) =>
-            {
-                setMessages(data)
-                setLoading(false)
-            }
-            )
-            .catch((error) =>
-            {
-                console.error('Error setting messages:', error)
-                // setLoading(false)
-            })
+        if (empire) {
+            getMessages(body)
+                .then((data) =>
+                {
+                    setMessages(data)
+                    setLoading(false)
+                }
+                )
+                .catch((error) =>
+                {
+                    console.error('Error setting messages:', error)
+                    // setLoading(false)
+                })
 
-        const messageContainer = messageContainerRef.current
-        if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
-
+            const messageContainer = messageContainerRef.current
+            if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
+        }
     }, [])
 
     // console.log(conversation)
@@ -145,7 +155,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                 )}
                 <form onSubmit={form.onSubmit((values) =>
                 {
-                    console.log(values)
+                    // console.log(values)
                     sendMessage(values)
                     form.reset()
                 })}>

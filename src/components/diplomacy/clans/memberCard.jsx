@@ -48,19 +48,20 @@ const MemberCard = ({ empire, myId, clan }) =>
     let color = ''
     let disabled = false
 
-    if (empire.turnsUsed <= 200) {
-        color = 'lightgreen'
-        disabled = true
-    }
-    if (empire.mode === 'demo') {
-        color = 'brown'
-    }
     if (empire.id === myId) {
         color = 'deepskyblue'
     }
 
     if (empire.id === myId) {
         disabled = true
+    }
+
+    let role = 'member'
+
+    if (empire.id === clan.empireIdLeader) {
+        role = 'Leader'
+    } else if (empire.id === clan.empireIdAssistant) {
+        role = 'Assistant'
     }
 
     // console.log(typeof home)
@@ -119,14 +120,15 @@ const MemberCard = ({ empire, myId, clan }) =>
                         <Tabs.Tab value="Recent News" >Recent News</Tabs.Tab>
                         <Tabs.Tab value="Intel" >Stats</Tabs.Tab>
                         <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
+                        <Tabs.Tab value="Role" disabled={role === 'Leader' || role === 'Assistant'}>Role</Tabs.Tab>
                     </Tabs.List>
 
                     <Tabs.Panel value="Intel" pt="xs">
                         <Intel empire={empire} />
                     </Tabs.Panel>
 
-                    <Tabs.Panel value="Trade" pt="xs">
-                        Trade tab content
+                    <Tabs.Panel value="Role" pt="xs">
+                        Empire Roles
                     </Tabs.Panel>
 
                     <Tabs.Panel value="Send Aid" pt="xs">
