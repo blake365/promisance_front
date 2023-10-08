@@ -10,6 +10,7 @@ import { MaxButton } from '../utilities/maxbutton'
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
 import classes from './markets.module.css'
+import MyItem from './myItem'
 
 
 // make it mobile friendly
@@ -146,109 +147,16 @@ export default function PublicMarketSell({ empire })
 
     // console.log(result)
 
-    let now = new Date()
-    // console.log(now.getTime())
+
+
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
 
-    let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food, eraArray[empire.era].runes]
-
-    function truncate(value, precision)
-    {
-        var step = Math.pow(10, precision || 0);
-        var temp = Math.trunc(step * value);
-
-        return temp / step;
-    }
-
-    const recallItem = async (id) =>
-    {
-        const body = { itemId: id, empireId: empire.id }
-        try {
-            const res = await Axios.post('/publicmarket/pubRecall', body)
-            // setResult(res.data)
-            // console.log(values)
-            // dispatch(fetchMyItems())
-            // dispatch(fetchOtherItems(marketValues))
-            loadEmpireTest()
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
+    // console.log(myItems)
 
     const myItemsRows = myItems.map((element) =>
     {
-        const editForm = useForm({
-            initialValues: {
-                empireId: empire.id,
-                type: 'edit',
-                price: 1,
-                itemId: null
-            }
-        })
-
-        const doEdit = async (values) =>
-        {
-            try {
-                const res = await Axios.post('/publicmarket/pubEditPrice', values)
-                // dispatch(fetchMyItems())
-                // setResult(res.data)
-                // console.log(values)
-                loadEmpireTest()
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        // console.log(element)
-        let createdAt = new Date(element.createdAt)
-        createdAt = createdAt.getTime()
-        let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
-        let timeRemaining = PUBMKT_START - hoursOnMarket
-        if (hoursOnMarket < 6) {
-            hoursOnMarket = `${timeRemaining} hours remaining`
-        }
-        return (
-            <tr tr key={element.id}>
-                <td align='center'>{unitArray[element.type]}</td>
-                <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
-                <td align='center'>${element.price.toLocaleString()}</td>
-                <td align='center'>{hoursOnMarket}</td>
-                <td align='center'>
-                    <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
-                        editForm.onSubmit((values) =>
-                        {
-                            // console.log(values)
-                            const body = {
-                                itemId: element.id,
-                                empireId: empire.id,
-                                price: values.price
-                            }
-                            // console.log(body)
-                            doEdit(body)
-
-                        })}>
-                        <NumberInput
-                            hideControls
-                            min={1}
-                            {...editForm.getInputProps('price')}
-                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-                            formatter={(value) =>
-                                !Number.isNaN(parseFloat(value))
-                                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                    : '$ '
-                            }
-                            sx={{ maxWidth: '80px' }}
-                        />
-                        <Button size='xs' compact type='submit'>Edit</Button>
-                        <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
-                    </form>
-
-                </td>
-
-            </tr>
-        )
+        return <MyItem element={element} empire={empire} key={element.id} />
     });
 
     return (
