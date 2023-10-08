@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useDisclosure, useColorScheme, useLocalStorage } from '@mantine/hooks';
+import useInterval from './functions/useInterval'
 import
 {
 	ColorSchemeProvider,
@@ -157,10 +158,8 @@ function App()
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
 
-	useEffect(() =>
+	useInterval(() =>
 	{
-		dispatch(setPage(pageState))
-
 		if (empireStatus === 'succeeded') {
 			try {
 				dispatch(fetchEffects({
@@ -190,7 +189,30 @@ function App()
 				navigate('/')
 			}
 		}
+	}, 60000)
 
+	useEffect(() =>
+	{
+		dispatch(setPage(pageState))
+
+		if (empireStatus === 'succeeded') {
+			try {
+				dispatch(fetchEffects({
+					id: empire.id
+				})).then((data) =>
+				{
+					// console.log(data)
+					if (data.meta.requestStatus === 'rejected') {
+						navigate('/')
+					}
+				}
+				)
+			}
+			catch (error) {
+				// console.log(error)
+				navigate('/')
+			}
+		}
 	})
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
