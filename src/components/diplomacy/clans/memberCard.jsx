@@ -107,7 +107,7 @@ const MemberCard = ({ empire, myId, clan }) =>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                                 <Title order={4} color={color}>
-                                    {empire.name} (#{empire.id}) {clan && clan}
+                                    {empire.name} {clan && clan}
                                 </Title>
                             </Group>
                         </Indicator>

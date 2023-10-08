@@ -64,7 +64,7 @@ export default function WorldNews()
                 let dataFormat = empires.map((empire) =>
                 ({
                     value: empire.empireId.toLocaleString(),
-                    label: `${empire.name}(#${empire.empireId}) `
+                    label: `${empire.name}`
                 })
                 )
                 // console.log(otherEmpires)

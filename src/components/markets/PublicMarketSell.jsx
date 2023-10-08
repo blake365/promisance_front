@@ -372,7 +372,8 @@ export default function PublicMarketSell({ empire })
                                 <tbody>{myItemsRows}</tbody>
                             </table>
                         </div>
-                        <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount. If you recall items, only 75% will be returned to you. </Text>
+                        <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
+                        <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
                     </Stack>
                 )}
             </Center>

@@ -59,7 +59,7 @@ export default function Overview()
 
 	let luck = Math.round(BASE_LUCK / size)
 
-	const [clan, setClan] = useState({})
+	const [clan, setClan] = useState(null)
 
 	const getClan = async () =>
 	{
@@ -104,7 +104,7 @@ export default function Overview()
 							<Group position='left' spacing={4}>
 								<Avatar size="xs" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Text weight={800} size='lg'>
-									{empire.name} (#{empire.id})
+									{empire.name}
 								</Text>
 							</Group>
 							<SimpleGrid cols={2} spacing={1}>

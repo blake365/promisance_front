@@ -71,7 +71,7 @@ export default function Summary()
 							<Group position='center' align='center'>
 								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Title order={2} align='center' >
-									{empire?.name} (#{empire?.id})
+									{empire?.name}
 								</Title>
 							</Group>
 							<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>

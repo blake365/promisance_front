@@ -121,7 +121,7 @@ export default function ForeignAid()
                             networth: empire.networth.toLocaleString(),
                             name: empire.name,
                             empireId: empire.empireId,
-                            label: `(#${empire.empireId}) ${empire.name}`
+                            label: `${empire.name}`
                         }
                     }
                 }
@@ -140,7 +140,7 @@ export default function ForeignAid()
         ({ empireId, name, networth, mode, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <div>
-                    <Text size='sm' weight='bold'>{name} (#{empireId}) </Text>
+                    <Text size='sm' weight='bold'>{name}</Text>
                     <Text size='sm'><Scales /> ${networth}</Text>
                 </div>
             </div>

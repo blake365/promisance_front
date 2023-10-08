@@ -60,7 +60,7 @@ export default function Mailbox()
                 let dataFormat = empires.map((empire) =>
                 ({
                     value: `${empire.empireId.toLocaleString()}` + ',' + `${empire.name}`,
-                    label: `${empire.name}(#${empire.empireId})`
+                    label: `${empire.name}`
                 }))
                 // console.log(otherEmpires)
                 setEmpires(dataFormat)

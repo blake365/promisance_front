@@ -95,7 +95,7 @@ export default function IntelCenter()
         ({ land, era, empireId, name, race, networth, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <div>
-                    <Text size='sm' weight='bold'>{name}(#{empireId}) </Text>
+                    <Text size='sm' weight='bold'>{name}</Text>
                     <Text size='sm'><Mountains /> {land} acres</Text>
                     <Text size='sm'><Scales /> ${networth}</Text>
                     <Text size='sm'><Hourglass /> {era}</Text>
