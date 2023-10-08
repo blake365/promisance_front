@@ -4,7 +4,6 @@ import { Group, Title, Text, Stack, Tabs, Paper, Loader } from "@mantine/core"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Axios from "axios"
-import ScoreCard from "../../scoreCard"
 import MemberCard from "./memberCard"
 import ClanIntel from "./clanIntel"
 import ClanNews from "./clanNews"
@@ -76,7 +75,6 @@ function MyClan()
                 {/* leader and assistant can invite members */}
 
                 {/* option to leave clan */}
-
 
                 <Paper mt={20}>
                     <Tabs p='md' keepMounted='false'>

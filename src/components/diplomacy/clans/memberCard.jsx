@@ -1,4 +1,4 @@
-import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, ThemeIcon, Tooltip, RingProgress, Center, Stack } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../../../config/races'
 import { eraArray } from '../../../config/eras'
@@ -8,11 +8,13 @@ import Intel from '../intel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from '../scoresAid'
+import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 
 const MemberCard = ({ empire, myId, clan }) =>
 {
     const [active, setActive] = useState(false)
-    const [opened, { toggle }] = useDisclosure(false);
+    const [opened, { toggle }] = useDisclosure(false)
+    const [effects, setEffects] = useState(null)
     // console.log(empire)
 
     const checkForSession = async () =>
@@ -26,9 +28,21 @@ const MemberCard = ({ empire, myId, clan }) =>
         }
     }
 
+    const getEffects = async () =>
+    {
+        try {
+            const effects = await Axios.post('/empire/effects', { empireId: empire.id })
+            return { effects: effects.data }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const now = new Date()
+
     useEffect(() =>
     {
-        const now = new Date()
+
         const actionDate = new Date(empire.lastAction.replace(' ', 'T'))
 
         // console.log(now - actionDate)
@@ -42,6 +56,13 @@ const MemberCard = ({ empire, myId, clan }) =>
                 setActive(true)
             }
         })
+
+        getEffects().then((res) =>
+        {
+            // console.log(res.effects)
+            setEffects(res.effects)
+        })
+
     }, [])
 
 
@@ -106,7 +127,58 @@ const MemberCard = ({ empire, myId, clan }) =>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
+                        {effects &&
+                            (<Group spacing='xs' ml='sm'>
+                                {effects.map(effect =>
+                                {
+                                    let effectAge = (now.valueOf() - new Date(effect.updatedAt).getTime()) / 60000
+                                    // age in minutes
+                                    // console.log(effectAge)
+                                    effectAge = Math.floor(effectAge)
 
+                                    let remaining = effect.empireEffectValue - effectAge
+                                    let percentRemaining = remaining / effect.empireEffectValue * 100
+
+                                    let color = 'green'
+                                    let icon = ''
+                                    if (effect.empireEffectName === 'spell shield') {
+                                        icon = <ShieldStar />
+                                    } else if (effect.empireEffectName === 'attack boost') {
+                                        icon = <Sword />
+                                    } else if (effect.empireEffectName === 'time gate') {
+                                        icon = <CalendarCheck />
+                                    } else if (effect.empireEffectName === 'era delay') {
+                                        icon = <HourglassMedium />
+                                        color = 'red'
+                                    }
+                                    if (effect.empireEffectName === 'bonus turns' || effect.empireEffectName === 'join clan' || effect.empireEffectName === 'leave clan') {
+                                        return
+                                    }
+
+
+                                    return (
+                                        <Tooltip withinPortal
+                                            label={
+                                                <Stack spacing={0} align='center'>
+                                                    <div>{effect.empireEffectName.toUpperCase()}</div>
+                                                    <div>{Math.round(remaining / 60) + ' hours remaining'}</div>
+                                                </Stack>
+                                            } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
+                                            <RingProgress
+                                                thickness={4}
+                                                sections={[{ value: percentRemaining, color: color }]}
+                                                size={39}
+                                                label={
+                                                    <Center>
+                                                        <ThemeIcon size="sm" radius="lg" color={color}>
+                                                            {icon}
+                                                        </ThemeIcon>
+                                                    </Center>
+                                                } />
+                                        </Tooltip>
+                                    )
+                                })}
+                            </Group>)}
                     </Group>
                 </Group>
             </Card.Section>
