@@ -23,7 +23,7 @@ function ClanPage()
                 <div>
                     <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
                     <Text align="center">Create or join a clan to team up with other players.</Text>
-                    <Text align="center">Clan mates can view a shared news feed, stats for each member, a shared news feed, shared intel, and receive a defense bonus. </Text>
+                    <Text align="center">Clan mates can view stats for each member, a shared news feed, shared intel, and receive a defense bonus. </Text>
                     <Group position="center" mt={10}>
                         <CreateClan disabled={disabled} />
                         <JoinClan disabled={disabled} />

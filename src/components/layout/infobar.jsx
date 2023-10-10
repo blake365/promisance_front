@@ -66,7 +66,7 @@ export default function InfoBar({ data })
 			}
 		}}>
 			<Progress color={eraArray[empire.era].color} value={roundPercent} size='xs' radius={0} mb='xs' />
-			<Grid justify="space-between" grow columns={19}>
+			<Grid justify="space-between" grow columns={19} pl='xs' pr='xs'>
 				<Grid.Col span={2}>
 					<Center>
 						<GitBranch size={20} color={eraArray[empire.era].color} />

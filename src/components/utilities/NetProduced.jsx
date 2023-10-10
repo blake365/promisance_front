@@ -6,6 +6,9 @@ const NetProduced = (props) =>
     let display = ''
 
     if (props.money) {
+        if (props.value == 0) {
+            display = '$0'
+        }
         if (props.value < 0) {
             display = `-$${abs.toLocaleString()}`
         } else {
@@ -14,6 +17,9 @@ const NetProduced = (props) =>
     } else if (props.percent) {
         display = `${props.value.toLocaleString()}%`
     } else {
+        if (props.value == 0) {
+            display = '0'
+        }
         if (props.value < 0) {
             display = `-${abs.toLocaleString()}`
         } else {
@@ -26,7 +32,7 @@ const NetProduced = (props) =>
             <Text weight={700}>{props.title}:</Text>
             <Text
                 align='right'
-                style={props.value >= 0 ? { color: 'green' } : { color: 'red' }}
+                style={props.value > 0 ? { color: 'green' } : { color: 'red' }}
                 weight={700}
             >
                 {display}

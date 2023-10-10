@@ -152,6 +152,28 @@ function App()
 				navigate('/create')
 			}
 		}
+
+		dispatch(setPage(pageState))
+
+		if (empireStatus === 'succeeded') {
+			try {
+				dispatch(fetchEffects({
+					id: empire.id
+				})).then((data) =>
+				{
+					// console.log(data)
+					if (data.meta.requestStatus === 'rejected') {
+						navigate('/')
+					}
+				}
+				)
+			}
+			catch (error) {
+				// console.log(error)
+				navigate('/')
+			}
+		}
+
 	})
 
 	let locationArr = location.pathname.split('/')
@@ -193,8 +215,6 @@ function App()
 
 	useEffect(() =>
 	{
-		dispatch(setPage(pageState))
-
 		if (empireStatus === 'succeeded') {
 			try {
 				dispatch(fetchEffects({
@@ -207,13 +227,24 @@ function App()
 					}
 				}
 				)
+
+				checkForNews().then((data) =>
+				{
+					// console.log(data)
+					setNews(data)
+				})
+				checkForMail().then((data) =>
+				{
+					// console.log(data)
+					setMail(data)
+				})
 			}
 			catch (error) {
 				// console.log(error)
 				navigate('/')
 			}
 		}
-	})
+	}, [])
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
 		key: 'prom-color-scheme',

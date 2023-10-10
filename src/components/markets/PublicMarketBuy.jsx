@@ -1,4 +1,4 @@
-import { Center, Loader, Stack } from '@mantine/core'
+import { Center, Loader, Stack, Group } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useState } from 'react'
@@ -13,17 +13,17 @@ export default function PublicMarketBuy({ empire })
     let marketStatus = useSelector(state => state.market.statusOthers)
     // console.log(marketStatus)
 
-    // console.log(otherItems)
+    console.log(otherItems)
     const [result, setResult] = useState(null)
 
 
     return (
         <main>
-            <Center my={10}>
+            <Center my={10} maw={950}>
                 {marketStatus !== 'succeeded' ?
                     (<Loader />) : (
 
-                        <Stack spacing='sm' align='center'>
+                        <Group spacing='sm' position='center'>
 
                             <PubBuyCard eraItem={eraArray[empire.era].trparm} type='arm' owned={empire.trpArm} item={otherItems['arm']} base={PVTM_TRPARM} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
@@ -37,7 +37,7 @@ export default function PublicMarketBuy({ empire })
 
                             <PubBuyCard eraItem={eraArray[empire.era].runes} type='runes' owned={empire.runes} item={otherItems['runes']} base={PVTM_RUNES} cash={empire.cash} empireId={empire.id} empireUUID={empire.uuid} />
 
-                        </Stack>
+                        </Group>
                     )
                 }
             </Center >
