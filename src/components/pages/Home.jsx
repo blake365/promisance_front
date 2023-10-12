@@ -1,4 +1,4 @@
-import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Image, ActionIcon } from '@mantine/core'
+import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Image } from '@mantine/core'
 
 import { HeroImageRight } from './homeHero'
 import HomeNews from '../layout/homeNews'
@@ -9,9 +9,7 @@ import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { DiscordLogo } from '@phosphor-icons/react'
 import { useMediaQuery } from '@mantine/hooks';
-import { IconBrandDiscord } from '@tabler/icons-react';
 
 export default function Home()
 {

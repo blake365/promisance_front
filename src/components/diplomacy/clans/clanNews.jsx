@@ -24,7 +24,7 @@ export default function ClanNews({ memberIds })
         {
             try {
                 const res = await Axios.post('/news/clan', body);
-                console.log(res.data)
+                // console.log(res.data)
                 const data = res.data;
                 return data;
             } catch (error) {

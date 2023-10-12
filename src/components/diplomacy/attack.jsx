@@ -143,7 +143,7 @@ export default function Attack()
                 const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
                 let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth }) => ({ name, empireId, land, era, race, networth }))
                 // let dataFormat = otherEmpires.map((empire) =>
-                //     ({ value: empire.empireId.toLocaleString(), label: `(#${empire.empireId}) ${empire.name} - land: ${empire.land.toLocaleString()} era: ${eraArray[empire.era].name} race: ${raceArray[empire.race].name}` })
+                //     ({ value: empire.empireId.toLocaleString(), label: `${empire.name} - land: ${empire.land.toLocaleString()} era: ${eraArray[empire.era].name} race: ${raceArray[empire.race].name}` })
                 // )
                 let dataFormat = otherEmpires.map((empire) =>
                 ({
@@ -154,7 +154,7 @@ export default function Attack()
                     era: eraArray[empire.era].name,
                     name: empire.name,
                     empireId: empire.empireId,
-                    label: `(#${empire.empireId}) ${empire.name}`
+                    label: `${empire.name}`
                 })
                 )
                 // console.log(otherEmpires)

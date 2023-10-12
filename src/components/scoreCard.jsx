@@ -80,7 +80,7 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
         <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder >
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
-            <Card.Section onClick={toggle} sx={{ cursor: 'pointer' }}>
+            <Card.Section onClick={toggle} sx={{ cursor: !home ? 'pointer' : '' }}>
                 <Group spacing="xs" my='xs'>
                     <Group w='100%' noWrap>
                         <Text mx='xs' align='center' sx={{ width: 25 }} weight='bolder'>

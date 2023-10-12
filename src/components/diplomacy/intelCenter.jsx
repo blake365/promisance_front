@@ -79,7 +79,7 @@ export default function IntelCenter()
                     era: eraArray[empire.era].name,
                     name: empire.name,
                     empireId: empire.empireId,
-                    label: `(#${empire.empireId}) ${empire.name}`
+                    label: `${empire.name}`
                 })
                 )
                 // console.log(otherEmpires)
