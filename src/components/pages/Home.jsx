@@ -69,7 +69,7 @@ export default function Home()
                                 direction="row"
                                 wrap="wrap">
                                 <Card maw={380} h={220} p='lg' withBorder >
-                                    <Text >Register a new account to create your empire and start your journey. If you still have questions, there is a built in guide to answer questions that may arise as you play.
+                                    <Text>Register a new account to create your empire and start your journey. If you still have questions, there is a built in guide to answer questions that may arise as you play.
                                     </Text>
                                     <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
                                 </Card>
@@ -139,7 +139,7 @@ export default function Home()
                     </Grid.Col>
                 </Grid>
 
-                {smScreen ? (<Box my='lg'>
+                {smScreen || !mdScreen ? (<Box my='lg'>
                     <Title order={1} align='center' mb='lg'>Ready to Play?</Title>
                     <Flex justify="center"
                         gap='md'

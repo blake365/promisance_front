@@ -266,7 +266,7 @@ function App()
 				navigate('/')
 			}
 		}
-	}, [])
+	}, [empireStatus])
 
 	// console.log(clanMail)
 
