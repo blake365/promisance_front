@@ -113,7 +113,10 @@ export default function TurnResultCard({ data })
 									) : (
 										''
 									)}
-
+									{data.wartax > 0 ? (<>
+										<Text>War Tax:</Text>
+										<Text align='right'>${(data.wartax).toLocaleString()}</Text>
+									</>) : ('')}
 
 									<NetProduced title='Net' value={data.money} money />
 								</SimpleGrid>

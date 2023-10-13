@@ -40,7 +40,7 @@ import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
-import { NewspaperClipping, Envelope } from '@phosphor-icons/react'
+import { NewspaperClipping, Envelope, UsersFour } from '@phosphor-icons/react'
 import EmpireNews from './components/news/empireNews';
 import BonusTurns from './components/layout/bonusTurns';
 import { loadScores } from './store/scoresSlice';
@@ -54,6 +54,7 @@ function App()
 	const [drawer, { open, close }] = useDisclosure(false)
 	const [news, setNews] = useState(0)
 	const [mail, setMail] = useState(0)
+	const [clanMail, setClanMail] = useState(0)
 
 	let location = useLocation()
 	// console.log(location)
@@ -109,6 +110,18 @@ function App()
 			const res = await Axios.get(`messages/${empire.id}/count`)
 			// console.log(res.data.count)
 			return res.data.count
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const checkForClanMail = async () =>
+	{
+		// console.log('checking for clan mail')
+		try {
+			const res = await Axios.post(`messages/clan/unread`, { empireId: empire.id, clanId: empire.clanId })
+			// console.log(res.data)
+			return res.data
 		} catch (error) {
 			console.log(error)
 		}
@@ -205,6 +218,10 @@ function App()
 					// console.log(data)
 					setMail(data)
 				})
+				if (empire.clanId !== 0) {
+					checkForClanMail().then((data) =>
+						setClanMail(data))
+				}
 			}
 			catch (error) {
 				// console.log(error)
@@ -238,6 +255,11 @@ function App()
 					// console.log(data)
 					setMail(data)
 				})
+
+				if (empire.clanId !== 0) {
+					checkForClanMail().then((data) =>
+						setClanMail(data))
+				}
 			}
 			catch (error) {
 				// console.log(error)
@@ -245,6 +267,8 @@ function App()
 			}
 		}
 	}, [])
+
+	// console.log(clanMail)
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
 		key: 'prom-color-scheme',
@@ -361,6 +385,9 @@ function App()
 								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
+										<Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
+											<Button component="a" href="/app/Clans" size='sm' compact color=''><UsersFour size='1.2rem' /> </Button>
+										</Indicator>
 										<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
 										</Indicator>

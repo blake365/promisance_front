@@ -7,6 +7,7 @@ import Axios from "axios"
 import MemberCard from "./memberCard"
 import ClanIntel from "./clanIntel"
 import ClanNews from "./clanNews"
+import ClanChat from "./clanChat"
 
 // show clan info, clan members, clan chat
 function MyClan()
@@ -14,6 +15,19 @@ function MyClan()
     const { empire } = useSelector((state) => state.empire)
     const [clan, setClan] = useState(null)
     const [members, setMembers] = useState(null)
+    const [clanMail, setClanMail] = useState(0)
+
+    const checkForClanMail = async () =>
+    {
+        // console.log('checking for clan mail')
+        try {
+            const res = await Axios.post(`messages/clan/unread`, { empireId: empire.id, clanId: empire.clanId })
+            // console.log(res.data)
+            return res.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     // get clan info
     useEffect(() =>
@@ -28,9 +42,13 @@ function MyClan()
             // console.log(members.data)
             setMembers(members.data)
         }
-
         getClan()
     }, [empire.networth])
+
+    useEffect(() =>
+    {
+        checkForClanMail().then((data) => setClanMail(data))
+    }, [])
 
     let intelMembers = members && members.map((member) => member.id)
     // console.log(intelMembers)
@@ -77,10 +95,10 @@ function MyClan()
                 {/* option to leave clan */}
 
                 <Paper mt={20}>
-                    <Tabs p='md' keepMounted='false'>
+                    <Tabs p='md' keepMounted={false}>
                         <Tabs.List>
                             <Tabs.Tab value="Clan Chat">
-                                Clan Chat
+                                Clan Chat {clanMail > 0 && <span>({clanMail})</span>}
                             </Tabs.Tab>
                             <Tabs.Tab value="Clan News">
                                 Shared News
@@ -94,7 +112,7 @@ function MyClan()
                         </Tabs.List>
 
                         <Tabs.Panel value='Clan Chat' pt="xs">
-                            Clan Chat
+                            <ClanChat empire={empire} />
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan News' pt="xs">

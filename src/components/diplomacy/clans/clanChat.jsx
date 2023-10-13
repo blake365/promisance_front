@@ -12,32 +12,35 @@ const getMessages = async (body) =>
     // console.log(body)
 
     try {
-        const res = await Axios.post(`/messages/messages`, body)
+        const res = await Axios.post(`/messages/clan`, body)
         const data = res.data
-        const lastMessage = data[data.length - 1]
-        // console.log(lastMessage)
-        // console.log(body.reader === lastMessage.empireIdDestination)
         // console.log(data)
-        if (body.reader === lastMessage.empireIdDestination) {
-            await Axios.get(`/messages/${body.conversationId}/read`)
+
+        if (data && data.length > 0) {
+            const lastMessage = data[data.length - 1]
+            console.log(lastMessage)
+            console.log(body.reader === lastMessage.empireId)
+            console.log(data)
+            if (body.reader !== lastMessage.empireId) {
+                await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
+            }
         }
+
         return data
     } catch (error) {
         console.error('Error fetching messages:', error)
     }
 }
 
-export default function ClanChat({ conversation, source, sourceName, destinationId, destinationName })
+export default function ClanChat({ empire })
 {
 
-    const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
     const messageContainerRef = useRef(null)
 
     let body = {
-        conversationId: conversation.conversationId,
-        empireId: source,
+        clanId: empire.clanId,
         reader: empire.id
     }
 
@@ -45,6 +48,7 @@ export default function ClanChat({ conversation, source, sourceName, destination
 
     useEffect(() =>
     {
+        setLoading(true)
         if (empire) {
             getMessages(body)
                 .then((data) =>
@@ -62,17 +66,17 @@ export default function ClanChat({ conversation, source, sourceName, destination
             const messageContainer = messageContainerRef.current
             if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
         }
+        setLoading(false)
     }, [])
 
     // console.log(conversation)
 
     const form = useForm({
         initialValues: {
-            sourceId: source,
-            sourceName: sourceName,
-            destinationId: destinationId,
-            destinationName: destinationName,
-            message: ''
+            empireId: empire.id,
+            empireName: empire.name,
+            clanId: empire.clanId,
+            clanMessageBody: ''
         },
     })
 
@@ -80,7 +84,7 @@ export default function ClanChat({ conversation, source, sourceName, destination
     {
         setLoading(true)
         try {
-            const res = await Axios.post(`/messages/message/new`, values)
+            const res = await Axios.post(`/messages/clan/new`, values)
             const data = res.data
             // console.log(data)
             getMessages(body).then((data) =>
@@ -107,6 +111,7 @@ export default function ClanChat({ conversation, source, sourceName, destination
             <Stack gap='sm' justify='space-between' h='100%'>
                 {loading ? (<Loader />) : (
                     <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
+                        {messages.length < 1 && <Text align='center'>Start the conversation</Text>}
                         {messages.map((message, index) =>
                         {
                             let now = new Date()
@@ -127,21 +132,21 @@ export default function ClanChat({ conversation, source, sourceName, destination
                                 timeSince = 'just now'
                             }
                             let ml = 0
-                            if (message.empireIdSource === source) ml = 'auto'
+                            if (message.empireId === empire.id) ml = 'auto'
                             let align = 'left'
-                            if (message.empireIdSource === source) align = 'right'
+                            if (message.empireId === empire.id) align = 'right'
                             let color = ''
-                            if (message.empireIdSource === source) color = 'cornflowerblue'
+                            if (message.empireId === empire.id) color = 'cornflowerblue'
                             let fontColor = ''
-                            if (message.empireIdSource === source) fontColor = 'black'
+                            if (message.empireId === empire.id) fontColor = 'black'
                             return (
                                 <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                     <Group position='apart'>
-                                        <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
+                                        <Text size='xs' align={align} color={fontColor}>{message.empireId !== empire.id ? (message.empireName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
                                     </Group>
 
-                                    <Text align={align} color={fontColor}>{message.messageBody}</Text>
+                                    <Text align={align} color={fontColor}>{message.clanMessageBody}</Text>
                                 </Card>
                             )
                         })}
@@ -154,7 +159,7 @@ export default function ClanChat({ conversation, source, sourceName, destination
                     form.reset()
                 })}>
                     <Group position='right' noWrap>
-                        <Textarea minRows={2} w='100%' {...form.getInputProps('message')} />
+                        <Textarea minRows={2} w='100%' {...form.getInputProps('clanMessageBody')} />
                         <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
