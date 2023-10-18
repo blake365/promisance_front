@@ -180,6 +180,22 @@ function App()
 					}
 				}
 				)
+				checkForNews().then((data) =>
+				{
+					// console.log(data)
+					setNews(data)
+				})
+				checkForMail().then((data) =>
+				{
+					// console.log(data)
+					setMail(data)
+				})
+
+				if (empire.clanId !== 0) {
+					checkForClanMail().then((data) =>
+						setClanMail(data))
+				}
+
 			}
 			catch (error) {
 				// console.log(error)
@@ -229,44 +245,6 @@ function App()
 			}
 		}
 	}, 60000)
-
-	useEffect(() =>
-	{
-		if (empireStatus === 'succeeded') {
-			try {
-				dispatch(fetchEffects({
-					id: empire.id
-				})).then((data) =>
-				{
-					// console.log(data)
-					if (data.meta.requestStatus === 'rejected') {
-						navigate('/')
-					}
-				}
-				)
-
-				checkForNews().then((data) =>
-				{
-					// console.log(data)
-					setNews(data)
-				})
-				checkForMail().then((data) =>
-				{
-					// console.log(data)
-					setMail(data)
-				})
-
-				if (empire.clanId !== 0) {
-					checkForClanMail().then((data) =>
-						setClanMail(data))
-				}
-			}
-			catch (error) {
-				// console.log(error)
-				navigate('/')
-			}
-		}
-	}, [empireStatus])
 
 	// console.log(clanMail)
 
@@ -385,9 +363,9 @@ function App()
 								<Grid.Col span={3}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
-										<Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
+										{empire.clanId !== 0 && <Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
 											<Button component="a" href="/app/Clans" size='sm' compact color=''><UsersFour size='1.2rem' /> </Button>
-										</Indicator>
+										</Indicator>}
 										<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
 											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
 										</Indicator>

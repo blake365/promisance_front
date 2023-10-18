@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import ClanCard from './clanCard'
 
-export default function ClanStats()
+export default function ClanRelations({ myClan, empireId })
 {
 
     const [loading, setLoading] = useState(false)
@@ -28,21 +28,25 @@ export default function ClanStats()
         setLoading(false)
     }, [])
 
+    let officer = false
+    if (myClan.empireIdLeader === empireId || myClan.empireIdAssistant === empireId) {
+        officer = true
+    }
 
     return (
         <main>
             <Stack spacing='sm' align='center'>
-                <Title order={1} align='center'>
-                    Clans Stats
-                </Title>
                 {loading && <Loader />}
                 {clans &&
                     <Stack spacing='sm'>
                         {clans.sort((a, b) => b.avgNetworth - a.avgNetworth).map((clan, index) =>
                         {
-                            return (
-                                <ClanCard clan={clan} index={index} key={index} />
-                            )
+                            // console.log(clan)
+                            if (myClan.id !== clan.clan.id) {
+                                return (
+                                    <ClanCard clan={clan} index={index} key={index} relations={officer} myClan={myClan} empireId={empireId} />
+                                )
+                            }
                         })}
                     </Stack>
                 }

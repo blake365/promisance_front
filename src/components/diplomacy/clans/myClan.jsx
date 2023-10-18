@@ -8,6 +8,7 @@ import MemberCard from "./memberCard"
 import ClanIntel from "./clanIntel"
 import ClanNews from "./clanNews"
 import ClanChat from "./clanChat"
+import ClanRelations from "./clanRelations"
 
 // show clan info, clan members, clan chat
 function MyClan()
@@ -126,7 +127,7 @@ function MyClan()
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan Relations' pt="xs">
-                            Clan Relations
+                            {/* <ClanRelations myClan={clan} empireId={empire.id} /> */}
                         </Tabs.Panel>
 
                     </Tabs>

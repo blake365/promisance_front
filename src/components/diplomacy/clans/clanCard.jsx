@@ -1,11 +1,12 @@
-import { Title, Card, Text, Group, Collapse, Stack } from '@mantine/core'
+import { Title, Card, Text, Group, Collapse, Stack, Button, ThemeIcon } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { Crown, Scales, UsersThree } from "@phosphor-icons/react"
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoreCard from '../../scoreCard'
+import { Sword, Handshake } from '@phosphor-icons/react'
 
-const ClanCard = ({ index, clan }) =>
+const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
 {
 
     const [opened, { toggle }] = useDisclosure(false);
@@ -25,7 +26,7 @@ const ClanCard = ({ index, clan }) =>
         async function fetchMembers()
         {
             const members = await Axios.post('/clans/getMembers', body)
-            console.log(members.data)
+            // console.log(members.data)
             return members.data
         }
 
@@ -41,8 +42,53 @@ const ClanCard = ({ index, clan }) =>
             })
         }
 
+
+
         setLoading(false)
     }, [])
+
+    const declareWar = async () =>
+    {
+        console.log('declaring war')
+        try {
+            const res = await Axios.post('/clans/declareWar', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
+            console.log(res)
+            return res.data
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const offerPeace = async () =>
+    {
+        console.log('offering peace')
+        try {
+            const res = await Axios.post('/clans/offerPeace', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
+            console.log(res.data)
+            return res.data
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    if (myClan) {
+        console.log(myClan)
+        let enemies = []
+        if (myClan.enemies) {
+            enemies = myClan.enemies.toString().split(',')
+        }
+        let peaceOffers = []
+        if (myClan.peaceOffer) {
+            peaceOffers = myClan.peaceOffer.toString().split(',')
+        }
+
+        console.log(enemies)
+        console.log(peaceOffers)
+    }
+
+
 
     // console.log(members)
     return (
@@ -65,7 +111,6 @@ const ClanCard = ({ index, clan }) =>
                             <Text>{clan.leader.name}</Text></Group>
                     </Group>
                     <Group spacing='lg'>
-
                         <Group ml='sm' spacing='xs' noWrap >
                             <UsersThree size={22} weight='fill' />
                             <Text>{clan.clan.clanMembers}</Text></Group>
@@ -77,6 +122,38 @@ const ClanCard = ({ index, clan }) =>
                             <Text>{clan.totalNetworth.toLocaleString()}</Text>
                         </Group>
                     </Group>
+                    {relations && (<Group>
+                        {/* if clan is in enemies list, option to offer peace, else option to declare war */}
+                        {myClan.enemies && enemies.includes(clan.clan.id.toString()) ? (
+                            peaceOffers.includes(clan.clan.id.toString()) ? (
+                                <Group ml='lg'>
+                                    <ThemeIcon size="md" radius="lg" color='red'>
+                                        <Sword />
+                                    </ThemeIcon>
+                                    <Text color='green' weight='bold'>You have offered peace</Text>
+                                </Group>
+                            ) : (
+                                <Group ml='lg'>
+                                    <ThemeIcon size="sm" radius="lg" color='red'>
+                                        <Sword />
+                                    </ThemeIcon>
+                                    <Button size='sm' compact color='green' leftIcon={<Handshake />} onClick={() =>
+                                    {
+                                        offerPeace()
+                                    }}>
+                                        Offer Peace
+                                    </Button>
+                                </Group>
+                            )
+                        ) : (
+                            <Button size='sm' compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
+                            {
+                                declareWar()
+                            }}>
+                                Declare War
+                            </Button>
+                        )}
+                    </Group>)}
                 </Group>
             </Card.Section>
 
