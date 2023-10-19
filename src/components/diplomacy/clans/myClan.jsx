@@ -18,6 +18,8 @@ function MyClan()
     const [members, setMembers] = useState(null)
     const [clanMail, setClanMail] = useState(0)
 
+    console.log(empire)
+
     const checkForClanMail = async () =>
     {
         // console.log('checking for clan mail')
@@ -36,15 +38,17 @@ function MyClan()
         async function getClan()
         {
             const clan = await Axios.post('/clans/get', { clanId: empire.clanId })
-            // console.log(clan.data)
-            setClan(clan.data)
+            console.log(clan.data[0])
+            setClan(clan.data[0])
 
             const members = await Axios.post('/clans/getMembers', { clanId: empire.clanId })
-            // console.log(members.data)
+            console.log(members.data)
             setMembers(members.data)
         }
-        getClan()
-    }, [empire.networth])
+        if (empire) {
+            getClan()
+        }
+    }, [empire])
 
     useEffect(() =>
     {
@@ -64,7 +68,7 @@ function MyClan()
                     <Stack spacing='xs'>
                         {members.map((member, index) =>
                         {
-                            // console.log(member)
+                            console.log(clan)
                             let role = ''
                             if (member.id === clan.empireIdLeader) {
                                 role = 'Leader'
@@ -127,7 +131,7 @@ function MyClan()
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan Relations' pt="xs">
-                            {/* <ClanRelations myClan={clan} empireId={empire.id} /> */}
+                            <ClanRelations myClan={clan} empireId={empire.id} />
                         </Tabs.Panel>
 
                     </Tabs>

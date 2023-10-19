@@ -42,8 +42,6 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
             })
         }
 
-
-
         setLoading(false)
     }, [])
 
@@ -73,19 +71,49 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
         }
     }
 
+    let atWar = false
+    let peaceOfferedMe = false
+    let peaceOfferedEnemy = false
+
     if (myClan) {
         console.log(myClan)
-        let enemies = []
-        if (myClan.enemies) {
-            enemies = myClan.enemies.toString().split(',')
-        }
-        let peaceOffers = []
-        if (myClan.peaceOffer) {
-            peaceOffers = myClan.peaceOffer.toString().split(',')
+        console.log(clan.clan)
+        let myRelations = myClan.relation.map((relation) =>
+        {
+            if (relation.clanRelationFlags === 'war') {
+                return relation.c_id2
+            }
+        })
+
+        // console.log(myRelations)
+
+        if (myRelations.includes(clan.clan.id)) {
+            atWar = true
         }
 
-        console.log(enemies)
-        console.log(peaceOffers)
+        let peaceOffers = myClan.relation.map((relation) =>
+        {
+            if (relation.clanRelationFlags === 'peace') {
+                return relation.c_id2
+            }
+        })
+
+        // console.log(peaceOffers)
+        if (peaceOffers.includes(clan.clan.id)) {
+            peaceOfferedMe = true
+        }
+
+        let enemyPeaceOffers = clan.clan.relation.map((relation) =>
+        {
+            if (relation.clanRelationFlags === 'peace') {
+                return relation.c_id1
+            }
+        })
+
+        if (enemyPeaceOffers.includes(myClan.id)) {
+            peaceOfferedEnemy = true
+        }
+
     }
 
 
@@ -124,28 +152,39 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
                     </Group>
                     {relations && (<Group>
                         {/* if clan is in enemies list, option to offer peace, else option to declare war */}
-                        {myClan.enemies && enemies.includes(clan.clan.id.toString()) ? (
-                            peaceOffers.includes(clan.clan.id.toString()) ? (
+                        {atWar ? (
+                            peaceOfferedMe ? (
                                 <Group ml='lg'>
-                                    <ThemeIcon size="md" radius="lg" color='red'>
+                                    <ThemeIcon size="md" radius="sm" color='red' >
                                         <Sword />
                                     </ThemeIcon>
                                     <Text color='green' weight='bold'>You have offered peace</Text>
                                 </Group>
                             ) : (
-                                <Group ml='lg'>
-                                    <ThemeIcon size="sm" radius="lg" color='red'>
+                                peaceOfferedEnemy ? (<Group ml='lg'>
+                                    <ThemeIcon size="md" radius="sm" color='red' >
                                         <Sword />
                                     </ThemeIcon>
                                     <Button size='sm' compact color='green' leftIcon={<Handshake />} onClick={() =>
                                     {
                                         offerPeace()
                                     }}>
-                                        Offer Peace
+                                        Accept Peace
                                     </Button>
-                                </Group>
-                            )
-                        ) : (
+                                </Group>) : (
+                                    <Group ml='lg'>
+                                        <ThemeIcon size="md" radius="sm" color='red' >
+                                            <Sword />
+                                        </ThemeIcon>
+                                        <Button size='sm' compact color='green' leftIcon={<Handshake />} onClick={() =>
+                                        {
+                                            offerPeace()
+                                        }}>
+                                            Offer Peace
+                                        </Button>
+                                    </Group>
+                                )
+                            )) : (
                             <Button size='sm' compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
                             {
                                 declareWar()
