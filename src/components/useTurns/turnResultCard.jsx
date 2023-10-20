@@ -56,7 +56,7 @@ const attackResult = (result) =>
 			return (<>
 				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
 				</span></Text>
-				<Text>You lost: {youLost.map((item, index) =>
+				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
 					else {
@@ -64,7 +64,7 @@ const attackResult = (result) =>
 					}
 				}
 				)}</Text>
-				<Text>You killed: {youKilled.map((item, index) =>
+				<Text align='center'>You killed: {youKilled.map((item, index) =>
 				{
 					if (index === youKilled.length - 1) { return (item) }
 					else {
@@ -72,7 +72,7 @@ const attackResult = (result) =>
 					}
 				}
 				)}</Text>
-				{result.attackType !== 'surprise' && <Text>
+				{result.attackType !== 'surprise' && <Text align='center'>
 					You captured: {buildingsCaptured.map((item, index) =>
 					{
 						if (index === buildingsCaptured.length - 1) { return (item) }

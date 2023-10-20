@@ -88,7 +88,7 @@ export default function Overview()
 			}
 		})
 	}
-	console.log(enemies)
+	// console.log(enemies)
 	if (enemies.length > 1) {
 		enemies = enemies.join(', ')
 	} else if (enemies.length === 1) {
