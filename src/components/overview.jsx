@@ -78,14 +78,16 @@ export default function Overview()
 
 	let clan = empire.clan
 
-	console.log(clan.relation)
-	let enemies = clan.relation.map((relation) =>
-	{
-		if (relation.clanRelationFlags === 'war') {
-			return relation.clan2Name
-		}
-	})
-
+	// console.log(clan.relation)
+	let enemies = []
+	if (clan) {
+		enemies = clan.relation.map((relation) =>
+		{
+			if (relation.clanRelationFlags === 'war') {
+				return relation.clan2Name
+			}
+		})
+	}
 	console.log(enemies)
 	if (enemies.length > 1) {
 		enemies = enemies.join(', ')
