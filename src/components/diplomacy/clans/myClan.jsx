@@ -18,7 +18,7 @@ function MyClan()
     const [members, setMembers] = useState(null)
     const [clanMail, setClanMail] = useState(0)
 
-    console.log(empire)
+    // console.log(empire)
 
     const checkForClanMail = async () =>
     {

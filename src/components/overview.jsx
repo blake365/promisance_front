@@ -59,23 +59,41 @@ export default function Overview()
 
 	let luck = Math.round(BASE_LUCK / size)
 
-	const [clan, setClan] = useState(null)
+	// const [clan, setClan] = useState(null)
 
-	const getClan = async () =>
-	{
-		const res = await Axios.post('/clans/get', { clanId: empire.clanId })
-		// console.log(res.data)
-		setClan(res.data)
-	}
+	// const getClan = async () =>
+	// {
+	// 	const res = await Axios.post('/clans/get', { clanId: empire.clanId })
+	// 	// console.log(res.data)
+	// 	setClan(res.data)
+	// }
 
-	useEffect(() =>
+	// useEffect(() =>
+	// {
+	// 	// console.log(empire.clanId)
+	// 	if (empire.clanId !== 0) {
+	// 		getClan()
+	// 	}
+	// }, [])
+
+	let clan = empire.clan
+
+	console.log(clan.relation)
+	let enemies = clan.relation.map((relation) =>
 	{
-		// console.log(empire.clanId)
-		if (empire.clanId !== 0) {
-			getClan()
+		if (relation.clanRelationFlags === 'war') {
+			return relation.clan2Name
 		}
-	}, [])
+	})
 
+	console.log(enemies)
+	if (enemies.length > 1) {
+		enemies = enemies.join(', ')
+	} else if (enemies.length === 1) {
+		enemies = enemies[0]
+	} else {
+		enemies = 'None'
+	}
 	// console.log(clan)
 	const clanRole = (empireId, clan) =>
 	{
@@ -265,7 +283,7 @@ export default function Overview()
 								<Col span={7}>
 									<Text align='right'>{clan ? (clan.clanName) : ('None')}</Text>
 									<Text align='right'>{clan ? (clanRole(empire.id, clan)) : 'None'}</Text>
-									<Text align='right'>None</Text>
+									<Text align='right'>{enemies}</Text>
 
 									<Text align='right' mt='sm'>{empire.offTotal} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>
 									<Text align='right'>{empire.defTotal} ({Math.round(empire.defSucc / empire.defTotal * 100)}%)</Text>

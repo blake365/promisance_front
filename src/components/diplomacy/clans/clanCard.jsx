@@ -5,10 +5,14 @@ import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoreCard from '../../scoreCard'
 import { Sword, Handshake } from '@phosphor-icons/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { empireLoaded } from '../../../store/empireSlice'
 
 const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
 {
+    const dispatch = useDispatch()
 
+    const uuid = useSelector((state) => state.empire.empire.uuid)
     const [opened, { toggle }] = useDisclosure(false);
     const [loading, setLoading] = useState(false)
     const [members, setMembers] = useState([])
@@ -19,6 +23,18 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
     let body = {
         clanId: clan.clan.id,
     }
+
+    const loadEmpireTest = async () =>
+    {
+        try {
+            const res = await Axios.get(`/empire/${uuid}`)
+            // console.log(res.data)
+            dispatch(empireLoaded(res.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     // console.log(empire)
     useEffect(() =>
     {
@@ -51,7 +67,8 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
         try {
             const res = await Axios.post('/clans/declareWar', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
             console.log(res)
-            return res.data
+            // return res.data
+            loadEmpireTest()
         }
         catch (error) {
             console.log(error)
@@ -64,7 +81,8 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
         try {
             const res = await Axios.post('/clans/offerPeace', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
             console.log(res.data)
-            return res.data
+            // return res.data
+            loadEmpireTest()
         }
         catch (error) {
             console.log(error)
@@ -106,7 +124,7 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
         let enemyPeaceOffers = clan.clan.relation.map((relation) =>
         {
             if (relation.clanRelationFlags === 'peace') {
-                return relation.c_id1
+                return relation.c_id2
             }
         })
 
