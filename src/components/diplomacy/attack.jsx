@@ -249,8 +249,8 @@ export default function Attack()
                                         withinPortal
                                         // itemComponent={SelectAttack}
                                         data={[
-                                            // { value: 'standard', label: 'Standard Attack' },
-                                            // { value: 'surprise', label: 'Surprise Attack' },
+                                            { value: 'standard', label: 'Standard Attack' },
+                                            { value: 'surprise', label: 'Surprise Attack' },
                                             { value: 'trparm', label: 'Guerilla Strike' },
                                             { value: 'trplnd', label: 'Lay Siege' },
                                             { value: 'trpfly', label: 'Air Strike' },

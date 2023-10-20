@@ -11,12 +11,79 @@ import NetProduced from '../utilities/NetProduced'
 const attackResult = (result) =>
 {
 	if (result.result === 'success') {
-		return (<>
-			<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
-			</span></Text>
-			<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
-			<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
-		</>)
+		if (result.attackType !== 'standard' && result.attackType !== 'surprise') {
+			return (<>
+				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
+				</span></Text>
+				<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+				<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+			</>)
+		} else {
+			// console.log(result)
+			let youLost = []
+			let youKilled = []
+			let buildingsCaptured = []
+
+			for (const key in result.troopLoss) {
+				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
+					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+				}
+			}
+
+			for (const key in result.troopKilled) {
+				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
+					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+				}
+			}
+
+			for (const key in result.buildingGain) {
+				if (Object.prototype.hasOwnProperty.call(result.buildingGain, key)) {
+					let newKey = key.toLowerCase()
+					let string = `${eraArray[result.era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
+					if (newKey === 'bldtroop') {
+						string = `
+							${eraArray[result.era].bldtrp}: ${result.buildingGain[key].toLocaleString()}
+						`
+					} else if (newKey === 'freeland') {
+						string = `
+							Free Land: ${result.buildingGain[key].toLocaleString()}
+						`
+					}
+					buildingsCaptured.push(string);
+				}
+			}
+
+			return (<>
+				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
+				</span></Text>
+				<Text>You lost: {youLost.map((item, index) =>
+				{
+					if (index === youLost.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+				<Text>You killed: {youKilled.map((item, index) =>
+				{
+					if (index === youKilled.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+				{result.attackType !== 'surprise' && <Text>
+					You captured: {buildingsCaptured.map((item, index) =>
+					{
+						if (index === buildingsCaptured.length - 1) { return (item) }
+						else {
+							return (item + ', ')
+						}
+					}
+					)}
+				</Text>}
+			</>)
+		}
 	} else if (result.result === 'fail') {
 		return (<>
 			<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
@@ -58,7 +125,7 @@ const spellResult = (result) =>
 
 export default function TurnResultCard({ data })
 {
-	console.log(data)
+	// console.log(data)
 	return (
 		<>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
