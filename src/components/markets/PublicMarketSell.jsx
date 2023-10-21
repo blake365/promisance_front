@@ -23,7 +23,7 @@ export default function PublicMarketSell({ empire })
     // add db entry with type, number, price, empireID, time to Market table
     // deduct items from selling empire
     // show items for sale for current empire
-    // TODO: remove items after X hours and return to seller
+    // remove items after X hours and return to seller
 
     const dispatch = useDispatch()
     // const [result, setResult] = useState(null)
@@ -282,6 +282,7 @@ export default function PublicMarketSell({ empire })
                         </div>
                         <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
                         <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
+                        <Text weight='bold' align='center'> Items on the market for 72 hours will be returned to you, only 75% will be returned. </Text>
                     </Stack>
                 )}
             </Center>

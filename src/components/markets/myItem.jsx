@@ -1,13 +1,11 @@
-import { Button, Center, NumberInput, Text, Table, Stack, Loader } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { Button, NumberInput } from '@mantine/core'
+import { useDispatch } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START } from '../../config/config'
-import { MaxButton } from '../utilities/maxbutton'
-import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
 
 export default function MyItem({ element, empire })
@@ -95,7 +93,7 @@ export default function MyItem({ element, empire })
             <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
             <td align='center'>${element.price.toLocaleString()}</td>
             <td align='center'>{hoursOnMarket}</td>
-            <td align='center'>
+            {hoursOnMarket >= 6 && <td align='center'>
                 <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
                     editForm.onSubmit((values) =>
                     {
@@ -124,8 +122,8 @@ export default function MyItem({ element, empire })
                     <Button size='xs' compact type='submit'>Edit</Button>
                     <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
                 </form>
-
             </td>
+            }
 
         </tr>
     )
