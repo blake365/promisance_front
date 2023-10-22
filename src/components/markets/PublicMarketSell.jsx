@@ -94,26 +94,38 @@ export default function PublicMarketSell({ empire })
 
     let processedItems = processItems(myItems)
 
-    if (myItems) {
+    if (processedItems) {
         // console.log(canSell)
         canSell = canSell.map((item, index) =>
         {
-            return processedItems.map((element) =>
-            {
-                if (element.type === index) {
-                    return canSell[index] -= element.amount
-                } else {
-                    return canSell[index]
-                }
-            })
+            if (processedItems.length > 0) {
+                return processedItems.map((element) =>
+                {
+                    if (element.type === index) {
+                        return canSell[index] -= element.amount
+                    } else {
+                        return canSell[index]
+                    }
+                })
+            } else {
+                return canSell[index]
+            }
         })
 
+        // console.log(canSell)
         canSell = canSell.map((item) =>
         {
-            if (item[item.length - 1] < 0) {
-                return 0
-            } else
-                return item[item.length - 1]
+            if (Array.isArray(item)) {
+                if (item[item.length - 1] < 0) {
+                    return 0
+                } else
+                    return item[item.length - 1]
+            } else {
+                if (item < 0) {
+                    return 0
+                } else
+                    return item
+            }
         })
     }
 
@@ -285,7 +297,7 @@ export default function PublicMarketSell({ empire })
                                                 eraTroop = 'runes'
                                             }
 
-                                            // console.log(canSell[index])
+                                            console.log(canSell[index])
 
                                             return (
                                                 <tr key={index}>
