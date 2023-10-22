@@ -1,17 +1,15 @@
-import { Button, Center, NumberInput, Text, Table, Stack, Loader } from '@mantine/core'
+import { Button, Center, NumberInput, Text, Stack, Loader } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START } from '../../config/config'
+import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START, PUBMKT_MAXTIME } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
-import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 
 import classes from './markets.module.css'
 import MyItem from './myItem'
-
 
 // make it mobile friendly
 
@@ -40,10 +38,86 @@ export default function PublicMarketSell({ empire })
         return Math.round(cost)
     }
 
+    let now = new Date()
+
     const trpArmCost = getCost(empire, PVTM_TRPARM)
     const trpLndCost = getCost(empire, PVTM_TRPLND)
     const trpFlyCost = getCost(empire, PVTM_TRPFLY)
     const trpSeaCost = getCost(empire, PVTM_TRPSEA)
+
+    const processItems = (items) =>
+    {
+        // console.log(items)
+
+        let processedItems = []
+
+        // take items that are on the market. 
+        // create a new object that has the item type, and amount
+        // if the item is greater than 24 hours old, do not add it
+        // if the item is less than 24 hours old, add it to the array
+        // if items are the same type, add them together to get the total amount
+        // return the array
+
+        items.forEach((item) =>
+        {
+            let age = Math.floor((now - new Date(item.createdAt)) / 1000 / 60 / 60)
+            // console.log(age)
+            if (age < 24) {
+                let newItem = {
+                    type: item.type,
+                    amount: parseInt(item.amount),
+                }
+
+                processedItems.push(newItem)
+            }
+        })
+
+        // take the processed items if the type is the same, add the amount together and consolidate into one object
+        // console.log(processedItems)
+        processedItems = processedItems.reduce((acc, curr) =>
+        {
+            let found = acc.find((item) => item.type === curr.type)
+
+            if (found) {
+                found.amount += curr.amount
+            } else {
+                acc.push(curr)
+            }
+
+            return acc
+        }, [])
+        // console.log(processedItems)
+        return processedItems
+    }
+
+    let canSell = [Math.floor(empire.trpArm * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpLnd * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpFly * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpSea * (PUBMKT_MAXSELL / 100)), Math.floor(empire.food * (PUBMKT_MAXFOOD / 100)), Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100))]
+
+    let processedItems = processItems(myItems)
+
+    if (myItems) {
+        // console.log(canSell)
+        canSell = canSell.map((item, index) =>
+        {
+            return processedItems.map((element) =>
+            {
+                if (element.type === index) {
+                    return canSell[index] -= element.amount
+                } else {
+                    return canSell[index]
+                }
+            })
+        })
+
+        canSell = canSell.map((item) =>
+        {
+            if (item[item.length - 1] < 0) {
+                return 0
+            } else
+                return item[item.length - 1]
+        })
+    }
+
+    // console.log(canSell)
 
     const form = useForm({
         initialValues: {
@@ -64,12 +138,12 @@ export default function PublicMarketSell({ empire })
         },
 
         validationRules: {
-            sellArm: (value) => value <= empire.trpArm * (PUBMKT_MAXSELL / 100),
-            sellLnd: (value) => value <= empire.trpLnd * (PUBMKT_MAXSELL / 100),
-            sellFly: (value) => value <= empire.trpFly * (PUBMKT_MAXSELL / 100),
-            sellSea: (value) => value <= empire.trpSea * (PUBMKT_MAXSELL / 100),
-            sellFood: (value) => value <= empire.food * (PUBMKT_MAXFOOD / 100),
-            sellRunes: (value) => value <= empire.food * (PUBMKT_MAXRUNES / 100)
+            sellArm: (value) => value <= canSell[0],
+            sellLnd: (value) => value <= canSell[1],
+            sellFly: (value) => value <= canSell[2],
+            sellSea: (value) => value <= canSell[3],
+            sellFood: (value) => value <= canSell[4],
+            sellRunes: (value) => value <= canSell[5],
         },
 
         errorMessages: {
@@ -147,9 +221,6 @@ export default function PublicMarketSell({ empire })
 
     // console.log(result)
 
-
-
-
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
 
     // console.log(myItems)
@@ -214,6 +285,8 @@ export default function PublicMarketSell({ empire })
                                                 eraTroop = 'runes'
                                             }
 
+                                            // console.log(canSell[index])
+
                                             return (
                                                 <tr key={index}>
                                                     <td align='center'>
@@ -237,15 +310,15 @@ export default function PublicMarketSell({ empire })
                                                         />
                                                     </td>
                                                     <td align='center'>
-                                                        {Math.floor(empire[troop] * (PUBMKT_MAXSELL / 100)).toLocaleString()}
+                                                        {canSell[index].toLocaleString()}
                                                     </td>
                                                     <td>
                                                         <NumberInput
                                                             hideControls
                                                             min={0}
-                                                            max={Math.floor(empire[troop] * (PUBMKT_MAXSELL / 100))}
+                                                            max={canSell[index]}
                                                             {...form.getInputProps(`${sell}`)}
-                                                            rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PUBMKT_MAXSELL / 100)} />}
+                                                            rightSection={<MaxButton formName={form} fieldName={sell} maxValue={canSell[index]} />}
                                                             parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                                                             formatter={(value) =>
                                                                 !Number.isNaN(parseFloat(value))
@@ -282,7 +355,7 @@ export default function PublicMarketSell({ empire })
                         </div>
                         <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
                         <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
-                        <Text weight='bold' align='center'> Items on the market for 72 hours will be returned to you, only 75% will be returned. </Text>
+                        <Text weight='bold' align='center'> Items on the market for {PUBMKT_MAXTIME} hours will be returned to you, only 75% will be returned. </Text>
                     </Stack>
                 )}
             </Center>
