@@ -213,6 +213,8 @@ function App()
 	{
 		if (empireStatus === 'succeeded') {
 			try {
+				loadEmpireTest()
+
 				dispatch(fetchEffects({
 					id: empire.id
 				})).then((data) =>

@@ -14,6 +14,10 @@ export default function AttackGuide({ empire })
             <p>In order to attack another empire, it must either be in the same era as yours or a Time Gate must be open between your empires, either opened by you or by your target.</p>
             <p>Six different attack methods are available for you to use, each having their own advantages and disadvantages:</p>
             <dl>
+                <dt>Standard Attack</dt>
+                <dd>The standard attack type, this allows sending all types of military units to attack your target. If successful, you will steal a percentage of your target's land, potentially with some of its original structures intact.</dd>
+                <dt>Surprise Attack</dt>
+                <dd>A surprise attack grants a 25% attack power bonus and allows the attacker to bypass any shared forces the defender's clan may have, though this comes at the cost of increased troop losses for the attacker as well as a significantly higher health loss. If successful, all structures on captured land are destroyed.</dd>
                 <dt>Guerilla Strike</dt>
                 <dd>By sending in only your {eraArray[empire.era].trparm}, you can avoid your target's other forces. If successful, all structures on captured land are destroyed.</dd>
                 <dt>Lay Siege</dt>

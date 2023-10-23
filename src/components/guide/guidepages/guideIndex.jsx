@@ -18,14 +18,15 @@ export default function GuideIndex()
                 <h4>Information</h4>
                 <Group>
                     <GuideLink text='Empire Summary' page='Summary' />
-                    <GuideLink text='Detailed Status' page='Overview' />
+                    <GuideLink text='Detailed Overview' page='Overview' />
                     <GuideLink text='Scores List' page='Scores' />
+                    <GuideLink text='Clan Statistics' page='Clan%20Stats' />
                     {/* <GuideLink text='The Graveyard' page='Graveyard' /> */}
                     {/* <GuideLink text='Searching for Empires' page='Empire Search' /> */}
                     <GuideLink text='Mailbox' page='Mailbox' />
                     <GuideLink text='World News' page='World%20News' />
                     {/* <GuideLink text='Clan Contacts' page='Clan Contacts' /> */}
-                    {/* <GuideLink text='Clan Statistics' page='Clan Statistics' /> */}
+
                 </Group>
                 <h4>Spending Turns</h4>
                 <Group>
@@ -38,6 +39,7 @@ export default function GuideIndex()
                     <GuideLink text='Casting Spells' page='Magic%20Center' />
                     <GuideLink text='Construction' page='Build' />
                     <GuideLink text='Demolition' page='demolish' />
+                    <GuideLink text='Favorites' page='Favorites' />
                 </Group>
                 <h4>Finance</h4>
                 <Group>
@@ -49,11 +51,10 @@ export default function GuideIndex()
                 </Group>
                 <h4>Diplomacy</h4>
                 <Group>
-                    {/* <GuideLink text='Sending Foreign Aid' page='Aid' />
                     <GuideLink text='Clans' page='Clans' />
-                    <GuideLink text='Clan Forum' page='Forum' /> */}
                     <GuideLink text='Your Army' page='War%20Council' />
                     <GuideLink text='Intel Center' page='Intel%20Center' />
+                    <GuideLink text='Sending Foreign Aid' page='Foreign%20Aid' />
                 </Group>
                 <h4>Management</h4>
                 <Group>

@@ -7,7 +7,7 @@ export default function OverviewGuide({ empire })
         <div>
             <GuideLink text='Return to Index' page='Index' />
 
-            <h2>Detailed Status</h2>
+            <h2>Detailed Overview</h2>
             <p>This page provides detailed statistics about your empire and its economy, divided into 6 overall sections. The red or green numbers indicate how your stats have been effected by Race or Era modifiers.</p>
             <h3>Empire</h3>
             <dl>
@@ -68,7 +68,7 @@ export default function OverviewGuide({ empire })
             <dl>
                 <dt>Offensive Power</dt>
                 <dd>This number indicates your empire's total calculated offensive power (see
-                    <GuideLink text='Military Units' page='Military' />
+                    {' '}<GuideLink text='Military Units' page='Military' />{" "}
                     for more information).</dd>
                 <dt>Defensive Power</dt>
                 <dd>Your empire's total calculated defensive power is shown here.</dd>
@@ -77,8 +77,6 @@ export default function OverviewGuide({ empire })
             <dl>
                 <dt>Member of Clan</dt>
                 <dd>If you are in a clan, its name is indicated here.  If you are independent, this will simply say "None."</dd>
-                <dt>Allies</dt>
-                <dd>If you are in a clan, other clans which you are allied with will be listed here.</dd>
                 <dt>Enemies</dt>
                 <dd>If you are in a clan, clans you are at war with are listed here.</dd>
                 <dt>Offensive Actions</dt>

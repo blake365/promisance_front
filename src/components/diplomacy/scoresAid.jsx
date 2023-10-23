@@ -97,7 +97,8 @@ export default function ScoresAid({ friend })
                 dispatch(loadScores())
             }
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data.error)
+            setError(error.response.data.error)
         }
     }
 

@@ -49,9 +49,11 @@ export default function ScoresGuide()
                 <dd>The time period in which the empire exists.</dd>
                 <dt>Race</dt>
                 <dd>The race of the empire's inhabitants.</dd>
+                <dt>DR</dt>
+                <dd>The empire's current diminishing returns value. As an empire is attacked, their DR percentage increases which causes them to lose less land each successive attack. The rate of increase is affected by building guard towers. </dd>
             </dl>
             <p>
-                Click on an empire to view their public profile, time of last action, and to see options on how to interact with them directly from the scores page. You can see recent news from that empire, view or get new intel, send an attack or cast a spell, all from the scores page.
+                Click on an empire to view their public profile, time of last action, and to see options on how to interact with them directly from the scores page. You can see recent news from that empire, view or get new intel, send aid, an attack or cast a spell, all from the scores page.
             </p>
         </div>
     )

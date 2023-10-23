@@ -111,7 +111,7 @@ export default function ScoresIntel({ enemy })
                         <Card py='lg'>
                             <Card.Section>
                                 <Text align='center'>Magic Power: {getPower_self(empire)}</Text>
-                                <Text align='center'>Cost: {Math.ceil(baseCost(empire))} {eraArray[empire.era].runes}</Text>
+                                <Text align='center'>Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}</Text>
                             </Card.Section>
                             <Card.Section>
                                 <form onSubmit={spellForm.onSubmit((values) =>

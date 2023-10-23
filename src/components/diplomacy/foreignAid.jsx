@@ -86,7 +86,7 @@ export default function ForeignAid()
 
     const sendAid = async (values) =>
     {
-        console.log('sending aid')
+        // console.log('sending aid')
         setError('')
         try {
             const res = await Axios.post(`/aid/`, values)
@@ -100,7 +100,8 @@ export default function ForeignAid()
                 form.reset()
             }
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data.error)
+            setError(error.response.data.error)
         }
     }
 

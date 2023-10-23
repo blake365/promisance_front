@@ -120,7 +120,7 @@ export default function MagicCenter()
                         Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
                     </Title>
                     <Text align='center'>
-                        Cast spells on yourself to generate food, money, and change eras. Spells take two turns to cast.
+                        Cast spells to create a shield, generate food or money, or change eras. Spells take two turns to cast.
                     </Text>
                     <Text align='center'>
                         Your current magic power is {magicPower}.

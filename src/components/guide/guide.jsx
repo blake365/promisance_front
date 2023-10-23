@@ -24,6 +24,10 @@ import NewsGuide from "./guidepages/news";
 import MailGuide from "./guidepages/mail";
 import IntelGuide from "./guidepages/intel";
 import SettingsGuide from "./guidepages/settings";
+import AidGuide from "./guidepages/foreignAid";
+import ClanGuide from "./guidepages/clan";
+import ClanStatsGuide from "./guidepages/clanStats";
+import FavoritesGuide from "./guidepages/favorites";
 
 export default function Guide(props)
 {
@@ -82,6 +86,14 @@ export default function Guide(props)
             return <IntelGuide empire={props.empire} />
         case 'Index':
             return <GuideIndex />
+        case 'Foreign%20Aid':
+            return <AidGuide empire={props.empire} />
+        case 'Clans':
+            return <ClanGuide />
+        case 'Clan%20Stats':
+            return <ClanStatsGuide />
+        case 'Favorites':
+            return <FavoritesGuide />
         default:
             return <GuideIndex />
     }

@@ -23,7 +23,7 @@ export default function BuildingsGuide({ empire })
                 <dt>{eraArray[empire.era].bldfood}</dt>
                 <dd>These are vital for feeding your {eraArray[empire.era].peasants} and military; without food, your population and army will starve and desert your empire.</dd>
                 <dt>{eraArray[empire.era].blddef}</dt>
-                <dd>These are a strictly defensive building, worth up to 450 defense points each. In order to provide maximum defense, each must be occupied by at least 150 {eraArray[empire.era].trparm}.</dd>
+                <dd>These are a strictly defensive building, for every 1% of land built as {eraArray[empire.era].blddef}, your defense is increased by 1% (up to 50%) and your diminishing returns (DR) rate increases by 0.01.</dd>
             </dl>
         </div>
     )
