@@ -180,21 +180,21 @@ function App()
 					}
 				}
 				)
-				checkForNews().then((data) =>
-				{
-					// console.log(data)
-					setNews(data)
-				})
-				checkForMail().then((data) =>
-				{
-					// console.log(data)
-					setMail(data)
-				})
+				// checkForNews().then((data) =>
+				// {
+				// 	// console.log(data)
+				// 	setNews(data)
+				// })
+				// checkForMail().then((data) =>
+				// {
+				// 	// console.log(data)
+				// 	setMail(data)
+				// })
 
-				if (empire.clanId !== 0) {
-					checkForClanMail().then((data) =>
-						setClanMail(data))
-				}
+				// if (empire.clanId !== 0) {
+				// 	checkForClanMail().then((data) =>
+				// 		setClanMail(data))
+				// }
 
 			}
 			catch (error) {
@@ -205,26 +205,32 @@ function App()
 
 	})
 
-	let locationArr = location.pathname.split('/')
-	let last = locationArr.length - 1
-	let pageState = locationArr[last]
+	const handleNewsRead = () =>
+	{
+		console.log('news read')
+		checkForNews().then((data) =>
+		{
+			// console.log(data)
+			setNews(data)
+		})
+	}
 
 	useInterval(() =>
 	{
-		if (empireStatus === 'succeeded') {
+		if (empireStatus === 'succeeded' && !modalOpened) {
 			try {
-				loadEmpireTest()
+				// loadEmpireTest()
 
-				dispatch(fetchEffects({
-					id: empire.id
-				})).then((data) =>
-				{
-					// console.log(data)
-					if (data.meta.requestStatus === 'rejected') {
-						navigate('/')
-					}
-				}
-				)
+				// dispatch(fetchEffects({
+				// 	id: empire.id
+				// })).then((data) =>
+				// {
+				// 	// console.log(data)
+				// 	if (data.meta.requestStatus === 'rejected') {
+				// 		navigate('/')
+				// 	}
+				// }
+				// )
 
 				checkForNews().then((data) =>
 				{
@@ -246,7 +252,11 @@ function App()
 				navigate('/')
 			}
 		}
-	}, 60000)
+	}, 30000)
+
+	let locationArr = location.pathname.split('/')
+	let last = locationArr.length - 1
+	let pageState = locationArr[last]
 
 	// console.log(clanMail)
 
@@ -378,7 +388,7 @@ function App()
 								</Grid.Col>
 							</Grid>
 							<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
-								<EmpireNews />
+								<EmpireNews onNewsRead={handleNewsRead} />
 							</Drawer>
 							<TurnResultContainer />
 							<Outlet />

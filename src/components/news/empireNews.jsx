@@ -5,7 +5,7 @@ import Axios from "axios"
 import NewsItem from "./newsItem"
 
 
-export default function EmpireNews()
+export default function EmpireNews(props)
 {
     const { empire } = useSelector((state) => state.empire)
 
@@ -28,6 +28,7 @@ export default function EmpireNews()
         try {
             const res = await Axios.get(`/news/${empire.id}/read`)
             // console.log(res.data)
+            props.onNewsRead('read')
             return res.data
         } catch (error) {
             console.log(error)
@@ -44,9 +45,7 @@ export default function EmpireNews()
         }).catch((error) =>
         {
             console.error('Error setting news data:', error);
-
         });
-
     }, [])
 
 
