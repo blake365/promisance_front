@@ -6,20 +6,18 @@ import
 } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Intel from '../intel'
 
 export default function ClanIntel({ members })
 {
-    console.log(members)
-    const { empire } = useSelector((state) => state.empire)
+    // console.log(members)
 
     const [intel, setIntel] = useState()
 
     const body = { ownerId: members }
 
-    console.log(body)
+    // console.log(body)
     // load intel
     useEffect(() =>
     {
@@ -27,7 +25,7 @@ export default function ClanIntel({ members })
         {
             try {
                 const res = await Axios.post(`/intel/clan`, body)
-                console.log(res.data)
+                // console.log(res.data)
                 return res.data
             } catch (error) {
                 console.log(error)

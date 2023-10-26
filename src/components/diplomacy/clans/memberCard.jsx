@@ -9,8 +9,9 @@ import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from '../scoresAid'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
+import ClanRole from './clanRole'
 
-const MemberCard = ({ empire, myId, clan }) =>
+const MemberCard = ({ empire, myId, clan, clanString }) =>
 {
     const [active, setActive] = useState(false)
     const [opened, { toggle }] = useDisclosure(false)
@@ -69,6 +70,8 @@ const MemberCard = ({ empire, myId, clan }) =>
     let color = ''
     let disabled = false
 
+    // console.log(clan.split(' ')[2])
+
     if (empire.id === myId) {
         color = 'deepskyblue'
     }
@@ -77,13 +80,8 @@ const MemberCard = ({ empire, myId, clan }) =>
         disabled = true
     }
 
-    let role = 'member'
+    let role = clanString.split(' ')[2]
 
-    if (empire.id === clan.empireIdLeader) {
-        role = 'Leader'
-    } else if (empire.id === clan.empireIdAssistant) {
-        role = 'Assistant'
-    }
 
     // console.log(typeof home)
     // let actionDate = new Date()
@@ -107,7 +105,7 @@ const MemberCard = ({ empire, myId, clan }) =>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                                 <Title order={4} color={color}>
-                                    {empire.name} {clan && clan}
+                                    {empire.name} {clanString && clanString}
                                 </Title>
                             </Group>
                         </Indicator>
@@ -192,7 +190,7 @@ const MemberCard = ({ empire, myId, clan }) =>
                         <Tabs.Tab value="Recent News" >Recent News</Tabs.Tab>
                         <Tabs.Tab value="Intel" >Stats</Tabs.Tab>
                         <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
-                        <Tabs.Tab value="Role" disabled={role === 'Leader' || role === 'Assistant'}>Role</Tabs.Tab>
+                        <Tabs.Tab value="Role">Role</Tabs.Tab>
                     </Tabs.List>
 
                     <Tabs.Panel value="Intel" pt="xs">
@@ -200,7 +198,7 @@ const MemberCard = ({ empire, myId, clan }) =>
                     </Tabs.Panel>
 
                     <Tabs.Panel value="Role" pt="xs">
-                        Empire Roles
+                        <ClanRole member={empire} role={role} clan={clan} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="Send Aid" pt="xs">

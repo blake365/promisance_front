@@ -68,7 +68,7 @@ function MyClan()
                     <Stack spacing='xs'>
                         {members.map((member, index) =>
                         {
-                            console.log(clan)
+                            // console.log(clan)
                             let role = ''
                             if (member.id === clan.empireIdLeader) {
                                 role = 'Leader'
@@ -82,21 +82,17 @@ function MyClan()
                             let clanString = ` - ${role} of ${clan.clanName}`
 
                             {/* show active effects for each member */ }
-                            return <MemberCard empire={member} myId={empire.id} key={member.id} clan={clanString} />
+                            return <MemberCard empire={member} myId={empire.id} key={member.id} clan={clan} clanString={clanString} />
                         })}
                     </Stack>
                     {/* leader and assistant can assign roles */}
-
                     {/* leader and assistant can kick members */}
 
                 </div>}
 
                 {/* leader and assistant can declare war or peace */}
-
                 {/* mandatory shared defense with clan mates */}
-
                 {/* leader and assistant can invite members */}
-
                 {/* option to leave clan */}
 
                 <Paper mt={20}>

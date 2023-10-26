@@ -44,7 +44,7 @@ export default function ClanRelations({ myClan, empireId })
                             // console.log(clan)
                             if (myClan.id !== clan.clan.id) {
                                 return (
-                                    <ClanCard clan={clan} index={index} key={index} relations={officer} myClan={myClan} empireId={empireId} />
+                                    <ClanCard clan={clan} index={index} key={index} officer={officer} myClan={myClan} empireId={empireId} />
                                 )
                             }
                         })}

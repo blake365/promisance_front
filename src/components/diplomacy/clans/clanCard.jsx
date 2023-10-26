@@ -8,7 +8,7 @@ import { Sword, Handshake } from '@phosphor-icons/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../../store/empireSlice'
 
-const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
+const ClanCard = ({ index, clan, officer, myClan, empireId }) =>
 {
     const dispatch = useDispatch()
 
@@ -94,8 +94,8 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
     let peaceOfferedEnemy = false
 
     if (myClan) {
-        console.log(myClan)
-        console.log(clan.clan)
+        // console.log(myClan)
+        // console.log(clan.clan)
         let myRelations = myClan.relation.map((relation) =>
         {
             if (relation.clanRelationFlags === 'war') {
@@ -168,7 +168,7 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
                             <Text>{clan.totalNetworth.toLocaleString()}</Text>
                         </Group>
                     </Group>
-                    {relations && (<Group>
+                    <Group>
                         {/* if clan is in enemies list, option to offer peace, else option to declare war */}
                         {atWar ? (
                             peaceOfferedMe ? (
@@ -183,7 +183,7 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
                                     <ThemeIcon size="md" radius="sm" color='red' >
                                         <Sword />
                                     </ThemeIcon>
-                                    <Button size='sm' compact color='green' leftIcon={<Handshake />} onClick={() =>
+                                    <Button size='sm' disabled={!officer} compact color='green' leftIcon={<Handshake />} onClick={() =>
                                     {
                                         offerPeace()
                                     }}>
@@ -194,7 +194,7 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
                                         <ThemeIcon size="md" radius="sm" color='red' >
                                             <Sword />
                                         </ThemeIcon>
-                                        <Button size='sm' compact color='green' leftIcon={<Handshake />} onClick={() =>
+                                        <Button size='sm' disabled={!officer} compact color='green' leftIcon={<Handshake />} onClick={() =>
                                         {
                                             offerPeace()
                                         }}>
@@ -203,14 +203,14 @@ const ClanCard = ({ index, clan, relations, myClan, empireId }) =>
                                     </Group>
                                 )
                             )) : (
-                            <Button size='sm' compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
+                            <Button size='sm' disabled={!officer} compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
                             {
                                 declareWar()
                             }}>
                                 Declare War
                             </Button>
                         )}
-                    </Group>)}
+                    </Group>
                 </Group>
             </Card.Section>
 
