@@ -96,21 +96,21 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
                         </Indicator>
                     </Group>
                     <Group spacing='lg'>
-                        <Group ml='sm' sx={{ width: '180px' }} noWrap>
+                        <Group ml='xs' sx={{ width: '180px' }} spacing='xs' noWrap>
                             <Scales size={22} weight='fill' />
                             <Text>${empire.networth.toLocaleString()}</Text></Group>
-                        <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '100px' }}>
                             <Mountains size={22} weight='fill' />
                             <Text>{empire.land.toLocaleString()}</Text></Group>
-                        <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '90px' }}>
                             <Hourglass size={22} weight='regular' />
                             <Text>{eraArray[empire.era].name}</Text></Group>
-                        <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '100px' }}>
                             <Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
-                        <Group ml='sm' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing='xs' noWrap >
 
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100} %</Text>

@@ -1,4 +1,4 @@
-import { Button, createStyles, Anchor, TextInput, Title, Box, Text, PasswordInput } from '@mantine/core'
+import { Button, createStyles, Anchor, TextInput, Title, Box, Text, PasswordInput, Paper } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { register } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -76,10 +76,11 @@ export default function Signup()
 
 	return (
 		<main className={classes.wrapper}>
-			<Box className={classes.form} radius={0} >
+			<Paper className={classes.form} radius={0} >
 				<Title order={2} ta="center" mt={90} mb={50}>
-					Register An Account
+					Register Account
 				</Title>
+
 				<form
 					onSubmit={form.onSubmit((values) => dispatch(register(values))
 						.unwrap()
@@ -98,6 +99,7 @@ export default function Signup()
 						required
 						size='md'
 						{...form.getInputProps('email')}
+						mt='md'
 					/>
 					<TextInput
 						label='Username'
@@ -106,6 +108,7 @@ export default function Signup()
 						required
 						size='md'
 						{...form.getInputProps('username')}
+						mt='md'
 					/>
 					<PasswordInput
 						label='Password'
@@ -113,6 +116,7 @@ export default function Signup()
 						withAsterisk
 						size='md'
 						{...form.getInputProps('password')}
+						mt='md'
 					/>
 					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
 					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
@@ -120,7 +124,10 @@ export default function Signup()
 				<Text ta="center" mt="md">
 					Already have an account? <Anchor href='/login'>Login</Anchor>
 				</Text>
-			</Box>
+				<Text ta="center" mt="md">
+					<Anchor href='/'>Return home</Anchor>
+				</Text>
+			</Paper>
 		</main>
 	)
 }

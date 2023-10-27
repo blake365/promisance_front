@@ -116,6 +116,9 @@ export default function NewLogin()
                 <Text ta="center" mt="md">
                     Need an account? <Anchor href='/register'>Register</Anchor>
                 </Text>
+                <Text ta="center" mt="md">
+                    <Anchor href='/'>Return home</Anchor>
+                </Text>
             </Paper>
         </div >
     );
