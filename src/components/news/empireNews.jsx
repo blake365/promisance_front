@@ -28,7 +28,7 @@ export default function EmpireNews(props)
         try {
             const res = await Axios.get(`/news/${empire.id}/read`)
             // console.log(res.data)
-            props.onNewsRead('read')
+            // props.onNewsRead('read')
             return res.data
         } catch (error) {
             console.log(error)

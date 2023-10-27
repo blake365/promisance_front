@@ -180,11 +180,11 @@ function App()
 					}
 				}
 				)
-				// checkForNews().then((data) =>
-				// {
-				// 	// console.log(data)
-				// 	setNews(data)
-				// })
+				checkForNews().then((data) =>
+				{
+					// console.log(data)
+					setNews(data)
+				})
 				// checkForMail().then((data) =>
 				// {
 				// 	// console.log(data)
@@ -205,15 +205,15 @@ function App()
 
 	})
 
-	const handleNewsRead = () =>
-	{
-		console.log('news read')
-		checkForNews().then((data) =>
-		{
-			// console.log(data)
-			setNews(data)
-		})
-	}
+	// const handleNewsRead = () =>
+	// {
+	// 	console.log('news read')
+	// 	checkForNews().then((data) =>
+	// 	{
+	// 		// console.log(data)
+	// 		setNews(data)
+	// 	})
+	// }
 
 	useInterval(() =>
 	{
@@ -232,11 +232,11 @@ function App()
 				// }
 				// )
 
-				checkForNews().then((data) =>
-				{
-					// console.log(data)
-					setNews(data)
-				})
+				// checkForNews().then((data) =>
+				// {
+				// 	// console.log(data)
+				// 	setNews(data)
+				// })
 				checkForMail().then((data) =>
 				{
 					// console.log(data)
@@ -252,7 +252,7 @@ function App()
 				navigate('/')
 			}
 		}
-	}, 30000)
+	}, 60000)
 
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1
@@ -388,7 +388,7 @@ function App()
 								</Grid.Col>
 							</Grid>
 							<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
-								<EmpireNews onNewsRead={handleNewsRead} />
+								<EmpireNews />
 							</Drawer>
 							<TurnResultContainer />
 							<Outlet />
