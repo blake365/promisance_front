@@ -6,22 +6,6 @@ and compete to become the largest in the land.
 
 This project is intended to be used with my typescript promisance back end which is also a work in progress.
 
-top todos:
-
-<!-- fix account creation -->
-<!-- game guide  -->
-
-public market broken
-bank deposit glitch
-
-<!-- overview page improvements -->
-
-scores page improvements
-multiplayer features
-empire settings / management
-color themes
-update to most recent version of Mantine
-
 ## Available Scripts
 
 In the project directory, you can run:

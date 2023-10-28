@@ -73,7 +73,6 @@ export default function MyItem({ element, empire })
     {
         var step = Math.pow(10, precision || 0);
         var temp = Math.trunc(step * value);
-
         return temp / step;
     }
 
@@ -81,11 +80,12 @@ export default function MyItem({ element, empire })
     let createdAt = new Date(element.createdAt)
     createdAt = createdAt.getTime()
     let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
-    let timeRemaining = PUBMKT_START - hoursOnMarket
+    let timeRemaining = Math.round((PUBMKT_START - hoursOnMarket) * 100) / 100
     if (hoursOnMarket < 6) {
         hoursOnMarket = `${timeRemaining} hours remaining`
     }
 
+    // console.log(timeRemaining)
 
     return (
         <tr tr key={element.id}>
