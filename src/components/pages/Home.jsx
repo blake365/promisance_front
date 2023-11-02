@@ -4,7 +4,7 @@ import { HeroImageRight } from './homeHero'
 import HomeNews from '../layout/homeNews'
 import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
-import { ROUND_END, ROUND_START, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
+import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
@@ -192,7 +192,7 @@ export default function Home()
                                         Turn Rate
                                     </Text>
                                 </Center>
-                                <Text>1 turn / {TURNS_FREQ} minutes</Text>
+                                <Text>{TURNS_COUNT} turn / {TURNS_FREQ} minutes</Text>
                             </Grid.Col>
                             <Grid.Col span={3}>
                                 <Center h={30} miw={100} >
