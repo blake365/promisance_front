@@ -2,8 +2,6 @@ import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image } fr
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-
-
 import { Mountains, Scales, Hourglass } from "@phosphor-icons/react"
 import ScoresAttack from './diplomacy/scoresAttack'
 import ScoresSpell from './diplomacy/scoresSpell'
@@ -47,6 +45,7 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
                 setActive(true)
             }
         })
+
     }, [])
 
 

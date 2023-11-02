@@ -8,7 +8,7 @@ import { Sword, Handshake } from '@phosphor-icons/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../../store/empireSlice'
 
-const ClanCard = ({ index, clan, officer, myClan, empireId }) =>
+const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
 {
     const dispatch = useDispatch()
 
@@ -168,29 +168,19 @@ const ClanCard = ({ index, clan, officer, myClan, empireId }) =>
                             <Text>{clan.totalNetworth.toLocaleString()}</Text>
                         </Group>
                     </Group>
-                    <Group>
-                        {/* if clan is in enemies list, option to offer peace, else option to declare war */}
-                        {atWar ? (
-                            peaceOfferedMe ? (
-                                <Group ml='lg'>
-                                    <ThemeIcon size="md" radius="sm" color='red' >
-                                        <Sword />
-                                    </ThemeIcon>
-                                    <Text color='green' weight='bold'>You have offered peace</Text>
-                                </Group>
-                            ) : (
-                                peaceOfferedEnemy ? (<Group ml='lg'>
-                                    <ThemeIcon size="md" radius="sm" color='red' >
-                                        <Sword />
-                                    </ThemeIcon>
-                                    <Button size='sm' disabled={!officer} compact color='green' leftIcon={<Handshake />} onClick={() =>
-                                    {
-                                        offerPeace()
-                                    }}>
-                                        Accept Peace
-                                    </Button>
-                                </Group>) : (
+                    {scores ? ('') : (
+                        <Group>
+                            {/* if clan is in enemies list, option to offer peace, else option to declare war */}
+                            {atWar ? (
+                                peaceOfferedMe ? (
                                     <Group ml='lg'>
+                                        <ThemeIcon size="md" radius="sm" color='red' >
+                                            <Sword />
+                                        </ThemeIcon>
+                                        <Text color='green' weight='bold'>You have offered peace</Text>
+                                    </Group>
+                                ) : (
+                                    peaceOfferedEnemy ? (<Group ml='lg'>
                                         <ThemeIcon size="md" radius="sm" color='red' >
                                             <Sword />
                                         </ThemeIcon>
@@ -198,19 +188,30 @@ const ClanCard = ({ index, clan, officer, myClan, empireId }) =>
                                         {
                                             offerPeace()
                                         }}>
-                                            Offer Peace
+                                            Accept Peace
                                         </Button>
-                                    </Group>
-                                )
-                            )) : (
-                            <Button size='sm' disabled={!officer} compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
-                            {
-                                declareWar()
-                            }}>
-                                Declare War
-                            </Button>
-                        )}
-                    </Group>
+                                    </Group>) : (
+                                        <Group ml='lg'>
+                                            <ThemeIcon size="md" radius="sm" color='red' >
+                                                <Sword />
+                                            </ThemeIcon>
+                                            <Button size='sm' disabled={!officer} compact color='green' leftIcon={<Handshake />} onClick={() =>
+                                            {
+                                                offerPeace()
+                                            }}>
+                                                Offer Peace
+                                            </Button>
+                                        </Group>
+                                    )
+                                )) : (
+                                <Button size='sm' disabled={!officer} compact color='red' ml='lg' leftIcon={<Sword />} onClick={() =>
+                                {
+                                    declareWar()
+                                }}>
+                                    Declare War
+                                </Button>
+                            )}
+                        </Group>)}
                 </Group>
             </Card.Section>
 

@@ -43,7 +43,6 @@ export default function Scores()
                 {loading && <Loader />}
                 {scores && scores.map(empire =>
                 {
-
                     let role = ''
                     let clanString = null
                     if (empire.clan) {

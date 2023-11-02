@@ -67,7 +67,7 @@ export default function Summary()
 				</Title>
 				<div>
 					{empire ? (
-						<Card opacity='80%'>
+						<Card>
 							<Group position='center' align='center'>
 								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Title order={2} align='center' >
@@ -176,12 +176,13 @@ export default function Summary()
 									</Table>
 								</Grid.Col>
 							</Grid>
+							<Stack align='center' spacing={0} mt='xs'>
+								{empire.turnsUsed < TURNS_PROTECTION ? (<Text align='center' mb='sm' color='green'>You are under new player protection for {TURNS_PROTECTION - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {TURNS_PROTECTION} turns.</Text>) : ('')}
+								<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
+								<Text align='center'>The current round will end in {days} days and {hours} hours.</Text>
+							</Stack>
 						</Card>) : ('')}
-					<Stack align='center' spacing={0} mt='xs'>
-						{empire.turnsUsed < TURNS_PROTECTION ? (<Text align='center' mb='sm' color='green'>You are under new player protection for {TURNS_PROTECTION - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {TURNS_PROTECTION} turns.</Text>) : ('')}
-						<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
-						<Text align='center'>The current round will end in {days} days and {hours} hours.</Text>
-					</Stack>
+
 				</div>
 			</Stack>
 		</main>
