@@ -21,10 +21,10 @@ export default function Scores()
 
     const { empire } = useSelector((state) => state.empire)
 
-    let myId = empire.id
+    let myEmpire = empire
 
     const { scores } = useSelector((state) => state.scores)
-    // console.log(scores)
+    console.log(scores)
 
     useEffect(() =>
     {
@@ -33,6 +33,7 @@ export default function Scores()
         setLoading(false)
     }, [])
 
+    // console.log(scores[0])
 
     return (
         <main>
@@ -40,25 +41,26 @@ export default function Scores()
                 <Title order={1} align='center'>
                     Scores
                 </Title>
-                {loading && <Loader />}
-                {scores && scores.map(empire =>
+                {loading ? <Loader /> : (scores.map(empire =>
                 {
+                    console.log(empire.clanReturn)
                     let role = ''
                     let clanString = null
-                    if (empire.clan) {
-                        if (empire.id === empire.clan.empireIdLeader) {
+                    if (empire.clanReturn) {
+                        if (empire.id === empire.clanReturn.empireIdLeader) {
                             role = 'Leader'
-                        } else if (empire.id === empire.clan.empireIdAssistant) {
+                        } else if (empire.id === empire.clanReturn.empireIdAssistant) {
                             role = 'Assistant'
-                        } else if (empire.id === empire.clan.empireIdAgent1 || empire.id === empire.clan.empireIdAgent2) {
+                        } else if (empire.id === empire.clanReturn.empireIdAgent1 || empire.id === empire.clanReturn.empireIdAgent2) {
                             role = 'Agent'
                         } else {
                             role = 'member'
                         }
-                        clanString = ` - ${role} of ${empire.clan.clanName}`
+                        clanString = ` - ${role} of ${empire.clanReturn.clanName}`
                     }
-                    return <ScoreCard empire={empire} myId={myId} key={empire.id} home={false} clan={clanString} />
-                })}
+
+                    return <ScoreCard empire={empire} myEmpire={myEmpire} key={empire.id} home={false} clan={clanString} />
+                }))}
 
             </Stack>
         </main>

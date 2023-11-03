@@ -1,8 +1,8 @@
-import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, ThemeIcon } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { Mountains, Scales, Hourglass } from "@phosphor-icons/react"
+import { Mountains, Scales, Hourglass, Sword } from "@phosphor-icons/react"
 import ScoresAttack from './diplomacy/scoresAttack'
 import ScoresSpell from './diplomacy/scoresSpell'
 import ScoresNews from './news/scoresNews'
@@ -10,8 +10,9 @@ import ScoresIntel from './diplomacy/scoresIntel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from './diplomacy/scoresAid'
+import { TURNS_PROTECTION } from '../config/config'
 
-const ScoreCard = ({ empire, myId, home, clan }) =>
+const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 {
 
     const [active, setActive] = useState(false)
@@ -48,22 +49,41 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
 
     }, [])
 
+    // console.log(myEmpire)
+
+    let atWar = false
+
+    if (myEmpire && empire.clanReturn?.relation) {
+        if (empire.clanReturn.relation.length > 0) {
+            let myRelations = empire.clanReturn.relation.map((relation) =>
+            {
+                if (relation.clanRelationFlags === 'war') {
+                    return relation.c_id2
+                }
+            })
+            // console.log(myRelations)
+            if (myRelations.includes(myEmpire.clanId)) {
+                atWar = true
+            }
+        }
+    }
+
+    // console.log(atWar)
 
     let color = ''
     let disabled = false
 
-    if (empire.turnsUsed <= 200) {
+    if (empire.turnsUsed <= TURNS_PROTECTION) {
         color = 'lightgreen'
         disabled = true
     }
     if (empire.mode === 'demo') {
         color = 'brown'
     }
-    if (empire.id === myId) {
+    if (empire.id === myEmpire?.id) {
         color = 'deepskyblue'
     }
-
-    if (empire.id === myId) {
+    if (empire.id === myEmpire?.id) {
         disabled = true
     }
 
@@ -89,7 +109,9 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                                 <Title order={4} color={color}>
-                                    {empire.name} {clan && clan}
+                                    {empire.name} {clan && clan} {atWar && <ThemeIcon size="sm" radius="sm" color='red'>
+                                        <Sword />
+                                    </ThemeIcon>}
                                 </Title>
                             </Group>
                         </Indicator>
@@ -110,7 +132,6 @@ const ScoreCard = ({ empire, myId, home, clan }) =>
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
                         <Group ml='xs' spacing='xs' noWrap >
-
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100} %</Text>
                         </Group>

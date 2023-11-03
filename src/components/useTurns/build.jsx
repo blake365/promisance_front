@@ -30,11 +30,13 @@ export default function Build()
 	const getBuildAmounts = (empire) =>
 	{
 		let size = calcSizeBonus(empire)
-		console.log(size)
+		// console.log(size)
 		let buildCost = Math.round((BUILD_COST + empire.land * 0.2) * (size / 3))
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
-		buildRate = Math.round((100 + raceArray[empire.race].mod_buildrate) / 100 * buildRate)
+		buildRate = Math.round(
+			((100 + raceArray[empire.race].mod_buildrate) / 100) * buildRate
+		)
 
 		let canBuild = Math.min(
 			Math.floor(empire.cash / buildCost),
