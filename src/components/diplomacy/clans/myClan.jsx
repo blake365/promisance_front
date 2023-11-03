@@ -1,7 +1,7 @@
 // forms to create and join a clan
-import { Group, Title, Text, Stack, Tabs, Paper, Loader } from "@mantine/core"
+import { Group, Title, Text, Stack, Tabs, Paper, Loader, Button } from "@mantine/core"
 
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Axios from "axios"
 import MemberCard from "./memberCard"
@@ -9,16 +9,31 @@ import ClanIntel from "./clanIntel"
 import ClanNews from "./clanNews"
 import ClanChat from "./clanChat"
 import ClanRelations from "./clanRelations"
+import { empireLoaded } from '../../../store/empireSlice'
+
 
 // show clan info, clan members, clan chat
 function MyClan()
 {
+    const dispatch = useDispatch()
+
     const { empire } = useSelector((state) => state.empire)
     const [clan, setClan] = useState(null)
     const [members, setMembers] = useState(null)
     const [clanMail, setClanMail] = useState(0)
+    const [response, setResponse] = useState(null)
 
     // console.log(empire)
+    const loadEmpireTest = async () =>
+    {
+        try {
+            const res = await Axios.get(`/empire/${empire.uuid}`)
+            // console.log(res.data)
+            dispatch(empireLoaded(res.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const checkForClanMail = async () =>
     {
@@ -38,11 +53,11 @@ function MyClan()
         async function getClan()
         {
             const clan = await Axios.post('/clans/get', { clanId: empire.clanId })
-            console.log(clan.data[0])
+            // console.log(clan.data[0])
             setClan(clan.data[0])
 
             const members = await Axios.post('/clans/getMembers', { clanId: empire.clanId })
-            console.log(members.data)
+            // console.log(members.data)
             setMembers(members.data)
         }
         if (empire) {
@@ -55,8 +70,36 @@ function MyClan()
         checkForClanMail().then((data) => setClanMail(data))
     }, [])
 
+    // console.log(clan)
+
     let intelMembers = members && members.map((member) => member.id)
     // console.log(intelMembers)
+
+    const disbandClan = async () =>
+    {
+        try {
+            const res = await Axios.post('/clans/disband', { clanId: clan.id, empireId: empire.id })
+            console.log(res.data)
+            // setResponse(res.data)
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+            setResponse(error?.response?.data?.error)
+        }
+    }
+
+    const leaveClan = async () =>
+    {
+        try {
+            const res = await Axios.post('/clans/leave', { empireId: empire.id })
+            console.log(res.data)
+            // setResponse(res.data)
+            loadEmpireTest()
+        } catch (error) {
+            console.log(error)
+            setResponse(error?.response?.data?.error)
+        }
+    }
 
     return (
         <section>
@@ -96,7 +139,7 @@ function MyClan()
                 {/* option to leave clan */}
 
                 <Paper mt={20}>
-                    <Tabs p='md' keepMounted={false}>
+                    <Tabs p='md' keepMounted={false} defaultValue="Clan Chat">
                         <Tabs.List>
                             <Tabs.Tab value="Clan Chat">
                                 Clan Chat {clanMail > 0 && <span>({clanMail})</span>}
@@ -131,6 +174,12 @@ function MyClan()
                         </Tabs.Panel>
 
                     </Tabs>
+                </Paper>
+
+                <Paper mt='lg' p='md'>
+                    {empire.id === clan.empireIdLeader ? (<Text mb='sm'>If you disband your clan you cannot join a new one for 3 days.</Text>) : <Text mb='sm'>If you leave a clan you cannot join a new one for 3 days.</Text>}
+                    {empire.id === clan.empireIdLeader ? (<Button color='red' onClick={disbandClan}>Disband Clan</Button>) : <Button color='red' onClick={leaveClan}>Leave Clan</Button>}
+                    <Text mt='sm' color='red'>{response}</Text>
                 </Paper>
             </div>
             }
