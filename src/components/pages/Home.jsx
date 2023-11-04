@@ -52,8 +52,7 @@ export default function Home()
                         </Box>
                     </Grid.Col>
                     <Grid.Col md={6} sm={12}>
-                        {smScreen ? <Image src='/images/mobileScreenshot.png' alt='screenshot' loading='lazy' width={350} fit='contain' radius={5} /> : <Image src='/images/Screenshot.png' alt='screenshot' loading='lazy' fit='contain' radius={5} />}
-
+                        {smScreen ? <Image src='/images/mobileScreenshot.webp' alt='screenshot' loading='lazy' width={350} fit='contain' radius={5} /> : <Image src='/images/Screenshot@0.5x.webp' alt='screenshot' loading='lazy' fit='contain' radius={5} />}
                     </Grid.Col>
                 </Grid>
 
@@ -86,44 +85,44 @@ export default function Home()
                             <Grid.Col sm={6} xs={12}>
                                 <Card ta='left' w={350} mih={440} withBorder mb='md'>
                                     <Card.Section>
-                                        <img src='/images/farm.webp' alt='farm' height={200} width={350} loading='lazy' />
+                                        <img src='/images/farm.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
                                     <Title order={2}>Farming</Title>
-                                    <Text size='sm'>As a Farmer you will focus your build on farms to produce as much food as possible. Sell your excess food to other players on the Public Market to grow your wealth. Master the dynamics of supply and demand to price your goods. Use your wealth to buy an army, and increase your land through attacks.</Text>
+                                    <Text mt='sm' size='sm'>As a Farmer you will focus your build on farms to produce as much food as possible. Sell your excess food to other players on the Public Market to grow your wealth. Master the dynamics of supply and demand to price your goods. Use your wealth to buy an army, and increase your land through attacks.</Text>
                                     <Card.Section inheritPadding withBorder py='sm' mt='xs'>
-                                        <Badge color='green'>Gremlin</Badge> <Badge color='green'>Goblin</Badge>
+                                        <Badge variant='filled' color='green'>Gremlin</Badge> <Badge variant='filled' color='green'>Goblin</Badge>
                                     </Card.Section>
                                 </Card>
                                 <Card ta='left' w={350} mih={440} withBorder>
                                     <Card.Section>
-                                        <img src='/images/industry.webp' alt='farm' height={200} width={350} loading='lazy' />
+                                        <img src='/images/industry.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
                                     <Title order={2}>Industry</Title>
-                                    <Text size='sm'>Focus on industry to produce troops for attack and defense. Build blacksmiths and keeps to produce troops and lower the cost of keeping them housed and fed. As you produce troops you can sell them on the Public Market to other players for a nice profit. The sale of your troops will fund your cash and food needs.</Text>
+                                    <Text mt='sm' size='sm'>Focus on industry to produce troops for attack and defense. Build blacksmiths and keeps to produce troops and lower the cost of keeping them housed and fed. As you produce troops you can sell them on the Public Market to other players for a nice profit. The sale of your troops will fund your cash and food needs.</Text>
                                     <Card.Section inheritPadding withBorder py='sm' mt='xs'>
-                                        <Badge color='red'>Dwarf</Badge> <Badge color='red'>Orc</Badge> <Badge color='red'>Goblin</Badge>
+                                        <Badge variant='filled' color='red'>Dwarf</Badge> <Badge variant='filled' color='red'>Orc</Badge> <Badge variant='filled' color='red'>Goblin</Badge>
                                     </Card.Section>
                                 </Card>
                             </Grid.Col>
                             <Grid.Col sm={6} xs={12}>
                                 <Card ta='left' w={350} mih={440} withBorder mb='md'>
                                     <Card.Section>
-                                        <img src='/images/cash.webp' alt='farm' height={200} width={350} loading='lazy' />
+                                        <img src='/images/cash.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
                                     <Title order={2}>Cashing</Title>
-                                    <Text size='sm'>As a Casher you will focus your buildings on huts and markets to grow your empire's economy. Use your excess cash to purchase food and troops from other players or from your Black Market. You may even be able to resell items for a profit. Balance your tax rate with what your citizens can bear for the best cash production.</Text>
+                                    <Text mt='sm' size='sm'>As a Casher you will focus your buildings on huts and markets to grow your empire's economy. Use your excess cash to purchase food and troops from other players or from your Black Market. You may even be able to resell items for a profit. Balance your tax rate with what your citizens can bear for the best cash production.</Text>
                                     <Card.Section inheritPadding withBorder py='sm' mt='xs'>
-                                        <Badge color='yellow'>Gnome</Badge> <Badge color='yellow'>Troll</Badge>
+                                        <Badge variant='filled' color='yellow'>Gnome</Badge> <Badge variant='filled' color='yellow'>Troll</Badge>
                                     </Card.Section>
                                 </Card>
                                 <Card ta='left' w={350} mih={440} withBorder>
                                     <Card.Section>
-                                        <img src='/images/magic.webp' alt='farm' height={200} width={350} loading='lazy' />
+                                        <img src='/images/magic.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
                                     <Title order={2}>Magic</Title>
-                                    <Text size='sm'>As a Mage you will rely on wizards and spells to create resources. Mage towers bring wizards to your land and produce the mana required for spells. Cast spells like Tree of Gold and Cornucopia to produce cash and food for your empire. Use offensive spells to tip battles in your favor or steal resources from undefended foes. </Text>
+                                    <Text mt='sm' size='sm'>As a Mage you will rely on wizards and spells to create resources. Mage towers bring wizards to your land and produce the mana required for spells. Cast spells like Tree of Gold and Cornucopia to produce cash and food for your empire. Use offensive spells to tip battles in your favor or steal resources from undefended foes. </Text>
                                     <Card.Section inheritPadding withBorder py='sm' mt='xs'>
-                                        <Badge color='indigo'>Elf</Badge> <Badge color='indigo'>Drow</Badge>
+                                        <Badge variant='filled' color='indigo'>Elf</Badge> <Badge variant='filled' color='indigo'>Drow</Badge>
                                     </Card.Section>
                                 </Card>
                             </Grid.Col>

@@ -56,7 +56,7 @@ export function HeroImageRight()
                             Welcome to
                         </Text>
                         <Group align='center' spacing={4}>
-                            <img src={neoIcon} className={classes.svg} />
+                            <img src={neoIcon} className={classes.svg} alt='logo' />
                             <Title className={classes.title} mb='lg'>
                                 NeoPromisance
                             </Title>
