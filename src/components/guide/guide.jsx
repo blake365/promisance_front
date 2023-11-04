@@ -28,6 +28,12 @@ import AidGuide from "./guidepages/foreignAid";
 import ClanGuide from "./guidepages/clan";
 import ClanStatsGuide from "./guidepages/clanStats";
 import FavoritesGuide from "./guidepages/favorites";
+import ProtectionGuide from "./guidepages/protection";
+import PublicMarketGuide from "./guidepages/publicMarket";
+import FarmerGuide from "./guidepages/farmer";
+import CasherGuide from "./guidepages/casher";
+import IndyGuide from "./guidepages/indy";
+import MageGuide from "./guidepages/mage";
 
 export default function Guide(props)
 {
@@ -94,6 +100,18 @@ export default function Guide(props)
             return <ClanStatsGuide />
         case 'Favorites':
             return <FavoritesGuide />
+        case 'Public%20Market':
+            return <PublicMarketGuide />
+        case 'Protection':
+            return <ProtectionGuide empire={props.empire} />
+        case 'Farmer':
+            return <FarmerGuide empire={props.empire} />
+        case 'Casher':
+            return <CasherGuide empire={props.empire} />
+        case 'Indy':
+            return <IndyGuide empire={props.empire} />
+        case 'Mage':
+            return <MageGuide empire={props.empire} />
         default:
             return <GuideIndex />
     }

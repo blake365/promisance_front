@@ -15,6 +15,14 @@ export default function GuideIndex()
                     <GuideLink text='Races' page='Race' />
                     <GuideLink text='Time Periods' page='Era' />
                 </Group>
+                <h4>Basic Strategies</h4>
+                <Group>
+                    <GuideLink text='Protection' page='Protection' />
+                    <GuideLink text='Farmer' page='Farmer' />
+                    <GuideLink text='Industrialist' page='Indy' />
+                    <GuideLink text='Casher' page='Casher' />
+                    <GuideLink text='Mage' page='Mage' />
+                </Group>
                 <h4>Information</h4>
                 <Group>
                     <GuideLink text='Empire Summary' page='Summary' />
@@ -58,12 +66,10 @@ export default function GuideIndex()
                 </Group>
                 <h4>Management</h4>
                 <Group>
-
                     {/* <GuideLink text='Managing Your Account' page='Account' /> */}
                     <GuideLink text='Empire Settings' page='Empire%20Settings' />
                     {/* <GuideLink text='Managing Your Clan' page='Manage%20Clan' /> */}
                 </Group>
-
             </div>
         </div>
     )
