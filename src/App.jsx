@@ -274,7 +274,7 @@ function App()
 					styles={(theme) => ({
 						main: {
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-						},
+						}
 					})}
 					navbarOffsetBreakpoint='sm'
 					fixed
@@ -317,14 +317,19 @@ function App()
 										size='sm'
 									/>
 								</MediaQuery>
-								<Group align='center' spacing={4}>
-									<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
-										<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-									</MediaQuery>
-									<Title order={1} ml={0}>
-										NeoPromisance
-									</Title>
-								</Group>
+								<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
+									<Group align='center' spacing={4}>
+
+										<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
+											<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+										</MediaQuery>
+
+										<Title order={1} ml={0}>
+											NeoPromisance
+										</Title>
+
+									</Group>
+								</a>
 								<Group>
 									{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
 									<ThemeToggle />

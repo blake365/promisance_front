@@ -10,10 +10,10 @@ export default function FooterSocial()
                 <Group spacing={0} position="apart" noWrap>
                     <Title order={1}>NeoPromisance</Title>
                     <Group>
-                        <ActionIcon size="lg" component='a' href='https://discord.gg/bnuVy2pdgM' alt='discord link'>
+                        <ActionIcon size="lg" component='a' href='https://discord.gg/bnuVy2pdgM' aria-label='discord link'>
                             <IconBrandDiscord size="2rem" stroke={1.5} />
                         </ActionIcon>
-                        <ActionIcon size="lg" component='a' href='https://github.com/blake365/typescript_promisance' alt='github link'>
+                        <ActionIcon size="lg" component='a' href='https://github.com/blake365/typescript_promisance' aria-label='github link'>
                             <IconBrandGithub size="2rem" stroke={1.5} />
                         </ActionIcon>
                     </Group>

@@ -10,6 +10,7 @@ export default function EffectIcons()
     let effects = useSelector((state) => state.effects.effects)
     let now = new Date()
 
+    // console.log(effects)
 
     return (
         <div>
