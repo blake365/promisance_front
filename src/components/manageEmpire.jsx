@@ -4,8 +4,9 @@ import { useForm, hasLength } from '@mantine/form'
 import { forwardRef, useState } from 'react'
 import Axios from 'axios'
 import { empireLoaded } from '../store/empireSlice'
-import { TURNS_MAXIMUM } from '../config/config'
+import { TURNS_MAXIMUM, TURNS_PROTECTION } from '../config/config'
 import { raceArray } from '../config/races'
+import { useNavigate } from 'react-router-dom'
 
 // create polymorph feature
 
@@ -52,12 +53,15 @@ const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
 export default function ManageEmpire()
 {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
 
 	const { empire } = useSelector((state) => state.empire)
 
 	const [profileUpdate, setProfileUpdate] = useState()
 	const [iconUpdate, setIconUpdate] = useState()
 	const [raceUpdate, setRaceUpdate] = useState()
+	const [deleteUpdate, setDeleteUpdate] = useState()
 
 	const form = useForm({
 		initialValues: {
@@ -67,6 +71,12 @@ export default function ManageEmpire()
 		},
 		validate: {
 			profile: hasLength({ max: 499 }, 'Profile must have 499 or less characters'),
+		},
+	})
+
+	const form2 = useForm({
+		initialValues: {
+			confirm: '',
 		},
 	})
 
@@ -125,9 +135,24 @@ export default function ManageEmpire()
 		}
 	}
 
-
-	// Change empire race form
 	// Rename empire form?
+	// free polymorph in protection
+	// option to delete empire
+
+	const deleteEmpire = async (values) =>
+	{
+		if (values.confirm === 'confirm') {
+			try {
+				const res = await Axios.delete(`/empire/${empire.uuid}`)
+				console.log(res.data)
+				navigate('/')
+			} catch (error) {
+				console.log(error)
+			}
+		} else {
+			setDeleteUpdate('Please confirm')
+		}
+	}
 
 	return (
 		<main>
@@ -186,8 +211,7 @@ export default function ManageEmpire()
 					<Stack spacing='sm' align='center'>
 						<Group align='center'>
 							<Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={40} width={40} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-							<Text w='300px'>{`Change your empire's race. This will cost you ${Math.floor(TURNS_MAXIMUM / 2)} turns, 25% of your food, cash, and runes, and 10% of your population and army. `}</Text>
-
+							{empire.turnsUsed > TURNS_PROTECTION ? (<Text w='300px'>{`Change your empire's race. This will cost you ${Math.floor(TURNS_MAXIMUM / 2)} turns, 25% of your food, cash, and runes, and 10% of your population and army. `}</Text>) : (<Text w='300px'>{`Change your empire's race. There is no cost to changing your race while in new player protection.`}</Text>)}
 						</Group>
 
 						<Select
@@ -202,6 +226,27 @@ export default function ManageEmpire()
 						<Text>{raceUpdate}</Text>
 					</Stack>
 				</form>
+
+				<Stack spacing='sm' align='center'>
+					<Title>Delete Empire</Title>
+					<Text maw={400}>This will fully delete your empire for this round. We are sorry to see you go. <a href='mailto:admin@neopromisance.com'>Contact us</a> if you have any feedback to improve the game. </Text>
+					<form onSubmit={form2.onSubmit((values) =>
+					{
+						console.log('deleting empire')
+						console.log(values)
+						deleteEmpire(values)
+					})}>
+						<Stack>
+							<TextInput placeholder="Type 'confirm' to delete empire"
+								{...form2.getInputProps('confirm')}
+								mb='sm'
+								maw={300}
+							/>
+							<Button color="red" type='submit'>Delete Empire</Button>
+							{deleteUpdate && <Text ta='center'>{deleteUpdate}</Text>}
+						</Stack>
+					</form>
+				</Stack>
 			</Stack>
 		</main>
 	)

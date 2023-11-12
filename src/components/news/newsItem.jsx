@@ -1,6 +1,6 @@
 import { Group, Card, Text, Box, Badge } from '@mantine/core'
 
-import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid } from '@phosphor-icons/react'
+import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid, Handshake } from '@phosphor-icons/react'
 
 
 export default function NewsItem({ item, now })
@@ -44,10 +44,14 @@ export default function NewsItem({ item, now })
         if (type === 'attack' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'attack' && result === 'fail') return <Sword size={24} color={highlight} weight='fill' />
         if (type === 'market' && result === 'success') return <ShoppingCart size={24} color={highlight} weight='fill' />
+        if (type === 'market' && result === 'fail') return <ShoppingCart size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'fail') return <MagicWand size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'shielded') return <ShieldStar size={24} color={highlight} weight='fill' />
         if (type === 'aid' && result === 'success') return <FirstAid size={24} color={highlight} weight='fill' />
+        if (type === 'war' && result === 'success') return <Sword size={24} color={highlight} weight='duotone' />
+        if (type === 'peace' && result === 'success') return <Handshake size={24} color={highlight} weight='fill' />
+        if (type === 'peace' && result === 'shielded') return <Handshake size={24} color={highlight} weight='fill' />
     }
 
     return (
