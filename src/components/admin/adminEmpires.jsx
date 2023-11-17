@@ -1,7 +1,8 @@
 import { Table, Text, Button, Title, Menu, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { IconSettings, IconTrash } from '@tabler/icons'
+import { IconSettings, IconTrash, IconAlertTriangle } from '@tabler/icons'
+import classes from './guide.module.css'
 
 function AdminEmpires()
 {
@@ -17,7 +18,6 @@ function AdminEmpires()
             console.log(data);
             setEmpires(data);
         }
-
         loadEmpires()
 
     }, [response]);
@@ -26,6 +26,15 @@ function AdminEmpires()
     {
         console.log('deleting empire')
         const response = await Axios.delete('/admin/deleteempire/' + uuid);
+        const data = response.data;
+        console.log(data);
+        setResponse(data);
+    }
+
+    const disableEmpire = async (uuid) =>
+    {
+        console.log('disabling empire')
+        const response = await Axios.post('/admin/disableempire/' + uuid);
         const data = response.data;
         console.log(data);
         setResponse(data);
@@ -42,6 +51,7 @@ function AdminEmpires()
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
                     <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteEmpire(item.uuid)}>Delete</Menu.Item>
+                    <Menu.Item color="orange" icon={<IconAlertTriangle size={14} />} onClick={() => disableEmpire(item.uuid)}>Disable</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <td>
@@ -55,6 +65,9 @@ function AdminEmpires()
             </td>
             <td>
                 {item.name}
+            </td>
+            <td>
+                {item.flags}
             </td>
             <td>
                 {item.turns}
@@ -85,31 +98,34 @@ function AdminEmpires()
 
     return (
         <Stack>
-            <Title>Users</Title>
+            <Title>Empires</Title>
             <Text color='red'>{response?.message}</Text>
             {empires.length > 0 &&
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Mode</th>
-                            <th>Created</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Turns</th>
-                            <th>Turns Used</th>
-                            <th>Profile</th>
-                            <th>Rank</th>
-                            <th>Networth</th>
-                            <th>Land</th>
-                            <th>Cash</th>
-                            <th>Food</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </Table>
+                <div className={classes.guideTable}>
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Mode</th>
+                                <th>Created</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Flags</th>
+                                <th>Turns</th>
+                                <th>Turns Used</th>
+                                <th>Profile</th>
+                                <th>Rank</th>
+                                <th>Networth</th>
+                                <th>Land</th>
+                                <th>Cash</th>
+                                <th>Food</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
+                </div>
             }
         </Stack>
     );

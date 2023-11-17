@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
-
+import { PURGE } from 'redux-persist'
 // const initialState = user
 // 	? { isLoggedIn: true, user }
 // 	: { isLoggedIn: false, user: null }
@@ -117,6 +117,9 @@ export const userSlice = createSlice({
 		[logout.fulfilled]: (state, action) => {
 			state.isLoggedIn = false
 			state.user = null
+		},
+		[PURGE]: (state, action) => {
+			state = initialState
 		},
 	},
 })

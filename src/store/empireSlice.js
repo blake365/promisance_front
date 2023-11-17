@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
+import { PURGE } from 'redux-persist'
+
+const initialState = {
+	status: 'idle',
+	empire: null,
+}
 
 export const create = createAsyncThunk(
 	'empire/created',
@@ -37,10 +43,7 @@ export const fetchEmpire = createAsyncThunk(
 
 export const empireSlice = createSlice({
 	name: 'empire',
-	initialState: {
-		status: 'idle',
-		empire: null,
-	},
+	initialState: initialState,
 	reducers: {
 		empireLoaded: (state, { payload }) => ({
 			empire: payload,
@@ -64,6 +67,10 @@ export const empireSlice = createSlice({
 		[fetchEmpire.fulfilled]: (state, action) => {
 			state.status = 'succeeded'
 			state.empire = action.payload.empire
+		},
+		[PURGE]: (state, action) => {
+			// console.log(action)
+			state = initialState
 		},
 	},
 })

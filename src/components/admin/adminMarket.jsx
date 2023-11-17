@@ -2,6 +2,7 @@ import { Table, Text, Button, Title, Menu, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons'
+import classes from './guide.module.css'
 
 const marketArray = [
     'trpArm', 'trpLnd', 'trpFly', 'trpSea', 'food', 'runes'
@@ -77,26 +78,29 @@ function AdminMarket()
 
     return (
         <Stack>
-            <Title>Mail</Title>
+            <Title>Market</Title>
             <Text color='red'>{response?.message}</Text>
             {items.length > 0 &&
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Created At</th>
-                            <th>Empire ID</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Price</th>
-                            <th>Time on Market</th>
-                            <th>Secret</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </Table>
+                <div className={classes.guideTable}>
+
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Created At</th>
+                                <th>Empire ID</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Time on Market</th>
+                                <th>Secret</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
+                </div>
             }
         </Stack>
     );

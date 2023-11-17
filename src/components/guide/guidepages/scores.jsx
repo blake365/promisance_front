@@ -1,5 +1,6 @@
 import GuideLink from '../../utilities/guidelink'
-
+import { Sword } from "@phosphor-icons/react"
+import { ThemeIcon } from '@mantine/core'
 
 export default function ScoresGuide()
 {
@@ -18,8 +19,11 @@ export default function ScoresGuide()
                 <dd>Denotes empires which are members of your current clan.</dd>
                 <dt><span className="mally">Ally</span></dt>
                 <dd>Empires belonging to a clan allied with your own appear in this color.</dd>
-                <dt><span className="mwar">War</span></dt>
-                <dd>If your clan has declared war on another clan, its members will be listed in this color.</dd>*/}
+                */}
+                <dt><span>War <ThemeIcon size="sm" radius="sm" color='red'>
+                    <Sword />
+                </ThemeIcon></span></dt>
+                <dd>If your clan has declared war on another clan, its members will be listed in this color.</dd>
                 <dt><span style={{ color: 'red' }}>Locked</span></dt>
                 <dd>These empires have been disabled by the Administration for violating the established Rules.</dd>
                 <dt><span style={{ color: 'orange' }}>Administrator</span></dt>

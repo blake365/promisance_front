@@ -32,7 +32,7 @@ export default function BonusTurns()
 
     return (
         <div>
-            {status === 'succeeded' && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= TURNS_MAXIMUM - 10}>Bonus Turns</Button>) : ('')}
+            {status === 'succeeded' && empire.flags === 0 && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= TURNS_MAXIMUM - 10}>Bonus Turns</Button>) : ('')}
         </div>
     )
 }

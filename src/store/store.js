@@ -21,7 +21,7 @@ import { scoresSlice } from './scoresSlice'
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: [],
+	whitelist: ['user', 'empire'],
 }
 
 const reducers = combineReducers({

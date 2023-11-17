@@ -15,8 +15,6 @@ import { raceArray } from '../config/races'
 import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
 import { BASE_LUCK } from '../config/config'
-import { useEffect, useState } from 'react'
-import Axios from 'axios'
 
 const RaceBonus = ({ value }) =>
 {
@@ -58,23 +56,6 @@ export default function Overview()
 	const era = eraArray[empire.era]
 
 	let luck = Math.round(BASE_LUCK / size)
-
-	// const [clan, setClan] = useState(null)
-
-	// const getClan = async () =>
-	// {
-	// 	const res = await Axios.post('/clans/get', { clanId: empire.clanId })
-	// 	// console.log(res.data)
-	// 	setClan(res.data)
-	// }
-
-	// useEffect(() =>
-	// {
-	// 	// console.log(empire.clanId)
-	// 	if (empire.clanId !== 0) {
-	// 		getClan()
-	// 	}
-	// }, [])
 
 	let clan = empire.clan
 

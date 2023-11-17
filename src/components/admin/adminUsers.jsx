@@ -2,6 +2,7 @@ import { Table, Text, Button, Title, Menu, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons'
+import classes from './guide.module.css'
 
 function AdminUsers()
 {
@@ -73,23 +74,26 @@ function AdminUsers()
             <Title>Users</Title>
             <Text color='red'>{response?.message}</Text>
             {users.length > 0 &&
-                <Table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Role</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Last IP</th>
-                            <th>Created At</th>
-                            <th>Empire Name</th>
-                            <th>Empire ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </Table>
+                <div className={classes.guideTable}>
+
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Role</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Last IP</th>
+                                <th>Created At</th>
+                                <th>Empire Name</th>
+                                <th>Empire ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
+                </div>
             }
         </Stack>
     );

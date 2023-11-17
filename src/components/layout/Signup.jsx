@@ -118,6 +118,9 @@ export default function Signup()
 						{...form.getInputProps('password')}
 						mt='md'
 					/>
+					<Text ta="center" mt="md">
+						By registering an account, you agree to abide by the <Anchor href='/rules'>game rules</Anchor>.
+					</Text>
 					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
 					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
 				</form>

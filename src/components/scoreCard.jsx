@@ -86,6 +86,12 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     if (empire.id === myEmpire?.id) {
         disabled = true
     }
+    if (empire.flags === 1) {
+        color = 'red'
+    }
+    if (empire.mode === 'admin') {
+        color = 'orange'
+    }
 
     // console.log(typeof home)
     // let actionDate = new Date()

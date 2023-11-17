@@ -54,6 +54,9 @@ import { inject } from '@vercel/analytics';
 
 import ClanPage from './components/diplomacy/clans/clanPage'
 import ClanStats from './components/diplomacy/clans/clanStats'
+import PrivacyPolicy from './components/pages/PrivacyPolicy'
+import Disabled from './components/pages/disabled'
+import GameRules from './components/pages/Rules'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -75,10 +78,13 @@ ReactDOM.render(
 				<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Home />} />
+						<Route path='*' element={<NothingFoundBackground />} />
 						<Route path='/login' element={<NewLogin />} />
 						<Route path='/register' element={<Signup />} />
 						<Route path='/create' element={<CreateEmpire />} />
 						<Route path='/demo' element={<CreateDemoEmpire />} />
+						<Route path='/privacy' element={<PrivacyPolicy />} />
+						<Route path='/rules' element={<GameRules />} />
 						<Route path='/admin/' element={<Admin />} >
 							<Route path='*' element={<NothingFoundBackground />} />
 							<Route path='' element={<AdminSummary />} />
@@ -117,6 +123,7 @@ ReactDOM.render(
 							<Route path='Foreign%20Aid' element={<ForeignAid />} />
 							<Route path='Clans' element={<ClanPage />} />
 							<Route path='Clan%20Stats' element={<ClanStats />} />
+							<Route path='disabled' element={<Disabled />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>

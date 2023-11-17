@@ -2,6 +2,7 @@ import { Table, Text, Button, Title, Menu, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons'
+import classes from './guide.module.css'
 
 function AdminMail()
 {
@@ -76,24 +77,27 @@ function AdminMail()
             <Title>Mail</Title>
             <Text color='red'>{response?.message}</Text>
             {items.length > 0 &&
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Created At</th>
-                            <th>Source Empire Id</th>
-                            <th>Source Empire Name</th>
-                            <th>Destination Empire Id</th>
-                            <th>Destination Empire Name</th>
-                            <th>Message Body</th>
-                            <th>Conversation Id</th>
-                            <th>Seen</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </Table>
+                <div className={classes.guideTable}>
+
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Created At</th>
+                                <th>Source Empire Id</th>
+                                <th>Source Empire Name</th>
+                                <th>Destination Empire Id</th>
+                                <th>Destination Empire Name</th>
+                                <th>Message Body</th>
+                                <th>Conversation Id</th>
+                                <th>Seen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
+                </div>
             }
         </Stack>
     );

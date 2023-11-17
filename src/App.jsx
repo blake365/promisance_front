@@ -26,6 +26,8 @@ import
 
 import neoIcon from './icons/neoIcon.svg'
 
+// import persistor from './store/store'
+
 import Sidebar from './components/layout/sidebar'
 import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -45,6 +47,7 @@ import EmpireNews from './components/news/empireNews';
 import BonusTurns from './components/layout/bonusTurns';
 import { loadScores } from './store/scoresSlice';
 import { TURNS_PROTECTION } from './config/config';
+import { persistor } from './store/store';
 
 function App()
 {
@@ -76,6 +79,12 @@ function App()
 			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
 		} catch (error) {
+			persistor.pause();
+			persistor.flush().then(() =>
+			{
+				return persistor.purge();
+			})
+			navigate('/')
 			console.log(error)
 		}
 	}
@@ -89,7 +98,12 @@ function App()
 				dispatch(fetchOtherItems(marketValues))
 			}
 		} catch (error) {
-			console.log(error)
+			persistor.pause();
+			persistor.flush().then(() =>
+			{
+				return persistor.purge();
+			})
+			navigate('/')
 		}
 	}
 
@@ -100,7 +114,12 @@ function App()
 			// console.log(res.data.count)
 			return res.data.count
 		} catch (error) {
-			console.log(error)
+			persistor.pause();
+			persistor.flush().then(() =>
+			{
+				return persistor.purge();
+			})
+			navigate('/')
 		}
 	}
 
@@ -111,7 +130,12 @@ function App()
 			// console.log(res.data.count)
 			return res.data.count
 		} catch (error) {
-			console.log(error)
+			persistor.pause();
+			persistor.flush().then(() =>
+			{
+				return persistor.purge();
+			})
+			navigate('/')
 		}
 	}
 
@@ -123,7 +147,12 @@ function App()
 			// console.log(res.data)
 			return res.data
 		} catch (error) {
-			console.log(error)
+			persistor.pause();
+			persistor.flush().then(() =>
+			{
+				return persistor.purge();
+			})
+			navigate('/')
 		}
 	}
 
@@ -136,13 +165,31 @@ function App()
 				const res = await Axios.get('auth/me')
 				// console.log('status', res.data)
 				if (res.status === 401) {
+					persistor.pause();
+					persistor.flush().then(() =>
+					{
+						return persistor.purge();
+					})
 					navigate('/')
+
 				} else if (res.status !== 200) {
+					persistor.pause();
+					persistor.flush().then(() =>
+					{
+						return persistor.purge();
+					})
 					navigate('/')
+
 				} else if (res.data) {
 					dispatch(load())
 				}
 			} catch (error) {
+				console.log(error)
+				persistor.pause();
+				persistor.flush().then(() =>
+				{
+					return persistor.purge();
+				})
 				navigate('/')
 			}
 		}
@@ -150,7 +197,6 @@ function App()
 		if (!isLoggedIn) {
 			loadUser()
 		}
-
 
 		if (isLoggedIn && user.empires.length > 0 && empireStatus === 'idle') {
 			dispatch(fetchEmpire(
@@ -169,37 +215,49 @@ function App()
 		dispatch(setPage(pageState))
 
 		if (empireStatus === 'succeeded') {
-			try {
-				dispatch(fetchEffects({
-					id: empire.id
-				})).then((data) =>
-				{
-					// console.log(data)
-					if (data.meta.requestStatus === 'rejected') {
-						navigate('/')
+
+			if (empire.flags === 1 && location.pathname !== '/app/disabled') {
+				navigate('/app/disabled')
+			} else {
+
+				try {
+					dispatch(fetchEffects({
+						id: empire.id
+					})).then((data) =>
+					{
+						// console.log(data)
+						if (data.meta.requestStatus === 'rejected') {
+							navigate('/')
+						}
 					}
+					)
+					checkForNews().then((data) =>
+					{
+						// console.log(data)
+						setNews(data)
+					})
+					// checkForMail().then((data) =>
+					// {
+					// 	// console.log(data)
+					// 	setMail(data)
+					// })
+
+					// if (empire.clanId !== 0) {
+					// 	checkForClanMail().then((data) =>
+					// 		setClanMail(data))
+					// }
+
 				}
-				)
-				checkForNews().then((data) =>
-				{
-					// console.log(data)
-					setNews(data)
-				})
-				// checkForMail().then((data) =>
-				// {
-				// 	// console.log(data)
-				// 	setMail(data)
-				// })
-
-				// if (empire.clanId !== 0) {
-				// 	checkForClanMail().then((data) =>
-				// 		setClanMail(data))
-				// }
-
-			}
-			catch (error) {
-				// console.log(error)
-				navigate('/')
+				catch (error) {
+					// console.log(error)
+					// navigate('/')
+					persistor.pause();
+					persistor.flush().then(() =>
+					{
+						return persistor.purge();
+					})
+					navigate('/')
+				}
 			}
 		}
 

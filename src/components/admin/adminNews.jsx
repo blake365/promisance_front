@@ -2,6 +2,7 @@ import { Table, Text, Button, Title, Menu, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons'
+import classes from './guide.module.css'
 
 function AdminNews()
 {
@@ -79,25 +80,28 @@ function AdminNews()
             <Title>News</Title>
             <Text color='red'>{response?.message}</Text>
             {items.length > 0 &&
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Created At</th>
-                            <th>Type</th>
-                            <th>Result</th>
-                            <th>Source Name</th>
-                            <th>Source ID</th>
-                            <th>Destination Name</th>
-                            <th>Destination ID</th>
-                            <th>Personal Content</th>
-                            <th>Public Content</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </Table>
+                <div className={classes.guideTable}>
+
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Created At</th>
+                                <th>Type</th>
+                                <th>Result</th>
+                                <th>Source Name</th>
+                                <th>Source ID</th>
+                                <th>Destination Name</th>
+                                <th>Destination ID</th>
+                                <th>Personal Content</th>
+                                <th>Public Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </Table>
+                </div>
             }
         </Stack>
     );

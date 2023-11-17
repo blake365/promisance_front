@@ -60,7 +60,7 @@ export function NothingFoundBackground()
                         page has been moved to another URL. If you think this is an error contact support.
                     </Text>
                     <Group position="center">
-                        <Button size="md" component='a' href='/app/'>Take me back to home page</Button>
+                        <Button size="md" component='a' href='/'>Take me back home</Button>
                     </Group>
                 </div>
             </div>
