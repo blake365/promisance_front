@@ -67,7 +67,7 @@ export default function PrivateMarketBuy()
         }
     })
 
-
+    // 23 4003
 
     // console.log(availArray)
     // console.log(priceArray)
@@ -253,6 +253,17 @@ export default function PrivateMarketBuy()
                                                         hideControls
                                                         min={0}
                                                         max={avail}
+                                                        parser={(value) =>
+                                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                                        }
+                                                        formatter={(value) =>
+                                                        {
+                                                            // console.log(typeof value)
+                                                            return !Number.isNaN(parseFloat(value))
+                                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                                : ''
+                                                        }
+                                                        }
                                                         {...form.getInputProps(buy)}
                                                         rightSection={<MaxButton formName={form} fieldName={buy} maxValue={avail} />}
                                                     />

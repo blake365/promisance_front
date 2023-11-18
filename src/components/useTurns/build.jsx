@@ -212,6 +212,17 @@ export default function Build()
 													<MaxButton fieldName='bldPop' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -236,6 +247,17 @@ export default function Build()
 													<MaxButton fieldName='bldCash' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -260,6 +282,17 @@ export default function Build()
 													<MaxButton fieldName='bldTroop' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -284,6 +317,17 @@ export default function Build()
 													<MaxButton fieldName='bldCost' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -308,6 +352,17 @@ export default function Build()
 													<MaxButton fieldName='bldWiz' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -333,6 +388,17 @@ export default function Build()
 													<MaxButton fieldName='bldFood' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -357,6 +423,17 @@ export default function Build()
 													<MaxButton fieldName='bldDef' maxValue={canBuild} formName={form} />
 												</div>}
 												rightSectionWidth={70}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 

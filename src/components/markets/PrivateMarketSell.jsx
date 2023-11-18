@@ -194,6 +194,17 @@ export default function PrivateMarketSell()
                                                         hideControls
                                                         min={0}
                                                         max={empire[troop] * (PVTM_MAXSELL / 10000)}
+                                                        parser={(value) =>
+                                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                                        }
+                                                        formatter={(value) =>
+                                                        {
+                                                            // console.log(typeof value)
+                                                            return !Number.isNaN(parseFloat(value))
+                                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                                : ''
+                                                        }
+                                                        }
                                                         {...form.getInputProps(sell)}
                                                         rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PVTM_MAXSELL / 10000)} />}
                                                     />

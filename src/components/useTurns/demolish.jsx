@@ -244,7 +244,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
 													<MaxButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -268,7 +278,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
 													<MaxButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -292,7 +312,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
 													<MaxButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -316,7 +346,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
 													<MaxButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -340,7 +380,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
 													<MaxButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -365,7 +415,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
 													<MaxButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -389,7 +449,17 @@ export default function Demolish()
 													<HalfButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
 													<MaxButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
 												</div>}
-												rightSectionWidth={70}
+												rightSectionWidth={70} parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 
@@ -442,6 +512,17 @@ export default function Demolish()
 												defaultValue={0}
 												max={empire.freeLand}
 												{...dropForm.getInputProps('drop')}
+												parser={(value) =>
+													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+												}
+												formatter={(value) =>
+												{
+													// console.log(typeof value)
+													return !Number.isNaN(parseFloat(value))
+														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												}
 											/>
 										</td>
 									</tr>
@@ -451,8 +532,6 @@ export default function Demolish()
 								Drop Land
 							</Button>
 						</Stack>
-
-
 					</form>
 				</Stack>
 			</Center>

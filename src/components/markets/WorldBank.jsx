@@ -180,6 +180,17 @@ export default function WorldBank()
                                         rightSection={
                                             <MaxButton formName={savingsForm} fieldName='depositAmt' maxValue={canSave} />
                                         }
+                                        parser={(value) =>
+                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                        }
+                                        formatter={(value) =>
+                                        {
+                                            // console.log(typeof value)
+                                            return !Number.isNaN(parseFloat(value))
+                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
+                                        }
+                                        }
                                     />
                                     <NumberInput
                                         hideControls
@@ -191,6 +202,17 @@ export default function WorldBank()
                                         max={empire.bank}
                                         {...savingsForm.getInputProps('withdrawAmt')}
                                         rightSection={<MaxButton formName={savingsForm} fieldName='withdrawAmt' maxValue={empire.bank} />}
+                                        parser={(value) =>
+                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                        }
+                                        formatter={(value) =>
+                                        {
+                                            // console.log(typeof value)
+                                            return !Number.isNaN(parseFloat(value))
+                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
+                                        }
+                                        }
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Stack>
@@ -231,6 +253,17 @@ export default function WorldBank()
                                         max={empire.loan}
                                         {...loanForm.getInputProps('repayAmt')}
                                         rightSection={<MaxButton formName={loanForm} fieldName='repayAmt' maxValue={empire.loan} />}
+                                        parser={(value) =>
+                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                        }
+                                        formatter={(value) =>
+                                        {
+                                            // console.log(typeof value)
+                                            return !Number.isNaN(parseFloat(value))
+                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
+                                        }
+                                        }
                                     />
                                     <NumberInput
                                         hideControls
@@ -242,6 +275,17 @@ export default function WorldBank()
                                         max={canLoan}
                                         {...loanForm.getInputProps('loanAmt')}
                                         rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={canLoan} />}
+                                        parser={(value) =>
+                                            value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                        }
+                                        formatter={(value) =>
+                                        {
+                                            // console.log(typeof value)
+                                            return !Number.isNaN(parseFloat(value))
+                                                ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                : ''
+                                        }
+                                        }
                                     />
                                     <Button type='submit'>Submit</Button>
                                 </Stack>

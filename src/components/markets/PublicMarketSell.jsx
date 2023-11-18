@@ -313,11 +313,16 @@ export default function PublicMarketSell({ empire })
                                                             min={1}
                                                             {...form.getInputProps(`${price}`)}
                                                             styles={{ input: { textAlign: 'center' } }}
-                                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                                            parser={(value) =>
+                                                                value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                                            }
                                                             formatter={(value) =>
-                                                                !Number.isNaN(parseFloat(value))
-                                                                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                                                    : '$ '
+                                                            {
+                                                                // console.log(typeof value)
+                                                                return !Number.isNaN(parseFloat(value))
+                                                                    ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                                                    : ''
+                                                            }
                                                             }
                                                         />
                                                     </td>
@@ -331,11 +336,16 @@ export default function PublicMarketSell({ empire })
                                                             max={canSell[index]}
                                                             {...form.getInputProps(`${sell}`)}
                                                             rightSection={<MaxButton formName={form} fieldName={sell} maxValue={canSell[index]} />}
-                                                            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                                            parser={(value) =>
+                                                                value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                                                            }
                                                             formatter={(value) =>
-                                                                !Number.isNaN(parseFloat(value))
-                                                                    ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                            {
+                                                                // console.log(typeof value)
+                                                                return !Number.isNaN(parseFloat(value))
+                                                                    ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                                     : ''
+                                                            }
                                                             }
                                                         />
                                                     </td>

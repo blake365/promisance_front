@@ -123,6 +123,17 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                             w='50%'
                             min={0}
                             max={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)}
+                            parser={(value) =>
+                                value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
+                            }
+                            formatter={(value) =>
+                            {
+                                // console.log(typeof value)
+                                return !Number.isNaN(parseFloat(value))
+                                    ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                    : ''
+                            }
+                            }
                             {...form.getInputProps(`buy`)}
                             rightSection={<MaxButton formName={form} fieldName='buy' maxValue={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)} />}
                         />
