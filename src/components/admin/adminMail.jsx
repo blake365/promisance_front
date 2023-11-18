@@ -32,21 +32,35 @@ function AdminMail()
         setResponse(data);
     }
 
+    const toggleReport = async (uuid) =>
+    {
+        console.log('toggling report')
+        const response = await Axios.get('/messages/togglereport/' + uuid);
+        const data = response.data;
+        console.log(data);
+        setResponse(data);
+    }
 
     const rows = items.map((item) =>
     (
         <tr key={item.uuid}>
-            <Menu shadow="md" width={100} mt='xs'>
-                <Menu.Target>
-                    <Button size='xs' compact><IconSettings size={14} /></Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                    <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
-                    <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteItem(item.uuid)}>Delete</Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+            <td>
+                <Menu shadow="md" width={100} mt='xs'>
+                    <Menu.Target>
+                        <Button size='xs' compact><IconSettings size={14} /></Button>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
+                        <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteItem(item.uuid)}>Delete</Menu.Item>
+                        <Menu.Item icon={<IconSettings size={14} />} onClick={() => toggleReport(item.uuid)}>Report</Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
+            </td>
             <td>
                 {item.createdAt}
+            </td>
+            <td>
+                {item.messageFlags}
             </td>
             <td>
                 {item.empireIdSource}
@@ -84,6 +98,7 @@ function AdminMail()
                             <tr>
                                 <th></th>
                                 <th>Created At</th>
+                                <th>Reported</th>
                                 <th>Source Empire Id</th>
                                 <th>Source Empire Name</th>
                                 <th>Destination Empire Id</th>

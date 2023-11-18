@@ -44,16 +44,18 @@ function AdminEmpires()
     const rows = empires.map((item) =>
     (
         <tr key={item.uuid}>
-            <Menu shadow="md" width={100} mt='xs'>
-                <Menu.Target>
-                    <Button size='xs' compact><IconSettings size={14} /></Button>
-                </Menu.Target>
-                <Menu.Dropdown>
-                    <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
-                    <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteEmpire(item.uuid)}>Delete</Menu.Item>
-                    <Menu.Item color="orange" icon={<IconAlertTriangle size={14} />} onClick={() => disableEmpire(item.uuid)}>Disable</Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+            <td>
+                <Menu shadow="md" width={100} mt='xs'>
+                    <Menu.Target>
+                        <Button size='xs' compact><IconSettings size={14} /></Button>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
+                        <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteEmpire(item.uuid)}>Delete</Menu.Item>
+                        <Menu.Item color="orange" icon={<IconAlertTriangle size={14} />} onClick={() => disableEmpire(item.uuid)}>Disable</Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
+            </td>
             <td>
                 {item.mode}
             </td>

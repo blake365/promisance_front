@@ -6,7 +6,7 @@
 // component will render a form for sending a new message
 // component will refresh when a new message is sent
 
-import { Button, Group, Card, Text, Loader, Stack, Box, Textarea } from '@mantine/core'
+import { Button, Group, Card, Text, Loader, Stack, Box, Textarea, Anchor } from '@mantine/core'
 import { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import { useForm } from '@mantine/form'
@@ -39,6 +39,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
+    const [report, setReport] = useState(false)
     const messageContainerRef = useRef(null)
 
     let body = {
@@ -101,6 +102,18 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
         }
     }
 
+    const reportMessages = async () =>
+    {
+        try {
+            const res = await Axios.post(`/messages/report`, { conversationId: conversation.conversationId })
+            const data = res.data
+            // console.log(data)
+            setReport(true)
+        } catch (error) {
+            console.error('Error reporting messages:', error)
+        }
+    }
+
     return (
         <Card radius='sm' mx='xs' p='xs' h='70vh' sx={{
             '@media (max-width: 800px)': {
@@ -137,7 +150,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                             let align = 'left'
                             if (message.empireIdSource === source) align = 'right'
                             let color = ''
-                            if (message.empireIdSource === source) color = 'cornflowerblue'
+                            if (message.empireIdSource === source) color = 'lightblue'
                             let fontColor = ''
                             if (message.empireIdSource === source) fontColor = 'black'
                             return (
@@ -146,7 +159,6 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
                                     </Group>
-
                                     <Text align={align} color={fontColor}>{message.messageBody}</Text>
                                 </Card>
                             )
@@ -164,6 +176,8 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                         <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
+                {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages}>Report conversation to admins for inappropriate or abusive language.</Anchor>)
+                }
             </Stack>
         </Card >
     )
