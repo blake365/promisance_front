@@ -377,7 +377,6 @@ export default function Build()
 										<td>
 											<NumberInput
 												hideControls
-												type='number'
 												min={0}
 												defaultValue={0}
 												max={empire.freeLand}
@@ -401,7 +400,6 @@ export default function Build()
 												}
 											/>
 										</td>
-
 									</tr>
 									<tr>
 										<td>{eraArray[empire.era].blddef}</td>

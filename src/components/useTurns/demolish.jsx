@@ -405,7 +405,6 @@ export default function Demolish()
 										<td>
 											<NumberInput
 												hideControls
-												type='number'
 												min={0}
 												defaultValue={0}
 												max={Math.min(canDemolish, empire.bldFood)}
