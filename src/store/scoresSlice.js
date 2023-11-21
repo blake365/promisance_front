@@ -6,7 +6,7 @@ export const loadScores = createAsyncThunk('scores/', async (thunkAPI) => {
 		const res = await Axios.get('empire/scores')
 		// console.log(res)
 		let data = res.data
-		console.log(data)
+		// console.log(data)
 		return data
 	} catch (e) {
 		console.log(e)

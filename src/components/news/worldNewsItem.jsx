@@ -54,7 +54,7 @@ export default function WorldNewsItem({ item, now })
     }
 
     return (
-        <Card shadow='sm' radius='sm' p='xs' withBorder>
+        <Card shadow='sm' radius='sm' p='xs' withBorder sx={{ maxHeight: 150, overflow: 'scroll' }}>
             <Card.Section p='xs'>
                 <Group position='apart'>
                     <Text size='xs'>{eventTime.toLocaleString()} ({timeSince})</Text>

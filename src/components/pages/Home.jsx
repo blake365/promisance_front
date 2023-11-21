@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
+import BigCarousel from '../layout/embla/Carousel'
 
 export default function Home()
 {
@@ -44,15 +45,18 @@ export default function Home()
             <HeroImageRight />
             <Container size='lg' align='center' mt='lg'>
                 <Grid justify='center' align='center' my='lg'>
-                    <Grid.Col md={6} sm={12}>
+                    <Grid.Col md={5} sm={12}>
                         <Box align='left' my='lg'>
                             <Title order={1}>About the Game</Title>
                             <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vie for power. </Text>
                             <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is in active development with new features and balance updates coming all the time. Join us today!</Text>
                         </Box>
                     </Grid.Col>
-                    <Grid.Col md={6} sm={12}>
+                    {/* <Grid.Col md={6} sm={12}>
                         {smScreen ? <Image src='/images/mobileScreenshot.webp' alt='screenshot' loading='lazy' width={350} fit='contain' radius={5} /> : <Image src='/images/Screenshot@0.5x.webp' alt='screenshot' loading='lazy' fit='contain' radius={5} />}
+                    </Grid.Col> */}
+                    <Grid.Col md={7} sm={12}>
+                        {smScreen ? <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(4).keys())} options={{}} /></section> : <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(5).keys())} options={{}} big /></section>}
                     </Grid.Col>
                 </Grid>
 

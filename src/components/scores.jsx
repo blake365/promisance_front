@@ -24,7 +24,7 @@ export default function Scores()
     let myEmpire = empire
 
     const { scores } = useSelector((state) => state.scores)
-    console.log(scores)
+    // console.log(scores)
 
     useEffect(() =>
     {
@@ -43,7 +43,7 @@ export default function Scores()
                 </Title>
                 {loading ? <Loader /> : (scores.map(empire =>
                 {
-                    console.log(empire.clanReturn)
+                    // console.log(empire.clanReturn)
                     let role = ''
                     let clanString = null
                     if (empire.clanReturn) {
