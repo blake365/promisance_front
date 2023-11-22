@@ -1,9 +1,24 @@
 import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
+import { useSelector } from "react-redux"
+import { ROUND_END, ROUND_START } from "../../config/config"
 
 export default function PrivateMarket()
 {
+    const { time } = useSelector((state) => state.time)
+
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
 
     return (
         <main>
@@ -16,7 +31,7 @@ export default function PrivateMarket()
                     <Text align='center'>
                         Purchase or sell goods on the Black Market
                     </Text>
-                    <Tabs defaultValue="Buy"
+                    {roundStatus ? <Text align='center' color='red'>The Black Market is currently closed.</Text> : (<Tabs defaultValue="Buy"
                         styles={{
                             tabLabel: { fontSize: '1.2rem' },
                         }}>
@@ -31,7 +46,8 @@ export default function PrivateMarket()
                         <Tabs.Panel value="Sell" >
                             <PrivateMarketSell />
                         </Tabs.Panel>
-                    </Tabs>
+                    </Tabs>)}
+
 
                 </Stack>
             </Center>

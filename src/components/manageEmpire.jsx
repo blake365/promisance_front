@@ -4,7 +4,7 @@ import { useForm, hasLength } from '@mantine/form'
 import { forwardRef, useState } from 'react'
 import Axios from 'axios'
 import { empireLoaded } from '../store/empireSlice'
-import { TURNS_MAXIMUM, TURNS_PROTECTION } from '../config/config'
+import { TURNS_MAXIMUM, TURNS_PROTECTION, ROUND_END, ROUND_START } from '../config/config'
 import { raceArray } from '../config/races'
 import { useNavigate } from 'react-router-dom'
 
@@ -57,6 +57,7 @@ export default function ManageEmpire()
 
 
 	const { empire } = useSelector((state) => state.empire)
+	const { time } = useSelector((state) => state.time)
 
 	const [profileUpdate, setProfileUpdate] = useState()
 	const [iconUpdate, setIconUpdate] = useState()
@@ -135,6 +136,18 @@ export default function ManageEmpire()
 		}
 	}
 
+	let roundStatus = false
+	let upcoming = ROUND_START - time
+	let remaining = ROUND_END - time
+
+	if (upcoming > 0) {
+		roundStatus = true
+	} else if (remaining < 0) {
+		roundStatus = true
+	} else {
+		roundStatus = false
+	}
+
 	// Rename empire form?
 	// free polymorph in protection
 	// option to delete empire
@@ -173,7 +186,7 @@ export default function ManageEmpire()
 							w='350px'
 							{...form.getInputProps('profile')}
 						/>
-						<Button size='sm' compact type='submit'>Submit</Button>
+						<Button size='sm' compact type='submit' disabled={roundStatus}>Submit</Button>
 						<Text>{profileUpdate}</Text>
 					</Stack>
 				</form>
@@ -194,7 +207,7 @@ export default function ManageEmpire()
 								{...iconForm.getInputProps('icon')}
 							/>
 						</Group>
-						<Button size='sm' compact type='submit'>Submit</Button>
+						<Button size='sm' compact type='submit' disabled={roundStatus}>Submit</Button>
 						<Text>{iconUpdate}</Text>
 					</Stack>
 				</form>
@@ -222,7 +235,7 @@ export default function ManageEmpire()
 							{...raceForm.getInputProps('race')}
 						/>
 
-						<Button size='sm' compact type='submit'>Submit</Button>
+						<Button size='sm' compact type='submit' disabled={roundStatus}>Submit</Button>
 						<Text>{raceUpdate}</Text>
 					</Stack>
 				</form>
@@ -242,7 +255,7 @@ export default function ManageEmpire()
 								mb='sm'
 								maw={300}
 							/>
-							<Button color="red" type='submit'>Delete Empire</Button>
+							<Button color="red" type='submit' disabled={roundStatus}>Delete Empire</Button>
 							{deleteUpdate && <Text ta='center'>{deleteUpdate}</Text>}
 						</Stack>
 					</form>

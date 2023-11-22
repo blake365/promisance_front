@@ -17,6 +17,7 @@ import { guideSlice } from './guideSlice'
 import { pubMarketSlice } from './pubMarketSlice'
 import { effectSlice } from './effectSlice'
 import { scoresSlice } from './scoresSlice'
+import { timeSlice } from './timeSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -25,6 +26,7 @@ const persistConfig = {
 }
 
 const reducers = combineReducers({
+	time: timeSlice.reducer,
 	empire: empireSlice.reducer,
 	user: userSlice.reducer,
 	results: turnResults.reducer,

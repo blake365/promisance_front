@@ -21,12 +21,14 @@ import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Intel from './intel'
+import { ROUND_END, ROUND_START } from '../../config/config'
 
 import { baseCost } from '../../functions/functions'
 
 export default function IntelCenter()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -136,6 +138,17 @@ export default function IntelCenter()
     }, [empire.turns])
 
     // console.log(intel)
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
 
     return (
         <section>
@@ -183,7 +196,7 @@ export default function IntelCenter()
                                         {...form.getInputProps('defenderId')}
                                     />
                                 )}
-                                <Button color='indigo' type='submit'>
+                                <Button color='indigo' type='submit' disabled={roundStatus}>
                                     Cast Spell
                                 </Button>
                             </Stack>

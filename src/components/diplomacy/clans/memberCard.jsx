@@ -10,6 +10,8 @@ import Axios from 'axios'
 import ScoresAid from '../scoresAid'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 import ClanRole from './clanRole'
+import { useSelector } from 'react-redux'
+import { ROUND_END, ROUND_START } from '../../../config/config'
 
 const MemberCard = ({ empire, myId, clan, clanString }) =>
 {
@@ -17,6 +19,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     const [opened, { toggle }] = useDisclosure(false)
     const [effects, setEffects] = useState(null)
     // console.log(empire)
+    const { time } = useSelector((state) => state.time)
 
     const checkForSession = async () =>
     {
@@ -82,6 +85,14 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
 
     let role = clanString.split(' ')[2]
 
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        disabled = true
+    } else if (remaining < 0) {
+        disabled = true
+    }
 
     // console.log(typeof home)
     // let actionDate = new Date()

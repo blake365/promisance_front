@@ -10,7 +10,8 @@ import ScoresIntel from './diplomacy/scoresIntel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from './diplomacy/scoresAid'
-import { TURNS_PROTECTION } from '../config/config'
+import { TURNS_PROTECTION, ROUND_START, ROUND_END } from '../config/config'
+import { useSelector } from 'react-redux'
 
 const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 {
@@ -18,6 +19,8 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     const [active, setActive] = useState(false)
     const [opened, { toggle }] = useDisclosure(false);
     // console.log(empire)
+
+    const { time } = useSelector((state) => state.time)
 
     const checkForSession = async () =>
     {
@@ -100,6 +103,14 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
     // console.log(clan)
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        disabled = true
+    } else if (remaining < 0) {
+        disabled = true
+    }
 
     return (
         <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder >

@@ -6,8 +6,8 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { FavoriteButton, HalfAndAll, HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
-import { BUILD_COST } from '../../config/config'
+import { FavoriteButton, HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
+import { BUILD_COST, ROUND_START, ROUND_END } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 
@@ -24,6 +24,7 @@ export default function Build()
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
+	const { time } = useSelector((state) => state.time)
 
 	const dispatch = useDispatch()
 
@@ -146,6 +147,18 @@ export default function Build()
 		} catch (error) {
 			console.log(error)
 		}
+	}
+
+	let roundStatus = false
+	let upcoming = ROUND_START - time
+	let remaining = ROUND_END - time
+
+	if (upcoming > 0) {
+		roundStatus = true
+	} else if (remaining < 0) {
+		roundStatus = true
+	} else {
+		roundStatus = false
 	}
 
 	return (
@@ -443,15 +456,11 @@ export default function Build()
 								</tbody>
 							</Table>
 							<div style={{ color: 'red' }}>{errors.error}</div>
-							{errors.error ? (
-								<Button color='black' type='submit' disabled>
-									Begin Construction
-								</Button>
-							) : (
-								<Button color='black' type='submit'>
-									Begin Construction
-								</Button>
-							)}
+
+							<Button color='dark' type='submit' disabled={errors.error || roundStatus}>
+								Begin Construction
+							</Button>
+
 						</Stack>
 					</form>
 					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{ marginTop: '1rem' }}>Demolish Buildings</Button>

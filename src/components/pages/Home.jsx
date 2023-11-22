@@ -11,6 +11,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
+import { getTime } from '../../store/timeSlice'
+
 
 export default function Home()
 {
@@ -26,6 +28,7 @@ export default function Home()
     //         navigate('/demo')
     //     }
     // }, [user])
+    dispatch(getTime())
 
     const xsScreen = useMediaQuery('(max-width: 576px)')
     const smScreen = useMediaQuery('(max-width: 768px)')

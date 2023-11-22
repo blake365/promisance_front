@@ -1,5 +1,5 @@
 // forms to create and join a clan
-import { Group, Title, Text, Stack, Tabs, Paper, Loader, Button } from "@mantine/core"
+import { Title, Text, Stack, Tabs, Paper, Loader, Button } from "@mantine/core"
 
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
@@ -10,6 +10,7 @@ import ClanNews from "./clanNews"
 import ClanChat from "./clanChat"
 import ClanRelations from "./clanRelations"
 import { empireLoaded } from '../../../store/empireSlice'
+import { ROUND_END, ROUND_START } from '../../../config/config'
 
 
 // show clan info, clan members, clan chat
@@ -18,6 +19,8 @@ function MyClan()
     const dispatch = useDispatch()
 
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
+
     const [clan, setClan] = useState(null)
     const [members, setMembers] = useState(null)
     const [clanMail, setClanMail] = useState(0)
@@ -101,6 +104,18 @@ function MyClan()
         }
     }
 
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
     return (
         <section>
             {clan && <div>
@@ -178,7 +193,7 @@ function MyClan()
 
                 <Paper mt='lg' p='md'>
                     {empire.id === clan.empireIdLeader ? (<Text mb='sm'>If you disband your clan you cannot join a new one for 3 days.</Text>) : <Text mb='sm'>If you leave a clan you cannot join a new one for 3 days.</Text>}
-                    {empire.id === clan.empireIdLeader ? (<Button color='red' onClick={disbandClan}>Disband Clan</Button>) : <Button color='red' onClick={leaveClan}>Leave Clan</Button>}
+                    {empire.id === clan.empireIdLeader ? (<Button color='red' onClick={disbandClan}>Disband Clan</Button>) : <Button color='red' onClick={leaveClan} disabled={roundStatus}>Leave Clan</Button>}
                     <Text mt='sm' color='red'>{response}</Text>
                 </Paper>
             </div>

@@ -19,12 +19,13 @@ import { MaxButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { Scales } from "@phosphor-icons/react"
-import { TURNS_PROTECTION } from '../../config/config'
+import { TURNS_PROTECTION, ROUND_END, ROUND_START } from '../../config/config'
 import classes from './aid.module.css'
 
 export default function ForeignAid()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -153,6 +154,18 @@ export default function ForeignAid()
         shipsNeeded = 10000
     }
 
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
     return (
         <section>
             <Center>
@@ -218,7 +231,7 @@ export default function ForeignAid()
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded}>
+                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>

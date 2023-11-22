@@ -15,7 +15,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { forwardRef } from 'react'
 import { getPower_self, baseCost } from '../../functions/functions'
-
+import { ROUND_START, ROUND_END } from '../../config/config'
 import { eraArray } from '../../config/eras'
 import { FavoriteButton } from '../utilities/maxbutton'
 
@@ -24,6 +24,7 @@ import { FavoriteButton } from '../utilities/maxbutton'
 export default function MagicCenter()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -110,6 +111,18 @@ export default function MagicCenter()
 
     const { nextEra, canAdvance, prevEra, canRegress } = eraCheck(empire)
 
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
 
     return (
         <section >
@@ -158,7 +171,7 @@ export default function MagicCenter()
                                 {...form.getInputProps('number')}
                             />
 
-                            <Button color='grape' type='submit'>
+                            <Button color='grape' type='submit' disabled={roundStatus}>
                                 Cast Spell
                             </Button>
                         </Stack>

@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
-import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
+import { BANK_LOANRATE, BANK_SAVERATE, ROUND_END, ROUND_START } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
 
 // DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
@@ -20,6 +20,7 @@ export default function WorldBank()
     //     error: '',
     // }
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
     // let loanDefault = empire.loan
     const dispatch = useDispatch()
 
@@ -118,6 +119,17 @@ export default function WorldBank()
     }
 
     // console.log(result[0].action)
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
 
     return (
         <main>
@@ -214,7 +226,7 @@ export default function WorldBank()
                                         }
                                         }
                                     />
-                                    <Button type='submit'>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus}>Submit</Button>
                                 </Stack>
                             </form>
                         </Card>
@@ -287,7 +299,7 @@ export default function WorldBank()
                                         }
                                         }
                                     />
-                                    <Button type='submit'>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus}>Submit</Button>
                                 </Stack>
                             </form>
                         </Card>

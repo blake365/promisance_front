@@ -7,7 +7,7 @@ import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
 import { OneTurn, MaxButton, HalfButton } from '../utilities/maxbutton'
-import { BUILD_COST } from '../../config/config'
+import { BUILD_COST, ROUND_START, ROUND_END } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 
@@ -20,6 +20,7 @@ export default function Demolish()
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
+	const { time } = useSelector((state) => state.time)
 
 	const dispatch = useDispatch()
 
@@ -180,6 +181,18 @@ export default function Demolish()
 		} catch (error) {
 			console.log(error)
 		}
+	}
+
+	let roundStatus = false
+	let upcoming = ROUND_START - time
+	let remaining = ROUND_END - time
+
+	if (upcoming > 0) {
+		roundStatus = true
+	} else if (remaining < 0) {
+		roundStatus = true
+	} else {
+		roundStatus = false
 	}
 
 	return (
@@ -471,7 +484,7 @@ export default function Demolish()
 								</tbody>
 							</Table>
 
-							<Button type='submit' color='orange' disabled={errors?.error}>
+							<Button type='submit' color='orange' disabled={errors?.error || roundStatus}>
 								Begin Demolition
 							</Button>
 
@@ -527,7 +540,7 @@ export default function Demolish()
 									</tr>
 								</tbody>
 							</Table>
-							<Button type='submit' color='red'>
+							<Button type='submit' color='red' disabled={roundStatus}>
 								Drop Land
 							</Button>
 						</Stack>

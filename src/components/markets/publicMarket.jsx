@@ -5,8 +5,9 @@ import PublicMarketSell from "./PublicMarketSell"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
+import { ROUND_END, ROUND_START } from "../../config/config"
 
-//FIXME: bug with data loading/rendering??
+//FIXED: bug with data loading/rendering??
 
 export default function PublicMarket()
 {
@@ -17,6 +18,7 @@ export default function PublicMarket()
     const dispatch = useDispatch()
 
     let marketStatus = useSelector(state => state.market.statusOthers)
+    const { time } = useSelector((state) => state.time)
 
     // console.log(marketStatus)
     useEffect(() =>
@@ -32,6 +34,17 @@ export default function PublicMarket()
 
     const [activeTab, setActiveTab] = useState('Buy');
 
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
 
     return (
         <main>
@@ -44,22 +57,25 @@ export default function PublicMarket()
                     <Text align="center">
                         Purchase or sell goods between other players on the Public Market
                     </Text>
-                    {marketStatus !== 'succeeded' ? (<Loader />) : (
-                        <Tabs styles={{
-                            tabLabel: { fontSize: '1.2rem' },
-                        }} value={activeTab} onTabChange={setActiveTab}>
-                            <Tabs.List grow position="center">
-                                <Tabs.Tab value="Buy">Buy</Tabs.Tab>
-                                <Tabs.Tab value="Sell">Sell</Tabs.Tab>
-                            </Tabs.List>
-                            <Tabs.Panel value="Buy">
-                                <PublicMarketBuy empire={empire} />
-                            </Tabs.Panel>
-                            <Tabs.Panel value="Sell" >
-                                <PublicMarketSell empire={empire} />
-                            </Tabs.Panel>
-                        </Tabs>
-                    )}
+                    {roundStatus ? <Text align='center' color='red'>The Public Market is currently closed.</Text> :
+                        <div>
+                            {marketStatus !== 'succeeded' ? (<Loader />) : (
+                                <Tabs styles={{
+                                    tabLabel: { fontSize: '1.2rem' },
+                                }} value={activeTab} onTabChange={setActiveTab}>
+                                    <Tabs.List grow position="center">
+                                        <Tabs.Tab value="Buy">Buy</Tabs.Tab>
+                                        <Tabs.Tab value="Sell">Sell</Tabs.Tab>
+                                    </Tabs.List>
+                                    <Tabs.Panel value="Buy">
+                                        <PublicMarketBuy empire={empire} />
+                                    </Tabs.Panel>
+                                    <Tabs.Panel value="Sell" >
+                                        <PublicMarketSell empire={empire} />
+                                    </Tabs.Panel>
+                                </Tabs>
+                            )}
+                        </div>}
                 </Stack>
             </Center>
         </main>

@@ -4,6 +4,7 @@ import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@p
 import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
 import { ROUND_END, ROUND_START, TURNS_PROTECTION } from '../../config/config'
+import { useSelector } from 'react-redux';
 
 const AnimateNumberChange = ({ number, type }) =>
 {
@@ -44,16 +45,31 @@ const AnimateNumberChange = ({ number, type }) =>
 	);
 };
 
-const now = new Date()
-let roundLength = ROUND_END - ROUND_START
-let roundProgress = now.getTime() - ROUND_START
-let roundPercent = roundProgress / roundLength * 100
+
 // console.log(roundPercent)
 
 export default function InfoBar({ data })
 {
 	// console.log(data.empire)
 	const empire = data
+
+	const { time } = useSelector((state) => state.time)
+	let roundLength = ROUND_END - ROUND_START
+	let roundProgress = time - ROUND_START
+	let roundPercent = roundProgress / roundLength * 100
+
+
+	let roundStatus = ''
+	let upcoming = ROUND_START - time
+	// console.log(upcoming)
+	let remaining = ROUND_END - time
+	// console.log(remaining)
+
+	if (upcoming > 0) {
+		roundStatus = `The round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days and ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours`
+	} else if (remaining < 0) {
+		roundStatus = 'The round has ended, thanks for playing!'
+	}
 
 	return (
 		<Paper shadow='xs' radius='xs' withBorder pb='xs' sx={(theme) =>
@@ -66,6 +82,9 @@ export default function InfoBar({ data })
 			}
 		}}>
 			<Progress color={eraArray[empire.era].color} value={roundPercent} size='xs' radius={0} mb='xs' />
+			<Text align='center' weight='bold' mb='xs'>
+				{roundStatus}
+			</Text>
 			<Grid justify="space-between" grow columns={19} pl='xs' pr='xs'>
 				<Grid.Col span={2}>
 					<Center>

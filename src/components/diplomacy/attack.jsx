@@ -23,7 +23,7 @@ import { FavoriteButton } from '../utilities/maxbutton'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
-import { MAX_ATTACKS, MAX_SPELLS } from '../../config/config'
+import { MAX_ATTACKS, MAX_SPELLS, ROUND_END, ROUND_START } from '../../config/config'
 
 // TODO: build attacking page
 // show your army information
@@ -41,6 +41,7 @@ import { MAX_ATTACKS, MAX_SPELLS } from '../../config/config'
 export default function Attack()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -195,6 +196,18 @@ export default function Attack()
     // console.log(otherEmpires)
     const eraDisplay = [0, 1, 2]
 
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
     return (
         <section>
             <Center>
@@ -260,7 +273,7 @@ export default function Attack()
                                         {...form.getInputProps('attackType')}
                                     />
 
-                                    <Button color='red' type='submit'>
+                                    <Button color='red' type='submit' disabled={roundStatus}>
                                         Attack
                                     </Button>
                                     <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
@@ -317,7 +330,7 @@ export default function Attack()
                                         {...spellForm.getInputProps('spell')}
                                     />
 
-                                    <Button color='indigo' type='submit'>
+                                    <Button color='indigo' type='submit' disabled={roundStatus}>
                                         Cast Spell
                                     </Button>
                                     <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>

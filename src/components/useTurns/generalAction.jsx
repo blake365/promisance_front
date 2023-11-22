@@ -10,15 +10,16 @@ import
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
+import { ROUND_END, ROUND_START } from '../../config/config'
 
 export default function GeneralAction(props)
 {
 	// const empire = useSelector((state) => state.empire)
-
+	const { time } = useSelector((state) => state.time)
 	const dispatch = useDispatch()
 
 	const form = useForm({
@@ -72,7 +73,17 @@ export default function GeneralAction(props)
 		flavorText = `For each turn you spend ${props.flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 75% of its baseline value.`
 	}
 
+	let roundStatus = false
+	let upcoming = ROUND_START - time
+	let remaining = ROUND_END - time
 
+	if (upcoming > 0) {
+		roundStatus = true
+	} else if (remaining < 0) {
+		roundStatus = true
+	} else {
+		roundStatus = false
+	}
 
 	return (
 		<section >
@@ -105,7 +116,7 @@ export default function GeneralAction(props)
 								color={props.color}
 								{...form.getInputProps('condensed', { type: 'checkbox' })}
 							/>
-							<Button color={props.color} type='submit'>
+							<Button color={props.color} type='submit' disabled={roundStatus}>
 								{props.title}
 							</Button>
 						</Stack>

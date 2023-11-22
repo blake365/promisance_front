@@ -38,6 +38,7 @@ import ThemeToggle from './components/utilities/themeToggle'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
 import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
+import { getTime } from './store/timeSlice'
 
 import Guide from './components/guide/guide'
 import EffectIcons from './components/layout/EffectIcons'
@@ -212,6 +213,7 @@ function App()
 			}
 		}
 
+		dispatch(getTime())
 		dispatch(setPage(pageState))
 
 		if (empireStatus === 'succeeded') {

@@ -1,15 +1,16 @@
 import { Card, Grid, Stack, Table, Title, Group, Text, Avatar } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { ROUND_END, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
+import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
 
 export default function Summary()
 {
-	let now = new Date()
 	const { empire } = useSelector((state) => state.empire)
 
+	const { time } = useSelector((state) => state.time)
+	// console.log(time)
 	// let bgimage = '/images/summaries/default.webp'
 
 	// let cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
@@ -54,9 +55,20 @@ export default function Summary()
 	// } else {
 	// 	bgimage = '/images/summaries/default.webp'
 	// }
-	let remaining = ROUND_END - now.getTime()
-	let days = Math.floor(remaining / (1000 * 60 * 60 * 24))
-	let hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+	let roundStatus = 'Round has not started'
+
+	let upcoming = ROUND_START - time
+	// console.log(upcoming)
+	let remaining = ROUND_END - time
+	// console.log(remaining)
+
+	if (upcoming > 0) {
+		roundStatus = `Round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days and ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours`
+	} else if (remaining < 0) {
+		roundStatus = 'The round has ended, thanks for playing!'
+	} else {
+		roundStatus = `Round will end in ${Math.floor(remaining / (1000 * 60 * 60 * 24))} days and ${Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours`
+	}
 
 	return (
 		<main>
@@ -178,8 +190,10 @@ export default function Summary()
 							</Grid>
 							<Stack align='center' spacing={0} mt='xs'>
 								{empire.turnsUsed < TURNS_PROTECTION ? (<Text align='center' mb='sm' color='green'>You are under new player protection for {TURNS_PROTECTION - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {TURNS_PROTECTION} turns.</Text>) : ('')}
+
 								<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
-								<Text align='center'>The current round will end in {days} days and {hours} hours.</Text>
+								<Text align='center'>Server time: {new Date(time).toISOString()}</Text>
+								<Text align='center'>{roundStatus}</Text>
 							</Stack>
 						</Card>) : ('')}
 
