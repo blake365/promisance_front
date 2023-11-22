@@ -180,10 +180,15 @@ export default function TurnResultCard({ data })
 									) : (
 										''
 									)}
+									{data.corruption > 0 ? (<>
+										<Text>Corruption:</Text>
+										<Text align='right'>${(data.corruption).toLocaleString()}</Text>
+									</>) : ('')}
 									{data.wartax > 0 ? (<>
 										<Text>War Tax:</Text>
 										<Text align='right'>${(data.wartax).toLocaleString()}</Text>
 									</>) : ('')}
+
 
 									<NetProduced title='Net' value={data.money} money />
 								</SimpleGrid>

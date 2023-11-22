@@ -81,7 +81,7 @@ export function calcProvisions(empire) {
 	let production =
 		10 * empire.freeLand +
 		empire.bldFood *
-			85 *
+			95 *
 			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
 	production *=
 		(100 +
@@ -159,7 +159,7 @@ export const baseCost = (empire) => {
 		empire.land * 0.1 +
 		100 +
 		empire.bldWiz *
-			0.3 *
+			0.5 *
 			((100 + raceArray[empire.race].mod_magic) / 100) *
 			calcSizeBonus(empire)
 	)

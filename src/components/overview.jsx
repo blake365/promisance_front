@@ -46,6 +46,11 @@ export default function Overview()
 
 	const { income, expenses, loanpayed } = calcFinances(cpi, empire, size)
 
+	let corruption = 0
+	if (empire.cash > empire.networth * 110) {
+		corruption = Math.round(expenses * size)
+	}
+
 	const { foodpro, foodcon } = calcProvisions(empire)
 
 	const oPower = offense(empire)
@@ -159,9 +164,11 @@ export default function Overview()
 								<Text align='right'>${income.toLocaleString()}</Text>
 								<Text>Expenses: <RaceBonus value={race.mod_expenses} /></Text>
 								<Text align='right'>${expenses.toLocaleString()}</Text>
+								<Text>Corruption: </Text>
+								<Text align='right'>${corruption.toLocaleString()}</Text>
 								<Text>Loan Payment:</Text>
 								<Text align='right'>${Math.abs(loanpayed).toLocaleString()}</Text>
-								<NetProduced title='Net' value={income - expenses - Math.abs(loanpayed)} money />
+								<NetProduced title='Net' value={income - expenses - Math.abs(loanpayed) - corruption} money />
 								<Text>Savings Balance:</Text>
 								<Text align='right'>${empire.bank.toLocaleString()}</Text>
 								<Text>Loan Balance:</Text>
