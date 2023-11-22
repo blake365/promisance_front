@@ -11,7 +11,46 @@ import NetProduced from '../utilities/NetProduced'
 const attackResult = (result) =>
 {
 	if (result.result === 'success') {
-		if (result.attackType !== 'standard' && result.attackType !== 'surprise') {
+
+		if (result.attackType === 'pillage') {
+			let youLost = []
+			let youKilled = []
+			let buildingsCaptured = []
+
+			for (const key in result.troopLoss) {
+				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
+					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+				}
+			}
+
+			for (const key in result.troopKilled) {
+				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
+					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+				}
+			}
+
+			return (<>
+				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
+				</span></Text>
+				<Text align='center'>You lost: {youLost.map((item, index) =>
+				{
+					if (index === youLost.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+				<Text align='center'>You killed: {youKilled.map((item, index) =>
+				{
+					if (index === youKilled.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+			</>)
+		}
+		else if (result.attackType !== 'standard' && result.attackType !== 'surprise') {
 			return (<>
 				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
 				</span></Text>

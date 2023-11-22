@@ -183,7 +183,8 @@ export default function AttackMini()
                                         { value: 'trparm', label: 'Guerilla Strike' },
                                         { value: 'trplnd', label: 'Lay Siege' },
                                         { value: 'trpfly', label: 'Air Strike' },
-                                        { value: 'trpsea', label: 'Coastal Assault' }
+                                        { value: 'trpsea', label: 'Coastal Assault' },
+                                        { value: 'pillage', label: 'Pillage' }
                                     ]}
                                     {...form.getInputProps('attackType')}
                                 />

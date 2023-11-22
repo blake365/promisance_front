@@ -26,6 +26,8 @@ export default function AttackGuide({ empire })
                 <dd>By sending in only your {eraArray[empire.era].trpfly}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. While attacking from above, significantly more structures can be destroyed, but much fewer will be captured.</dd>
                 <dt>Coastal Assault</dt>
                 <dd>By sending in only your {eraArray[empire.era].trpsea}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[empire.era].blddef} and {eraArray[empire.era].bldwiz} are especially vulnerable.</dd>
+                <dt>Pillage</dt>
+                <dd>Send your whole army on a raid for food and cash. If you are successful you will capture a small amount of land as well as steal food and cash from your enemy.</dd>
             </dl>
             <h2>Casting Spells</h2>
             <p>From here, your {eraArray[empire.era].trpwiz} can spend {eraArray[empire.era].runes} and turns to cast spells on your enemies.</p>
