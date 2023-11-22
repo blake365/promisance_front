@@ -60,8 +60,8 @@ export default function WorldNewsItem({ item, now })
                     <Text size='xs'>{eventTime.toLocaleString()} ({timeSince})</Text>
                 </Group>
             </Card.Section>
-            <Group noWrap spacing='xs'>
-                <Box>
+            <Group noWrap spacing='xs' sx={{ alignItems: 'start' }}>
+                <Box mt='sm'>
                     {selectIcon(item.type, item.result)}
                 </Box>
                 <Box ta='left'>
