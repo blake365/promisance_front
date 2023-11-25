@@ -10,7 +10,7 @@ export default function EffectIcons()
     let effects = useSelector((state) => state.effects.effects)
     let now = new Date()
 
-    console.log(effects)
+    // console.log(effects)
     // console.log(now)
 
     return (
@@ -23,10 +23,10 @@ export default function EffectIcons()
                         // age in minutes
                         // console.log(effectAge)
                         effectAge = Math.floor(effectAge)
-                        console.log(effectAge)
+                        // console.log(effectAge)
 
                         let remaining = (effect.empireEffectValue - effectAge)
-                        console.log(remaining)
+                        // console.log(remaining)
                         let percentRemaining = remaining / effect.empireEffectValue * 100
 
                         let color = 'green'

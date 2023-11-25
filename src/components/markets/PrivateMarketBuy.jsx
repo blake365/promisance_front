@@ -206,7 +206,7 @@ export default function PrivateMarketBuy()
                                             Price:
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Can Buy:
+                                            Can Afford:
                                         </th>
                                         <th weight='bold' align='center'>
                                             Buy:

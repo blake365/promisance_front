@@ -13,7 +13,7 @@ function ClanPage()
     const { empire } = useSelector((state) => state.empire)
 
     let disabled = false
-    if (empire.turnsUsed < TURNS_PROTECTION) {
+    if (empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo') {
         disabled = true
     }
 
@@ -24,6 +24,7 @@ function ClanPage()
                     <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
                     <Text align="center">Create or join a clan to team up with other players.</Text>
                     <Text align="center">Clan mates can view stats for each member, a shared news feed, shared intel, and receive a defense bonus. </Text>
+                    {empire.mode === 'demo' && <Text align="center" color='red'>Clans are disabled for demo accounts.</Text>}
                     <Group position="center" mt={10}>
                         <CreateClan disabled={disabled} />
                         <JoinClan disabled={disabled} />

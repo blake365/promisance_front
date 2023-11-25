@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text, Group, Image } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { create } from '../../store/empireSlice'
-import { useEffect } from 'react'
+import { useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
@@ -34,6 +34,21 @@ const useStyles = createStyles(() => ({
 	}
 }));
 
+const raceObjects = raceArray.map((race, index) => ({
+	icon: index,
+	label: race.name,
+	value: index
+}))
+
+const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
+	<div ref={ref} {...others}>
+		<Group>
+			<Image src={`/icons/${raceArray[icon].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+			<Text>{label}</Text>
+		</Group>
+	</div>
+))
+
 export default function CreateEmpire()
 {
 
@@ -58,7 +73,7 @@ export default function CreateEmpire()
 	const form = useForm({
 		initialValues: {
 			name: '',
-			race: { index: 0, name: 'Human' },
+			race: 0
 		},
 
 		validationRules: {
@@ -113,19 +128,11 @@ export default function CreateEmpire()
 									{...form.getInputProps('name')}
 								/>
 								<Select
-									label="Race"
+									label="Choose Your Race"
 									placeholder="Pick one"
 									required
-									data={raceArray.map((icon, index) =>
-									{
-										return {
-											value: index,
-											label: <Group>
-												<Image src={`/icons/${raceArray[index].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-												<Text>{icon.name}</Text>
-											</Group>
-										}
-									})}
+									itemComponent={RaceItem}
+									data={raceObjects}
 									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>
@@ -184,7 +191,7 @@ export default function CreateEmpire()
 									{raceArray.map(race => 
 									{
 										return (
-											<tr>
+											<tr key={race.name}>
 												<td>{race.name}</td>
 												<td style={race.mod_offense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_offense}%</td>
 												<td style={race.mod_defense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_defense}%</td>

@@ -150,6 +150,7 @@ export default function IntelCenter()
         roundStatus = false
     }
 
+
     return (
         <section>
             <Center>
@@ -161,6 +162,7 @@ export default function IntelCenter()
                     <Text align='center'>
                         Cast a spell to view another empire's stats. This will take two turns.
                     </Text>
+                    {empire.mode === 'demo' && <Text align='center' color='red'>Intel is disabled for demo accounts.</Text>}
                     <Card sx={{ width: '300px' }}>
                         <Card.Section withBorder inheritPadding py="xs">
                             <Group position='apart'>
@@ -196,7 +198,7 @@ export default function IntelCenter()
                                         {...form.getInputProps('defenderId')}
                                     />
                                 )}
-                                <Button color='indigo' type='submit' disabled={roundStatus}>
+                                <Button color='indigo' type='submit' disabled={roundStatus || empire.mode === 'demo'}>
                                     Cast Spell
                                 </Button>
                             </Stack>
