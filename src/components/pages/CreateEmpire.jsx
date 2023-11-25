@@ -1,4 +1,4 @@
-import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text } from '@mantine/core'
+import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text, Group, Image } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { create } from '../../store/empireSlice'
 import { useEffect } from 'react'
@@ -58,7 +58,7 @@ export default function CreateEmpire()
 	const form = useForm({
 		initialValues: {
 			name: '',
-			race: 0,
+			race: { index: 0, name: 'Human' },
 		},
 
 		validationRules: {
@@ -116,17 +116,16 @@ export default function CreateEmpire()
 									label="Race"
 									placeholder="Pick one"
 									required
-									data={[
-										{ value: 0, label: 'Human' },
-										{ value: 1, label: 'Elf' },
-										{ value: 2, label: 'Dwarf' },
-										{ value: 3, label: 'Troll' },
-										{ value: 4, label: 'Gnome' },
-										{ value: 5, label: 'Gremlin' },
-										{ value: 6, label: 'Orc' },
-										{ value: 7, label: 'Drow' },
-										{ value: 8, label: 'Goblin' },
-									]}
+									data={raceArray.map((icon, index) =>
+									{
+										return {
+											value: index,
+											label: <Group>
+												<Image src={`/icons/${raceArray[index].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+												<Text>{icon.name}</Text>
+											</Group>
+										}
+									})}
 									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>

@@ -275,8 +275,8 @@ export default function Overview()
 									<Text align='right'>{clan ? (clanRole(empire.id, clan)) : 'None'}</Text>
 									<Text align='right'>{enemies}</Text>
 
-									<Text align='right' mt='sm'>{empire.offTotal} ({Math.round(empire.offSucc / empire.offTotal * 100)}%)</Text>
-									<Text align='right'>{empire.defTotal} ({Math.round(empire.defSucc / empire.defTotal * 100)}%)</Text>
+									<Text align='right' mt='sm'>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>
+									<Text align='right'>{empire.defTotal} ({empire.defSucc ? Math.round(empire.defSucc / empire.defTotal * 100) : ('0')}%)</Text>
 									{/* <Text align='right'>{empire.kills}</Text> */}
 								</Col>
 							</Grid>
