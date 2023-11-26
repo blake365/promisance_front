@@ -109,7 +109,7 @@ export default function Lottery()
         <main>
             <Center mb={10}>
                 <Stack spacing='sm' align='center' maw={650}>
-                    <img src='/images/bank.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='world bank' />
+                    <img src='/images/lottery.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='world bank' />
                     <Title order={1} align='center'>
                         Lottery
                     </Title>
