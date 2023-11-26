@@ -105,7 +105,7 @@ export default function PubBuyCard({ eraItem, type, owned, item, base, cash, emp
                     <Text>
                         Can Afford:
                     </Text>
-                    <Text align='right'>{cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}</Text>
+                    {cash === 0 ? <Text align='right'>0</Text> : (<Text align='right'>{cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}</Text>)}
                 </SimpleGrid>
             </Card.Section>
             <Card.Section p='sm' withBorder>
