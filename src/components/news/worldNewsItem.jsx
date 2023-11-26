@@ -1,6 +1,6 @@
 import { Group, Card, Text, Box } from '@mantine/core'
 
-import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid, Handshake } from '@phosphor-icons/react'
+import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid, Handshake, HandCoins } from '@phosphor-icons/react'
 
 
 export default function WorldNewsItem({ item, now })
@@ -51,6 +51,8 @@ export default function WorldNewsItem({ item, now })
         if (type === 'war' && result === 'success') return <Sword size={24} color={highlight} weight='duotone' />
         if (type === 'peace' && result === 'success') return <Handshake size={24} color={highlight} weight='fill' />
         if (type === 'peace' && result === 'shielded') return <Handshake size={24} color={highlight} weight='fill' />
+        if (type === 'lottery' && result === 'success') return <HandCoins size={24} color={highlight} weight='fill' />
+        if (type === 'lottery' && result === 'fail') return <HandCoins size={24} color={highlight} weight='fill' />
     }
 
     return (

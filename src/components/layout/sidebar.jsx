@@ -31,7 +31,7 @@ const Sidebar = () =>
 		'Black Market',
 		'Public Market',
 		'The Bank',
-		// 'Lottery',
+		'Lottery',
 	]
 	const foreignLinks = [
 		'Clans',

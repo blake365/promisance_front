@@ -28,6 +28,7 @@ import Attack from './components/diplomacy/attack'
 import Heal from './components/useTurns/heal'
 import Mailbox from './components/mail/mailbox'
 import ForeignAid from './components/diplomacy/foreignAid'
+import Lottery from './components/markets/Lottery'
 
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
@@ -124,6 +125,7 @@ ReactDOM.render(
 							<Route path='Clans' element={<ClanPage />} />
 							<Route path='Clan%20Stats' element={<ClanStats />} />
 							<Route path='disabled' element={<Disabled />} />
+							<Route path='Lottery' element={<Lottery />} />
 						</Route>
 					</Routes>
 				</BrowserRouter>
