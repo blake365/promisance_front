@@ -15,7 +15,6 @@ const attackResult = (result) =>
 		if (result.attackType === 'pillage') {
 			let youLost = []
 			let youKilled = []
-			let buildingsCaptured = []
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
@@ -124,11 +123,51 @@ const attackResult = (result) =>
 			</>)
 		}
 	} else if (result.result === 'fail') {
-		return (<>
-			<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
-			<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
-			<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
-		</>)
+
+		if (result.attackType === 'pillage' || result.attackType === 'surprise' || result.attackType === 'standard') {
+			let youLost = []
+			let youKilled = []
+
+			for (const key in result.troopLoss) {
+				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
+					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+				}
+			}
+
+			for (const key in result.troopKilled) {
+				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
+					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+				}
+			}
+
+			return (<>
+				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
+				<Text align='center'>You lost: {youLost.map((item, index) =>
+				{
+					if (index === youLost.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+				<Text align='center'>You killed: {youKilled.map((item, index) =>
+				{
+					if (index === youKilled.length - 1) { return (item) }
+					else {
+						return (item + ', ')
+					}
+				}
+				)}</Text>
+			</>)
+
+		} else {
+			return (<>
+				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
+				<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+				<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+			</>)
+		}
+
 	}
 }
 
