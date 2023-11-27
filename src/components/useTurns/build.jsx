@@ -457,7 +457,7 @@ export default function Build()
 							</Table>
 							<div style={{ color: 'red' }}>{errors.error}</div>
 
-							<Button color='dark' type='submit' disabled={errors.error || roundStatus}>
+							<Button color='lime' type='submit' disabled={errors.error || roundStatus}>
 								Begin Construction
 							</Button>
 

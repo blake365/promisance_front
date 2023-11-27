@@ -279,7 +279,7 @@ function App()
 	{
 		if (empireStatus === 'succeeded' && !modalOpened) {
 			try {
-				// loadEmpireTest()
+				loadEmpireTest()
 
 				// dispatch(fetchEffects({
 				// 	id: empire.id
