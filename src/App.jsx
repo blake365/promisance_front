@@ -312,7 +312,7 @@ function App()
 				navigate('/')
 			}
 		}
-	}, 60000)
+	}, 300000)
 
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1

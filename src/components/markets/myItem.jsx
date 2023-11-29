@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START } from '../../config/config'
+import { PUBMKT_START } from '../../config/config'
 
 
 export default function MyItem({ element, empire })
@@ -80,9 +80,12 @@ export default function MyItem({ element, empire })
     let createdAt = new Date(element.createdAt)
     createdAt = createdAt.getTime()
     let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
+    // hoursOnMarket -= PUBMKT_START
     let timeRemaining = Math.round((PUBMKT_START - hoursOnMarket) * 100) / 100
     if (hoursOnMarket < 6) {
         hoursOnMarket = `${timeRemaining} hours remaining`
+    } else {
+        hoursOnMarket = Math.round((hoursOnMarket - 6) * 100) / 100
     }
 
     // console.log(timeRemaining)

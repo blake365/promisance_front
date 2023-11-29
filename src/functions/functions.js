@@ -3,11 +3,23 @@
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
 // math
+/**
+ * Generates a random integer between the specified minimum and maximum values (inclusive).
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @returns {number} The random integer generated.
+ */
 export function randomIntFromInterval(min, max) {
 	// min and max included
 	return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+/**
+ * Calculates the logarithm of a number with a specified base.
+ * @param {number} number - The number to calculate the logarithm of.
+ * @param {number} base - The base of the logarithm.
+ * @returns {number} The calculated logarithm.
+ */
 export function generalLog(number, base) {
 	let log = Math.log(number) / Math.log(base)
 	// console.log(log)
@@ -15,6 +27,12 @@ export function generalLog(number, base) {
 }
 
 // general
+/**
+ * Calculates the empire size bonus/penalty based on the net worth.
+ * @param {Object} options - The options object.
+ * @param {number} options.networth - The net worth of the empire.
+ * @returns {number} - The calculated size bonus/penalty rounded to 3 decimal places.
+ */
 export function calcSizeBonus({ networth }) {
 	// Calculates empire size bonus/penalty, mainly used for interest rates
 	// Ranges from 0.5 to 1.7, rounded to 3 decimal places
@@ -30,6 +48,18 @@ export function calcSizeBonus({ networth }) {
 // attacks
 
 // offensive power
+/**
+ * Calculates the offense power of an empire.
+ * @param {object} empire - The empire object containing information about the empire.
+ * @param {number} empire.era - The era of the empire.
+ * @param {number} empire.trpArm - The number of armored troops in the empire.
+ * @param {number} empire.trpLnd - The number of land troops in the empire.
+ * @param {number} empire.trpFly - The number of flying troops in the empire.
+ * @param {number} empire.trpSea - The number of sea troops in the empire.
+ * @param {number} empire.race - The race of the empire.
+ * @param {number} empire.health - The health of the empire.
+ * @returns {number} - The calculated offense power of the empire.
+ */
 export function offense(empire) {
 	let oPower =
 		eraArray[empire.era].o_trparm * empire.trpArm +
@@ -43,6 +73,20 @@ export function offense(empire) {
 	return Math.round(oPower)
 }
 // defensive power
+/**
+ * Calculates the defense power of an empire.
+ * @param {Object} empire - The empire object containing various properties.
+ * @param {number} empire.era - The era of the empire.
+ * @param {number} empire.trpArm - The number of armored troops in the empire.
+ * @param {number} empire.trpLnd - The number of land troops in the empire.
+ * @param {number} empire.trpFly - The number of flying troops in the empire.
+ * @param {number} empire.trpSea - The number of sea troops in the empire.
+ * @param {number} empire.race - The race of the empire.
+ * @param {number} empire.health - The health of the empire.
+ * @param {number} empire.bldDef - The defense bonus from buildings in the empire.
+ * @param {number} empire.land - The land area of the empire.
+ * @returns {number} - The calculated defense power.
+ */
 export function defense(empire) {
 	let dPower =
 		eraArray[empire.era].d_trparm * empire.trpArm +
@@ -64,6 +108,11 @@ export function defense(empire) {
 }
 
 // explore
+/**
+ * Calculates the amount of new land to explore based on the empire's attributes.
+ * @param {object} empire - The empire object containing information about land, era, and race.
+ * @returns {number} - The amount of new land to explore.
+ */
 export function explore(empire) {
 	const newLand = Math.ceil(
 		(1 / (empire.land * 0.000035 + 1)) *

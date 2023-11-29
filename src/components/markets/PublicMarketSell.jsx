@@ -297,7 +297,7 @@ export default function PublicMarketSell({ empire })
                                                 eraTroop = 'runes'
                                             }
 
-                                            console.log(canSell[index])
+                                            // console.log(canSell[index])
 
                                             return (
                                                 <tr key={index}>

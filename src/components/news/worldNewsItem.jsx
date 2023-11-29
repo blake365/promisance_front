@@ -44,6 +44,7 @@ export default function WorldNewsItem({ item, now })
         if (type === 'attack' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'attack' && result === 'fail') return <Sword size={24} color={highlight} weight='fill' />
         if (type === 'market' && result === 'success') return <ShoppingCart size={24} color={highlight} weight='fill' />
+        if (type === 'market' && result === 'fail') return <ShoppingCart size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'success') return <Shield size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'fail') return <MagicWand size={24} color={highlight} weight='fill' />
         if (type === 'spell' && result === 'shielded') return <ShieldStar size={24} color={highlight} weight='fill' />
