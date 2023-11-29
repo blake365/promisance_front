@@ -34,6 +34,7 @@ import FarmerGuide from "./guidepages/farmer";
 import CasherGuide from "./guidepages/casher";
 import IndyGuide from "./guidepages/indy";
 import MageGuide from "./guidepages/mage";
+import LotteryGuide from "./guidepages/lottery";
 
 export default function Guide(props)
 {
@@ -112,6 +113,8 @@ export default function Guide(props)
             return <IndyGuide empire={props.empire} />
         case 'Mage':
             return <MageGuide empire={props.empire} />
+        case 'Lottery':
+            return <LotteryGuide />
         default:
             return <GuideIndex />
     }

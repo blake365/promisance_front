@@ -55,7 +55,7 @@ export default function GuideIndex()
                     <GuideLink text='Black Market' page='Black%20Market' />
                     <GuideLink text='Public Market' page='Public%20Market' />
                     <GuideLink text='The Bank' page='The%20Bank' />
-                    {/* <GuideLink text='The Lottery' page='Lottery' /> */}
+                    <GuideLink text='Lottery' page='Lottery' />
                 </Group>
                 <h4>Diplomacy</h4>
                 <Group>

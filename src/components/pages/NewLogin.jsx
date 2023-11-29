@@ -15,23 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const bgArray = [
-    '/images/summaries/default.webp',
-    '/images/summaries/cashfuture.webp',
-    '/images/summaries/cashpast.webp',
-    '/images/summaries/cashpresent.webp',
-    '/images/summaries/farmfuture.webp',
-    '/images/summaries/farmpast.webp',
-    '/images/summaries/farmpresent.webp',
-    '/images/summaries/indyfuture.webp',
-    '/images/summaries/indypast.webp',
-    '/images/summaries/indypresent.webp',
-    '/images/summaries/magefuture.webp',
-    '/images/summaries/magepast.webp',
-    '/images/summaries/magepresent.webp',
-]
-
-let bg = bgArray[Math.floor(Math.random() * bgArray.length)]
+let bg = '/images/login.webp'
 
 const useStyles = createStyles(() => ({
     wrapper: {

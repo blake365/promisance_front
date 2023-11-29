@@ -14,7 +14,7 @@ const useStyles = createStyles(() => ({
 		backgroundPosition: 'center center',
 		backgroundRepeat: 'no-repeat',
 		backgroundImage:
-			`url('/images/summaries/default.webp')`,
+			`url('/images/login.webp')`,
 	},
 
 	form: {

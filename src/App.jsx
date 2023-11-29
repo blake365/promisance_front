@@ -59,6 +59,7 @@ function App()
 	const [news, setNews] = useState(0)
 	const [mail, setMail] = useState(0)
 	const [clanMail, setClanMail] = useState(0)
+	const [refreshLoading, setRefreshLoading] = useState(false)
 
 	let location = useLocation()
 	// console.log(location)
@@ -75,6 +76,7 @@ function App()
 
 	const loadEmpireTest = async () =>
 	{
+		setRefreshLoading(true)
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
 			// console.log(res.data)
@@ -88,6 +90,7 @@ function App()
 			navigate('/')
 			console.log(error)
 		}
+		setRefreshLoading(false)
 	}
 
 	const loadMarket = async () =>
@@ -379,15 +382,12 @@ function App()
 								</MediaQuery>
 								<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
 									<Group align='center' spacing={4}>
-
 										<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
 											<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 										</MediaQuery>
-
 										<Title order={1} ml={0}>
 											NeoPromisance
 										</Title>
-
 									</Group>
 								</a>
 								<Group>
@@ -429,11 +429,13 @@ function App()
 												}
 											}
 											}>Game Guide</Button>
-										<Button compact variant='outline' onClick={() =>
+										<Button compact variant='outline' loading={refreshLoading} onClick={() =>
 										{
+											// setRefreshLoading(true)
 											loadEmpireTest()
 											loadMarket()
 											dispatch(loadScores())
+											// setRefreshLoading(false)
 										}}>Refresh</Button>
 									</Group>
 								</Grid.Col>
