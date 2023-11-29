@@ -151,7 +151,7 @@ export default function MagicCenter()
                                 required
                                 itemComponent={SelectItem}
                                 data={[
-                                    { value: 0, label: 'Spell Shield', power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
+                                    { value: 0, label: `${eraArray[empire.era].spell_shield}`, power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
                                     { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17) },
                                     { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
                                     { value: 5, label: 'Open Time Gate', power: 65, cost: Math.ceil(baseCost(empire) * 20) },

@@ -1,11 +1,12 @@
-import { Group } from "@mantine/core"
+import { Group, Anchor } from "@mantine/core"
 import GuideLink from "../../utilities/guidelink"
 
 export default function GuideIndex()
 {
     return (
         <div>
-            <h2>Index of Topics</h2>
+            <h2>Index of Topics </h2>
+            <Anchor href='https://guide.neopromisance.com' target="_blank">External Guide ↗</Anchor>
             <div>
                 <h4>Getting Started</h4>
                 <Group>
@@ -55,7 +56,6 @@ export default function GuideIndex()
                     <GuideLink text='Public Market' page='Public%20Market' />
                     <GuideLink text='The Bank' page='The%20Bank' />
                     {/* <GuideLink text='The Lottery' page='Lottery' /> */}
-
                 </Group>
                 <h4>Diplomacy</h4>
                 <Group>

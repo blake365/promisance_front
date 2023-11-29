@@ -1,4 +1,4 @@
-import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Image } from '@mantine/core'
+import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor } from '@mantine/core'
 
 import { HeroImageRight } from './homeHero'
 import HomeNews from '../layout/homeNews'
@@ -75,7 +75,7 @@ export default function Home()
                                 direction="row"
                                 wrap="wrap">
                                 <Card maw={380} h={220} p='lg' withBorder >
-                                    <Text>Register a new account to create your empire and start your journey. If you still have questions, there is a built in guide to answer questions that may arise as you play.
+                                    <Text>Register a new account to create your empire and start your journey. If you still have questions, there is a built in and <Anchor href='https://guide.neopromisance.com' target="_blank">external ↗</Anchor> guide to answer questions that may arise as you play.
                                     </Text>
                                     <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
                                 </Card>
