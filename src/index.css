@@ -171,10 +171,13 @@ code {
 }
 
 .embla {
-  --slide-spacing: 1rem;
-  --slide-size: 100%;
+  --slide-spacing: 0.5rem;
+  --slide-size: 96%;
   --slide-height: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  border: 1px solid lightgray
 }
 
 .embla__viewport {
@@ -199,6 +202,7 @@ code {
   display: block;
   height: var(--slide-height);
   width: 100%;
+  /* margin: 0 0px 0 5px; */
   object-fit: cover;
 }
 

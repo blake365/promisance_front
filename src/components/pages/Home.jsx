@@ -13,7 +13,6 @@ import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
 import { getTime } from '../../store/timeSlice'
 
-
 export default function Home()
 {
     const dispatch = useDispatch()
@@ -47,7 +46,7 @@ export default function Home()
         <main style={{ backgroundColor: '#F1F3F5' }}>
             <HeroImageRight />
             <Container size='lg' align='center' mt='lg'>
-                <Grid justify='center' align='center' my='lg'>
+                <Grid justify='center' align='center' mb='lg'>
                     <Grid.Col md={5} sm={12}>
                         <Box align='left' my='lg'>
                             <Title order={1}>About the Game</Title>
@@ -74,12 +73,12 @@ export default function Home()
                                 align="center"
                                 direction="row"
                                 wrap="wrap">
-                                <Card maw={380} h={220} p='lg' withBorder >
+                                <Card maw={380} h={220} p='lg' withBorder shadow='sm' >
                                     <Text>Register a new account to create your empire and start your journey. If you still have questions, there is a built in and <Anchor href='https://guide.neopromisance.com' target="_blank">external ↗</Anchor> guide to answer questions that may arise as you play.
                                     </Text>
                                     <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
                                 </Card>
-                                <Card maw={380} h={220} p='lg' withBorder >
+                                <Card maw={380} h={220} p='lg' withBorder shadow='sm'>
                                     <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
                                     <Button size='md' sx={{ marginTop: 10 }} component='a' onClick={demoRegister}>Demo Account</Button>
                                     <Text color='red' align='center' size='sm'>{error && error.error}</Text>
@@ -90,7 +89,7 @@ export default function Home()
                     <Grid.Col md={8} sm={12}>
                         <Grid justify='center' align='center' maw={740} my='md'>
                             <Grid.Col sm={6} xs={12}>
-                                <Card ta='left' w={350} mih={440} withBorder mb='md'>
+                                <Card ta='left' w={350} mih={440} withBorder mb='md' shadow='sm'>
                                     <Card.Section>
                                         <img src='/images/farm.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
@@ -100,7 +99,7 @@ export default function Home()
                                         <Badge variant='filled' color='green'>Gremlin</Badge> <Badge variant='filled' color='green'>Hobbit</Badge> <Badge variant='filled' color='green'>Ghoul</Badge>
                                     </Card.Section>
                                 </Card>
-                                <Card ta='left' w={350} mih={440} withBorder>
+                                <Card ta='left' w={350} mih={440} withBorder shadow='sm'>
                                     <Card.Section>
                                         <img src='/images/industry.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
@@ -112,7 +111,7 @@ export default function Home()
                                 </Card>
                             </Grid.Col>
                             <Grid.Col sm={6} xs={12}>
-                                <Card ta='left' w={350} mih={440} withBorder mb='md'>
+                                <Card ta='left' w={350} mih={440} withBorder mb='md' shadow='sm'>
                                     <Card.Section>
                                         <img src='/images/cash.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>
@@ -122,7 +121,7 @@ export default function Home()
                                         <Badge variant='filled' color='yellow'>Gnome</Badge> <Badge variant='filled' color='yellow'>Minotaur</Badge> <Badge variant='filled' color='yellow'>Vampire</Badge>
                                     </Card.Section>
                                 </Card>
-                                <Card ta='left' w={350} mih={440} withBorder>
+                                <Card ta='left' w={350} mih={440} withBorder shadow='sm'>
                                     <Card.Section>
                                         <img src='/images/magic.webp' alt='farm' height={175} width={350} loading='lazy' />
                                     </Card.Section>

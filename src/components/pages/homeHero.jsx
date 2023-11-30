@@ -1,5 +1,6 @@
 import { createStyles, Container, Title, Text, Button, Group } from '@mantine/core';
 import neoIcon from '../../icons/neoIcon.svg'
+import { Compass, ListBullets, DiscordLogo } from '@phosphor-icons/react'
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -57,7 +58,7 @@ export function HeroImageRight()
                         </Text>
                         <Group align='center' spacing={4}>
                             <img src={neoIcon} className={classes.svg} alt='logo' />
-                            <Title className={classes.title} mb='lg'>
+                            <Title component='a' href='/' className={classes.title} mb='lg'>
                                 NeoPromisance
                             </Title>
                         </Group>
@@ -69,10 +70,20 @@ export function HeroImageRight()
                         </Text>
                     </div>
                 </div>
-                <Group mt='lg' spacing='lg'>
+                <Group my='lg' spacing='lg'>
                     <Button size='lg' component='a' href='/register'>Register</Button>
                     <Button size='lg' color='teal' component='a' href='/login'>Login</Button>
-                    {/* <Button color='blue'>Demo Account</Button> */}
+                </Group>
+                <Group position='left'>
+                    <Button leftIcon={<Compass size={14} />} component='a' href='https://guide.neopromisance.com' target='_blank' color='dark' compact size='md'>
+                        Guide
+                    </Button>
+                    <Button leftIcon={<ListBullets size={14} />} component='a' href='/rules' color='dark' compact size='md'>
+                        Rules
+                    </Button>
+                    <Button leftIcon={<DiscordLogo size={14} />} component='a' href='https://discord.gg/bnuVy2pdgM' target='_blank' color='dark' compact size='md'>
+                        Discord
+                    </Button>
                 </Group>
             </Container>
         </div>
