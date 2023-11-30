@@ -17,12 +17,13 @@ import { MaxButton } from '../utilities/maxbutton'
 import { loadScores } from '../../store/scoresSlice'
 
 import { eraArray } from '../../config/eras'
-import { TURNS_PROTECTION } from '../../config/config'
+import { TURNS_PROTECTION, ROUND_END, ROUND_START } from '../../config/config'
 import classes from './aid.module.css'
 
 export default function ScoresAid({ friend })
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -106,6 +107,19 @@ export default function ScoresAid({ friend })
     let shipsNeeded = Math.round(empire.trpSea * 0.02)
     if (shipsNeeded < 10000) {
         shipsNeeded = 10000
+    }
+
+    let roundStatus = false
+    let upcoming = ROUND_START - time
+    let remaining = ROUND_END - time
+
+    // console.log(upcoming / 60 / 10000 / 60, remaining)
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0 || remaining / 10000 / 60 / 60 < 24) {
+        roundStatus = true
+    } else {
+        roundStatus = false
     }
 
     return (

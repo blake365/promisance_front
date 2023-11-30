@@ -99,7 +99,7 @@ export default function Lottery()
 
     if (upcoming > 0) {
         roundStatus = true
-    } else if (remaining < 0) {
+    } else if (remaining < 0 || remaining / 10000 / 60 / 60 < 24) {
         roundStatus = true
     } else {
         roundStatus = false

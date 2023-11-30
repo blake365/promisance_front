@@ -141,14 +141,14 @@ export function calcProvisions(empire) {
 	let foodpro = Math.round(production)
 
 	let consumption =
-		empire.trpArm * 0.05 +
-		empire.trpLnd * 0.03 +
-		empire.trpFly * 0.02 +
-		empire.trpSea * 0.01 +
-		empire.peasants * 0.01 +
-		empire.trpWiz * 0.25
+		empire.trpArm * 0.05 * 0.7 +
+		empire.trpLnd * 0.03 * 0.7 +
+		empire.trpFly * 0.02 * 0.7 +
+		empire.trpSea * 0.01 * 0.7 +
+		empire.peasants * 0.01 * 0.7 +
+		empire.trpWiz * 0.25 * 0.7
 
-	consumption *= (100 + raceArray[empire.race].mod_foodcon) / 100
+	consumption *= (100 - raceArray[empire.race].mod_foodcon) / 100
 
 	let foodcon = Math.round(consumption)
 
