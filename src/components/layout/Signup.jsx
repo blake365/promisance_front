@@ -110,6 +110,7 @@ export default function Signup()
 						{...form.getInputProps('username')}
 						mt='md'
 					/>
+					<Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
 					<PasswordInput
 						label='Password'
 						placeholder=''

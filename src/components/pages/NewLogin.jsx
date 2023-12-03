@@ -89,12 +89,13 @@ export default function NewLogin()
                 )
                 }>
                     <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
+                    <Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
                     <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
                     <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
-                    <Text size='sm' mt='xs' color='dark' align='center'>You will stay logged in for 1 hour</Text>
+                    <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
 
                 </form>
                 <Text ta="center" mt="md">
