@@ -176,7 +176,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                         <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
-                {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages}>Report conversation to admins for inappropriate or abusive language.</Anchor>)
+                {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>Report conversation to admins for inappropriate or abusive language.</Anchor>)
                 }
             </Stack>
         </Card >

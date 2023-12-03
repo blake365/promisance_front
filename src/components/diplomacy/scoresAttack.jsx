@@ -9,7 +9,7 @@ import
     Table,
     Group,
 } from '@mantine/core'
-import { useState, } from 'react'
+import { useState } from 'react'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,6 +28,7 @@ export default function ScoresAttack({ enemy })
 
     const [selectedAttack, setSelectedAttack] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -58,6 +59,7 @@ export default function ScoresAttack({ enemy })
 
     const sendAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/attack`, values)
@@ -70,8 +72,10 @@ export default function ScoresAttack({ enemy })
                 loadEmpireTest()
                 dispatch(loadScores())
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -112,7 +116,7 @@ export default function ScoresAttack({ enemy })
                                         {...form.getInputProps('attackType')}
                                     />
 
-                                    <Button color='red' type='submit'>
+                                    <Button color='red' type='submit' loading={loading}>
                                         Attack
                                     </Button>
                                     <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>

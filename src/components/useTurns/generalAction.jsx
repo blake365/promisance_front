@@ -15,12 +15,14 @@ import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { ROUND_END, ROUND_START } from '../../config/config'
+import { useState } from 'react'
 
 export default function GeneralAction(props)
 {
 	// const empire = useSelector((state) => state.empire)
 	const { time } = useSelector((state) => state.time)
 	const dispatch = useDispatch()
+	const [loading, setLoading] = useState(false)
 
 	const form = useForm({
 		initialValues: {
@@ -52,14 +54,17 @@ export default function GeneralAction(props)
 
 	const doTurns = async (values) =>
 	{
+		setLoading(true)
 		try {
 			const res = await Axios.post('/useturns', values)
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
+			setLoading(false)
 		} catch (error) {
 			console.log(error)
+			setLoading(false)
 		}
 	}
 
@@ -116,7 +121,7 @@ export default function GeneralAction(props)
 								color={props.color}
 								{...form.getInputProps('condensed', { type: 'checkbox' })}
 							/>
-							<Button color={props.color} type='submit' disabled={roundStatus}>
+							<Button color={props.color} type='submit' disabled={roundStatus} loading={loading}>
 								{props.title}
 							</Button>
 						</Stack>

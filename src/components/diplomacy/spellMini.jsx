@@ -34,7 +34,7 @@ export default function SpellMini()
     const [spellSelectedEmpire, spellSetSelectedEmpire] = useState('')
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
     const [error, setError] = useState('')
-
+    const [loading, setLoading] = useState(false)
 
     const spellForm = useForm({
         initialValues: {
@@ -67,6 +67,7 @@ export default function SpellMini()
 
     const sendSpellAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
@@ -78,9 +79,11 @@ export default function SpellMini()
                 dispatch(setResult([res.data]))
                 loadEmpireTest()
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
             setError(error)
+            setLoading(false)
         }
     }
 
@@ -202,7 +205,7 @@ export default function SpellMini()
                                     {...spellForm.getInputProps('spell')}
                                 />
 
-                                <Button color='indigo' type='submit'>
+                                <Button color='indigo' type='submit' loading={loading}>
                                     Cast Spell
                                 </Button>
                                 <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>

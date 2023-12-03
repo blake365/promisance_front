@@ -33,6 +33,7 @@ export default function AttackMini()
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [selectedAttack, setSelectedAttack] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -66,6 +67,7 @@ export default function AttackMini()
 
     const sendAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/attack`, values)
@@ -77,8 +79,11 @@ export default function AttackMini()
                 dispatch(setResult(res.data))
                 loadEmpireTest()
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
+
         }
     }
 
@@ -189,7 +194,7 @@ export default function AttackMini()
                                     {...form.getInputProps('attackType')}
                                 />
 
-                                <Button color='red' type='submit'>
+                                <Button color='red' type='submit' loading={loading}>
                                     Attack
                                 </Button>
                                 <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>

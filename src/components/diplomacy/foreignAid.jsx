@@ -32,6 +32,7 @@ export default function ForeignAid()
     const [otherEmpires, setOtherEmpires] = useState()
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -88,6 +89,7 @@ export default function ForeignAid()
     const sendAid = async (values) =>
     {
         // console.log('sending aid')
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/aid/`, values)
@@ -100,9 +102,11 @@ export default function ForeignAid()
                 loadEmpireTest()
                 form.reset()
             }
+            setLoading(false)
         } catch (error) {
             console.log(error.response.data.error)
             setError(error.response.data.error)
+            setLoading(false)
         }
     }
 
@@ -232,7 +236,7 @@ export default function ForeignAid()
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded}>
+                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>

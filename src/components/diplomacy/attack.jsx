@@ -16,7 +16,7 @@ import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
-import { setResult, clearResult } from '../../store/turnResultsSlice'
+import { setResult } from '../../store/turnResultsSlice'
 import { baseCost, getPower_self } from '../../functions/functions'
 import { FavoriteButton } from '../utilities/maxbutton'
 
@@ -51,6 +51,7 @@ export default function Attack()
     const [spellSelectedEmpire, spellSetSelectedEmpire] = useState('')
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -101,6 +102,7 @@ export default function Attack()
 
     const sendAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/attack`, values)
@@ -112,13 +114,17 @@ export default function Attack()
                 dispatch(setResult(res.data))
                 loadEmpireTest()
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setError(error)
+            setLoading(false)
         }
     }
 
     const sendSpellAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
@@ -130,9 +136,11 @@ export default function Attack()
                 dispatch(setResult([res.data]))
                 loadEmpireTest()
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
             setError(error)
+            setLoading(false)
         }
     }
 
@@ -273,7 +281,7 @@ export default function Attack()
                                         {...form.getInputProps('attackType')}
                                     />
 
-                                    <Button color='red' type='submit' disabled={roundStatus}>
+                                    <Button color='red' type='submit' disabled={roundStatus} loading={loading}>
                                         Attack
                                     </Button>
                                     <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
@@ -330,7 +338,7 @@ export default function Attack()
                                         {...spellForm.getInputProps('spell')}
                                     />
 
-                                    <Button color='indigo' type='submit' disabled={roundStatus}>
+                                    <Button color='indigo' type='submit' disabled={roundStatus} loading={loading}>
                                         Cast Spell
                                     </Button>
                                     <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>

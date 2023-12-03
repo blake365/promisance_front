@@ -18,7 +18,7 @@ import { setResult } from '../../store/turnResultsSlice'
 import { eraArray } from '../../config/eras'
 import { loadScores } from '../../store/scoresSlice'
 import Intel from './intel'
-import { getPower_self, baseCost } from '../../functions/functions'
+import { baseCost } from '../../functions/functions'
 
 export default function ScoresIntel({ enemy })
 {
@@ -26,6 +26,7 @@ export default function ScoresIntel({ enemy })
     const { empire } = useSelector((state) => state.empire)
     const [intel, setIntel] = useState()
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -83,6 +84,7 @@ export default function ScoresIntel({ enemy })
 
     const sendSpellAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
@@ -95,8 +97,10 @@ export default function ScoresIntel({ enemy })
                 loadEmpireTest()
                 dispatch(loadScores())
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -110,8 +114,9 @@ export default function ScoresIntel({ enemy })
 
                         <Card py='lg'>
                             <Card.Section>
-                                <Text align='center'>Magic Power: {getPower_self(empire)}</Text>
-                                <Text align='center'>Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}</Text>
+                                <Text align='left' py='xs'>
+                                    Ratio Needed: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
+                                </Text>
                             </Card.Section>
                             <Card.Section>
                                 <form onSubmit={spellForm.onSubmit((values) =>
@@ -121,7 +126,7 @@ export default function ScoresIntel({ enemy })
                                     window.scroll({ top: 0, behavior: 'smooth' })
                                 })}>
                                     <Stack spacing='sm' align='center'>
-                                        <Button color='indigo' type='submit'>
+                                        <Button color='indigo' type='submit' loading={loading}>
                                             Cast Spell
                                         </Button>
                                     </Stack>

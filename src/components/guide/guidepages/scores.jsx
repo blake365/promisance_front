@@ -23,11 +23,11 @@ export default function ScoresGuide()
                 <dt><span>War <ThemeIcon size="sm" radius="sm" color='red'>
                     <Sword />
                 </ThemeIcon></span></dt>
-                <dd>If your clan has declared war on another clan, its members will be listed in this color.</dd>
+                <dd>If your clan has declared war on another clan, its members will indicated by this icon.</dd>
                 <dt><span style={{ color: 'red' }}>Locked</span></dt>
                 <dd>These empires have been disabled by the Administration for violating the established Rules.</dd>
                 <dt><span style={{ color: 'orange' }}>Administrator</span></dt>
-                <dd>These empires are responsible for keeping the game running smoothly. To preserve game balance, they cannot be attacked, nor can they interact with others (aside from private messaging). If you're experiencing technical difficulties playing the game, these are the people to talk to.</dd>
+                <dd>These empires are responsible for keeping the game running smoothly. If you're experiencing technical difficulties playing the game, these are the people to talk to. To find bugs and test new features the admins may be active players in the game. </dd>
                 <dt><span style={{ color: 'deepskyblue' }}>Yourself</span></dt>
                 <dd>Your own empire is always displayed in this color, making it easier to locate yourself in the score list.</dd>
             </dl>

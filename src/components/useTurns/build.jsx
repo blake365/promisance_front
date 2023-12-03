@@ -10,6 +10,7 @@ import { FavoriteButton, HalfButton, MaxButton, OneTurn } from '../utilities/max
 import { BUILD_COST, ROUND_START, ROUND_END } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
+import { useState } from 'react'
 
 // clear form on submit
 // fix styling of button, unused land, top alignment, text alignment in cells
@@ -25,6 +26,7 @@ export default function Build()
 	}
 	const { empire } = useSelector((state) => state.empire)
 	const { time } = useSelector((state) => state.time)
+	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -136,6 +138,7 @@ export default function Build()
 
 	const doBuild = async (values) =>
 	{
+		setLoading(true)
 		try {
 			const res = await Axios.post('/build', values)
 			// dispatch(setResult(res.data))
@@ -144,8 +147,10 @@ export default function Build()
 			loadEmpireTest()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
+			setLoading(false)
 		} catch (error) {
 			console.log(error)
+			setLoading(false)
 		}
 	}
 
@@ -457,7 +462,7 @@ export default function Build()
 							</Table>
 							<div style={{ color: 'red' }}>{errors.error}</div>
 
-							<Button color='lime' type='submit' disabled={errors.error || roundStatus}>
+							<Button color='lime' type='submit' disabled={errors.error || roundStatus} loading={loading}>
 								Begin Construction
 							</Button>
 

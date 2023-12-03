@@ -35,6 +35,7 @@ export default function IntelCenter()
     const [otherEmpires, setOtherEmpires] = useState()
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [intel, setIntel] = useState()
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -110,13 +111,18 @@ export default function IntelCenter()
 
     const sendSpellAttack = async (values) =>
     {
+        setLoading(true)
         try {
             const res = await Axios.post(`/magic/attack`, values)
             // console.log(res.data)
             dispatch(setResult([res.data]))
             loadEmpireTest()
+            form.reset()
+            window.scroll({ top: 0, behavior: 'smooth' })
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -170,7 +176,7 @@ export default function IntelCenter()
                             </Group>
                         </Card.Section>
                         <Text align='left' py='xs'>
-                            Ratio: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
+                            Ratio Needed: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
                         </Text>
                         <Text align='center'>
 
@@ -198,7 +204,7 @@ export default function IntelCenter()
                                         {...form.getInputProps('defenderId')}
                                     />
                                 )}
-                                <Button color='indigo' type='submit' disabled={roundStatus || empire.mode === 'demo'}>
+                                <Button color='indigo' type='submit' disabled={roundStatus || empire.mode === 'demo'} loading={loading}>
                                     Cast Spell
                                 </Button>
                             </Stack>

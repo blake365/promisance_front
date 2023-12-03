@@ -10,7 +10,7 @@ import { OneTurn, MaxButton, HalfButton } from '../utilities/maxbutton'
 import { BUILD_COST, ROUND_START, ROUND_END } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
-
+import { useState } from 'react'
 
 export default function Demolish()
 {
@@ -21,6 +21,7 @@ export default function Demolish()
 	}
 	const { empire } = useSelector((state) => state.empire)
 	const { time } = useSelector((state) => state.time)
+	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -156,6 +157,7 @@ export default function Demolish()
 
 	const doDemolish = async (values) =>
 	{
+		setLoading(true)
 		try {
 			const res = await Axios.post('/demolish', values)
 			// dispatch(setResult(res.data))
@@ -164,13 +166,16 @@ export default function Demolish()
 			loadEmpireTest()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
+			setLoading(false)
 		} catch (error) {
 			console.log(error)
+			setLoading(false)
 		}
 	}
 
 	const doDrop = async (values) =>
 	{
+		setLoading(true)
 		try {
 			const res = await Axios.post('/drop', values)
 			// dispatch(setResult(res.data))
@@ -178,8 +183,11 @@ export default function Demolish()
 			dispatch(setResult(res.data))
 			loadEmpireTest()
 			form.reset()
+			window.scroll({ top: 0, behavior: 'smooth' })
+			setLoading(false)
 		} catch (error) {
 			console.log(error)
+			setLoading(false)
 		}
 	}
 
@@ -484,7 +492,7 @@ export default function Demolish()
 								</tbody>
 							</Table>
 
-							<Button type='submit' color='orange' disabled={errors?.error || roundStatus}>
+							<Button type='submit' color='orange' disabled={errors?.error || roundStatus} loading={loading}>
 								Begin Demolition
 							</Button>
 
@@ -540,7 +548,7 @@ export default function Demolish()
 									</tr>
 								</tbody>
 							</Table>
-							<Button type='submit' color='red' disabled={roundStatus}>
+							<Button type='submit' color='red' disabled={roundStatus} loading={loading}>
 								Drop Land
 							</Button>
 						</Stack>

@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import GeneralAction from './generalAction'
+import { eraArray } from '../../config/eras'
 
 export default function Industry()
 {
@@ -118,7 +119,7 @@ export default function Industry()
 						<Stack align='center'>
 							<SimpleGrid cols={2} spacing={5}>
 								<NumberInput
-									label='Infantry'
+									label={eraArray[empire.era].trparm}
 									min={0}
 									max={100}
 									defaultValue={empire.indArmy}
@@ -127,7 +128,7 @@ export default function Industry()
 									{...form.getInputProps('indArmy')}
 								/>
 								<NumberInput
-									label='Tanks'
+									label={eraArray[empire.era].trplnd}
 									min={0}
 									max={100}
 									defaultValue={empire.indLnd}
@@ -136,7 +137,7 @@ export default function Industry()
 									{...form.getInputProps('indLnd')}
 								/>
 								<NumberInput
-									label='Jets'
+									label={eraArray[empire.era].trpfly}
 									min={0}
 									max={100}
 									defaultValue={empire.indFly}
@@ -145,7 +146,7 @@ export default function Industry()
 									{...form.getInputProps('indFly')}
 								/>
 								<NumberInput
-									label='Battleships'
+									label={eraArray[empire.era].trpsea}
 									min={0}
 									max={100}
 									defaultValue={empire.indSea}

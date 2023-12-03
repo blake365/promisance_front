@@ -122,7 +122,7 @@ export default function Mailbox()
                                     // console.log(item)
                                     let otherEmpire = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
                                     // console.log(item)
-                                    return (<Tabs.Tab key={item.uuid} value={item.conversationId.toString()}>{otherEmpire}</Tabs.Tab>)
+                                    return (<Tabs.Tab key={item.uuid} value={item.conversationId.toString()} sx={{ maxWidth: 110, overflow: 'scroll', textOverflow: 'ellipsis', paddingLeft: 5 }}>{otherEmpire}</Tabs.Tab>)
                                 })}
                             </Tabs.List>
 
@@ -141,7 +141,7 @@ export default function Mailbox()
                     <Card>
                         <Card.Section pt='sm'>
                             <Text align='center'>Start a new conversation</Text>
-                            <Text size='xs' color='gray' align='center'>Messages are not encrypted and can be read by anyone with access to the database.</Text>
+                            <Text size='xs' color='dimmed' align='center'>Messages are not encrypted and can be read by anyone with access to the database.</Text>
                         </Card.Section>
                         <Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
@@ -175,7 +175,6 @@ export default function Mailbox()
                                     <Button type='submit' size='xs'>Send</Button>
                                 </Group>
                             </form>
-
                         </Card.Section>
                     </Card>
                 </Stack>

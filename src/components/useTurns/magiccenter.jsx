@@ -18,6 +18,7 @@ import { getPower_self, baseCost } from '../../functions/functions'
 import { ROUND_START, ROUND_END } from '../../config/config'
 import { eraArray } from '../../config/eras'
 import { FavoriteButton } from '../utilities/maxbutton'
+import { useState } from 'react'
 
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
@@ -25,6 +26,7 @@ export default function MagicCenter()
 {
     const { empire } = useSelector((state) => state.empire)
     const { time } = useSelector((state) => state.time)
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -57,6 +59,7 @@ export default function MagicCenter()
 
     const doMagic = async (values) =>
     {
+        setLoading(true)
         // console.log(values)
         try {
             const res = await Axios.post('/magic', values)
@@ -64,8 +67,10 @@ export default function MagicCenter()
             dispatch(setResult(res.data))
             window.scroll({ top: 0, behavior: 'smooth' })
             loadEmpireTest()
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -171,7 +176,7 @@ export default function MagicCenter()
                                 {...form.getInputProps('number')}
                             />
 
-                            <Button color='grape' type='submit' disabled={roundStatus}>
+                            <Button color='grape' type='submit' disabled={roundStatus} loading={loading}>
                                 Cast Spell
                             </Button>
                         </Stack>

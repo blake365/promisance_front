@@ -29,6 +29,7 @@ export default function ScoresSpell({ enemy })
 
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const spellForm = useForm({
         initialValues: {
@@ -60,6 +61,7 @@ export default function ScoresSpell({ enemy })
 
     const sendSpellAttack = async (values) =>
     {
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/magic/attack`, values)
@@ -72,8 +74,10 @@ export default function ScoresSpell({ enemy })
                 loadEmpireTest()
                 dispatch(loadScores())
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -126,7 +130,7 @@ export default function ScoresSpell({ enemy })
                                             {...spellForm.getInputProps('spell')}
                                         />
 
-                                        <Button color='indigo' type='submit'>
+                                        <Button color='indigo' type='submit' loading={loading}>
                                             Cast Spell
                                         </Button>
                                         <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>

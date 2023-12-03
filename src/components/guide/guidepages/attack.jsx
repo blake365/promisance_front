@@ -33,6 +33,13 @@ export default function AttackGuide({ empire })
             <p>From here, your {eraArray[empire.era].trpwiz} can spend {eraArray[empire.era].runes} and turns to cast spells on your enemies.</p>
             <p>Spells cannot be cast if your empire's health is below 20%. Casting an offensive spell reduces health by 6%.</p>
             <p>If your empire's magic power is not great enough, high level spells will result in a magical explosion and kill some of your {eraArray[empire.era].trpwiz}.</p>
+            <p>To successfully cast an offensive spell, your magic ratio must be a certain value. </p>
+            <p>Your magic offense power is: your {eraArray[empire.era].trpwiz} / ((your land + enemy land ) / 2) * race magic bonus</p>
+            <p>
+                Enemy magic defense power is: enemy {eraArray[empire.era].trpwiz} / enemy land * 1.05 * enemy race magic bonus
+            </p>
+            <p>Magic ratio: your magic offense / enemy magic defense</p>
+
             <h3>Offensive Spells</h3>
             <dl>
                 <dt>{eraArray[empire.era].spell_blast}</dt>

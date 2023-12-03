@@ -28,6 +28,7 @@ export default function ScoresAid({ friend })
     const dispatch = useDispatch()
 
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const form = useForm({
         initialValues: {
@@ -83,7 +84,8 @@ export default function ScoresAid({ friend })
 
     const sendAid = async (values) =>
     {
-        console.log('sending aid')
+        // console.log('sending aid')
+        setLoading(true)
         setError('')
         try {
             const res = await Axios.post(`/aid/`, values)
@@ -97,9 +99,11 @@ export default function ScoresAid({ friend })
                 form.reset()
                 dispatch(loadScores())
             }
+            setLoading(false)
         } catch (error) {
             console.log(error.response.data.error)
             setError(error.response.data.error)
+            setLoading(false)
         }
     }
 
@@ -163,7 +167,7 @@ export default function ScoresAid({ friend })
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded}>
+                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>
