@@ -59,6 +59,9 @@ import PrivacyPolicy from './components/pages/PrivacyPolicy'
 import Disabled from './components/pages/disabled'
 import GameRules from './components/pages/Rules'
 
+import { TourProvider } from '@reactour/tour'
+import { steps } from './tour/steps'
+
 inject();
 // import Guide from './components/guide/guide'
 
@@ -74,63 +77,73 @@ Axios.defaults.withCredentials = true
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<BrowserRouter>
-					<Routes>
-						<Route path='/' element={<Home />} />
-						<Route path='*' element={<NothingFoundBackground />} />
-						<Route path='/login' element={<NewLogin />} />
-						<Route path='/register' element={<Signup />} />
-						<Route path='/create' element={<CreateEmpire />} />
-						<Route path='/demo' element={<CreateDemoEmpire />} />
-						<Route path='/privacy' element={<PrivacyPolicy />} />
-						<Route path='/rules' element={<GameRules />} />
-						<Route path='/admin/' element={<Admin />} >
+		<TourProvider steps={steps} showCloseButton={true} styles={{
+			popover: (base) => ({
+				...base,
+				'--reactour-accent': '#40c057',
+				borderRadius: '10px',
+				color: 'black',
+				marginLeft: '20px',
+			}),
+		}}>
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<BrowserRouter>
+						<Routes>
+							<Route path='/' element={<Home />} />
 							<Route path='*' element={<NothingFoundBackground />} />
-							<Route path='' element={<AdminSummary />} />
-							<Route path='Summary' element={<AdminSummary />} />
-							<Route path='Users' element={<AdminUsers />} />
-							<Route path='Empires' element={<AdminEmpires />} />
-							<Route path='Mail' element={<AdminMail />} />
-							<Route path='Market' element={<AdminMarket />} />
-							<Route path='News' element={<AdminNews />} />
-						</Route>
-						<Route path='/app/' element={<App />}>
-							<Route path='*' element={<NothingFoundBackground />} />
-							{/* <Route path='guide' element={<Guide />} /> */}
-							<Route path='' element={<Summary />} />
-							<Route path='summary' element={<Summary />} />
-							<Route path='overview' element={<Overview />} />
-							<Route path='scores' element={<Scores />} />
-							<Route path='favorites' element={<Favorites />} />
-							<Route path='farm' element={<Farm />} />
-							<Route path='cash' element={<Cash />} />
-							<Route path='explore' element={<Explore />} />
-							<Route path='meditate' element={<Meditate />} />
-							<Route path='industry' element={<Industry />} />
-							<Route path='build' element={<Build />} />
-							<Route path='demolish' element={<Demolish />} />
-							<Route path='Heal' element={<Heal />} />
-							<Route path='Black%20Market' element={<PrivateMarket />} />
-							<Route path='Public%20Market' element={<PublicMarket />} />
-							<Route path='The%20Bank' element={<WorldBank />} />
-							<Route path='Magic%20Center' element={<MagicCenter />} />
-							<Route path='Empire%20Settings' element={<ManageEmpire />} />
-							<Route path='War%20Council' element={<Attack />} />
-							<Route path='Intel%20Center' element={<IntelCenter />} />
-							<Route path='World%20News' element={<WorldNews />} />
-							<Route path='Mailbox' element={<Mailbox />} />
-							<Route path='Foreign%20Aid' element={<ForeignAid />} />
-							<Route path='Clans' element={<ClanPage />} />
-							<Route path='Clan%20Stats' element={<ClanStats />} />
-							<Route path='disabled' element={<Disabled />} />
-							<Route path='Lottery' element={<Lottery />} />
-						</Route>
-					</Routes>
-				</BrowserRouter>
-			</PersistGate>
-		</Provider>
+							<Route path='/login' element={<NewLogin />} />
+							<Route path='/register' element={<Signup />} />
+							<Route path='/create' element={<CreateEmpire />} />
+							<Route path='/demo' element={<CreateDemoEmpire />} />
+							<Route path='/privacy' element={<PrivacyPolicy />} />
+							<Route path='/rules' element={<GameRules />} />
+							<Route path='/admin/' element={<Admin />} >
+								<Route path='*' element={<NothingFoundBackground />} />
+								<Route path='' element={<AdminSummary />} />
+								<Route path='Summary' element={<AdminSummary />} />
+								<Route path='Users' element={<AdminUsers />} />
+								<Route path='Empires' element={<AdminEmpires />} />
+								<Route path='Mail' element={<AdminMail />} />
+								<Route path='Market' element={<AdminMarket />} />
+								<Route path='News' element={<AdminNews />} />
+							</Route>
+							<Route path='/app/' element={<App />}>
+								<Route path='*' element={<NothingFoundBackground />} />
+								{/* <Route path='guide' element={<Guide />} /> */}
+								<Route path='' element={<Summary />} />
+								<Route path='summary' element={<Summary />} />
+								<Route path='overview' element={<Overview />} />
+								<Route path='scores' element={<Scores />} />
+								<Route path='favorites' element={<Favorites />} />
+								<Route path='farm' element={<Farm />} />
+								<Route path='cash' element={<Cash />} />
+								<Route path='explore' element={<Explore />} />
+								<Route path='meditate' element={<Meditate />} />
+								<Route path='industry' element={<Industry />} />
+								<Route path='build' element={<Build />} />
+								<Route path='demolish' element={<Demolish />} />
+								<Route path='Heal' element={<Heal />} />
+								<Route path='Black%20Market' element={<PrivateMarket />} />
+								<Route path='Public%20Market' element={<PublicMarket />} />
+								<Route path='The%20Bank' element={<WorldBank />} />
+								<Route path='Magic%20Center' element={<MagicCenter />} />
+								<Route path='Empire%20Settings' element={<ManageEmpire />} />
+								<Route path='War%20Council' element={<Attack />} />
+								<Route path='Intel%20Center' element={<IntelCenter />} />
+								<Route path='World%20News' element={<WorldNews />} />
+								<Route path='Mailbox' element={<Mailbox />} />
+								<Route path='Foreign%20Aid' element={<ForeignAid />} />
+								<Route path='Clans' element={<ClanPage />} />
+								<Route path='Clan%20Stats' element={<ClanStats />} />
+								<Route path='disabled' element={<Disabled />} />
+								<Route path='Lottery' element={<Lottery />} />
+							</Route>
+						</Routes>
+					</BrowserRouter>
+				</PersistGate>
+			</Provider>
+		</TourProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 )

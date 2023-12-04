@@ -2,9 +2,13 @@ import { Button, Stack, Title } from '@mantine/core'
 import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
+import { useTour } from '@reactour/tour'
 
 const Sidebar = () =>
 {
+
+	const { setCurrentStep } = useTour()
+
 	const infoLinks = [
 		'Summary',
 		'Overview',
@@ -97,6 +101,15 @@ const Sidebar = () =>
 							variant={variant}
 							fullWidth
 							key={index}
+							className={link === 'Explore' ? 'first-step' : link === 'Build' ? 'third-step' : ''}
+							onClick={() =>
+							{
+								if (link === 'Explore') {
+									setCurrentStep(1)
+								} else if (link === 'Build') {
+									setCurrentStep(4)
+								}
+							}}
 						>
 							{link}
 						</Button>

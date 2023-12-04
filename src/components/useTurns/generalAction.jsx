@@ -16,6 +16,7 @@ import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { ROUND_END, ROUND_START } from '../../config/config'
 import { useState } from 'react'
+import { useTour } from '@reactour/tour'
 
 export default function GeneralAction(props)
 {
@@ -23,6 +24,8 @@ export default function GeneralAction(props)
 	const { time } = useSelector((state) => state.time)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
+
+	const { setCurrentStep } = useTour()
 
 	const form = useForm({
 		initialValues: {
@@ -62,6 +65,9 @@ export default function GeneralAction(props)
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
+			if (values.type === 'explore') {
+				setCurrentStep(2)
+			}
 		} catch (error) {
 			console.log(error)
 			setLoading(false)

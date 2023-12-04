@@ -22,6 +22,7 @@ import
 	Button,
 	Indicator,
 	Image,
+	Text,
 } from '@mantine/core'
 
 import neoIcon from './icons/neoIcon.svg'
@@ -50,6 +51,8 @@ import { loadScores } from './store/scoresSlice';
 import { TURNS_PROTECTION } from './config/config';
 import { persistor } from './store/store';
 
+import { useTour } from '@reactour/tour';
+
 function App()
 {
 	const [opened, setOpened] = useState(false)
@@ -71,8 +74,10 @@ function App()
 	const { empire } = useSelector((state) => state.empire)
 	// console.log(empire)
 
+
 	const navigate = useNavigate()
 	// console.log(empire)
+	const { setIsOpen } = useTour()
 
 	const loadEmpireTest = async () =>
 	{
@@ -320,6 +325,7 @@ function App()
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
+	// console.log(pageState)
 
 	// console.log(clanMail)
 
@@ -417,7 +423,15 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={2}>
 									<Group spacing='xs' position='center'>
-										<Button compact variant='outline' onClick={() => { setModalOpened(true) }}
+										<Button.Group
+										><Button compact variant='outline' onClick={() =>
+										{
+											if (setIsOpen) {
+												dispatch(setPage(null))
+												setIsOpen(false)
+											}
+											setModalOpened(true)
+										}}
 											sx={(theme) =>
 											{
 												if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
@@ -428,7 +442,22 @@ function App()
 													}
 												}
 											}
-											}>Game Guide</Button>
+											}
+											className='sixth-step'>Guide</Button>
+											<Button compact variant='outline' onClick={() => setIsOpen(true)}
+												sx={(theme) =>
+												{
+													if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
+														return {
+															border: '1px solid #40c057',
+															boxShadow: '0 0 2px 1px #40c057',
+															color: '#40c057',
+														}
+													}
+												}
+												}
+												className='sixth-step'>Tour</Button>
+										</Button.Group>
 										<Button compact variant='outline' loading={refreshLoading} onClick={() =>
 										{
 											// setRefreshLoading(true)

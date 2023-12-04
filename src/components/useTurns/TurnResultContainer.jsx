@@ -29,7 +29,7 @@ export default function TurnResultContainer()
   }, [location])
 
   return show ? (
-    <div style={{ maxHeight: '300px', overflow: 'scroll', padding: '0.5rem', paddingBottom: '0.75rem' }}>
+    <div style={{ maxHeight: '300px', overflow: 'scroll', padding: '0.5rem', paddingBottom: '0.75rem' }} className="step-twopointfive fifth-step">
       {result.map((item, index) =>
       {
         return (<TurnResultCard data={item} key={index} />)

@@ -6,7 +6,8 @@ export default function GuideIndex()
     return (
         <div>
             <h2>Index of Topics </h2>
-            <Anchor href='https://guide.neopromisance.com' target="_blank">External Guide ↗</Anchor>
+            <Anchor href='https://guide.neopromisance.com' target="_blank" mr='sm'>External Guide ↗</Anchor>
+            <GuideLink text='Personalized New Player Tips' page='New%20Player' />
             <div>
                 <h4>Getting Started</h4>
                 <Group>

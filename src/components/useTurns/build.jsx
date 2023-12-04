@@ -11,7 +11,7 @@ import { BUILD_COST, ROUND_START, ROUND_END } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState } from 'react'
-
+import { useTour } from '@reactour/tour'
 // clear form on submit
 // fix styling of button, unused land, top alignment, text alignment in cells
 // build demolish feature
@@ -28,6 +28,7 @@ export default function Build()
 	const { time } = useSelector((state) => state.time)
 	const [loading, setLoading] = useState(false)
 
+	const { setCurrentStep } = useTour()
 	const dispatch = useDispatch()
 
 	const getBuildAmounts = (empire) =>
@@ -148,6 +149,7 @@ export default function Build()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
+			setCurrentStep(5)
 		} catch (error) {
 			console.log(error)
 			setLoading(false)
@@ -169,7 +171,7 @@ export default function Build()
 	return (
 		<main>
 			<Center mb={10}>
-				<Stack spacing='sm' align='center'>
+				<Stack spacing='sm' align='center' >
 					<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
 					<Title order={1} align='center'>
 						Build <FavoriteButton empire={empire} title='Build' />
@@ -197,8 +199,9 @@ export default function Build()
 								})
 								: setErrors("Can't build that many buildings")
 						}
+
 					>
-						<Stack spacing='sm' align='center'>
+						<Stack spacing='sm' align='center' className='fourth-step'>
 							<Table verticalSpacing='xs' striped>
 								<thead>
 									<tr>
