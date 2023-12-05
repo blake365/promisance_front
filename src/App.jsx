@@ -77,7 +77,17 @@ function App()
 
 	const navigate = useNavigate()
 	// console.log(empire)
-	const { setIsOpen } = useTour()
+	const { setIsOpen, currentStep } = useTour()
+
+	useEffect(() =>
+	{
+		// console.log(currentStep)
+		if (currentStep === 3 || currentStep === 0) {
+			setOpened(true)
+		} else {
+			setOpened(false)
+		}
+	}, [currentStep])
 
 	const loadEmpireTest = async () =>
 	{
@@ -444,7 +454,13 @@ function App()
 											}
 											}
 											className='sixth-step'>Guide</Button>
-											<Button compact variant='outline' onClick={() => setIsOpen(true)}
+											<Button compact variant='outline' onClick={() =>
+											{
+												if (currentStep === 0 || currentStep === 3) {
+													setOpened(true)
+												}
+												setIsOpen(true)
+											}}
 												sx={(theme) =>
 												{
 													if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
