@@ -7,6 +7,7 @@ import { empireLoaded } from '../store/empireSlice'
 import { TURNS_MAXIMUM, TURNS_PROTECTION, ROUND_END, ROUND_START } from '../config/config'
 import { raceArray } from '../config/races'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../store/userSlice'
 
 // create polymorph feature
 
@@ -158,6 +159,7 @@ export default function ManageEmpire()
 			try {
 				const res = await Axios.delete(`/empire/${empire.uuid}`)
 				console.log(res.data)
+				dispatch(logout())
 				navigate('/')
 			} catch (error) {
 				console.log(error)
@@ -245,8 +247,8 @@ export default function ManageEmpire()
 					<Text maw={400}>This will fully delete your empire for this round. We are sorry to see you go. <a href='mailto:admin@neopromisance.com'>Contact us</a> if you have any feedback to improve the game. </Text>
 					<form onSubmit={form2.onSubmit((values) =>
 					{
-						console.log('deleting empire')
-						console.log(values)
+						// console.log('deleting empire')
+						// console.log(values)
 						deleteEmpire(values)
 					})}>
 						<Stack>

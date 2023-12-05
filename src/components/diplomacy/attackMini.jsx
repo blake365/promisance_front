@@ -133,6 +133,15 @@ export default function AttackMini()
         )
     );
 
+    const SelectAttack = forwardRef(
+        ({ label, sub, ...others }, ref) => (
+            <div ref={ref} {...others}>
+                <Text size='md'>{label}</Text>
+                <Text size='xs' m={0}>{sub}</Text>
+            </div>
+        )
+    )
+
     return (
         <section>
             <Center>
@@ -181,15 +190,15 @@ export default function AttackMini()
                                     placeholder="Pick one"
                                     withAsterisk
                                     withinPortal
-                                    // itemComponent={SelectAttack}
+                                    itemComponent={SelectAttack}
                                     data={[
-                                        { value: 'standard', label: 'Standard Attack' },
-                                        { value: 'surprise', label: 'Surprise Attack' },
-                                        { value: 'trparm', label: 'Guerilla Strike' },
-                                        { value: 'trplnd', label: 'Lay Siege' },
-                                        { value: 'trpfly', label: 'Air Strike' },
-                                        { value: 'trpsea', label: 'Coastal Assault' },
-                                        { value: 'pillage', label: 'Pillage' }
+                                        { value: 'standard', label: 'Standard Attack', sub: 'attack with all units' },
+                                        { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
+                                        { value: 'trparm', label: 'Guerilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
+                                        { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
+                                        { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
+                                        { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
+                                        { value: 'pillage', label: 'Pillage', sub: 'attack with all units' }
                                     ]}
                                     {...form.getInputProps('attackType')}
                                 />

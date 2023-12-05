@@ -1,9 +1,10 @@
 // clan scoreboard
-import { Stack, Title, Loader } from '@mantine/core'
+import { Stack, Title, Loader, Card, Button, Text } from '@mantine/core'
 import { useState, useEffect } from 'react'
 
 import Axios from 'axios'
 import ClanCard from './clanCard'
+import { Link } from 'react-router-dom'
 
 export default function ClanStats()
 {
@@ -36,7 +37,7 @@ export default function ClanStats()
                     Clans Stats
                 </Title>
                 {loading && <Loader />}
-                {clans &&
+                {clans ?
                     <Stack spacing='sm'>
                         {clans.sort((a, b) => b.avgNetworth - a.avgNetworth).map((clan, index) =>
                         {
@@ -44,7 +45,12 @@ export default function ClanStats()
                                 <ClanCard clan={clan} index={index} key={index} scores />
                             )
                         })}
-                    </Stack>
+                    </Stack> : <Card>
+                        <Stack align='center'>
+                            <Title order={4}>No Clans Created Yet</Title>
+                            <Link to='/app/Clans'><Button>Create a Clan</Button></Link>
+                        </Stack>
+                    </Card>
                 }
             </Stack>
         </main>

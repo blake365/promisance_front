@@ -153,7 +153,7 @@ export default function SpellMini()
                         Cast Spell <FavoriteButton title='Spell' empire={empire} />
                     </Title>
                     <Text align='center'>
-                        Cast spells to capture land, steal resources, or destroy enemy resources. Spells take two turns.
+                        Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
 

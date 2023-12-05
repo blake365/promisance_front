@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useDisclosure, useColorScheme, useLocalStorage } from '@mantine/hooks';
 import useInterval from './functions/useInterval'
@@ -320,7 +320,7 @@ function App()
 				navigate('/')
 			}
 		}
-	}, 300000)
+	}, 120000)
 
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1
@@ -472,10 +472,10 @@ function App()
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
 										{empire.clanId !== 0 && <Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
-											<Button component="a" href="/app/Clans" size='sm' compact color=''><UsersFour size='1.2rem' /> </Button>
+											<Link to='/app/Clans'><Button size='sm' compact color=''><UsersFour size='1.2rem' /> </Button></Link>
 										</Indicator>}
 										<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
-											<Button component="a" href="/app/mailbox" size='sm' compact color=''><Envelope size='1.2rem' /> </Button>
+											<Link to='/app/Mailbox'><Button size='sm' compact color=''><Envelope size='1.2rem' /> </Button></Link>
 										</Indicator>
 										<Indicator color="green" disabled={news < 1} label={news} size={20} overflowCount={50} zIndex={3}>
 											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /></Button>
