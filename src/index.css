@@ -12,6 +12,8 @@ code {
     monospace;
 }
 
+
+
 .fade-enter {
   opacity: 0;
   transform: translate(0, 25px);
@@ -105,6 +107,11 @@ code {
   --admonition-note-rgb-value: 138, 180, 248;
   --admonition-warning-rgb-value: 253, 186, 116;
   --admonition-danger-rgb-value: 220, 38, 38;
+}
+
+a {
+  color: var(--brand-primary);
+  text-decoration: underline;
 }
 
 .sandbox {

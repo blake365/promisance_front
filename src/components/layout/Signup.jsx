@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form'
 import { register } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -120,16 +120,16 @@ export default function Signup()
 						mt='md'
 					/>
 					<Text ta="center" mt="md">
-						By registering an account, you agree to abide by the <Anchor href='/rules'>game rules</Anchor>.
+						By registering an account, you agree to abide by the <Anchor component={Link} to='/rules'>game rules</Anchor>.
 					</Text>
 					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
 					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
 				</form>
 				<Text ta="center" mt="md">
-					Already have an account? <Anchor href='/login'>Login</Anchor>
+					Already have an account? <Anchor component={Link} to='/login'>Login</Anchor>
 				</Text>
 				<Text ta="center" mt="md">
-					<Anchor href='/'>Return home</Anchor>
+					<Anchor component={Link} to='/'>Return home</Anchor>
 				</Text>
 			</Paper>
 		</main>

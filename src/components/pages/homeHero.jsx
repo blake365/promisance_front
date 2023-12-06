@@ -1,6 +1,7 @@
 import { createStyles, Container, Title, Text, Button, Group } from '@mantine/core';
 import neoIcon from '../../icons/neoIcon.svg'
 import { Compass, ListBullets, DiscordLogo } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -58,7 +59,7 @@ export function HeroImageRight()
                         </Text>
                         <Group align='center' spacing={4}>
                             <img src={neoIcon} className={classes.svg} alt='logo' />
-                            <Title component='a' href='/' className={classes.title} mb='lg'>
+                            <Title component={Link} to='/' className={classes.title} mb='lg'>
                                 NeoPromisance
                             </Title>
                         </Group>
@@ -71,14 +72,14 @@ export function HeroImageRight()
                     </div>
                 </div>
                 <Group my='lg' spacing='lg'>
-                    <Button size='lg' component='a' href='/register'>Register</Button>
-                    <Button size='lg' color='teal' component='a' href='/login'>Login</Button>
+                    <Button component={Link} to='/register' size='lg'>Register</Button>
+                    <Button component={Link} to='/login' size='lg' color='teal'>Login</Button>
                 </Group>
                 <Group position='left'>
                     <Button leftIcon={<Compass size={14} />} component='a' href='https://guide.neopromisance.com' target='_blank' color='dark' compact size='md'>
                         Guide
                     </Button>
-                    <Button leftIcon={<ListBullets size={14} />} component='a' href='/rules' color='dark' compact size='md'>
+                    <Button component={Link} to='/rules' leftIcon={<ListBullets size={14} />} color='dark' compact size='md'>
                         Rules
                     </Button>
                     <Button leftIcon={<DiscordLogo size={14} />} component='a' href='https://discord.gg/bnuVy2pdgM' target='_blank' color='dark' compact size='md'>

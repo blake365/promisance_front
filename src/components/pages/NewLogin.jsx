@@ -7,13 +7,14 @@ import
     Button,
     Title,
     Text,
-    Anchor,
+    Anchor
 } from '@mantine/core';
 import { useForm } from '@mantine/form'
 import { login } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 let bg = '/images/login.webp'
 
@@ -99,10 +100,10 @@ export default function NewLogin()
 
                 </form>
                 <Text ta="center" mt="md">
-                    Need an account? <Anchor href='/register'>Register</Anchor>
+                    Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
                 </Text>
                 <Text ta="center" mt="md">
-                    <Anchor href='/'>Return home</Anchor>
+                    <Anchor component={Link} to='/'>Return home</Anchor>
                 </Text>
             </Paper>
         </div >

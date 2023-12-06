@@ -101,6 +101,7 @@ export default function Mailbox()
                     console.error('Error setting conversation data:', error);
                     setLoading(false);
                 });
+            window.scroll({ top: 0, behavior: 'smooth' })
         } catch (error) {
             console.error('Error sending message:', error)
         }

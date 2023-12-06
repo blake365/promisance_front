@@ -50,7 +50,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
         const actionDate = new Date(empire.lastAction.replace(' ', 'T'))
 
         // console.log(now - actionDate)
-        if (now - actionDate < 1200000) {
+        if (now - actionDate < 300000) {
             setActive(true)
         }
 
