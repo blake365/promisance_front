@@ -50,6 +50,7 @@ import BonusTurns from './components/layout/bonusTurns';
 import { loadScores } from './store/scoresSlice';
 import { TURNS_PROTECTION } from './config/config';
 import { persistor } from './store/store';
+import { resetUser } from './store/userSlice';
 
 import { useTour } from '@reactour/tour';
 
@@ -102,7 +103,8 @@ function App()
 			{
 				return persistor.purge();
 			})
-			navigate('/')
+			dispatch(resetUser())
+			navigate('/login')
 			console.log(error)
 		}
 		setRefreshLoading(false)
@@ -122,7 +124,9 @@ function App()
 			{
 				return persistor.purge();
 			})
-			navigate('/')
+			dispatch(resetUser())
+			navigate('/login')
+
 		}
 	}
 
@@ -138,7 +142,9 @@ function App()
 			{
 				return persistor.purge();
 			})
-			navigate('/')
+			dispatch(resetUser())
+			navigate('/login')
+
 		}
 	}
 
@@ -154,7 +160,8 @@ function App()
 			{
 				return persistor.purge();
 			})
-			navigate('/')
+			dispatch(resetUser())
+			navigate('/login')
 		}
 	}
 
@@ -171,7 +178,9 @@ function App()
 			{
 				return persistor.purge();
 			})
-			navigate('/')
+			dispatch(resetUser())
+			navigate('/login')
+
 		}
 	}
 
@@ -189,7 +198,8 @@ function App()
 					{
 						return persistor.purge();
 					})
-					navigate('/')
+					dispatch(resetUser())
+					navigate('/login')
 
 				} else if (res.status !== 200) {
 					persistor.pause();
@@ -197,7 +207,8 @@ function App()
 					{
 						return persistor.purge();
 					})
-					navigate('/')
+					dispatch(resetUser())
+					navigate('/login')
 
 				} else if (res.data) {
 					dispatch(load())
@@ -209,7 +220,8 @@ function App()
 				{
 					return persistor.purge();
 				})
-				navigate('/')
+				dispatch(resetUser())
+				navigate('/login')
 			}
 		}
 
@@ -276,7 +288,8 @@ function App()
 					{
 						return persistor.purge();
 					})
-					navigate('/')
+					dispatch(resetUser())
+					navigate('/login')
 				}
 			}
 		}
@@ -327,7 +340,7 @@ function App()
 			}
 			catch (error) {
 				// console.log(error)
-				navigate('/')
+				navigate('/login')
 			}
 		}
 	}, 120000)
@@ -502,7 +515,7 @@ function App()
 							<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
 								<EmpireNews />
 							</Drawer>
-							<TurnResultContainer />
+							<TurnResultContainer empire={empire} />
 							<Outlet />
 						</>)}
 					</main>

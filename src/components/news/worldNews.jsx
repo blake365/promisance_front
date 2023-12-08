@@ -178,7 +178,8 @@ export default function WorldNews()
                                 { value: 'attack', label: 'Attack' },
                                 { value: 'market', label: 'Market' },
                                 { value: 'spell', label: 'Magic' },
-                                { value: 'aid', label: 'Aid' }
+                                { value: 'aid', label: 'Aid' },
+                                { value: 'lottery', label: 'Lottery' },
                             ]}
                             {...form.getInputProps('type')}
                             size='xs'

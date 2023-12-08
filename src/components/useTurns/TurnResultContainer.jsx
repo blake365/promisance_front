@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import TurnResultCard from "./turnResultCard";
 
 
-export default function TurnResultContainer()
+export default function TurnResultContainer({ empire })
 {
   // const [results, setResults] = useState([])
   const [result, setResult] = useState([]);
@@ -32,7 +32,7 @@ export default function TurnResultContainer()
     <div style={{ maxHeight: '300px', overflow: 'scroll', padding: '0.5rem', paddingBottom: '0.75rem' }} className="step-twopointfive fifth-step">
       {result.map((item, index) =>
       {
-        return (<TurnResultCard data={item} key={index} />)
+        return (<TurnResultCard data={item} key={index} era={empire.era} />)
       })}
     </div>
   ) : null

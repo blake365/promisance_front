@@ -17,7 +17,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
-import { baseCost, getPower_self } from '../../functions/functions'
+import { baseCost, defense, getPower_self, offense } from '../../functions/functions'
 import { FavoriteButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
@@ -209,6 +209,20 @@ export default function Attack()
         )
     );
 
+    function formatNumber(num)
+    {
+        if (num >= 1e12) {
+            return (num / 1e12).toFixed(2) + ' T';
+        }
+        if (num >= 1e9) {
+            return (num / 1e9).toFixed(2) + ' B';
+        }
+        if (num >= 1e6) {
+            return (num / 1e6).toFixed(2) + ' M';
+        }
+        return num.toLocaleString();
+    }
+
     // console.log(selectedAttack)
     // console.log(otherEmpires)
     const eraDisplay = [0, 1, 2]
@@ -298,6 +312,64 @@ export default function Attack()
                             </form>
 
                         </Card>
+                        <Card>
+                            <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'baseline', height: '49px' }}>
+                                <Text weight={500}>Your Army:</Text><Title ml='xs' order={4} color={eraArray[empire.era].color}>{eraArray[empire.era].name}</Title>
+                            </Card.Section>
+                            <Card.Section pt="sm">
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Unit
+                                            </th>
+                                            <th style={{ textAlign: 'right' }}>
+                                                Number
+                                            </th>
+                                            <th style={{ textAlign: 'right' }}>
+                                                Attack
+                                            </th>
+                                            <th style={{ textAlign: 'right' }}>
+                                                Defense
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trparm}</td>
+                                            <td align='right'>{empire?.trpArm.toLocaleString()}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].o_trparm * empire.trpArm * (1 + raceArray[empire.race].mod_offense / 100) * (empire.health / 100)))}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].d_trparm * empire.trpArm * (1 + raceArray[empire.race].mod_defense / 100) * (empire.health / 100)))}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trplnd}</td>
+                                            <td align='right'>{empire?.trpLnd.toLocaleString()}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].o_trplnd * empire.trpLnd * (1 + raceArray[empire.race].mod_offense / 100) * (empire.health / 100)))}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].d_trplnd * empire.trpLnd * (1 + raceArray[empire.race].mod_defense / 100) * (empire.health / 100)))}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpfly}</td>
+                                            <td align='right'>{empire?.trpFly.toLocaleString()}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].o_trpfly * empire.trpFly * (1 + raceArray[empire.race].mod_offense / 100) * (empire.health / 100)))}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].d_trpfly * empire.trpFly * (1 + raceArray[empire.race].mod_defense / 100) * (empire.health / 100)))}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{eraArray[empire.era].trpsea}</td>
+                                            <td align='right'>{empire?.trpSea.toLocaleString()}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].o_trpsea * empire.trpSea * (1 + raceArray[empire.race].mod_offense / 100) * (empire.health / 100)))}</td>
+                                            <td align='right'>{formatNumber(Math.round(eraArray[empire.era].d_trpsea * empire.trpSea * (1 + raceArray[empire.race].mod_defense / 100) * (empire.health / 100)))}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>All Units</td>
+                                            <td></td>
+                                            <td align='right'>{formatNumber(offense(empire))}</td>
+                                            <td align='right'>{formatNumber(defense(empire))}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Card.Section>
+
+                        </Card>
                         <Card sx={{ width: '300px' }}>
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
@@ -354,85 +426,29 @@ export default function Attack()
                                 </Stack>
                             </form>
                         </Card>
-                        <Card>
-                            <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                                <Text weight={500}>Your Army:</Text><Badge color={eraArray[empire.era].color}>{eraArray[empire.era].name}</Badge>
-                            </Card.Section>
-                            <Card.Section inheritPadding py="xs">
-                                <Table striped>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Unit
-                                            </th>
-                                            <th>
-                                                Number
-                                            </th>
-                                            <th>
-                                                Attack
-                                            </th>
-                                            <th>
-                                                Defense
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trparm}</td>
-                                            <td align='right'>{empire?.trpArm.toLocaleString()}</td>
-                                            <td align='right'>{eraArray[empire.era].o_trparm}</td>
-                                            <td align='right'>{eraArray[empire.era].d_trparm}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trplnd}</td>
-                                            <td align='right'>{empire?.trpLnd.toLocaleString()}</td>
-                                            <td align='right'>{eraArray[empire.era].o_trplnd}</td>
-                                            <td align='right'>{eraArray[empire.era].d_trplnd}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trpfly}</td>
-                                            <td align='right'>{empire?.trpFly.toLocaleString()}</td>
-                                            <td align='right'>{eraArray[empire.era].o_trpfly}</td>
-                                            <td align='right'>{eraArray[empire.era].d_trpfly}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trpsea}</td>
-                                            <td align='right'>{empire?.trpSea.toLocaleString()}</td>
-                                            <td align='right'>{eraArray[empire.era].o_trpsea}</td>
-                                            <td align='right'>{eraArray[empire.era].d_trpsea}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{eraArray[empire.era].trpwiz}</td>
-                                            <td align='right'>{empire?.trpWiz.toLocaleString()}</td>
-                                            <td colSpan={2} align='center'>Power: {getPower_self(empire)}</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </Card.Section>
 
-                        </Card>
 
                     </Group>
-
+                    <Title order={3}>Base Unit Values</Title>
                     <Group position='center' >
                         {eraDisplay.map((era) =>
                         {
-                            if (era !== empire.era) return (
-                                <Card key={era}>
+                            return (
+                                <Card key={era} sx={{ width: 255 }}>
                                     <Card.Section withBorder inheritPadding py="xs">
-                                        <Badge color={eraArray[era].color}>{eraArray[era].name}</Badge>
+                                        <Title align='center' order={4} color={eraArray[era].color}>{eraArray[era].name}</Title>
                                     </Card.Section>
-                                    <Card.Section inheritPadding py="xs">
-                                        <Table striped>
+                                    <Card.Section pt="xs">
+                                        <Table>
                                             <thead>
                                                 <tr>
                                                     <th>
                                                         Unit
                                                     </th>
-                                                    <th>
+                                                    <th style={{ textAlign: 'right' }}>
                                                         Attack
                                                     </th>
-                                                    <th>
+                                                    <th style={{ textAlign: 'right' }}>
                                                         Defense
                                                     </th>
                                                 </tr>

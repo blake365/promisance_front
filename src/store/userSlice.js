@@ -86,6 +86,7 @@ export const userSlice = createSlice({
 			isLoggedIn: true,
 			user: payload,
 		}),
+		resetUser: (state) => initialState,
 	},
 	extraReducers: {
 		[register.fulfilled]: (state, action) => {
@@ -126,4 +127,4 @@ export const userSlice = createSlice({
 
 export const userSelector = (state) => state.user
 
-export const { userLoaded } = userSlice.actions
+export const { userLoaded, resetUser } = userSlice.actions

@@ -6,12 +6,16 @@ import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
 import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
-import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
 import { getTime } from '../../store/timeSlice'
+import Axios from 'axios'
+import { persistor } from '../../store/store';
+import { resetUser } from '../../store/userSlice';
+import { load } from '../../store/userSlice';
 
 export default function Home()
 {
@@ -19,17 +23,52 @@ export default function Home()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
 
-    // const { isLoggedIn, user } = useSelector((state) => state.user)
+    // const { isLoggedIn } = useSelector((state) => state.user)
 
     // useEffect(() =>
     // {
-    //     if (isLoggedIn && user.role === 'demo' && user.empires.length === 0) {
-    //         navigate('/demo')
+    //     async function loadUser()
+    //     {
+    //         // console.log('loading user')
+    //         try {
+    //             const res = await Axios.get('auth/me')
+    //             // console.log('status', res.data)
+    //             if (res.status === 401) {
+    //                 persistor.pause();
+    //                 persistor.flush().then(() =>
+    //                 {
+    //                     return persistor.purge();
+    //                 })
+    //                 dispatch(resetUser())
+
+    //             } else if (res.status !== 200) {
+    //                 persistor.pause();
+    //                 persistor.flush().then(() =>
+    //                 {
+    //                     return persistor.purge();
+    //                 })
+    //                 dispatch(resetUser())
+    //             } else if (res.data) {
+    //                 dispatch(load())
+    //             }
+    //         } catch (error) {
+    //             // console.log(error)
+    //             persistor.pause();
+    //             persistor.flush().then(() =>
+    //             {
+    //                 return persistor.purge();
+    //             })
+    //             dispatch(resetUser())
+    //         }
     //     }
-    // }, [user])
+    //     if (!isLoggedIn) {
+    //         loadUser()
+    //     }
+
+    // }, [])
+
     dispatch(getTime())
 
-    const xsScreen = useMediaQuery('(max-width: 576px)')
     const smScreen = useMediaQuery('(max-width: 768px)')
     const mdScreen = useMediaQuery('(min-width: 992px)')
 

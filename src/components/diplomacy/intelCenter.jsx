@@ -169,7 +169,7 @@ export default function IntelCenter()
                         Cast a spell to view another empire's stats. This will take two turns.
                     </Text>
                     {empire.mode === 'demo' && <Text align='center' color='red'>Intel is disabled for demo accounts.</Text>}
-                    <Card sx={{ width: '300px' }}>
+                    <Card sx={{ width: '350px' }}>
                         <Card.Section withBorder inheritPadding py="xs">
                             <Group position='apart'>
                                 <Text weight={500}>Cast Spell:</Text>
@@ -216,7 +216,6 @@ export default function IntelCenter()
                             '@media (max-width: 650px)': {
                                 width: 700,
                             },
-
                             '@media (max-width: 700px)': {
                                 width: 350,
                             },
@@ -227,7 +226,7 @@ export default function IntelCenter()
                             {intel.map((item) =>
                             {
                                 return (<Accordion.Item value={item.uuid} key={item.uuid}>
-                                    <Accordion.Control>{item.name}(#{item.spiedEmpireId}) - {new Date(item.createdAt).toLocaleString()}</Accordion.Control>
+                                    <Accordion.Control>{item.name} - {new Date(item.createdAt).toLocaleString()}</Accordion.Control>
                                     <Accordion.Panel>
                                         <Intel empire={item} />
                                     </Accordion.Panel>

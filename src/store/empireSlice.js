@@ -52,6 +52,7 @@ export const empireSlice = createSlice({
 		// turnsUsed(state, action) {
 		// 	state = action.payload
 		// },
+		resetEmpire: () => initialState,
 	},
 	extraReducers: {
 		[create.pending]: (state, action) => {

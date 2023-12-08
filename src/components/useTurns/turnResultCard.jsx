@@ -8,7 +8,7 @@ import
 import { eraArray } from '../../config/eras'
 import NetProduced from '../utilities/NetProduced'
 
-const attackResult = (result) =>
+const attackResult = (result, era) =>
 {
 	if (result.result === 'success') {
 
@@ -18,13 +18,13 @@ const attackResult = (result) =>
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
-					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+					youLost.push(`${eraArray[era][key]}: ${result.troopLoss[key].toLocaleString()}`);
 				}
 			}
 
 			for (const key in result.troopKilled) {
 				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
-					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+					youKilled.push(`${eraArray[era][key]}: ${result.troopKilled[key].toLocaleString()}`);
 				}
 			}
 
@@ -64,23 +64,23 @@ const attackResult = (result) =>
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
-					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+					youLost.push(`${eraArray[era][key]}: ${result.troopLoss[key].toLocaleString()}`);
 				}
 			}
 
 			for (const key in result.troopKilled) {
 				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
-					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+					youKilled.push(`${eraArray[era][key]}: ${result.troopKilled[key].toLocaleString()}`);
 				}
 			}
 
 			for (const key in result.buildingGain) {
 				if (Object.prototype.hasOwnProperty.call(result.buildingGain, key)) {
 					let newKey = key.toLowerCase()
-					let string = `${eraArray[result.era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
+					let string = `${eraArray[era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
 					if (newKey === 'bldtroop') {
 						string = `
-							${eraArray[result.era].bldtrp}: ${result.buildingGain[key].toLocaleString()}
+							${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}
 						`
 					} else if (newKey === 'freeland') {
 						string = `
@@ -130,13 +130,13 @@ const attackResult = (result) =>
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
-					youLost.push(`${eraArray[result.era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+					youLost.push(`${eraArray[era][key]}: ${result.troopLoss[key].toLocaleString()}`);
 				}
 			}
 
 			for (const key in result.troopKilled) {
 				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
-					youKilled.push(`${eraArray[result.era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+					youKilled.push(`${eraArray[era][key]}: ${result.troopKilled[key].toLocaleString()}`);
 				}
 			}
 
@@ -201,7 +201,7 @@ const spellResult = (result) =>
 	}
 }
 
-export default function TurnResultCard({ data })
+export default function TurnResultCard({ data, era })
 {
 	// console.log(data)
 	return (
@@ -223,7 +223,7 @@ export default function TurnResultCard({ data })
 					})}>
 						{data.type === 'explore' && <Text align='center' weight='bold' color='green'>You gained {data.result.toLocaleString()} acres while exploring</Text>}
 						{data?.messages?.desertion && <Text align='center' color='red' weight='bold'>{data.messages.desertion}</Text>}
-						{data.attack && attackResult(data.attack)}
+						{data.attack && attackResult(data.attack, era)}
 						{data.cast && spellResult(data.cast)}
 						{data.aid && data.aid.includes('successfully') ? (<Text align='center' weight='bold' color='green'>{data.aid}</Text>) : (<Text align='center' weight='bold' color='red'>{data.aid}</Text>)}
 						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
@@ -285,19 +285,19 @@ export default function TurnResultCard({ data })
 							<div>
 								<Text weight={800}>Population and Military:</Text>
 								<SimpleGrid cols={2} spacing={1}>
-									{data.peasants !== 0 ? (<NetProduced value={data.peasants} title='Peasants' />) : ('')
+									{data.peasants !== 0 ? (<NetProduced value={data.peasants} title={eraArray[era].peasants} />) : ('')
 									}
-									{data.trpArm !== 0 ? (<NetProduced value={data.trpArm} title='Footmen' />) : ('')
+									{data.trpArm !== 0 ? (<NetProduced value={data.trpArm} title={eraArray[era].trparm} />) : ('')
 									}
-									{data.trpLnd !== 0 ? (<NetProduced value={data.trpLnd} title='Catapults' />) : ('')
+									{data.trpLnd !== 0 ? (<NetProduced value={data.trpLnd} title={eraArray[era].trplnd} />) : ('')
 									}
-									{data.trpFly !== 0 ? (<NetProduced value={data.trpFly} title='Zeppelins' />) : ('')
+									{data.trpFly !== 0 ? (<NetProduced value={data.trpFly} title={eraArray[era].trpfly} />) : ('')
 									}
-									{data.trpSea !== 0 ? (<NetProduced value={data.trpSea} title='Galleons' />) : ('')
+									{data.trpSea !== 0 ? (<NetProduced value={data.trpSea} title={eraArray[era].trpsea} />) : ('')
 									}
-									{data.trpWiz !== 0 ? (<NetProduced value={data.trpWiz} title='Wizards' />) : ('')
+									{data.trpWiz !== 0 ? (<NetProduced value={data.trpWiz} title={eraArray[era].trpwiz} />) : ('')
 									}
-									{data.runes !== 0 ? (<NetProduced value={data.runes} title='Mana' />) : ('')}
+									{data.runes !== 0 ? (<NetProduced value={data.runes} title={eraArray[era].runes} />) : ('')}
 								</SimpleGrid>
 							</div>
 						</SimpleGrid>
