@@ -1,4 +1,4 @@
-import { ROUND_START, ROUND_END } from '../../config/config'
+import { ROUND_START, ROUND_END } from '../../src/config/config'
 
 export default async function handler(request, response) {
 	let now = new Date().getTime()
