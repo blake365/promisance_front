@@ -5,7 +5,7 @@
       "destination": "/index.html"
     }
   ], 
-  "cron": [
+  "crons": [
     {
       "path": "/api/cron/test",
       "schedule": "*/5 * * * *"
