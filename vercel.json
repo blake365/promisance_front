@@ -9,6 +9,26 @@
     {
       "path": "/api/cron/test",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/turns",
+      "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/thirty",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path":"/api/cron/hour",
+      "schedule": "1 * * * *"
+    },
+    {
+      "path":"/api/cron/daily",
+      "schedule": "0 1 * *" 
+    },
+    {
+      "path":"/api/cron/aid",
+      "schedule": "0 */5 * * *"
     }
   ]
 }

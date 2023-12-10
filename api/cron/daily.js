@@ -6,7 +6,11 @@ export default async function handler(request, response) {
 		now > new Date(ROUND_START).getTime() &&
 		now < new Date(ROUND_END).getTime()
 	) {
-		const result = await fetch('https://api.neopromisance.com/api/cron/daily')
+		const result = await fetch('https://api.neopromisance.com/api/cron/daily', {
+			headers: {
+				authorization: `Bearer ${process.env.VITE_CRON_SECRET}`,
+			},
+		})
 		const data = await result.json()
 
 		return response.json(data)
