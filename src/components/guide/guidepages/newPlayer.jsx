@@ -55,12 +55,17 @@ export default function NewTipsGuide({ empire })
         <div>
             <GuideLink text='Return to Index' page='Index' />
 
-            <h2>New Player Tips</h2>
+            <h2>Personalized Tips</h2>
             <p>
-                You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {TURNS_PROTECTION} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire. If you are brand new to the game, the <strong>Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide.
+                You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {TURNS_PROTECTION} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
+            </p>
+            <p>If you are brand new to the game, the <strong>Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide.
             </p>
             <p>
-                As a {raceArray[empire.race].name} your people are strongest in {raceStrength}
+                You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to build up your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
+            </p>
+            <p>
+                As a <strong>{raceArray[empire.race].name}</strong> your people are strongest in {raceStrength}
             </p>
         </div>
     )

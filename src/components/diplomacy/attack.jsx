@@ -9,7 +9,7 @@ import
     Card,
     Table,
     Group,
-    Badge,
+    ActionIcon,
 } from '@mantine/core'
 import { useEffect, useState, forwardRef } from 'react'
 import { useForm } from '@mantine/form'
@@ -22,21 +22,11 @@ import { FavoriteButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
+import { Mountains, Scales, Hourglass, Alien, Compass } from "@phosphor-icons/react"
 import { MAX_ATTACKS, MAX_SPELLS, ROUND_END, ROUND_START } from '../../config/config'
 
-// TODO: build attacking page
-// show your army information
-// show attack and def value of your troops
-// get list of other empires
-// select empire to attack
-// show other empire id, name, era, networth, land...
-// select attack type
-// show attack type information (allow to hide?)
-// submit empire to attack and attack type
-// HERE --> figure out time gate situation
-// return results and update troop info
-
+import { useTour } from '@reactour/tour';
+import { attackSteps } from '../../tour/attackSteps';
 
 export default function Attack()
 {
@@ -52,6 +42,9 @@ export default function Attack()
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const { setIsOpen, setSteps, setMeta } = useTour()
+
 
     const form = useForm({
         initialValues: {
@@ -242,17 +235,30 @@ export default function Attack()
     return (
         <section>
             <Center>
-                <Stack spacing='sm' align='center'>
+                <Stack spacing='sm' align='center' className='attk-first-step attk-sixth-step'>
                     <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
-                    <Title order={1} align='center'>
-                        War Council
-                    </Title>
+                    <Group position='center' spacing='xs'>
+                        <Title order={1} align='center'>
+                            War Council
+                        </Title>
+
+                        <ActionIcon size='lg' onClick={() =>
+                        {
+                            setMeta('attacking tour')
+                            setSteps(attackSteps)
+                            setIsOpen(true)
+                        }}
+                            sx={{
+                                color: '#40c057',
+                            }}><Compass size={30} /></ActionIcon>
+                    </Group>
                     <Text align='center'>
                         Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
                     </Text>
                     <Text align='center'>
                         Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
                     </Text>
+
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     <Group position='center' align='flex-start'>
                         <Card sx={{ width: '300px' }}>
@@ -271,6 +277,7 @@ export default function Attack()
                                 <Stack spacing='sm' align='center'>
                                     {otherEmpires && (
                                         <Select
+                                            className='attk-third-step'
                                             searchable
                                             searchValue={selectedEmpire}
                                             onSearchChange={setSelectedEmpire}
@@ -285,6 +292,7 @@ export default function Attack()
                                         />
                                     )}
                                     <Select
+                                        className='attk-fourth-step'
                                         value={selectedAttack}
                                         onChange={setSelectedAttack}
                                         label="Select an Attack Type"
@@ -312,7 +320,7 @@ export default function Attack()
                             </form>
 
                         </Card>
-                        <Card>
+                        <Card className='attk-step-twopointfive'>
                             <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'baseline', height: '49px' }}>
                                 <Text weight={500}>Your Army:</Text><Title ml='xs' order={4} color={eraArray[empire.era].color}>{eraArray[empire.era].name}</Title>
                             </Card.Section>
@@ -370,7 +378,7 @@ export default function Attack()
                             </Card.Section>
 
                         </Card>
-                        <Card sx={{ width: '300px' }}>
+                        <Card sx={{ width: '300px' }} className='attk-fifth-step'>
                             <Card.Section withBorder inheritPadding py="xs">
                                 <Group position='apart'>
                                     <Text weight={500}>Cast Spell:</Text>
@@ -430,7 +438,7 @@ export default function Attack()
 
                     </Group>
                     <Title order={3}>Base Unit Values</Title>
-                    <Group position='center' >
+                    <Group position='center' className='attk-second-step'>
                         {eraDisplay.map((era) =>
                         {
                             return (

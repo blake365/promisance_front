@@ -22,12 +22,14 @@ import
 	Button,
 	Indicator,
 	Image,
-	Text,
+	Tooltip,
+	ActionIcon,
 } from '@mantine/core'
 
 import neoIcon from './icons/neoIcon.svg'
 
 // import persistor from './store/store'
+import { Refresh } from 'tabler-icons-react';
 
 import Sidebar from './components/layout/sidebar'
 import InfoBar from './components/layout/infobar'
@@ -78,20 +80,31 @@ function App()
 
 	const navigate = useNavigate()
 	// console.log(empire)
-	const { setIsOpen, currentStep } = useTour()
+
+	const { setIsOpen, currentStep, meta } = useTour()
 
 	useEffect(() =>
 	{
 		// console.log(currentStep)
-		if (currentStep === 3 || currentStep === 0) {
-			setOpened(true)
-		} else {
-			setOpened(false)
+		// console.log(meta)
+		if (meta === 'new player tour') {
+			if (currentStep === 3 || currentStep === 0) {
+				setOpened(true)
+			} else {
+				setOpened(false)
+			}
+			if (currentStep === 1 && pageName !== 'Explore') {
+				navigate('/app/Explore')
+			}
+			if (currentStep === 4 && pageName !== 'Build') {
+				navigate('/app/Build')
+			}
 		}
-	}, [currentStep])
+	}, [currentStep, setIsOpen, meta])
 
 	const loadEmpireTest = async () =>
 	{
+		console.log('loading empire')
 		setRefreshLoading(true)
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
@@ -193,6 +206,7 @@ function App()
 				const res = await Axios.get('auth/me')
 				// console.log('status', res.data)
 				if (res.status === 401) {
+					console.log('401')
 					persistor.pause();
 					persistor.flush().then(() =>
 					{
@@ -230,11 +244,26 @@ function App()
 		}
 
 		if (isLoggedIn && user.empires.length > 0 && empireStatus === 'idle') {
+			console.log('logged in but no empire')
 			dispatch(fetchEmpire(
 				{
 					uuid: user.empires[0].uuid,
 				}
-			))
+			)).then((data) =>
+			{
+				console.log(data.error)
+				if (data.error) {
+					console.log(data.error)
+					persistor.pause();
+					persistor.flush().then(() =>
+					{
+						return persistor.purge();
+					})
+					dispatch(resetUser())
+					navigate('/login')
+				}
+			})
+
 		} else if (isLoggedIn && user.empires.length === 0) {
 			if (user.role === 'demo') {
 				navigate('/demo')
@@ -348,6 +377,7 @@ function App()
 	let locationArr = location.pathname.split('/')
 	let last = locationArr.length - 1
 	let pageState = locationArr[last]
+	let pageName = pageState.replace('%20', ' ')
 	// console.log(pageState)
 
 	// console.log(clanMail)
@@ -441,13 +471,13 @@ function App()
 								<Guide empire={empire} />
 							</Modal>
 							<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-								<Grid.Col span={3}>
+								<Grid.Col span={2}>
 									<EffectIcons />
 								</Grid.Col>
-								<Grid.Col span={2}>
+								<Grid.Col span={3}>
 									<Group spacing='xs' position='center'>
-										<Button.Group
-										><Button compact variant='outline' onClick={() =>
+
+										<Button compact variant='outline' onClick={() =>
 										{
 											if (setIsOpen) {
 												dispatch(setPage(null))
@@ -466,38 +496,20 @@ function App()
 												}
 											}
 											}
-											className='sixth-step'>Guide</Button>
-											<Button compact variant='outline' onClick={() =>
+											className='sixth-step'>{pageName} Guide</Button>
+										<Tooltip label="Refresh Data" withArrow>
+											<Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} onClick={() =>
 											{
-												if (currentStep === 0 || currentStep === 3) {
-													setOpened(true)
-												}
-												setIsOpen(true)
-											}}
-												sx={(theme) =>
-												{
-													if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
-														return {
-															border: '1px solid #40c057',
-															boxShadow: '0 0 2px 1px #40c057',
-															color: '#40c057',
-														}
-													}
-												}
-												}
-												className='sixth-step'>Tour</Button>
-										</Button.Group>
-										<Button compact variant='outline' loading={refreshLoading} onClick={() =>
-										{
-											// setRefreshLoading(true)
-											loadEmpireTest()
-											loadMarket()
-											dispatch(loadScores())
-											// setRefreshLoading(false)
-										}}>Refresh</Button>
+												// setRefreshLoading(true)
+												loadEmpireTest()
+												loadMarket()
+												dispatch(loadScores())
+												// setRefreshLoading(false)
+											}}><Refresh size={16} strokeWidth={2.5} /></Button>
+										</Tooltip>
 									</Group>
 								</Grid.Col>
-								<Grid.Col span={3}>
+								<Grid.Col span={2}>
 									<Group spacing='xs' mr='sm' position='right'>
 										<BonusTurns />
 										{empire.clanId !== 0 && <Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>

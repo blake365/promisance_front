@@ -234,7 +234,7 @@ export default function IntelCenter()
                             })}
 
                         </Accordion>
-                    ) : (<div>None Available</div>)}
+                    ) : (<div>No Intel Gathered</div>)}
                 </Stack>
             </Center>
         </section>

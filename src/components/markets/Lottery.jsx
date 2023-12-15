@@ -10,6 +10,7 @@ export default function Lottery()
 {
 
     const [result, setResult] = useState(null)
+    const [loading, setLoading] = useState(false)
     const [jackpot, setJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [totalTickets, setTotalTickets] = useState(0)
@@ -31,6 +32,7 @@ export default function Lottery()
 
     const buyTicket = async () =>
     {
+        setLoading(true)
         const values = {
             empireId: empire.id,
             type: 'lottery',
@@ -44,6 +46,7 @@ export default function Lottery()
             console.log(error)
             setResult(error.response.data)
         }
+        setLoading(false)
     }
 
     useEffect(() =>
@@ -130,7 +133,7 @@ export default function Lottery()
                     <Text align='center'>
                         A ticket costs <strong>${ticketCost.toLocaleString()}</strong>.
                     </Text>
-                    <Button onClick={buyTicket} disabled={roundStatus || tickets === LOTTERY_MAXTICKETS || empire.turnsUsed <= TURNS_PROTECTION || empire.cash < ticketCost || empire.mode === 'demo'}>Buy Ticket</Button>
+                    <Button onClick={buyTicket} disabled={roundStatus || tickets === LOTTERY_MAXTICKETS || empire.turnsUsed <= TURNS_PROTECTION || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
                 </Stack>
             </Center>
         </main>

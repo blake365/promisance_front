@@ -169,8 +169,8 @@ export function calcPCI(empire) {
 export function calcFinances(cpi, empire, size) {
 	let income = Math.round(
 		(cpi * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 500) /
-			size
+			empire.bldCash * 500) *
+			Math.max(0.8, size)
 	)
 
 	// let loan = Math.round(empire.loan / 200)
@@ -209,7 +209,7 @@ export const baseCost = (empire) => {
 		100 +
 		empire.bldWiz *
 			0.35 *
-			((100 + raceArray[empire.race].mod_magic) / 100) *
+			((100 - raceArray[empire.race].mod_magic) / 100) *
 			calcSizeBonus(empire)
 	)
 }

@@ -83,7 +83,7 @@ ReactDOM.render(
 				'--reactour-accent': '#40c057',
 				borderRadius: '10px',
 				color: 'black',
-				marginLeft: '20px',
+				marginLeft: '8px',
 			}),
 		}}>
 			<Provider store={store}>

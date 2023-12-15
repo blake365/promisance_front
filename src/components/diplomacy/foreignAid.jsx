@@ -186,9 +186,9 @@ export default function ForeignAid()
                         Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given each hour, up to a maximum of 4.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
-                    {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
-                    {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
-                    <Card>
+                    {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
+                    {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
+                    <Card sx={{ width: '350px' }} >
                         <form onSubmit={form.onSubmit((values) =>
                         {
                             console.log(values)
@@ -196,7 +196,7 @@ export default function ForeignAid()
                             // dispatch(clearResult)
                             window.scroll({ top: 0, behavior: 'smooth' })
                         })}>
-                            <Stack spacing='sm' align='center'>
+                            <Stack spacing='sm' align='center' >
                                 {otherEmpires && (
                                     <Select
                                         searchable

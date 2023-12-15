@@ -22,7 +22,7 @@ import { timeSlice } from './timeSlice'
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user', 'empire'],
+	whitelist: ['user'],
 }
 
 const reducers = combineReducers({

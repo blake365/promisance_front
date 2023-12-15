@@ -217,7 +217,7 @@ export default function ManageEmpire()
 				<form onSubmit={raceForm.onSubmit((values) =>
 				{
 					console.log(values)
-					if (empire.turns > Math.floor(TURNS_MAXIMUM / 2)) {
+					if (empire.turns >= Math.floor(TURNS_MAXIMUM / 2)) {
 						updateRace(values)
 					} else {
 						setRaceUpdate('Not enough turns')
