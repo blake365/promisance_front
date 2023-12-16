@@ -43,7 +43,7 @@ export default function Attack()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const { setIsOpen, setSteps, setMeta } = useTour()
+    const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 
     const form = useForm({
@@ -143,7 +143,7 @@ export default function Attack()
         {
             try {
                 const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
-                let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth }) => ({ name, empireId, land, era, race, networth }))
+                let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth, diminishingReturns }) => ({ name, empireId, land, era, race, networth, diminishingReturns }))
                 // let dataFormat = otherEmpires.map((empire) =>
                 //     ({ value: empire.empireId.toLocaleString(), label: `${empire.name} - land: ${empire.land.toLocaleString()} era: ${eraArray[empire.era].name} race: ${raceArray[empire.race].name}` })
                 // )
@@ -156,7 +156,8 @@ export default function Attack()
                     era: eraArray[empire.era].name,
                     name: empire.name,
                     empireId: empire.empireId,
-                    label: `${empire.name}`
+                    label: `${empire.name}`,
+                    dr: empire.diminishingReturns
                 })
                 )
                 // console.log(otherEmpires)
@@ -170,11 +171,11 @@ export default function Attack()
 
 
     const SelectItem = forwardRef(
-        ({ land, era, empireId, name, race, networth, ...others }, ref) => (
+        ({ land, era, empireId, name, race, networth, dr, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <div>
                     <Text size='sm' weight='bold'>{name}</Text>
-                    <Text size='sm'><Mountains /> {land} acres</Text>
+                    <Text size='sm'><Mountains /> {land} acres / DR {dr}%</Text>
                     <Text size='sm'><Scales /> ${networth}</Text>
                     <Text size='sm'><Hourglass /> {era}</Text>
                     <Text size='sm'><Alien /> {race}</Text>
@@ -244,6 +245,7 @@ export default function Attack()
                             {
                                 setMeta('attacking tour')
                                 setSteps(attackSteps)
+                                setCurrentStep(0)
                                 setIsOpen(true)
                             }}
                                 sx={{
@@ -302,12 +304,12 @@ export default function Attack()
                                         withinPortal
                                         itemComponent={SelectAttack}
                                         data={[
-                                            { value: 'standard', label: 'Standard Attack', sub: 'attack with all units' },
-                                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
                                             { value: 'trparm', label: 'Guerilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
                                             { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
                                             { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
                                             { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
+                                            { value: 'standard', label: 'All Out Attack', sub: 'attack with all units' },
+                                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
                                             { value: 'pillage', label: 'Pillage', sub: 'attack with all units' }
                                         ]}
                                         {...form.getInputProps('attackType')}

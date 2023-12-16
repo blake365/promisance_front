@@ -21,7 +21,7 @@ import { buildSteps } from '../../tour/buildSteps'
 
 export default function Build()
 {
-	const { setIsOpen, setSteps, setMeta } = useTour()
+	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 	let buildNumberArray = []
 	let totalBuild = 0
@@ -32,7 +32,6 @@ export default function Build()
 	const { time } = useSelector((state) => state.time)
 	const [loading, setLoading] = useState(false)
 
-	const { setCurrentStep } = useTour()
 	const dispatch = useDispatch()
 
 	const getBuildAmounts = (empire) =>
@@ -183,6 +182,7 @@ export default function Build()
 						{
 							setMeta('build tour')
 							setSteps(buildSteps)
+							setCurrentStep(0)
 							setIsOpen(true)
 						}}
 							sx={{

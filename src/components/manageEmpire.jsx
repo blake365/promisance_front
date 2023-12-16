@@ -58,7 +58,7 @@ export default function ManageEmpire()
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const { setIsOpen, setSteps, setMeta } = useTour()
+	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 
 	const { empire } = useSelector((state) => state.empire)
@@ -251,6 +251,7 @@ export default function ManageEmpire()
 					{
 						setMeta('new player tour')
 						setSteps(steps)
+						setCurrentStep(0)
 						setIsOpen(true)
 					}}
 						rightIcon={<Compass />}

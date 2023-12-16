@@ -129,12 +129,12 @@ export default function ScoresAttack({ enemy })
                                         withinPortal
                                         itemComponent={SelectAttack}
                                         data={[
-                                            { value: 'standard', label: 'Standard Attack', sub: 'attack with all units' },
-                                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
                                             { value: 'trparm', label: 'Guerilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
                                             { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
                                             { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
                                             { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
+                                            { value: 'standard', label: 'All Out Attack', sub: 'attack with all units' },
+                                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
                                             { value: 'pillage', label: 'Pillage', sub: 'attack with all units' }
                                         ]}
                                         {...form.getInputProps('attackType')}

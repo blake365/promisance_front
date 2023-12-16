@@ -37,6 +37,6 @@ export const buildSteps = [
 	{
 		selector: '.bld-seventh-step',
 		content:
-			'These buildings are only for defending your empire. For each percent of land dedicated to defense, your total defense will be increased by 1% (up to a 50% bonus). It will also increase the amount your DR % increases when you are attacked. DR limits the amount of land you can lose in an attack and is displayed in the Scores. ',
+			'These buildings are only for defending your empire. For each percent of land dedicated to defense, your total defense will be increased by 1% (up to a 50% bonus). It will also increase the amount your DR % increases when you are attacked. DR limits the amount of land you can lose in an attack and is displayed in the Scores.',
 	},
 ]

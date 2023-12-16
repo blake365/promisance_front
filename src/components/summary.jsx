@@ -15,7 +15,7 @@ export default function Summary()
 	const [raceStrength, setRaceStrength] = useState('')
 	const { empire } = useSelector((state) => state.empire)
 
-	const { setIsOpen, setSteps, setMeta } = useTour()
+	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 	const { time } = useSelector((state) => state.time)
 	// console.log(time)
@@ -177,6 +177,7 @@ export default function Summary()
 								{
 									setMeta('new player tour')
 									setSteps(steps)
+									setCurrentStep(0)
 									setIsOpen(true)
 								}}
 									rightIcon={<Compass />}

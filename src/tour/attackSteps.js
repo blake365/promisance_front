@@ -12,12 +12,12 @@ export const attackSteps = [
 	{
 		selector: '.attk-step-twopointfive',
 		content:
-			'You can see the total attack and defense values of your army. These values take into account your race bonuses and health. As you attack, your health will drop. Use turns building and gaining resources to recover your health. Exploring to heal will grow you empire even faster.',
+			'You can see the total attack and defense values of your army. These values take into account your race bonuses and health. As you attack, your health will drop, affecting your attack and defense. Use turns building and gaining resources to recover your health. Exploring to heal will grow you empire even faster. Using turns in Heal will double your recovery rate.',
 	},
 	{
 		selector: '.attk-third-step',
 		content:
-			'When selecting a target to attack, consider an empire that has a high amount of land relative to their net worth, or is smaller than you. You should also attempt to gain intel on their army through the Intel Center or recent news. You may need to target multiple empires to maximize your land gains.',
+			'When selecting a target to attack, consider an empire that has a high amount of land relative to their net worth or with a low DR percentage. You should also attempt to gain intel on their army through the Intel Center or recent news. You may need to target multiple empires to maximize your land gains.',
 	},
 	{
 		selector: '.attk-fourth-step',

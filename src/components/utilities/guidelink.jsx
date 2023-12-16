@@ -7,8 +7,8 @@ export default function GuideLink(props)
 {
     const dispatch = useDispatch()
 
-    return(
-        <Anchor onClick={()=> dispatch(setPage(props.page))}>
+    return (
+        <Anchor onClick={() => dispatch(setPage(props.page))} color={props.color}>
             {props.text}
         </Anchor>
     )
