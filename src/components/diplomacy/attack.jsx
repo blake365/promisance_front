@@ -235,30 +235,31 @@ export default function Attack()
     return (
         <section>
             <Center>
-                <Stack spacing='sm' align='center' className='attk-first-step attk-sixth-step'>
+                <Stack spacing='sm' align='center'>
                     <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
                     <Group position='center' spacing='xs'>
                         <Title order={1} align='center'>
                             War Council
+                            <ActionIcon size='md' ml='xs' onClick={() =>
+                            {
+                                setMeta('attacking tour')
+                                setSteps(attackSteps)
+                                setIsOpen(true)
+                            }}
+                                sx={{
+                                    color: '#40c057',
+                                    display: 'inline',
+                                }}><Compass size={24} /></ActionIcon>
                         </Title>
-
-                        <ActionIcon size='lg' onClick={() =>
-                        {
-                            setMeta('attacking tour')
-                            setSteps(attackSteps)
-                            setIsOpen(true)
-                        }}
-                            sx={{
-                                color: '#40c057',
-                            }}><Compass size={30} /></ActionIcon>
                     </Group>
-                    <Text align='center'>
-                        Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
-                    </Text>
-                    <Text align='center'>
-                        Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
-                    </Text>
-
+                    <div className='attk-first-step attk-sixth-step'>
+                        <Text align='center'>
+                            Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
+                        </Text>
+                        <Text align='center'>
+                            Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
+                        </Text>
+                    </div>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     <Group position='center' align='flex-start'>
                         <Card sx={{ width: '300px' }}>

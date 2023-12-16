@@ -1,4 +1,4 @@
-import { Button, Center, NumberInput, Stack, Table, Title, Text, Group } from '@mantine/core'
+import { Button, Center, NumberInput, Stack, Table, Title, Text, ActionIcon } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -12,13 +12,17 @@ import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState } from 'react'
 import { useTour } from '@reactour/tour'
+import { Compass } from '@phosphor-icons/react'
 // clear form on submit
 // fix styling of button, unused land, top alignment, text alignment in cells
 // build demolish feature
+import { buildSteps } from '../../tour/buildSteps'
 
 
 export default function Build()
 {
+	const { setIsOpen, setSteps, setMeta } = useTour()
+
 	let buildNumberArray = []
 	let totalBuild = 0
 	let errors = {
@@ -175,19 +179,30 @@ export default function Build()
 					<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
 					<Title order={1} align='center'>
 						Build <FavoriteButton empire={empire} title='Build' />
+						<ActionIcon size='md' onClick={() =>
+						{
+							setMeta('build tour')
+							setSteps(buildSteps)
+							setIsOpen(true)
+						}}
+							sx={{
+								color: '#40c057',
+								display: 'inline',
+							}}><Compass size={24} /></ActionIcon>
 					</Title>
-					<Text align='center'>
-						Each structure consumes one acre of unused land and costs $
-						{buildCost.toLocaleString()} to build.
-					</Text>
-					<Text align='center'>
-						You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
-					</Text>
-					<Text align='center'>
-						With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
-						structures
-					</Text>
-
+					<div className='bld-first-step'>
+						<Text align='center'>
+							Each structure consumes one acre of unused land and costs $
+							{buildCost.toLocaleString()} to build.
+						</Text>
+						<Text align='center'>
+							You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
+						</Text>
+						<Text align='center'>
+							With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
+							structures
+						</Text>
+					</div>
 					<form
 						onSubmit={
 							totalBuild <= canBuild
@@ -213,7 +228,7 @@ export default function Build()
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr className='bld-second-step'>
 										<td>{eraArray[empire.era].bldpop}</td>
 										<td>
 											{empire.bldPop} (
@@ -248,7 +263,7 @@ export default function Build()
 										</td>
 
 									</tr>
-									<tr>
+									<tr className='bld-step-twopointfive'>
 										<td>{eraArray[empire.era].bldcash}</td>
 										<td>
 											{empire.bldCash} (
@@ -283,7 +298,7 @@ export default function Build()
 										</td>
 
 									</tr>
-									<tr>
+									<tr className='bld-third-step'>
 										<td>{eraArray[empire.era].bldtrp}</td>
 										<td>
 											{empire.bldTroop} (
@@ -318,7 +333,7 @@ export default function Build()
 										</td>
 
 									</tr>
-									<tr>
+									<tr className='bld-fourth-step'>
 										<td>{eraArray[empire.era].bldcost}</td>
 										<td>
 											{empire.bldCost} (
@@ -353,7 +368,7 @@ export default function Build()
 										</td>
 
 									</tr>
-									<tr>
+									<tr className='bld-fifth-step'>
 										<td>{eraArray[empire.era].bldwiz}</td>
 										<td>
 											{empire.bldWiz} (
@@ -388,7 +403,7 @@ export default function Build()
 										</td>
 
 									</tr>
-									<tr>
+									<tr className='bld-sixth-step'>
 										<td>{eraArray[empire.era].bldfood}</td>
 										<td>
 											{empire.bldFood} (
@@ -422,7 +437,7 @@ export default function Build()
 											/>
 										</td>
 									</tr>
-									<tr>
+									<tr className='bld-seventh-step'>
 										<td>{eraArray[empire.era].blddef}</td>
 										<td>
 											{empire.bldDef} (

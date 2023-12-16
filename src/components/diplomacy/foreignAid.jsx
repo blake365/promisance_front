@@ -183,66 +183,65 @@ export default function ForeignAid()
                         Send resources and troops to other players.
                     </Text>
                     <Text align='center'>
-                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given each hour, up to a maximum of 4.
+                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every 4 hours, up to a maximum of 5.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
-                    <Card sx={{ width: '350px' }} >
-                        <form onSubmit={form.onSubmit((values) =>
-                        {
-                            console.log(values)
-                            sendAid(values)
-                            // dispatch(clearResult)
-                            window.scroll({ top: 0, behavior: 'smooth' })
-                        })}>
-                            <Stack spacing='sm' align='center' >
-                                {otherEmpires && (
-                                    <Select
-                                        searchable
-                                        searchValue={selectedEmpire}
-                                        onSearchChange={setSelectedEmpire}
-                                        label="Select an Empire to Aid"
-                                        placeholder="Pick one"
-                                        withAsterisk
-                                        itemComponent={SelectItem}
-                                        data={otherEmpires}
-                                        withinPortal
 
-                                        {...form.getInputProps('receiverId')}
-                                    />
-                                )}
-                                <div className={classes.tablecontainer}>
-                                    <table className={classes.widetable}>
-                                        <thead>
-                                            <tr>
-                                                <th align='left'>Unit</th>
-                                                <th align='right'>Owned</th>
-                                                <th align='right'>Can Send</th>
-                                                <th align='center'>Send</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {itemArray.map((item, index) => (<tr key={index}>
-                                                <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
-                                                <td align='right'>{empire[item].toLocaleString()}</td>
-                                                <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
-                                                <td>
-                                                    <NumberInput min={0} max={Math.floor(empire[item] * 0.15)} {...form.getInputProps(`${item}`)}
-                                                        rightSection={<MaxButton maxValue={Math.floor(empire[item] * 0.15)} formName={form} fieldName={item} style={{ marginRight: '20px' }} />}
-                                                    />
-                                                </td>
-                                            </tr>))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
-                                    Send Aid
-                                </Button>
-                                <Text size='sm'>{empire.aidCredits} credits remaining</Text>
-                            </Stack>
-                        </form>
-                    </Card>
+                    <form onSubmit={form.onSubmit((values) =>
+                    {
+                        console.log(values)
+                        sendAid(values)
+                        // dispatch(clearResult)
+                        window.scroll({ top: 0, behavior: 'smooth' })
+                    })}>
+                        <Stack spacing='sm' align='center' >
+                            {otherEmpires && (
+                                <Select
+                                    searchable
+                                    searchValue={selectedEmpire}
+                                    onSearchChange={setSelectedEmpire}
+                                    label="Select an Empire to Aid"
+                                    placeholder="Pick one"
+                                    withAsterisk
+                                    itemComponent={SelectItem}
+                                    data={otherEmpires}
+                                    withinPortal
+
+                                    {...form.getInputProps('receiverId')}
+                                />
+                            )}
+                            <div className={classes.tablecontainer}>
+                                <table className={classes.widetable}>
+                                    <thead>
+                                        <tr>
+                                            <th align='left'>Unit</th>
+                                            <th align='right'>Owned</th>
+                                            <th align='right'>Can Send</th>
+                                            <th align='center'>Send</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {itemArray.map((item, index) => (<tr key={index}>
+                                            <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
+                                            <td align='right'>{empire[item].toLocaleString()}</td>
+                                            <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
+                                            <td>
+                                                <NumberInput min={0} max={Math.floor(empire[item] * 0.15)} {...form.getInputProps(`${item}`)}
+                                                    rightSection={<MaxButton maxValue={Math.floor(empire[item] * 0.15)} formName={form} fieldName={item} style={{ marginRight: '20px' }} />}
+                                                />
+                                            </td>
+                                        </tr>))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
+                                Send Aid
+                            </Button>
+                            <Text size='sm'>{empire.aidCredits} credits remaining</Text>
+                        </Stack>
+                    </form>
                 </Stack>
             </Center>
         </section>

@@ -1,4 +1,4 @@
-import { Stack, Title, Button, TextInput, Group, Avatar, Text, Select, Image } from '@mantine/core'
+import { Stack, Title, Button, TextInput, Group, Avatar, Text, Select, Image, ActionIcon, Center } from '@mantine/core'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm, hasLength } from '@mantine/form'
 import { forwardRef, useState } from 'react'
@@ -8,7 +8,9 @@ import { TURNS_MAXIMUM, TURNS_PROTECTION, ROUND_END, ROUND_START } from '../conf
 import { raceArray } from '../config/races'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../store/userSlice'
-
+import { Compass } from '@phosphor-icons/react'
+import { useTour } from '@reactour/tour';
+import { steps } from '../tour/steps'
 // create polymorph feature
 
 // array of icon names from /icons
@@ -55,6 +57,8 @@ export default function ManageEmpire()
 {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
+
+	const { setIsOpen, setSteps, setMeta } = useTour()
 
 
 	const { empire } = useSelector((state) => state.empire)
@@ -241,6 +245,22 @@ export default function ManageEmpire()
 						<Text>{raceUpdate}</Text>
 					</Stack>
 				</form>
+
+				<Center my='sm'>
+					<Button compact variant='outline' align='center' onClick={() =>
+					{
+						setMeta('new player tour')
+						setSteps(steps)
+						setIsOpen(true)
+					}}
+						rightIcon={<Compass />}
+						sx={{
+							border: '1px solid #40c057',
+							boxShadow: '0 0 2px 1px #40c057',
+							color: '#40c057',
+						}}
+						className='sixth-step'>Replay First Turns Tour</Button>
+				</Center>
 
 				<Stack spacing='sm' align='center'>
 					<Title>Delete Empire</Title>

@@ -6,6 +6,8 @@ import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTour } from '@reactour/tour';
+import { steps } from '../tour/steps'
+import { Compass } from '@phosphor-icons/react'
 
 export default function Summary()
 {
@@ -13,7 +15,7 @@ export default function Summary()
 	const [raceStrength, setRaceStrength] = useState('')
 	const { empire } = useSelector((state) => state.empire)
 
-	const { setIsOpen, currentStep, setMeta } = useTour()
+	const { setIsOpen, setSteps, setMeta } = useTour()
 
 	const { time } = useSelector((state) => state.time)
 	// console.log(time)
@@ -154,7 +156,7 @@ export default function Summary()
 								You are the founder of a new empire in the world of Promisance. You are currently in the protection period. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
 							</Text>
 							<Text mt='sm'>
-								If you are brand new to the game, the <strong>Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide.
+								If you are brand new to the game, the <strong>First Turns Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Additional walkthrough tours are indicated with the Compass <Compass /> icon and are available on the Build and Attack pages.
 							</Text>
 							<Text mt='sm'>
 								You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to build up your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
@@ -170,19 +172,22 @@ export default function Summary()
 									{empire?.name}
 								</Title>
 							</Group>
-							<Center my='sm'>
+							{empire.turnsUsed < 200 && (<Center my='sm'>
 								<Button compact variant='outline' align='center' onClick={() =>
 								{
 									setMeta('new player tour')
+									setSteps(steps)
 									setIsOpen(true)
 								}}
+									rightIcon={<Compass />}
 									sx={{
 										border: '1px solid #40c057',
 										boxShadow: '0 0 2px 1px #40c057',
 										color: '#40c057',
 									}}
 									className='sixth-step'>First Turns Tour</Button>
-							</Center>
+							</Center>)}
+
 							<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>
 
 							<Grid justify='space-between' grow>

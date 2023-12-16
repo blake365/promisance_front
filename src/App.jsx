@@ -202,33 +202,10 @@ function App()
 		async function loadUser()
 		{
 			// console.log('loading user')
-			try {
-				const res = await Axios.get('auth/me')
-				// console.log('status', res.data)
-				if (res.status === 401) {
-					console.log('401')
-					persistor.pause();
-					persistor.flush().then(() =>
-					{
-						return persistor.purge();
-					})
-					dispatch(resetUser())
-					navigate('/login')
-
-				} else if (res.status !== 200) {
-					persistor.pause();
-					persistor.flush().then(() =>
-					{
-						return persistor.purge();
-					})
-					dispatch(resetUser())
-					navigate('/login')
-
-				} else if (res.data) {
-					dispatch(load())
-				}
-			} catch (error) {
-				console.log(error)
+			const res = await Axios.get('auth/me')
+			// console.log('status', res.data)
+			if (res.status === 401) {
+				console.log('401')
 				persistor.pause();
 				persistor.flush().then(() =>
 				{
@@ -236,7 +213,20 @@ function App()
 				})
 				dispatch(resetUser())
 				navigate('/login')
+
+			} else if (res.status !== 200) {
+				persistor.pause();
+				persistor.flush().then(() =>
+				{
+					return persistor.purge();
+				})
+				dispatch(resetUser())
+				navigate('/login')
+
+			} else if (res.data) {
+				dispatch(load())
 			}
+
 		}
 
 		if (!isLoggedIn) {
@@ -419,7 +409,15 @@ function App()
 							</Navbar.Section>
 							<Navbar.Section>
 								<Button
-									onClick={() => dispatch(logout())}
+									onClick={() =>
+									{
+										persistor.pause();
+										persistor.flush().then(() =>
+										{
+											return persistor.purge();
+										})
+										dispatch(logout())
+									}}
 									variant='subtle'
 									color='red'
 									fullWidth
@@ -463,7 +461,7 @@ function App()
 							<Modal
 								opened={modalOpened}
 								onClose={() => setModalOpened(false)}
-								title='Game Guide'
+								title={<Title order={2}>Game Guide</Title>}
 								centered
 								overflow="inside"
 								size="xl"
@@ -485,6 +483,7 @@ function App()
 											}
 											setModalOpened(true)
 										}}
+											// rightIcon={<Compass size={18} />}
 											sx={(theme) =>
 											{
 												if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
@@ -498,7 +497,7 @@ function App()
 											}
 											className='sixth-step'>{pageName} Guide</Button>
 										<Tooltip label="Refresh Data" withArrow>
-											<Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} onClick={() =>
+											<Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} loaderPosition='center' onClick={() =>
 											{
 												// setRefreshLoading(true)
 												loadEmpireTest()

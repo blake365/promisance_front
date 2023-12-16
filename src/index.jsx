@@ -84,6 +84,11 @@ ReactDOM.render(
 				borderRadius: '10px',
 				color: 'black',
 				marginLeft: '8px',
+				boxShadow: '0 0 3em rgba(0, 0, 0, 0.5)',
+			}),
+			button: (base) => ({
+				...base,
+				color: 'black',
 			}),
 		}}>
 			<Provider store={store}>
