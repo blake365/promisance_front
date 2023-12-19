@@ -259,8 +259,8 @@ export default function Overview()
 								<Text align='right'><RaceBonus value={race.mod_buildrate} /> </Text>
 								<Text align='right'>{Math.round(empire.bldPop / empire.land * 100)}%</Text>
 								<Text align='right'>{Math.round(empire.bldCash / empire.land * 100)}%</Text>
-								<Text align='right'>{Math.round(empire.bldCost / empire.land * 100)}%</Text>
 								<Text align='right'>{Math.round(empire.bldTroop / empire.land * 100)}%</Text>
+								<Text align='right'>{Math.round(empire.bldCost / empire.land * 100)}%</Text>
 								<Text align='right'>{Math.round(empire.bldWiz / empire.land * 100)}%</Text>
 								<Text align='right'>{Math.round(empire.bldFood / empire.land * 100)}%</Text>
 								<Text align='right'>{Math.round(empire.bldDef / empire.land * 100)}%</Text>
