@@ -6,66 +6,18 @@ import HomeScores from '../layout/homeScores'
 import FooterSocial from '../layout/footer'
 import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
 import { getTime } from '../../store/timeSlice'
-import Axios from 'axios'
-import { persistor } from '../../store/store';
-import { resetUser } from '../../store/userSlice';
-import { load } from '../../store/userSlice';
 
 export default function Home()
 {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-
-    // const { isLoggedIn } = useSelector((state) => state.user)
-
-    // useEffect(() =>
-    // {
-    //     async function loadUser()
-    //     {
-    //         // console.log('loading user')
-    //         try {
-    //             const res = await Axios.get('auth/me')
-    //             // console.log('status', res.data)
-    //             if (res.status === 401) {
-    //                 persistor.pause();
-    //                 persistor.flush().then(() =>
-    //                 {
-    //                     return persistor.purge();
-    //                 })
-    //                 dispatch(resetUser())
-
-    //             } else if (res.status !== 200) {
-    //                 persistor.pause();
-    //                 persistor.flush().then(() =>
-    //                 {
-    //                     return persistor.purge();
-    //                 })
-    //                 dispatch(resetUser())
-    //             } else if (res.data) {
-    //                 dispatch(load())
-    //             }
-    //         } catch (error) {
-    //             // console.log(error)
-    //             persistor.pause();
-    //             persistor.flush().then(() =>
-    //             {
-    //                 return persistor.purge();
-    //             })
-    //             dispatch(resetUser())
-    //         }
-    //     }
-    //     if (!isLoggedIn) {
-    //         loadUser()
-    //     }
-
-    // }, [])
 
     dispatch(getTime())
 
@@ -93,9 +45,6 @@ export default function Home()
                             <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is in active development with new features and balance updates coming all the time. Join us today!</Text>
                         </Box>
                     </Grid.Col>
-                    {/* <Grid.Col md={6} sm={12}>
-                        {smScreen ? <Image src='/images/mobileScreenshot.webp' alt='screenshot' loading='lazy' width={350} fit='contain' radius={5} /> : <Image src='/images/Screenshot@0.5x.webp' alt='screenshot' loading='lazy' fit='contain' radius={5} />}
-                    </Grid.Col> */}
                     <Grid.Col md={7} sm={12}>
                         {smScreen ? <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(4).keys())} options={{}} /></section> : <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(5).keys())} options={{}} big /></section>}
                     </Grid.Col>

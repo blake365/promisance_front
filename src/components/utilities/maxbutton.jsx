@@ -1,6 +1,5 @@
 import { ActionIcon } from "@mantine/core"
-import { IconArrowBarToUp, } from '@tabler/icons'
-import { IconStar, IconStarFilled } from '@tabler/icons-react'
+import { IconArrowBarToUp, IconStar, IconStarFilled } from '@tabler/icons-react'
 import { useDispatch } from 'react-redux'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'

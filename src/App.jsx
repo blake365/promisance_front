@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
-import { useDisclosure, useColorScheme, useLocalStorage } from '@mantine/hooks';
+import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import useInterval from './functions/useInterval'
 import
 {
@@ -23,13 +23,12 @@ import
 	Indicator,
 	Image,
 	Tooltip,
-	ActionIcon,
 } from '@mantine/core'
 
 import neoIcon from './icons/neoIcon.svg'
 
 // import persistor from './store/store'
-import { Refresh } from 'tabler-icons-react';
+import { IconRefresh } from '@tabler/icons-react';
 
 import Sidebar from './components/layout/sidebar'
 import InfoBar from './components/layout/infobar'
@@ -504,7 +503,7 @@ function App()
 												loadMarket()
 												dispatch(loadScores())
 												// setRefreshLoading(false)
-											}}><Refresh size={16} strokeWidth={2.5} /></Button>
+											}}><IconRefresh size={16} strokeWidth={2.5} /></Button>
 										</Tooltip>
 									</Group>
 								</Grid.Col>
