@@ -165,7 +165,7 @@ export default function ForeignAid()
     // console.log(upcoming / 60 / 10000 / 60, remaining)
     if (upcoming > 0) {
         roundStatus = true
-    } else if (remaining < 0 || remaining / 10000 / 60 / 60 < 24) {
+    } else if (remaining < 0 || remaining / 1000 / 60 / 60 < 24) {
         roundStatus = true
     } else {
         roundStatus = false

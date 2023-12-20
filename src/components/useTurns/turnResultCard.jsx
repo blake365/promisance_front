@@ -49,7 +49,7 @@ const attackResult = (result, era) =>
 				)}</Text>
 			</>)
 		}
-		else if (result.attackType !== 'standard' && result.attackType !== 'surprise') {
+		else if (result.attackType !== 'all out' && result.attackType !== 'surprise') {
 			return (<>
 				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
 				</span></Text>
@@ -79,13 +79,9 @@ const attackResult = (result, era) =>
 					let newKey = key.toLowerCase()
 					let string = `${eraArray[era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
 					if (newKey === 'bldtroop') {
-						string = `
-							${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}
-						`
+						string = `${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}`
 					} else if (newKey === 'freeland') {
-						string = `
-							Free Land: ${result.buildingGain[key].toLocaleString()}
-						`
+						string = `Free Land: ${result.buildingGain[key].toLocaleString()}`
 					}
 					buildingsCaptured.push(string);
 				}
@@ -124,7 +120,7 @@ const attackResult = (result, era) =>
 		}
 	} else if (result.result === 'fail') {
 
-		if (result.attackType === 'pillage' || result.attackType === 'surprise' || result.attackType === 'standard') {
+		if (result.attackType === 'pillage' || result.attackType === 'surprise' || result.attackType === 'all out') {
 			let youLost = []
 			let youKilled = []
 

@@ -233,7 +233,7 @@ function App()
 			loadUser()
 		}
 
-		if (isLoggedIn && user.empires.length > 0 && empireStatus === 'idle') {
+		if (isLoggedIn && user.empires.length > 0 && (empireStatus === 'idle' || empireStatus === 'loading')) {
 			console.log('logged in but no empire')
 			dispatch(fetchEmpire(
 				{
@@ -327,7 +327,7 @@ function App()
 
 	useInterval(() =>
 	{
-		if (empireStatus === 'succeeded' && !modalOpened) {
+		if (empireStatus === 'succeeded' && !modalOpened && pageName !== 'Public Market') {
 			try {
 				loadEmpireTest()
 

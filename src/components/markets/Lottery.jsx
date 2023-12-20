@@ -102,7 +102,7 @@ export default function Lottery()
 
     if (upcoming > 0) {
         roundStatus = true
-    } else if (remaining < 0 || remaining / 10000 / 60 / 60 < 24) {
+    } else if (remaining < 0 || remaining / 1000 / 60 / 60 < 24) {
         roundStatus = true
     } else {
         roundStatus = false
@@ -119,7 +119,7 @@ export default function Lottery()
                     {empire.mode === 'demo' && <Text align='center' color='red'>The lottery is not accessible to demo accounts.</Text>}
                     {empire.turnsUsed <= TURNS_PROTECTION && <Text align='center' color='red'>The lottery is only accessible once you have left protection.</Text>}
                     <Text align='center'>
-                        The lottery can be a good way to get extra cash for your empire. There is a lottery drawing every 24 hours and you can buy up to {LOTTERY_MAXTICKETS} lottery tickets each day. Drawings are random and there is no guarantee of a winner. If no winner is found, the jackpot will continue to increase until there a winner is found. Lottery results are posted in the World News.
+                        The lottery can be a good way to get extra cash for your empire. There is a lottery drawing every 24 hours and you can buy up to {LOTTERY_MAXTICKETS} lottery tickets each day. Drawings are random and there is no guarantee of a winner. If no winner is found, the jackpot will continue to increase until there is a winner. Lottery results are posted in the World News.
                     </Text>
                     <Text align='center'>
                         You currently have <strong>{tickets}/{LOTTERY_MAXTICKETS}</strong> lottery tickets.
@@ -133,7 +133,7 @@ export default function Lottery()
                     <Text align='center'>
                         A ticket costs <strong>${ticketCost.toLocaleString()}</strong>.
                     </Text>
-                    <Button onClick={buyTicket} disabled={roundStatus || tickets === LOTTERY_MAXTICKETS || empire.turnsUsed <= TURNS_PROTECTION || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
+                    <Button onClick={buyTicket} disabled={roundStatus || tickets >= LOTTERY_MAXTICKETS || empire.turnsUsed <= TURNS_PROTECTION || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
                 </Stack>
             </Center>
         </main>
