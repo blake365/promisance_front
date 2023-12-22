@@ -124,7 +124,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                         </Text>
                         <Indicator color='blue' position='top-start' disabled={!active}>
                             <Group spacing='xs' noWrap>
-                                <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+                                <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} imageProps={{ loading: 'lazy' }} />
                                 <Title order={4} color={color}>
                                     {empire.name} {clan && clan} {atWar && <ThemeIcon size="sm" radius="sm" color='red'>
                                         <Sword />

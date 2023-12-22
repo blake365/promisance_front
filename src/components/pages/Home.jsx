@@ -1,5 +1,4 @@
 import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor } from '@mantine/core'
-
 import { HeroImageRight } from './homeHero'
 import HomeNews from '../layout/homeNews'
 import HomeScores from '../layout/homeScores'

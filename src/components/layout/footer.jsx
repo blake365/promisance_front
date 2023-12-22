@@ -10,8 +10,8 @@ export default function FooterSocial()
             <Container size='lg' py='lg'>
                 <Group spacing={0} position="apart">
                     <Title order={1} component={Link} to='/' aria-label='home'>NeoPromisance</Title>
-                    <Group noWrap position='center'>
-                        <Anchor color='gray' href='https://guide.neopromisance.com' target="_blank">Game Guide</Anchor>
+                    <Group >
+                        <Anchor color='gray' href='https://guide.neopromisance.com' target="_blank">Guide</Anchor>
                         <Anchor component={Link} to='/rules' color='gray'>Rules</Anchor>
                         <Anchor component={Link} to='/privacy' color='gray'>Privacy Policy</Anchor>
                         <ActionIcon size="lg" component='a' href='https://discord.gg/bnuVy2pdgM' aria-label='discord link'>

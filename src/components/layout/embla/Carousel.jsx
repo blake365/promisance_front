@@ -71,6 +71,7 @@ const BigCarousel = (props) =>
                                     <span>{index + 1}</span>
                                 </div>
                                 <img
+                                    loading='lazy'
                                     className="embla__slide__img"
                                     src={imageByIndex(index)}
                                     alt={`Screenshot ${index + 1}`}

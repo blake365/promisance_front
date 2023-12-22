@@ -8,11 +8,11 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: '#000000',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        '@media (max-width: 400px)': {
+        '@media (max-width: 480px)': {
             backgroundImage:
                 'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/militarysmall.webp)',
         },
-        '@media (min-width: 400px)': {
+        '@media (min-width: 480px)': {
             backgroundImage:
                 'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/military2.webp)',
         },
@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     svg: {
         filter: 'invert(1)',
         marginBottom: '1rem',
-        '@media (max-width: 400px)': {
+        '@media (max-width: 480px)': {
             height: '2.6rem',
         },
         '@media (min-width: 700px)': {
