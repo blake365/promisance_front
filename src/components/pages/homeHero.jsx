@@ -8,8 +8,14 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: '#000000',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundImage:
-            'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/military2.webp)',
+        '@media (max-width: 400px)': {
+            backgroundImage:
+                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/militarysmall.webp)',
+        },
+        '@media (min-width: 400px)': {
+            backgroundImage:
+                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/military2.webp)',
+        },
         paddingTop: '3rem',
         paddingBottom: '3rem',
     },
@@ -24,7 +30,6 @@ const useStyles = createStyles((theme) => ({
         marginBottom: '1rem',
         '@media (max-width: 400px)': {
             height: '2.6rem',
-
         },
         '@media (min-width: 700px)': {
             height: '5rem',
