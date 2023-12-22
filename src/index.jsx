@@ -36,6 +36,8 @@ import Signup from './components/layout/Signup'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
 import CreateDemoEmpire from './components/pages/CreateDemoEmpire'
+import Archive from './components/pages/Archive'
+import RoundArchive from './components/pages/RoundArchive'
 
 import Admin from './components/pages/admin'
 import AdminSummary from './components/admin/adminSummary'
@@ -103,6 +105,8 @@ ReactDOM.render(
 							<Route path='/demo' element={<CreateDemoEmpire />} />
 							<Route path='/privacy' element={<PrivacyPolicy />} />
 							<Route path='/rules' element={<GameRules />} />
+							<Route path='/archive' element={<Archive />} />
+							<Route path='/archive/:roundId' element={<RoundArchive />} />
 							<Route path='/admin/' element={<Admin />} >
 								<Route path='*' element={<NothingFoundBackground />} />
 								<Route path='' element={<AdminSummary />} />

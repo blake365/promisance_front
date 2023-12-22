@@ -8,8 +8,7 @@ const NetProduced = (props) =>
     if (props.money) {
         if (props.value == 0) {
             display = '$0'
-        }
-        if (props.value < 0) {
+        } else if (props.value < 0) {
             display = `-$${abs.toLocaleString()}`
         } else {
             display = `+$${abs.toLocaleString()}`
@@ -19,8 +18,7 @@ const NetProduced = (props) =>
     } else {
         if (props.value == 0) {
             display = '0'
-        }
-        if (props.value < 0) {
+        } else if (props.value < 0) {
             display = `-${abs.toLocaleString()}`
         } else {
             display = `+${abs.toLocaleString()}`

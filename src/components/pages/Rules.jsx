@@ -1,12 +1,12 @@
 import { Container } from '@mantine/core'
-import { HeroImageRight } from './homeHero'
 import FooterSocial from '../layout/footer'
+import { SlimHero } from './slimHero';
 
 const GameRules = () =>
 {
     return (
         <div>
-            <HeroImageRight />
+            <SlimHero />
             <Container size='lg' mt='lg'>
                 <h2>Terms of Engagement for NeoPromisance</h2>
                 <p>Upon creating an empire in our games, you consent to the following guidelines:</p>

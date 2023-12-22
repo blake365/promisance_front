@@ -1,4 +1,4 @@
-import { createStyles, Container, Title, Text, Button, Group } from '@mantine/core';
+import { createStyles, Container, Title, Button, Group } from '@mantine/core';
 import neoIcon from '../../icons/neoIcon.svg'
 import { Compass, ListBullets, DiscordLogo, Archive } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom';
@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
-export function HeroImageRight()
+export function SlimHero()
 {
     const { classes } = useStyles();
     return (
@@ -54,24 +54,15 @@ export function HeroImageRight()
             <Container size="lg">
                 <div className={classes.inner}>
                     <div >
-                        <Text color='white'>
-                            Welcome to
-                        </Text>
                         <Group align='center' spacing={4}>
                             <img src={neoIcon} className={classes.svg} alt='logo' />
                             <Title component={Link} to='/' className={classes.title} mb='lg'>
                                 NeoPromisance
                             </Title>
                         </Group>
-                        <Title color='white' size='h3' maw='24rem' mb='lg'>
-                            A free browser game of empire building and conquest
-                        </Title>
-                        <Text color='white' maw='24rem'>
-                            Build your empire, plan your expansion, find your niche, and conquer your enemies in this multiplayer game of diplomacy, strategy, and war.
-                        </Text>
                     </div>
                 </div>
-                <Group my='lg' spacing='lg'>
+                <Group mb='lg' spacing='lg'>
                     <Button component={Link} to='/register' size='lg'>Register</Button>
                     <Button component={Link} to='/login' size='lg' color='teal'>Login</Button>
                 </Group>
@@ -82,9 +73,9 @@ export function HeroImageRight()
                     <Button component={Link} to='/rules' leftIcon={<ListBullets size={14} />} color='dark' compact size='md'>
                         Rules
                     </Button>
-                    {/* <Button component={Link} to='/archive' leftIcon={<Archive size={14} />} color='dark' compact size='md'>
+                    <Button component={Link} to='/archive' leftIcon={<Archive size={14} />} color='dark' compact size='md'>
                         Archive
-                    </Button> */}
+                    </Button>
                     <Button leftIcon={<DiscordLogo size={14} />} component='a' href='https://discord.gg/bnuVy2pdgM' target='_blank' color='dark' compact size='md'>
                         Discord
                     </Button>

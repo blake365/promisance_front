@@ -1,12 +1,12 @@
 import { Container } from '@mantine/core'
 import FooterSocial from '../layout/footer'
-import { HeroImageRight } from './homeHero'
+import { SlimHero } from './slimHero'
 
 export default function PrivacyPolicy()
 {
     return (
         <div>
-            <HeroImageRight />
+            <SlimHero />
             <Container size='lg' mt='lg'>
                 <h1>Privacy Policy</h1>
                 <p>Last updated: October 07, 2023</p>
