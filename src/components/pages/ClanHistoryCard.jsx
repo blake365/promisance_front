@@ -12,13 +12,13 @@ const ClanHistoryCard = ({ clan, index }) =>
     const [loading, setLoading] = useState(false)
     const [members, setMembers] = useState([])
 
-    // console.log(empire)
+    // console.log(clan)
     useEffect(() =>
     {
         setLoading(true)
         async function fetchMembers()
         {
-            const members = await Axios.get(`/archives/empires/${clan.clanHistory_id}`)
+            const members = await Axios.get(`/archives/empires/${clan.clan_id}`)
             console.log(members.data)
             return members.data
         }
@@ -34,6 +34,14 @@ const ClanHistoryCard = ({ clan, index }) =>
 
         setLoading(false)
     }, [])
+
+    const findLeader = (members) =>
+    {
+        let leader = members.find((member) => member.empireHistoryId === clan.clanHistoryLeader)
+        return leader
+    }
+
+    let leader = findLeader(members)
 
     // console.log(members)
     return (
@@ -53,7 +61,7 @@ const ClanHistoryCard = ({ clan, index }) =>
                         </Group>
                         <Group ml='sm' noWrap spacing='xs'>
                             <Crown size={22} weight='fill' />
-                            {/* <Text>{clan.leader.name}</Text> */}
+                            <Text>{leader.empireHistoryName}</Text>
                         </Group>
                     </Group>
                     <Group spacing='lg'>

@@ -74,59 +74,59 @@ const HistoryCard = ({ empire }) =>
                     <tbody>
                         <tr>
                             <td>Income</td>
-                            <td align='right'>{empire.empireHistoryIncome.toLocaleString()}</td>
+                            <td align='right'>${Number(empire.empireHistoryIncome).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Expenses</td>
-                            <td align='right'>{empire.empireHistoryExpenses.toLocaleString()}</td>
+                            <td align='right'>${Number(empire.empireHistoryExpenses).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Food Production</td>
-                            <td align='right'>{empire.empireHistoryFoodPro.toLocaleString()}</td>
+                            <td align='right'>{Number(empire.empireHistoryFoodPro).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Food Consumption</td>
-                            <td align='right'>{empire.empireHistoryFoodCon.toLocaleString()}</td>
+                            <td align='right'>{Number(empire.empireHistoryFoodCon).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Industry Production</td>
-                            <td align='right'>{empire.empireHistoryIndyProd.toLocaleString()}</td>
+                            <td align='right'>${Number(empire.empireHistoryIndyProd).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Magic Production</td>
-                            <td align='right'>{empire.empireHistoryMagicProd.toLocaleString()}</td>
+                            <td align='right'>${Number(empire.empireHistoryMagicProd).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Attack Gains</td>
-                            <td align='right'>{empire.empireHistoryAttackGain.toLocaleString()}</td>
+                            <td align='right'>{Number(empire.empireHistoryAttackGain).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Attack Losses</td>
-                            <td align='right'>{empire.empireHistoryAttackLoss.toLocaleString()}</td>
+                            <td align='right'>{Number(empire.empireHistoryAttackLoss).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Net Worth per turn</td>
-                            <td align='right'>{Math.round(Number(empire.empireHistoryNetworth) / empire.turnsUsed)}</td>
+                            <td align='right'>${Math.round(Number(empire.empireHistoryNetworth) / empire.turnsUsed).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Final {eraArray[era].trparm}</td>
-                            <td align='right'>{empire.finalTrpArm}</td>
+                            <td align='right'>{Number(empire.finalTrpArm).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Final {eraArray[era].trplnd}</td>
-                            <td align='right'>{empire.finalTrpLnd}</td>
+                            <td align='right'>{Number(empire.finalTrpLnd).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Final {eraArray[era].trpfly}</td>
-                            <td align='right'>{empire.finalTrpFly}</td>
+                            <td align='right'>{Number(empire.finalTrpFly).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Final {eraArray[era].trpsea}</td>
-                            <td align='right'>{empire.finalTrpSea}</td>
+                            <td align='right'>{Number(empire.finalTrpSea).toLocaleString()}</td>
                         </tr>
                         <tr>
                             <td>Final {eraArray[era].trpwiz}</td>
-                            <td align='right'>{empire.finalTrpWiz}</td>
+                            <td align='right'>{Number(empire.finalTrpWiz).toLocaleString()}</td>
                         </tr>
                     </tbody>
                 </Table>
