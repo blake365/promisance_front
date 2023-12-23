@@ -162,10 +162,10 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                             <Text>{clan.clan.clanMembers}</Text></Group>
                         <Group ml='sm' spacing='xs' noWrap >
                             <Text weight='bold'>Avg</Text><Scales size={22} weight='fill' />
-                            <Text>{Math.round(clan.avgNetworth).toLocaleString()}</Text></Group>
+                            <Text>${Math.round(clan.avgNetworth).toLocaleString()}</Text></Group>
                         <Group ml='sm' spacing='xs' noWrap >
                             <Text weight='bold'>Total</Text><Scales size={22} weight='fill' />
-                            <Text>{clan.totalNetworth.toLocaleString()}</Text>
+                            <Text>${clan.totalNetworth.toLocaleString()}</Text>
                         </Group>
                     </Group>
                     {scores ? ('') : (

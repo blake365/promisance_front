@@ -49,7 +49,6 @@ const Archive = () =>
                     // console.log(round)
                     return (
                         <Card withBorder my='xs' shadow='sm' sx={(theme) => ({
-
                             '&:hover': {
                                 backgroundColor: theme.colors.gray[0],
                             },

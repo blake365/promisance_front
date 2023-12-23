@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
 import { getTime } from '../../store/timeSlice'
+import { onLCP } from 'web-vitals'
+
 
 export default function Home()
 {
@@ -19,6 +21,8 @@ export default function Home()
     const [error, setError] = useState(null)
 
     dispatch(getTime())
+    onLCP(console.log)
+
 
     const smScreen = useMediaQuery('(max-width: 768px)')
     const mdScreen = useMediaQuery('(min-width: 992px)')

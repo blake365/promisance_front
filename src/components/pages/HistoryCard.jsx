@@ -1,30 +1,27 @@
-import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, ThemeIcon } from '@mantine/core'
+import { Title, Card, Avatar, Text, Group, Collapse, Image, Table } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { Mountains, Scales, Hourglass, Sword } from "@phosphor-icons/react"
-import NetProduced from '../utilities/NetProduced'
+import { Mountains, Scales, Hourglass } from "@phosphor-icons/react"
+
+const eraConverter = (era) =>
+{
+    if (era === 'Past') {
+        return 0
+    } else if (era === 'Present') {
+        return 1
+    } else if (era === 'Future') {
+        return 2
+    }
+}
 
 const HistoryCard = ({ empire }) =>
 {
     const [opened, { toggle }] = useDisclosure(false);
 
-    let color = ''
-    let disabled = false
-
-    if (empire.mode === 'demo') {
-        color = 'brown'
-    }
-
-    if (empire.flags === 1) {
-        color = 'red'
-    }
-    if (empire.mode === 'admin') {
-        color = 'orange'
-    }
+    let era = eraConverter(empire.empireHistoryEra)
 
     return (
-        <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder my='sm'>
+        <Card shadow="sm" radius="sm" sx={{ width: '100%', maxWidth: 600 }} key={empire.id} withBorder my='sm'>
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
             <Card.Section onClick={toggle} sx={{ cursor: 'pointer' }} inheritPadding>
@@ -35,7 +32,7 @@ const HistoryCard = ({ empire }) =>
                         </Text>
                         <Group spacing='xs' noWrap>
                             <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-                            <Title order={4} color={color}>
+                            <Title order={4}>
                                 {empire.empireHistoryName}
                             </Title>
                         </Group>
@@ -72,20 +69,67 @@ const HistoryCard = ({ empire }) =>
                 {!opened ? <Text size='sm' align='center' color='dimmed'>Click to Expand</Text> : <hr />}
             </Card.Section>
             <Collapse in={opened}>
-                <Text>{empire.profile}</Text>
-                <Text>Income: {empire.empireHistoryIncome}</Text>
-                <Text>Expenses: {empire.empireHistoryExpenses}</Text>
-                <Text>Cash Net: {empire.empireHistoryIncome - empire.empireHistoryExpenses}</Text>
-
-                <Text>Food Production: {empire.empireHistoryFoodPro}</Text>
-                <Text>Food Consumption: {empire.empireHistoryFoodCon}</Text>
-                <Text>Food Net: {empire.empireHistoryFoodPro - empire.empireHistoryFoodCon}</Text>
-
-                <Text>Industry Production: {empire.empireHistoryIndyProd}</Text>
-                <Text>Magic Production: {empire.empireHistoryMagicProd}</Text>
-                <Text>Attack Gains: {empire.empireHistoryAttackGain}</Text>
-                <Text>Attack Losses: {empire.empireHistoryAttackLoss}</Text>
-                <Text>Networth per turn: {Math.round(Number(empire.empireHistoryNetworth) / empire.turnsUsed)}</Text>
+                <Text align='left'>Profile: {empire.profile}</Text>
+                <Table striped>
+                    <tbody>
+                        <tr>
+                            <td>Income</td>
+                            <td align='right'>{empire.empireHistoryIncome.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Expenses</td>
+                            <td align='right'>{empire.empireHistoryExpenses.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Food Production</td>
+                            <td align='right'>{empire.empireHistoryFoodPro.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Food Consumption</td>
+                            <td align='right'>{empire.empireHistoryFoodCon.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Industry Production</td>
+                            <td align='right'>{empire.empireHistoryIndyProd.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Magic Production</td>
+                            <td align='right'>{empire.empireHistoryMagicProd.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Attack Gains</td>
+                            <td align='right'>{empire.empireHistoryAttackGain.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Attack Losses</td>
+                            <td align='right'>{empire.empireHistoryAttackLoss.toLocaleString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Net Worth per turn</td>
+                            <td align='right'>{Math.round(Number(empire.empireHistoryNetworth) / empire.turnsUsed)}</td>
+                        </tr>
+                        <tr>
+                            <td>Final {eraArray[era].trparm}</td>
+                            <td align='right'>{empire.finalTrpArm}</td>
+                        </tr>
+                        <tr>
+                            <td>Final {eraArray[era].trplnd}</td>
+                            <td align='right'>{empire.finalTrpLnd}</td>
+                        </tr>
+                        <tr>
+                            <td>Final {eraArray[era].trpfly}</td>
+                            <td align='right'>{empire.finalTrpFly}</td>
+                        </tr>
+                        <tr>
+                            <td>Final {eraArray[era].trpsea}</td>
+                            <td align='right'>{empire.finalTrpSea}</td>
+                        </tr>
+                        <tr>
+                            <td>Final {eraArray[era].trpwiz}</td>
+                            <td align='right'>{empire.finalTrpWiz}</td>
+                        </tr>
+                    </tbody>
+                </Table>
             </Collapse>
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
