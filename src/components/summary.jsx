@@ -18,7 +18,6 @@ export default function Summary()
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 	const { time } = useSelector((state) => state.time)
-	// console.log(time)
 	let bgimage = '/images/summaries/default.webp'
 
 	let cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
@@ -65,9 +64,13 @@ export default function Summary()
 	}
 	let roundStatus = 'Round has not started'
 
+	// console.log(time)
+
+	// console.log(ROUND_START)
 	let upcoming = ROUND_START - time
 	// console.log(upcoming)
 	let remaining = ROUND_END - time
+	// console.log(ROUND_END)
 	// console.log(remaining)
 
 	if (upcoming > 0) {

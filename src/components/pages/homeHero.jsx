@@ -87,9 +87,9 @@ export function HeroImageRight()
                     <Button component={Link} to='/rules' leftIcon={<ListBullets size={14} />} color='dark' compact size='md'>
                         Rules
                     </Button>
-                    {/* <Button component={Link} to='/archive' leftIcon={<Archive size={14} />} color='dark' compact size='md'>
+                    <Button component={Link} to='/archive' leftIcon={<Archive size={14} />} color='dark' compact size='md'>
                         Archive
-                    </Button> */}
+                    </Button>
                     <Button leftIcon={<DiscordLogo size={14} />} component='a' href='https://discord.gg/bnuVy2pdgM' target='_blank' color='dark' compact size='md'>
                         Discord
                     </Button>
