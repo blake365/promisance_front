@@ -53,7 +53,7 @@ const Archive = () =>
                                 backgroundColor: theme.colors.gray[0],
                             },
                         })} key={round.id} component={Link} to={`/archive/${round.round_h_id}`}>
-                            <Title order={3}>{round.name}</Title>
+                            <Title order={3}>{round.name} - v{round?.gameVersion}</Title>
                             <Text>{new Date(round.startDate).toLocaleDateString()} - {new Date(round.stopDate).toLocaleDateString()}</Text>
                             <Text>Empires: {round.allEmpires}</Text>
                             <Text>Clans: {round.allClans}</Text>

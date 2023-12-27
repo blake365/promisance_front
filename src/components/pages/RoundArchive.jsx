@@ -50,7 +50,7 @@ const RoundArchive = () =>
                 {loading ? <Loader /> : (
                     <>
                         <Title>
-                            {round.roundHistory.name}
+                            {round.roundHistory.name} - v{round.roundHistory.gameVersion}
                         </Title>
                         <Text>
                             {new Date(round.roundHistory.startDate).toLocaleDateString()} - {new Date(round.roundHistory.stopDate).toLocaleDateString()}
