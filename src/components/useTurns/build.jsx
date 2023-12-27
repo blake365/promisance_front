@@ -13,11 +13,7 @@ import { calcSizeBonus } from '../../functions/functions'
 import { useState } from 'react'
 import { useTour } from '@reactour/tour'
 import { Compass } from '@phosphor-icons/react'
-// clear form on submit
-// fix styling of button, unused land, top alignment, text alignment in cells
-// build demolish feature
 import { buildSteps } from '../../tour/buildSteps'
-
 
 export default function Build()
 {

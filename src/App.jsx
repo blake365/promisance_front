@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
@@ -42,7 +42,7 @@ import { setPage } from './store/guideSlice'
 import { fetchMyItems, fetchOtherItems } from './store/pubMarketSlice'
 import { getTime } from './store/timeSlice'
 
-import Guide from './components/guide/guide'
+const Guide = lazy(() => import('./components/guide/guide'));
 import EffectIcons from './components/layout/EffectIcons'
 import { fetchEffects } from './store/effectSlice'
 import { NewspaperClipping, Envelope, UsersFour } from '@phosphor-icons/react'
@@ -68,17 +68,12 @@ function App()
 
 	let location = useLocation()
 	// console.log(location)
-
 	const empireStatus = useSelector(state => state.empire.status)
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-	// const empire = useSelector((state) => state.empire)
 	const { empire } = useSelector((state) => state.empire)
 	// console.log(empire)
-
-
 	const navigate = useNavigate()
-	// console.log(empire)
 
 	const { setIsOpen, currentStep, meta } = useTour()
 
@@ -103,7 +98,7 @@ function App()
 
 	const loadEmpireTest = async () =>
 	{
-		console.log('loading empire')
+		// console.log('loading empire')
 		setRefreshLoading(true)
 		try {
 			const res = await Axios.get(`/empire/${empire.uuid}`)
@@ -138,7 +133,6 @@ function App()
 			})
 			dispatch(resetUser())
 			navigate('/login')
-
 		}
 	}
 
@@ -156,7 +150,6 @@ function App()
 			})
 			dispatch(resetUser())
 			navigate('/login')
-
 		}
 	}
 
@@ -192,7 +185,6 @@ function App()
 			})
 			dispatch(resetUser())
 			navigate('/login')
-
 		}
 	}
 
@@ -225,7 +217,6 @@ function App()
 			} else if (res.data) {
 				dispatch(load())
 			}
-
 		}
 
 		if (!isLoggedIn) {
@@ -233,14 +224,14 @@ function App()
 		}
 
 		if (isLoggedIn && user.empires.length > 0 && (empireStatus === 'idle' || empireStatus === 'loading')) {
-			console.log('logged in but no empire')
+			// console.log('logged in but no empire')
 			dispatch(fetchEmpire(
 				{
 					uuid: user.empires[0].uuid,
 				}
 			)).then((data) =>
 			{
-				console.log(data.error)
+				// console.log(data.error)
 				if (data.error) {
 					console.log(data.error)
 					persistor.pause();
@@ -269,7 +260,6 @@ function App()
 			if (empire.flags === 1 && location.pathname !== '/app/disabled') {
 				navigate('/app/disabled')
 			} else {
-
 				try {
 					dispatch(fetchEffects({
 						id: empire.id
@@ -286,16 +276,6 @@ function App()
 						// console.log(data)
 						setNews(data)
 					})
-					// checkForMail().then((data) =>
-					// {
-					// 	// console.log(data)
-					// 	setMail(data)
-					// })
-
-					// if (empire.clanId !== 0) {
-					// 	checkForClanMail().then((data) =>
-					// 		setClanMail(data))
-					// }
 
 				}
 				catch (error) {
@@ -314,38 +294,11 @@ function App()
 
 	})
 
-	// const handleNewsRead = () =>
-	// {
-	// 	console.log('news read')
-	// 	checkForNews().then((data) =>
-	// 	{
-	// 		// console.log(data)
-	// 		setNews(data)
-	// 	})
-	// }
-
 	useInterval(() =>
 	{
 		if (empireStatus === 'succeeded' && !modalOpened && pageName !== 'Public Market') {
 			try {
 				loadEmpireTest()
-
-				// dispatch(fetchEffects({
-				// 	id: empire.id
-				// })).then((data) =>
-				// {
-				// 	// console.log(data)
-				// 	if (data.meta.requestStatus === 'rejected') {
-				// 		navigate('/')
-				// 	}
-				// }
-				// )
-
-				// checkForNews().then((data) =>
-				// {
-				// 	// console.log(data)
-				// 	setNews(data)
-				// })
 				checkForMail().then((data) =>
 				{
 					// console.log(data)
@@ -465,7 +418,9 @@ function App()
 								overflow="inside"
 								size="xl"
 							>
-								<Guide empire={empire} />
+								<Suspense fallback={<Loader size='xl' />}>
+									<Guide empire={empire} />
+								</Suspense>
 							</Modal>
 							<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
 								<Grid.Col span={2}>
@@ -473,7 +428,6 @@ function App()
 								</Grid.Col>
 								<Grid.Col span={3}>
 									<Group spacing='xs' position='center'>
-
 										<Button compact variant='outline' onClick={() =>
 										{
 											if (setIsOpen) {
