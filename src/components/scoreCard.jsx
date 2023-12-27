@@ -103,8 +103,8 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
     // console.log(clan)
-    let upcoming = ROUND_START - time
-    let remaining = ROUND_END - time
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
 
     if (upcoming > 0) {
         disabled = true

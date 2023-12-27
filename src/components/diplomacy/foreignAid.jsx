@@ -159,8 +159,8 @@ export default function ForeignAid()
     }
 
     let roundStatus = false
-    let upcoming = ROUND_START - time
-    let remaining = ROUND_END - time
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
 
     // console.log(upcoming / 60 / 10000 / 60, remaining)
     if (upcoming > 0) {

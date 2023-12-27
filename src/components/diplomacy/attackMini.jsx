@@ -27,6 +27,8 @@ export default function AttackMini()
 {
     const { empire } = useSelector((state) => state.empire)
 
+    const { time } = useSelector((state) => state.time)
+
     const dispatch = useDispatch()
 
     const [otherEmpires, setOtherEmpires] = useState()
@@ -157,6 +159,18 @@ export default function AttackMini()
         return num.toLocaleString();
     }
 
+    let roundStatus = false
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
     return (
         <section>
             <Center>
@@ -218,7 +232,7 @@ export default function AttackMini()
                                     {...form.getInputProps('attackType')}
                                 />
 
-                                <Button color='red' type='submit' loading={loading}>
+                                <Button color='red' type='submit' loading={loading} disabled={roundStatus}>
                                     Attack
                                 </Button>
                                 <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>

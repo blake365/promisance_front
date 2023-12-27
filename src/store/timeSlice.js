@@ -6,19 +6,9 @@ export const getTime = createAsyncThunk('time/', async (thunkAPI) => {
 	try {
 		const res = await Axios.get('time')
 		// console.log(res)
-		let data = res.data.time
-		// let gameOn
-		// console.log(data)
-		// if (
-		// 	data.time > new Date(ROUND_START).getTime() &&
-		// 	data.time < new Date(ROUND_END).getTime()
-		// ) {
-		// 	gameOn = true
-		// } else {
-		// 	gameOn = false
-		// }
-		// console.log(gameOn)
-		return data
+		const { time, start, end } = res.data
+		// console.log(time, start, end)
+		return { time, start, end }
 	} catch (e) {
 		console.log(e)
 		return thunkAPI.rejectWithValue()

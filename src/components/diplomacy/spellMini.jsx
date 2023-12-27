@@ -15,7 +15,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
-import { baseCost, getPower_self } from '../../functions/functions'
+import { baseCost } from '../../functions/functions'
 import { FavoriteButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
@@ -27,6 +27,7 @@ import { MAX_SPELLS } from '../../config/config'
 export default function SpellMini()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
 
@@ -143,6 +144,17 @@ export default function SpellMini()
         )
     );
 
+    let roundStatus = false
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
 
     return (
         <section>
@@ -205,7 +217,7 @@ export default function SpellMini()
                                     {...spellForm.getInputProps('spell')}
                                 />
 
-                                <Button color='indigo' type='submit' loading={loading}>
+                                <Button color='indigo' type='submit' loading={loading} disabled={roundStatus}>
                                     Cast Spell
                                 </Button>
                                 <Text size='sm'>{MAX_SPELLS - empire.spells} spells remaining</Text>

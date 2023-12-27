@@ -18,6 +18,7 @@ export default function Summary()
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 
 	const { time } = useSelector((state) => state.time)
+	// console.log(time)
 	let bgimage = '/images/summaries/default.webp'
 
 	let cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
@@ -67,9 +68,9 @@ export default function Summary()
 	// console.log(time)
 
 	// console.log(ROUND_START)
-	let upcoming = ROUND_START - time
+	let upcoming = time.start - time.time
 	// console.log(upcoming)
-	let remaining = ROUND_END - time
+	let remaining = time.end - time.time
 	// console.log(ROUND_END)
 	// console.log(remaining)
 
@@ -85,7 +86,7 @@ export default function Summary()
 	useEffect(() =>
 	{
 		// console.log(time - new Date(empire.createdAt).getTime())
-		if (empire && time && time - new Date(empire.createdAt).getTime() <= 120000) {
+		if (empire && time.time && time.time - new Date(empire.createdAt).getTime() <= 120000) {
 			// console.log('new player')
 			// console.log(raceArray[empire.race].name)
 			// switch cases for raceStrength
@@ -300,7 +301,7 @@ export default function Summary()
 
 								</>) : ('')}
 								<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
-								<Text align='center'>Server time: {new Date(time).toISOString()}</Text>
+								<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
 								<Text align='center'>{roundStatus}</Text>
 							</Stack>
 						</Card></>

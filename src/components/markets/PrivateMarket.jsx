@@ -9,8 +9,8 @@ export default function PrivateMarket()
     const { time } = useSelector((state) => state.time)
 
     let roundStatus = false
-    let upcoming = ROUND_START - time
-    let remaining = ROUND_END - time
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
 
     if (upcoming > 0) {
         roundStatus = true

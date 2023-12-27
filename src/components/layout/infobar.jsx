@@ -54,15 +54,15 @@ export default function InfoBar({ data })
 	const empire = data
 
 	const { time } = useSelector((state) => state.time)
-	let roundLength = ROUND_END - ROUND_START
-	let roundProgress = time - ROUND_START
+	let roundLength = time.end - time.start
+	let roundProgress = time.time - time.start
 	let roundPercent = roundProgress / roundLength * 100
 
 
 	let roundStatus = ''
-	let upcoming = ROUND_START - time
+	let upcoming = time.start - time.time
 	// console.log(upcoming)
-	let remaining = ROUND_END - time
+	let remaining = time.end - time.time
 	// console.log(remaining)
 
 	if (upcoming > 0) {

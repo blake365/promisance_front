@@ -49,7 +49,7 @@ export default function Favorites()
 {
     const { empire } = useSelector((state) => state.empire)
 
-    console.log(empire.favorites)
+    // console.log(empire.favorites)
 
     return (
         <main>
