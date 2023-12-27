@@ -1,8 +1,6 @@
 import GuideLink from "../../utilities/guidelink"
 import { eraArray } from "../../../config/eras"
 
-
-
 export default function HealGuide({ empire })
 {
     return (

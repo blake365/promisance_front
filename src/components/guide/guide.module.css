@@ -4,9 +4,15 @@
     text-align: center;
 }
 
-th {
-    text-align: center !important;
+.guideTable th {
+    padding: 0 1rem;
+    text-align: center;
 }
+
+.guideTable td {
+    text-align: center;
+}
+
 
 @media screen and (max-width: 400px) {
     .guideTable {

@@ -1,6 +1,5 @@
 import { TURNS_MAXIMUM, TURNS_PROTECTION } from '../../../config/config'
 import { eraArray } from '../../../config/eras'
-import { raceArray } from '../../../config/races'
 import GuideLink from '../../utilities/guidelink'
 
 export default function ProtectionGuide({ empire })

@@ -9,7 +9,6 @@ export default function EraGuide({ empire })
     return (
         <div>
             <GuideLink text='Return to Index' page='Index' />
-
             <h2>Time Periods</h2>
             <p>Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open Time Gate.</p>
             <p>The offensive and defensive power of <GuideLink page='Military' text='military units' /> varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:</p>
@@ -43,13 +42,10 @@ export default function EraGuide({ empire })
                             return (
                                 <tr key={era.name}>
                                     <td>{era.name}</td>
-
                                     <td style={era.mod_cashpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_cashpro}%</td>
                                     <td style={era.mod_foodpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_foodpro}%</td>
                                     <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
-
                                     <td style={era.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_runepro}%</td>
-
                                     <td style={era.mod_explore >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_explore}%</td>
                                 </tr>
                             )

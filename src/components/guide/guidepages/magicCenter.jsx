@@ -16,7 +16,7 @@ export default function MagicCenterGuide({ empire })
             <h3>Utility Spells</h3>
             <dl>
                 <dt>{eraArray[empire.era].spell_shield}</dt>
-                <dd>This will allow you to partially protect your empire from magical attacks from other empires. Casting once will protect your empire for 12 hours, and each additional cast will extend it by 3 hours. If your empire has less than 9 hours of protection remaining, it will automatically be renewed to 12 hours.</dd>
+                <dd>This will allow you to partially protect your empire from magical attacks from other empires. Casting once will protect your empire for 24 hours, and each additional cast will extend it by 3 hours. If your empire has less than 14 hours of protection remaining, it will automatically be renewed to 24 hours.</dd>
                 <dt>{eraArray[empire.era].spell_food}</dt>
                 <dd>This spell will create an amount of {eraArray[empire.era].food} to feed your citizens and army, the amount being proportional to the size of your empire and the number of {eraArray[empire.era].trpwiz} at your disposal.</dd>
                 <dt>{eraArray[empire.era].spell_cash}</dt>
@@ -26,9 +26,9 @@ export default function MagicCenterGuide({ empire })
                 <dt>{eraArray[empire.era].spell_ungate}</dt>
                 <dd>If your empire currently has an open Time Gate, this spell will close it, protecting your empire from attacks by other empires in different time periods (unless they themselves have open time gates).</dd>
                 <dt>{eraArray[empire.era].spell_advance}</dt>
-                <dd>This spell advances your empire from its current era to the next one (if such an era exists). At least 96 hours must be spent in your current era before you may cast this spell.</dd>
+                <dd>This spell advances your empire from its current era to the next one (if such an era exists). At least 72 hours must be spent in your current era before you may cast this spell.</dd>
                 {MAGIC_ALLOW_REGRESS ? (<div><dt>{eraArray[empire.era].spell_regress}</dt>
-                    <dd>This spell regresses your empire from its current era to the previous one (if such an era exists). At least 96 hours must be spent in your current era before you may cast this spell.</dd></div>)
+                    <dd>This spell regresses your empire from its current era to the previous one (if such an era exists). At least 72 hours must be spent in your current era before you may cast this spell.</dd></div>)
                     : ("")
                 }
             </dl>

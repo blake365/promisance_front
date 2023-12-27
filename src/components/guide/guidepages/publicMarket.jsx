@@ -1,5 +1,4 @@
-import { eraArray } from "../../../config/eras"
-import { PUBMKT_MAXTIME, PUBMKT_MINTIME, PUBMKT_START, PVTM_MAXSELL } from "../../../config/config"
+import { PUBMKT_MAXTIME, PUBMKT_START } from "../../../config/config"
 import GuideLink from "../../utilities/guidelink"
 
 export default function PublicMarketGuide()
