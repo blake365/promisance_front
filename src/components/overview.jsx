@@ -48,7 +48,8 @@ export default function Overview()
 
 	let corruption = 0
 	if (empire.cash > empire.networth * 110) {
-		corruption = Math.round(expenses * size)
+		let multiples = Math.floor(empire.cash / empire.networth) - 1
+		corruption = Math.round(multiples * empire.networth * 0.001)
 	}
 
 	const { foodpro, foodcon } = calcProvisions(empire)

@@ -25,6 +25,10 @@
     {
       "path":"/api/cron/aid",
       "schedule": "0 */5 * * *"
+    },
+    {
+      "path":"/api/cron/snapshots",
+      "schedule": "0 */4 * * *"
     }
   ]
 }
