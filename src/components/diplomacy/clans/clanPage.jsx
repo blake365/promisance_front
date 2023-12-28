@@ -11,11 +11,25 @@ import { TURNS_PROTECTION } from "../../../config/config"
 function ClanPage()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { time } = useSelector((state) => state.time)
 
     let disabled = false
     if (empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo') {
         disabled = true
     }
+
+    let roundStatus = false
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0 || remaining / 1000 / 60 / 60 < 24) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
 
     return (
         <main>
@@ -26,8 +40,8 @@ function ClanPage()
                     <Text align="center">Clan mates can view stats for each member, a shared news feed, shared intel, and receive a defense bonus. </Text>
                     {empire.mode === 'demo' && <Text align="center" color='red'>Clans are disabled for demo accounts.</Text>}
                     <Group position="center" mt={10}>
-                        <CreateClan disabled={disabled} />
-                        <JoinClan disabled={disabled} />
+                        <CreateClan disabled={disabled || roundStatus} />
+                        <JoinClan disabled={disabled || roundStatus} />
                     </Group>
                 </div>) : (<MyClan />)}
         </main>
