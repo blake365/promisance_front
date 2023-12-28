@@ -2,7 +2,6 @@ import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
 import { useSelector } from "react-redux"
-import { ROUND_END, ROUND_START } from "../../config/config"
 
 export default function PrivateMarket()
 {

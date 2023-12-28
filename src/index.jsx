@@ -4,7 +4,7 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
 
-import { Loader } from '@mantine/core'
+import { Loader, Center } from '@mantine/core'
 
 import
 {
@@ -45,8 +45,8 @@ import Signup from './components/layout/Signup'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
 import CreateDemoEmpire from './components/pages/CreateDemoEmpire'
-import Archive from './components/pages/Archive'
-import RoundArchive from './components/pages/RoundArchive'
+const Archive = lazy(() => import('./components/pages/Archive'));
+const RoundArchive = lazy(() => import('./components/pages/RoundArchive'));
 import PrivacyPolicy from './components/pages/PrivacyPolicy'
 import Disabled from './components/pages/disabled'
 import GameRules from './components/pages/Rules'
@@ -107,49 +107,49 @@ ReactDOM.render(
 							<Route path='/demo' element={<CreateDemoEmpire />} />
 							<Route path='/privacy' element={<PrivacyPolicy />} />
 							<Route path='/rules' element={<GameRules />} />
-							<Route path='/archive' element={<Archive />} />
-							<Route path='/archive/:roundId' element={<RoundArchive />} />
-							<Route path='/admin/' element={<Suspense fallback={<Loader size='xl' />}><Admin /></Suspense>} >
-								<Route path='*' element={<Suspense fallback={<Loader size='xl' />}><NothingFoundBackground /></Suspense>} />
-								<Route path='' element={<Suspense fallback={<Loader size='xl' />}><AdminSummary /></Suspense>} />
-								<Route path='Summary' element={<Suspense fallback={<Loader size='xl' />}><AdminSummary /></Suspense>} />
-								<Route path='Users' element={<Suspense fallback={<Loader size='xl' />}><AdminUsers /></Suspense>} />
-								<Route path='Empires' element={<Suspense fallback={<Loader size='xl' />}><AdminEmpires /></Suspense>} />
-								<Route path='Mail' element={<Suspense fallback={<Loader size='xl' />}><AdminMail /></Suspense>} />
-								<Route path='Market' element={<Suspense fallback={<Loader size='xl' />}><AdminMarket /></Suspense>} />
-								<Route path='News' element={<Suspense fallback={<Loader size='xl' />}><AdminNews /></Suspense>} />
+							<Route path='/archive' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Archive /></Suspense>} />
+							<Route path='/archive/:roundId' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><RoundArchive /></Suspense>} />
+							<Route path='/admin/' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Admin /></Suspense>} >
+								<Route path='*' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><NothingFoundBackground /></Suspense>} />
+								<Route path='' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
+								<Route path='Summary' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
+								<Route path='Users' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminUsers /></Suspense>} />
+								<Route path='Empires' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminEmpires /></Suspense>} />
+								<Route path='Mail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMail /></Suspense>} />
+								<Route path='Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMarket /></Suspense>} />
+								<Route path='News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
 							</Route>
 
-							<Route path='/app/' element={<Suspense fallback={<Loader size='xl' />}><App /></Suspense>}>
+							<Route path='/app/' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><App /></Suspense>}>
 								<Route path='*' element={<NothingFoundBackground />} />
 								{/* <Route path='guide' element={<Guide />} /> */}
 								<Route path='' element={<Summary />} />
 								<Route path='summary' element={<Summary />} />
-								<Route path='overview' element={<Suspense fallback={<Loader size='xl' />}><Overview /></Suspense>} />
-								<Route path='scores' element={<Suspense fallback={<Loader size='xl' />}><Scores /></Suspense>} />
-								<Route path='favorites' element={<Suspense fallback={<Loader size='xl' />}><Favorites /></Suspense>} />
-								<Route path='farm' element={<Suspense fallback={<Loader size='xl' />}><Farm /></Suspense>} />
-								<Route path='cash' element={<Suspense fallback={<Loader size='xl' />}><Cash /></Suspense>} />
-								<Route path='explore' element={<Suspense fallback={<Loader size='xl' />}><Explore /></Suspense>} />
-								<Route path='meditate' element={<Suspense fallback={<Loader size='xl' />}><Meditate /></Suspense>} />
-								<Route path='industry' element={<Suspense fallback={<Loader size='xl' />}><Industry /></Suspense>} />
-								<Route path='build' element={<Suspense fallback={<Loader size='xl' />}><Build /></Suspense>} />
-								<Route path='demolish' element={<Suspense fallback={<Loader size='xl' />}><Demolish /></Suspense>} />
-								<Route path='Heal' element={<Suspense fallback={<Loader size='xl' />}><Heal /></Suspense>} />
-								<Route path='Black%20Market' element={<Suspense fallback={<Loader size='xl' />}><PrivateMarket /></Suspense>} />
-								<Route path='Public%20Market' element={<Suspense fallback={<Loader size='xl' />}><PublicMarket /></Suspense>} />
-								<Route path='The%20Bank' element={<Suspense fallback={<Loader size='xl' />}><WorldBank /></Suspense>} />
-								<Route path='Magic%20Center' element={<Suspense fallback={<Loader size='xl' />}><MagicCenter /></Suspense>} />
-								<Route path='Empire%20Settings' element={<Suspense fallback={<Loader size='xl' />}><ManageEmpire /></Suspense>} />
-								<Route path='War%20Council' element={<Suspense fallback={<Loader size='xl' />}><Attack /></Suspense>} />
-								<Route path='Intel%20Center' element={<Suspense fallback={<Loader size='xl' />}><IntelCenter /></Suspense>} />
-								<Route path='World%20News' element={<Suspense fallback={<Loader size='xl' />}><WorldNews /></Suspense>} />
-								<Route path='Mailbox' element={<Suspense fallback={<Loader size='xl' />}><Mailbox /></Suspense>} />
-								<Route path='Foreign%20Aid' element={<Suspense fallback={<Loader size='xl' />}><ForeignAid /></Suspense>} />
-								<Route path='Clans' element={<Suspense fallback={<Loader size='xl' />}><ClanPage /></Suspense>} />
-								<Route path='Clan%20Stats' element={<Suspense fallback={<Loader size='xl' />}><ClanStats /></Suspense>} />
-								<Route path='disabled' element={<Suspense fallback={<Loader size='xl' />}><Disabled /></Suspense>} />
-								<Route path='Lottery' element={<Suspense fallback={<Loader size='xl' />}><Lottery /></Suspense>} />
+								<Route path='overview' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Overview /></Suspense>} />
+								<Route path='scores' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Scores /></Suspense>} />
+								<Route path='favorites' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Favorites /></Suspense>} />
+								<Route path='farm' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Farm /></Suspense>} />
+								<Route path='cash' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Cash /></Suspense>} />
+								<Route path='explore' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Explore /></Suspense>} />
+								<Route path='meditate' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Meditate /></Suspense>} />
+								<Route path='industry' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Industry /></Suspense>} />
+								<Route path='build' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Build /></Suspense>} />
+								<Route path='demolish' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Demolish /></Suspense>} />
+								<Route path='Heal' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Heal /></Suspense>} />
+								<Route path='Black%20Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><PrivateMarket /></Suspense>} />
+								<Route path='Public%20Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><PublicMarket /></Suspense>} />
+								<Route path='The%20Bank' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><WorldBank /></Suspense>} />
+								<Route path='Magic%20Center' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><MagicCenter /></Suspense>} />
+								<Route path='Empire%20Settings' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><ManageEmpire /></Suspense>} />
+								<Route path='War%20Council' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Attack /></Suspense>} />
+								<Route path='Intel%20Center' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><IntelCenter /></Suspense>} />
+								<Route path='World%20News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><WorldNews /></Suspense>} />
+								<Route path='Mailbox' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Mailbox /></Suspense>} />
+								<Route path='Foreign%20Aid' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><ForeignAid /></Suspense>} />
+								<Route path='Clans' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><ClanPage /></Suspense>} />
+								<Route path='Clan%20Stats' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><ClanStats /></Suspense>} />
+								<Route path='disabled' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Disabled /></Suspense>} />
+								<Route path='Lottery' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Lottery /></Suspense>} />
 							</Route>
 						</Routes>
 					</BrowserRouter>

@@ -19,7 +19,7 @@ import { MaxButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { Scales } from "@phosphor-icons/react"
-import { TURNS_PROTECTION, ROUND_END, ROUND_START } from '../../config/config'
+import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
 
 export default function ForeignAid()

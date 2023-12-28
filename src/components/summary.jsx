@@ -1,6 +1,6 @@
 import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Modal, Button, Center } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
+import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
@@ -163,7 +163,7 @@ export default function Summary()
 								If you are brand new to the game, the <strong>First Turns Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Additional walkthrough tours are indicated with the Compass <Compass /> icon and are available on the Build and Attack pages.
 							</Text>
 							<Text mt='sm'>
-								You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to build up your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
+								You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building buildings tailored to your economy, military, magic, or food production. You can also focus on a combination of these things.
 							</Text>
 							<Text mt='sm'>
 								As a {raceArray[empire.race].name} your people are strongest in {raceStrength}

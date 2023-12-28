@@ -10,8 +10,6 @@ import ClanNews from "./clanNews"
 import ClanChat from "./clanChat"
 import ClanRelations from "./clanRelations"
 import { empireLoaded } from '../../../store/empireSlice'
-import { ROUND_END, ROUND_START } from '../../../config/config'
-
 
 // show clan info, clan members, clan chat
 function MyClan()

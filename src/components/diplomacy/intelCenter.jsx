@@ -21,7 +21,6 @@ import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Intel from './intel'
-import { ROUND_END, ROUND_START } from '../../config/config'
 
 import { baseCost } from '../../functions/functions'
 

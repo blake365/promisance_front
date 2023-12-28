@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
-import { BANK_LOANRATE, BANK_SAVERATE, ROUND_END, ROUND_START } from '../../config/config'
+import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
 
 // DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)

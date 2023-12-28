@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
-import { ROUND_END, ROUND_START } from '../../config/config'
 import { useState } from 'react'
 import { useTour } from '@reactour/tour'
 

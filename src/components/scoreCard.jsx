@@ -10,7 +10,7 @@ import ScoresIntel from './diplomacy/scoresIntel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from './diplomacy/scoresAid'
-import { TURNS_PROTECTION, ROUND_START, ROUND_END } from '../config/config'
+import { TURNS_PROTECTION } from '../config/config'
 import { useSelector } from 'react-redux'
 
 const ScoreCard = ({ empire, myEmpire, home, clan }) =>

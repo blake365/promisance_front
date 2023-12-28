@@ -1,12 +1,13 @@
-import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor } from '@mantine/core'
+import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor, Loader } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
-import HomeNews from '../layout/homeNews'
-import HomeScores from '../layout/homeScores'
+import { useState, lazy, Suspense } from 'react'
+
+const HomeNews = lazy(() => import('../layout/homeNews'));
+const HomeScores = lazy(() => import('../layout/homeScores'));
 import FooterSocial from '../layout/footer'
 import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
@@ -210,8 +211,10 @@ export default function Home()
                     </Card>
                 </Box>
                 <Group my='md' position='center' align='flex-start'>
-                    <HomeScores />
-                    <HomeNews />
+                    <Suspense fallback={<Center><Loader size='xl' /></Center>}>
+                        <HomeScores />
+                        <HomeNews />
+                    </Suspense>
                 </Group>
             </Container>
             <FooterSocial />

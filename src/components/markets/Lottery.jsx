@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
 import { useEffect, useState } from 'react'
-import { LOTTERY_MAXTICKETS, ROUND_END, ROUND_START, TURNS_PROTECTION } from '../../config/config'
+import { LOTTERY_MAXTICKETS, TURNS_PROTECTION } from '../../config/config'
 import { generalLog } from '../../functions/functions'
 
 export default function Lottery()

@@ -5,7 +5,6 @@ import PublicMarketSell from "./PublicMarketSell"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
-import { ROUND_END, ROUND_START } from "../../config/config"
 
 //FIXED: bug with data loading/rendering??
 

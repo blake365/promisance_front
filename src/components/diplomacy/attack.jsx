@@ -17,13 +17,13 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
-import { baseCost, defense, getPower_self, offense } from '../../functions/functions'
+import { baseCost, defense, offense } from '../../functions/functions'
 import { FavoriteButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { Mountains, Scales, Hourglass, Alien, Compass } from "@phosphor-icons/react"
-import { MAX_ATTACKS, MAX_SPELLS, ROUND_END, ROUND_START } from '../../config/config'
+import { MAX_ATTACKS, MAX_SPELLS } from '../../config/config'
 
 import { useTour } from '@reactour/tour';
 import { attackSteps } from '../../tour/attackSteps';

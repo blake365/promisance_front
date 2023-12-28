@@ -17,7 +17,7 @@ import { MaxButton } from '../utilities/maxbutton'
 import { loadScores } from '../../store/scoresSlice'
 
 import { eraArray } from '../../config/eras'
-import { TURNS_PROTECTION, ROUND_END, ROUND_START } from '../../config/config'
+import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
 
 export default function ScoresAid({ friend })
@@ -114,8 +114,8 @@ export default function ScoresAid({ friend })
     }
 
     let roundStatus = false
-    let upcoming = ROUND_START - time
-    let remaining = ROUND_END - time
+    let upcoming = time.start - time.time
+    let remaining = time.end - time.time
 
     // console.log(upcoming / 60 / 10000 / 60, remaining)
     if (upcoming > 0) {
