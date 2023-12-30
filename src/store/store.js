@@ -18,11 +18,12 @@ import { pubMarketSlice } from './pubMarketSlice'
 import { effectSlice } from './effectSlice'
 import { scoresSlice } from './scoresSlice'
 import { timeSlice } from './timeSlice'
+import { achievementSlice } from './achievementSlice'
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user'],
+	whitelist: ['user', 'time', 'achievements'],
 }
 
 const reducers = combineReducers({
@@ -34,6 +35,7 @@ const reducers = combineReducers({
 	market: pubMarketSlice.reducer,
 	effects: effectSlice.reducer,
 	scores: scoresSlice.reducer,
+	achievements: achievementSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)

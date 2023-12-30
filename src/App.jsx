@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useEffect, useState, lazy, Suspense, useRef } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
@@ -24,9 +24,9 @@ import
 	Image,
 	Tooltip,
 } from '@mantine/core'
+import { NotificationsProvider, showNotification } from '@mantine/notifications';
 
 import neoIcon from './icons/neoIcon.svg'
-
 // import persistor from './store/store'
 import { IconRefresh } from '@tabler/icons-react';
 
@@ -54,6 +54,7 @@ import { persistor } from './store/store';
 import { resetUser } from './store/userSlice';
 
 import { useTour } from '@reactour/tour';
+import { processAchievement } from './functions/processAchievement';
 
 function App()
 {
@@ -72,7 +73,42 @@ function App()
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const { empire } = useSelector((state) => state.empire)
+	// const { time } = useSelector((state) => state.time)
+
 	// console.log(empire)
+	// const achievements = empire?.achievements
+	// console.log(achievements)
+	let achievements = {}// Extract achievements from empire
+	if (empire) {
+		achievements = empire.achievements
+		// console.log(achievements)
+	}
+
+	useEffect(() =>
+	{
+		// console.log('achievements changed')
+		// console.log(achievements)
+		// if achievements changes, check where awarded is true and if timeAwarded is within 1 minute of current time
+		// if true, show notification
+		Object.keys(achievements).forEach((key) =>
+		{
+			// console.log(achievements[key])
+			// console.log(new Date(achievements[key].timeAwarded).getTime())
+			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 2000 > Date.now()) {
+				console.log(key)
+				const { message, icon } = processAchievement(key)
+				console.log(message)
+				// console.log(icon)
+				showNotification({
+					title: 'Achievement Awarded',
+					message: message,
+					icon: icon,
+				})
+			}
+		})
+
+	}, [achievements])
+
 	const navigate = useNavigate()
 
 	const { setIsOpen, currentStep, meta } = useTour()
@@ -334,156 +370,158 @@ function App()
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-				<AppShell
-					styles={(theme) => ({
-						main: {
-							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-						}
-					})}
-					navbarOffsetBreakpoint='sm'
-					fixed
-					navbar={
-						<Navbar
-							padding='sm'
-							hiddenBreakpoint='sm'
-							hidden={!opened}
-							width={{ sm: 200, base: 200 }}
-							zIndex={110}
-							sx={{ paddingBottom: 'calc(1em + env(safe-area-inset-bottom))' }}
-						>
-							<Navbar.Section
-								grow
-								component={ScrollArea}
-								ml={10}
-								onClick={() => setOpened(false)}
+				<NotificationsProvider autoClose={8000}>
+					<AppShell
+						styles={(theme) => ({
+							main: {
+								backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+							}
+						})}
+						navbarOffsetBreakpoint='sm'
+						fixed
+						navbar={
+							<Navbar
+								padding='sm'
+								hiddenBreakpoint='sm'
+								hidden={!opened}
+								width={{ sm: 200, base: 200 }}
+								zIndex={110}
+								sx={{ paddingBottom: 'calc(1em + env(safe-area-inset-bottom))' }}
 							>
-								<Sidebar />
-							</Navbar.Section>
-							<Navbar.Section>
-								<Button
-									onClick={() =>
-									{
-										persistor.pause();
-										persistor.flush().then(() =>
-										{
-											return persistor.purge();
-										})
-										dispatch(logout())
-									}}
-									variant='subtle'
-									color='red'
-									fullWidth
+								<Navbar.Section
+									grow
+									component={ScrollArea}
+									ml={10}
+									onClick={() => setOpened(false)}
 								>
-									Logout
-								</Button>
-							</Navbar.Section>
-						</Navbar>
-					}
-					header={
-						<Header height={60} p='sm' zIndex={120}>
-							<Group position='apart' spacing={2}>
-								<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-									<Burger
-										opened={opened}
-										onClick={() => setOpened((o) => !o)}
-										size='sm'
-									/>
-								</MediaQuery>
-								<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
-									<Group align='center' spacing={4}>
-										<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
-											<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-										</MediaQuery>
-										<Title order={1} ml={0}>
-											NeoPromisance
-										</Title>
-									</Group>
-								</a>
-								<Group>
-									{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
-									<ThemeToggle />
-								</Group>
-							</Group>
-						</Header>
-					}
-				>
-					<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }}>
-						{empireStatus !== 'succeeded' ? (<Loader />) : (<>
-							<InfoBar data={empire} />
-							<Modal
-								opened={modalOpened}
-								onClose={() => setModalOpened(false)}
-								title={<Title order={2}>Game Guide</Title>}
-								centered
-								overflow="inside"
-								size="xl"
-							>
-								<Suspense fallback={<Loader size='xl' />}>
-									<Guide empire={empire} />
-								</Suspense>
-							</Modal>
-							<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-								<Grid.Col span={2}>
-									<EffectIcons />
-								</Grid.Col>
-								<Grid.Col span={3}>
-									<Group spacing='xs' position='center'>
-										<Button compact variant='outline' onClick={() =>
+									<Sidebar />
+								</Navbar.Section>
+								<Navbar.Section>
+									<Button
+										onClick={() =>
 										{
-											if (setIsOpen) {
-												dispatch(setPage(null))
-												setIsOpen(false)
-											}
-											setModalOpened(true)
-										}}
-											// rightIcon={<Compass size={18} />}
-											sx={(theme) =>
+											persistor.pause();
+											persistor.flush().then(() =>
 											{
-												if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
-													return {
-														border: '1px solid #40c057',
-														boxShadow: '0 0 2px 1px #40c057',
-														color: '#40c057',
+												return persistor.purge();
+											})
+											dispatch(logout())
+										}}
+										variant='subtle'
+										color='red'
+										fullWidth
+									>
+										Logout
+									</Button>
+								</Navbar.Section>
+							</Navbar>
+						}
+						header={
+							<Header height={60} p='sm' zIndex={120}>
+								<Group position='apart' spacing={2}>
+									<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+										<Burger
+											opened={opened}
+											onClick={() => setOpened((o) => !o)}
+											size='sm'
+										/>
+									</MediaQuery>
+									<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
+										<Group align='center' spacing={4}>
+											<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
+												<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+											</MediaQuery>
+											<Title order={1} ml={0}>
+												NeoPromisance
+											</Title>
+										</Group>
+									</a>
+									<Group>
+										{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
+										<ThemeToggle />
+									</Group>
+								</Group>
+							</Header>
+						}
+					>
+						<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }}>
+							{empireStatus !== 'succeeded' ? (<Loader />) : (<>
+								<InfoBar data={empire} />
+								<Modal
+									opened={modalOpened}
+									onClose={() => setModalOpened(false)}
+									title={<Title order={2}>Game Guide</Title>}
+									centered
+									overflow="inside"
+									size="xl"
+								>
+									<Suspense fallback={<Loader size='xl' />}>
+										<Guide empire={empire} />
+									</Suspense>
+								</Modal>
+								<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
+									<Grid.Col span={2}>
+										<EffectIcons />
+									</Grid.Col>
+									<Grid.Col span={3}>
+										<Group spacing='xs' position='center'>
+											<Button compact variant='outline' onClick={() =>
+											{
+												if (setIsOpen) {
+													dispatch(setPage(null))
+													setIsOpen(false)
+												}
+												setModalOpened(true)
+											}}
+												// rightIcon={<Compass size={18} />}
+												sx={(theme) =>
+												{
+													if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
+														return {
+															border: '1px solid #40c057',
+															boxShadow: '0 0 2px 1px #40c057',
+															color: '#40c057',
+														}
 													}
 												}
-											}
-											}
-											className='sixth-step'>{pageName} Guide</Button>
-										<Tooltip label="Refresh Data" withArrow>
-											<Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} loaderPosition='center' onClick={() =>
-											{
-												// setRefreshLoading(true)
-												loadEmpireTest()
-												loadMarket()
-												dispatch(loadScores())
-												// setRefreshLoading(false)
-											}}><IconRefresh size={16} strokeWidth={2.5} /></Button>
-										</Tooltip>
-									</Group>
-								</Grid.Col>
-								<Grid.Col span={2}>
-									<Group spacing='xs' mr='sm' position='right'>
-										<BonusTurns />
-										{empire.clanId !== 0 && <Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
-											<Link to='/app/Clans'><Button size='sm' compact color=''><UsersFour size='1.2rem' /> </Button></Link>
-										</Indicator>}
-										<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
-											<Link to='/app/Mailbox'><Button size='sm' compact color=''><Envelope size='1.2rem' /> </Button></Link>
-										</Indicator>
-										<Indicator color="green" disabled={news < 1} label={news} size={20} overflowCount={50} zIndex={3}>
-											<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /></Button>
-										</Indicator>
-									</Group>
-								</Grid.Col>
-							</Grid>
-							<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
-								<EmpireNews />
-							</Drawer>
-							<TurnResultContainer empire={empire} />
-							<Outlet />
-						</>)}
-					</main>
-				</AppShell>
+												}
+												className='sixth-step'>{pageName} Guide</Button>
+											<Tooltip label="Refresh Data" withArrow>
+												<Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} loaderPosition='center' onClick={() =>
+												{
+													// setRefreshLoading(true)
+													loadEmpireTest()
+													loadMarket()
+													dispatch(loadScores())
+													// setRefreshLoading(false)
+												}}><IconRefresh size={16} strokeWidth={2.5} /></Button>
+											</Tooltip>
+										</Group>
+									</Grid.Col>
+									<Grid.Col span={2}>
+										<Group spacing='xs' mr='sm' position='right'>
+											<BonusTurns />
+											{empire.clanId !== 0 && <Indicator color="green" disabled={clanMail < 1} label={clanMail} size={20} overflowCount={50} zIndex={3}>
+												<Link to='/app/Clans'><Button size='sm' compact color=''><UsersFour size='1.2rem' /> </Button></Link>
+											</Indicator>}
+											<Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>
+												<Link to='/app/Mailbox'><Button size='sm' compact color=''><Envelope size='1.2rem' /> </Button></Link>
+											</Indicator>
+											<Indicator color="green" disabled={news < 1} label={news} size={20} overflowCount={50} zIndex={3}>
+												<Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /></Button>
+											</Indicator>
+										</Group>
+									</Grid.Col>
+								</Grid>
+								<Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
+									<EmpireNews />
+								</Drawer>
+								<TurnResultContainer empire={empire} />
+								<Outlet />
+							</>)}
+						</main>
+					</AppShell>
+				</NotificationsProvider>
 			</MantineProvider>
 		</ColorSchemeProvider>
 	)
