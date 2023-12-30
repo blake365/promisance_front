@@ -58,7 +58,7 @@ const RoundArchive = () =>
                         <Tabs defaultValue='empires'>
                             <Tabs.List grow position="center">
                                 <Tabs.Tab value='empires'>Empires</Tabs.Tab>
-                                <Tabs.Tab value='clans'>Clans</Tabs.Tab>
+                                {/* <Tabs.Tab value='clans'>Clans</Tabs.Tab> */}
                             </Tabs.List>
 
                             <Tabs.Panel value='empires'>
@@ -71,7 +71,7 @@ const RoundArchive = () =>
                                 })}
                             </Tabs.Panel>
 
-                            <Tabs.Panel value='clans'>
+                            {/* <Tabs.Panel value='clans'>
                                 {round.clanHistory.map((clan, index) =>
                                 {
                                     console.log(clan)
@@ -79,7 +79,7 @@ const RoundArchive = () =>
                                         <ClanHistoryCard clan={clan} index={index} key={clan.id} />
                                     )
                                 })}
-                            </Tabs.Panel>
+                            </Tabs.Panel> */}
                         </Tabs>
 
                     </>)
