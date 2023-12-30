@@ -88,7 +88,7 @@ function App()
 	{
 		// console.log('achievements changed')
 		// console.log(achievements)
-		// if achievements changes, check where awarded is true and if timeAwarded is within 1 minute of current time
+		// if achievements changes, check where awarded is true and if timeAwarded is within 2 seconds of current time
 		// if true, show notification
 		Object.keys(achievements).forEach((key) =>
 		{
@@ -97,7 +97,7 @@ function App()
 			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 2000 > Date.now()) {
 				console.log(key)
 				const { message, icon } = processAchievement(key)
-				console.log(message)
+				// console.log(message)
 				// console.log(icon)
 				showNotification({
 					title: 'Achievement Awarded',

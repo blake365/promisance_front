@@ -4,6 +4,7 @@ import { Scales, Sword, Shield, MagicWand, Coins, AirplaneTilt, Boat, UsersThree
 export const processAchievement = (achievement) =>
 {
 	// set achievement message and icon based on name provided to function
+	console.log(achievement)
 	const root = achievement.slice(0, -1)
 	const level = achievement.slice(-1)
 	// income
@@ -37,7 +38,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// indy production
-	if (root === 'indyPro') {
+	else if (root === 'indyPro') {
 		if (level === '0') {
 			return {
 				message: 'Industrialist 1',
@@ -67,7 +68,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// magic production
-	if (root === 'magicPro') {
+	else if (root === 'magicPro') {
 		if (level === '0') {
 			return {
 				message: 'Alchemy 1',
@@ -97,7 +98,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// expenses
-	if (root === 'expenses') {
+	else if (root === 'expenses') {
 		if (level === '0') {
 			return {
 				message: 'Big Spender 1',
@@ -127,7 +128,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// food consumption
-	if (root === 'foodcon') {
+	else if (root === 'foodcon') {
 		if (level === '0') {
 			return {
 				message: 'Foodie 1',
@@ -157,7 +158,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// food production
-	if (root === 'foodpro') {
+	else if (root === 'food') {
 		if (level === '0') {
 			return {
 				message: 'Farmer 1',
@@ -187,7 +188,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// explore
-	if (root === 'explore') {
+	else if (root === 'exploreGains') {
 		if (level === '0') {
 			return {
 				message: 'Explorer 1',
@@ -217,7 +218,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// land
-	if (root === 'land') {
+	else if (root === 'land') {
 		if (level === '0') {
 			return {
 				message: 'Expansionist 1',
@@ -247,37 +248,37 @@ export const processAchievement = (achievement) =>
 	}
 
 	// net worth
-	if (root === 'networth') {
+	else if (root === 'networth') {
 		if (level === '0') {
 			return {
-				message: 'Growth Urge 1',
+				message: 'Net Worth 1',
 				icon: <Scales />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Growth Urge 2',
+				message: 'Net Worth 2',
 				icon: <Scales />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Growth Urge 3',
+				message: 'Net Worth 3',
 				icon: <Scales />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Growth Urge 4',
+				message: 'Net Worth 4',
 				icon: <Scales />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Growth Urge 5',
+				message: 'Net Worth 5',
 				icon: <Scales />,
 			}
 		}
 	}
 
 	// peasants
-	if (root === 'peasants') {
+	else if (root === 'peasants') {
 		if (level === '0') {
 			return {
 				message: 'Populist 1',
@@ -307,7 +308,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// guerilla
-	if (root === 'trpArm') {
+	else if (root === 'trpArm') {
 		if (level === '0') {
 			return {
 				message: 'Guerilla Master 1',
@@ -337,7 +338,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// seige
-	if (root === 'trpLnd') {
+	else if (root === 'trpLnd') {
 		if (level === '0') {
 			return {
 				message: 'Siege Master 1',
@@ -367,7 +368,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// air
-	if (root === 'trpFly') {
+	else if (root === 'trpFly') {
 		if (level === '0') {
 			return {
 				message: 'Air Master 1',
@@ -397,7 +398,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// sea
-	if (root === 'trpSea') {
+	else if (root === 'trpSea') {
 		if (level === '0') {
 			return {
 				message: 'Sea Master 1',
@@ -427,7 +428,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// wizard
-	if (root === 'trpWiz') {
+	else if (root === 'trpWiz') {
 		if (level === '0') {
 			return {
 				message: 'Magic Man 1',
@@ -457,7 +458,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// attack gains
-	if (root === 'attackGains') {
+	else if (root === 'attackGains') {
 		if (level === '0') {
 			return {
 				message: 'Warlord 1',
@@ -487,7 +488,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// turns used
-	if (root === 'turns') {
+	else if (root === 'turns') {
 		if (level === '0') {
 			return {
 				message: 'Into the World',
@@ -507,7 +508,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// offensive success
-	if (root === 'attacks') {
+	else if (root === 'attacks') {
 		if (level === '0') {
 			return {
 				message: 'Tactical Edge 1',
@@ -537,7 +538,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// defensive success
-	if (root === 'defends') {
+	else if (root === 'defends') {
 		if (level === '0') {
 			return {
 				message: 'Iron Tower 1',
@@ -567,8 +568,8 @@ export const processAchievement = (achievement) =>
 	}
 
 	// rank
-	if (root === 'rank') {
-		if (level === '0') {
+	else if (root === 'rank') {
+		if (level === '1') {
 			return {
 				message: 'Top of the World',
 				icon: <Trophy />,
@@ -577,8 +578,8 @@ export const processAchievement = (achievement) =>
 	}
 
 	// build
-	if (root === 'build') {
-		if (level === '0') {
+	else if (root === 'buil') {
+		if (level === 'd') {
 			return {
 				message: 'Fully Built',
 				icon: <Hammer />,
@@ -587,12 +588,18 @@ export const processAchievement = (achievement) =>
 	}
 
 	// clan
-	if (root === 'clanId') {
-		if (level === '0') {
+	else if (root === 'joinCla') {
+		if (level === 'n') {
 			return {
 				message: 'Joined a Clan',
 				icon: <UsersFour />,
 			}
 		}
 	}
+
+	return {
+		message: root + ' ' + level,
+		icon: null,
+	}
+
 }

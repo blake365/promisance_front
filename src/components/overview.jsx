@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
-
+import Achievements from './achievements/achievements'
 import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
 import { BASE_LUCK, TURNS_PROTECTION } from '../config/config'
@@ -333,7 +333,7 @@ export default function Overview()
 				</Group>
 
 			</div>
-
+			{empire && <Achievements achievements={empire.achievements} era={empire.era} />}
 		</main >
 	)
 }
