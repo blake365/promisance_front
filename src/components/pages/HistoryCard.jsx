@@ -18,6 +18,7 @@ const HistoryCard = ({ empire }) =>
 {
     const [opened, { toggle }] = useDisclosure(false);
 
+    // console.log(empire)
     let era = eraConverter(empire.empireHistoryEra)
 
     return (
@@ -128,6 +129,36 @@ const HistoryCard = ({ empire }) =>
                             <td>Final {eraArray[era].trpwiz}</td>
                             <td align='right'>{Number(empire.finalTrpWiz).toLocaleString()}</td>
                         </tr>
+                        {Object.keys(empire).filter(key => key.includes('peak')).map((key, index) =>
+                        {
+                            let suffix = key.slice(4)
+                            // console.log(suffix)
+                            if (suffix === 'TrpWiz') {
+                                suffix = eraArray[era].trpwiz
+                            } else if (suffix === 'TrpFly') {
+                                suffix = eraArray[era].trpfly
+                            } else if (suffix === 'TrpSea') {
+                                suffix = eraArray[era].trpsea
+                            } else if (suffix === 'TrpLnd') {
+                                suffix = eraArray[era].trplnd
+                            } else if (suffix === 'TrpArm') {
+                                suffix = eraArray[era].trparm
+                            } else if (suffix === 'Food') {
+                                suffix = eraArray[era].food
+                            } else if (suffix === 'Peasants') {
+                                suffix = eraArray[era].peasants
+                            } else if (suffix === 'Runes') {
+                                suffix = eraArray[era].runes
+                            }
+
+                            return (
+                                <tr key={index}>
+                                    <td>Peak {suffix}</td>
+                                    <td align='right'>{suffix === 'Networth' || suffix === 'Cash' ? '$' : ''}{Number(empire[key]).toLocaleString()}</td>
+                                </tr>
+                            )
+                        })}
+
                     </tbody>
                 </Table>
             </Collapse>

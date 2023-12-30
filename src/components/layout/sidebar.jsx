@@ -43,8 +43,10 @@ const Sidebar = () =>
 		// 'Mage Council',
 		'Intel Center',
 		'Foreign Aid',
-
-
+	]
+	const statsLinks = [
+		// 'Advanced Stats',
+		'Achievements',
 	]
 	const managementLinks = [
 		'Empire Settings',
@@ -139,6 +141,28 @@ const Sidebar = () =>
 				})}
 				<Title order={4}>Diplomacy</Title>
 				{foreignLinks.map((link, index) =>
+				{
+					let variant = 'subtle'
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+						variant = 'filled'
+					} else if (locationString === link) {
+						variant = 'filled'
+					}
+					return (
+						<Button
+							component={Link}
+							compact
+							to={`/app/${link}`}
+							variant={variant}
+							fullWidth
+							key={index}
+						>
+							{link}
+						</Button>
+					)
+				})}
+				<Title order={4}>Advanced Stats</Title>
+				{statsLinks.map((link, index) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {

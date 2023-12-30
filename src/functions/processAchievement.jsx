@@ -4,7 +4,7 @@ import { Scales, Sword, Shield, MagicWand, Coins, AirplaneTilt, Boat, UsersThree
 export const processAchievement = (achievement) =>
 {
 	// set achievement message and icon based on name provided to function
-	console.log(achievement)
+	// console.log(achievement)
 	const root = achievement.slice(0, -1)
 	const level = achievement.slice(-1)
 	// income
@@ -38,7 +38,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// indy production
-	else if (root === 'indyPro') {
+	else if (root === 'indyProd') {
 		if (level === '0') {
 			return {
 				message: 'Industrialist 1',
@@ -68,7 +68,7 @@ export const processAchievement = (achievement) =>
 	}
 
 	// magic production
-	else if (root === 'magicPro') {
+	else if (root === 'magicProd') {
 		if (level === '0') {
 			return {
 				message: 'Alchemy 1',

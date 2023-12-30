@@ -38,6 +38,7 @@ const ClanStats = lazy(() => import('./components/diplomacy/clans/clanStats'));
 const Favorites = lazy(() => import('./components/useTurns/favorites'));
 const WorldNews = lazy(() => import('./components/news/worldNews'));
 const IntelCenter = lazy(() => import('./components/diplomacy/intelCenter'));
+const Achievements = lazy(() => import('./components/achievements/achievements'))
 
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
@@ -150,6 +151,7 @@ ReactDOM.render(
 								<Route path='Clan%20Stats' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><ClanStats /></Suspense>} />
 								<Route path='disabled' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Disabled /></Suspense>} />
 								<Route path='Lottery' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Lottery /></Suspense>} />
+								<Route path='Achievements' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Achievements /></Suspense>} />
 							</Route>
 						</Routes>
 					</BrowserRouter>

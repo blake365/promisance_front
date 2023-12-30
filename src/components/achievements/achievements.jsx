@@ -1,6 +1,7 @@
 import { Title, Notification, Group, Box } from "@mantine/core";
 import { processAchievement } from "../../functions/processAchievement"
 import { eraArray } from "../../config/eras";
+import { useSelector } from "react-redux";
 
 function categoryName(name, era)
 {
@@ -53,8 +54,13 @@ function categoryName(name, era)
     }
 }
 
-function Achievements({ achievements, era })
+function Achievements()
 {
+
+    const { empire } = useSelector((state) => state.empire)
+
+    const era = empire.era
+    const achievements = empire.achievements
     // console.log(achievements)
     let achievementArray = Object.keys(achievements).map((key) =>
     {
