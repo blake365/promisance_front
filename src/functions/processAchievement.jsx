@@ -1,5 +1,7 @@
 import { Scales, Sword, Shield, MagicWand, Coins, AirplaneTilt, Boat, UsersThree, ForkKnife, Skull, Grains, Mountains, MapTrifold, CreditCard, Trophy, Factory, Hammer, GitBranch, MedalMilitary, UsersFour, ShieldChevron } from "@phosphor-icons/react"
+import { Text } from '@mantine/core'
 
+import { achievements } from "../config/achievements"
 
 export const processAchievement = (achievement) =>
 {
@@ -11,27 +13,42 @@ export const processAchievement = (achievement) =>
 	if (root === 'income') {
 		if (level === '0') {
 			return {
-				message: 'Money Maker 1',
+				message: <div>
+					<Text>Money Maker 1</Text>
+					<Text size='sm' color="dimmed">Total Income of ${achievements[0].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Coins />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Money Maker 2',
+				message: <div>
+					<Text>Money Maker 2</Text>
+					<Text size='sm' color="dimmed">Total Income of ${achievements[0].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Coins />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Money Maker 3',
+				message: <div>
+					<Text>Money Maker 3</Text>
+					<Text size='sm' color="dimmed">Total Income of ${achievements[0].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Coins />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Money Maker 4',
+				message: <div>
+					<Text>Money Maker 4</Text>
+					<Text size='sm' color="dimmed">Total Income of ${achievements[0].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Coins />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Money Maker 5',
+				message: <div>
+					<Text>Money Maker 5</Text>
+					<Text size='sm' color="dimmed">Total Income of ${achievements[0].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Coins />,
 			}
 		}
@@ -41,27 +58,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'indyProd') {
 		if (level === '0') {
 			return {
-				message: 'Industrialist 1',
+				message: <div>
+					<Text>Industrialist 1</Text>
+					<Text size='sm' color="dimmed">Total Industrial Output of ${achievements[1].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Factory />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Industrialist 2',
+				message: <div>
+					<Text>Industrialist 2</Text>
+					<Text size='sm' color="dimmed">Total Industrial Output of ${achievements[1].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Factory />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Industrialist 3',
+				message: <div>
+					<Text>Industrialist 3</Text>
+					<Text size='sm' color="dimmed">Total Industrial Output of ${achievements[1].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Factory />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Industrialist 4',
+				message: <div>
+					<Text>Industrialist 4</Text>
+					<Text size='sm' color="dimmed">Total Industrial Output of ${achievements[1].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Factory />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Industrialist 5',
+				message: <div>
+					<Text>Industrialist 5</Text>
+					<Text size='sm' color="dimmed">Total Industrial Output of ${achievements[1].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Factory />,
 			}
 		}
@@ -71,27 +103,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'magicProd') {
 		if (level === '0') {
 			return {
-				message: 'Alchemy 1',
+				message: <div>
+					<Text>Alchemy 1</Text>
+					<Text size='sm' color="dimmed">Total Magical Output of ${achievements[2].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Alchemy 2',
+				message: <div>
+					<Text>Alchemy 2</Text>
+					<Text size='sm' color="dimmed">Total Magical Output of ${achievements[2].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Alchemy 3',
+				message: <div>
+					<Text>Alchemy 3</Text>
+					<Text size='sm' color="dimmed">Total Magical Output of ${achievements[2].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Alchemy 4',
+				message: <div>
+					<Text>Alchemy 4</Text>
+					<Text size='sm' color="dimmed">Total Magical Output of ${achievements[2].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Alchemy 5',
+				message: <div>
+					<Text>Alchemy 5</Text>
+					<Text size='sm' color="dimmed">Total Magical Output of ${achievements[2].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		}
@@ -101,27 +148,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'expenses') {
 		if (level === '0') {
 			return {
-				message: 'Big Spender 1',
+				message: <div>
+					<Text>Big Spender 1</Text>
+					<Text size='sm' color="dimmed">Total Expenses of ${achievements[3].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <CreditCard />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Big Spender 2',
+				message: <div>
+					<Text>Big Spender 2</Text>
+					<Text size='sm' color="dimmed">Total Expenses of ${achievements[3].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <CreditCard />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Big Spender 3',
+				message: <div>
+					<Text>Big Spender 3</Text>
+					<Text size='sm' color="dimmed">Total Expenses of ${achievements[3].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <CreditCard />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Big Spender 4',
+				message: <div>
+					<Text>Big Spender 4</Text>
+					<Text size='sm' color="dimmed">Total Expenses of ${achievements[3].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <CreditCard />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Big Spender 5',
+				message: <div>
+					<Text>Big Spender 5</Text>
+					<Text size='sm' color="dimmed">Total Expenses of ${achievements[3].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <CreditCard />,
 			}
 		}
@@ -131,27 +193,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'foodcon') {
 		if (level === '0') {
 			return {
-				message: 'Foodie 1',
+				message: <div>
+					<Text>Foodie 1</Text>
+					<Text size='sm' color="dimmed">Total Food Consumption of {achievements[4].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <ForkKnife />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Foodie 2',
+				message: <div>
+					<Text>Foodie 2</Text>
+					<Text size='sm' color="dimmed">Total Food Consumption of {achievements[4].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <ForkKnife />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Foodie 3',
+				message: <div>
+					<Text>Foodie 3</Text>
+					<Text size='sm' color="dimmed">Total Food Consumption of {achievements[4].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <ForkKnife />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Foodie 4',
+				message: <div>
+					<Text>Foodie 4</Text>
+					<Text size='sm' color="dimmed">Total Food Consumption of {achievements[4].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <ForkKnife />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Foodie 5',
+				message: <div>
+					<Text>Foodie 5</Text>
+					<Text size='sm' color="dimmed">Total Food Consumption of {achievements[4].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <ForkKnife />,
 			}
 		}
@@ -161,27 +238,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'food') {
 		if (level === '0') {
 			return {
-				message: 'Farmer 1',
+				message: <div>
+					<Text>Farmer 1</Text>
+					<Text size='sm' color="dimmed">Total Food Production of {achievements[5].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Grains />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Farmer 2',
+				message: <div>
+					<Text>Farmer 2</Text>
+					<Text size='sm' color="dimmed">Total Food Production of {achievements[5].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Grains />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Farmer 3',
+				message: <div>
+					<Text>Farmer 3</Text>
+					<Text size='sm' color="dimmed">Total Food Production of {achievements[5].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Grains />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Farmer 4',
+				message: <div>
+					<Text>Farmer 4</Text>
+					<Text size='sm' color="dimmed">Total Food Production of {achievements[5].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Grains />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Farmer 5',
+				message: <div>
+					<Text>Farmer 5</Text>
+					<Text size='sm' color="dimmed">Total Food Production of {achievements[5].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Grains />,
 			}
 		}
@@ -191,27 +283,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'exploreGains') {
 		if (level === '0') {
 			return {
-				message: 'Explorer 1',
+				message: <div>
+					<Text>Explorer 1</Text>
+					<Text size='sm' color="dimmed">Total Exploration Gains of {achievements[6].thresholds[4].toLocaleString()} land</Text>
+				</div>,
 				icon: <Mountains />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Explorer 2',
+				message: <div>
+					<Text>Explorer 2</Text>
+					<Text size='sm' color="dimmed">Total Exploration Gains of {achievements[6].thresholds[3].toLocaleString()} land</Text>
+				</div>,
 				icon: <Mountains />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Explorer 3',
+				message: <div>
+					<Text>Explorer 3</Text>
+					<Text size='sm' color="dimmed">Total Exploration Gains of {achievements[6].thresholds[2].toLocaleString()} land</Text>
+				</div>,
 				icon: <Mountains />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Explorer 4',
+				message: <div>
+					<Text>Explorer 4</Text>
+					<Text size='sm' color="dimmed">Total Exploration Gains of {achievements[6].thresholds[1].toLocaleString()} land</Text>
+				</div>,
 				icon: <Mountains />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Explorer 5',
+				message: <div>
+					<Text>Explorer 5</Text>
+					<Text size='sm' color="dimmed">Total Exploration Gains of {achievements[6].thresholds[0].toLocaleString()} land</Text>
+				</div>,
 				icon: <Mountains />,
 			}
 		}
@@ -221,27 +328,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'land') {
 		if (level === '0') {
 			return {
-				message: 'Expansionist 1',
+				message: <div>
+					<Text>Expansionist 1</Text>
+					<Text size='sm' color="dimmed">Total Land of {achievements[7].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <MapTrifold />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Expansionist 2',
+				message: <div>
+					<Text>Expansionist 2</Text>
+					<Text size='sm' color="dimmed">Total Land of {achievements[7].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <MapTrifold />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Expansionist 3',
+				message: <div>
+					<Text>Expansionist 3</Text>
+					<Text size='sm' color="dimmed">Total Land of {achievements[7].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <MapTrifold />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Expansionist 4',
+				message: <div>
+					<Text>Expansionist 4</Text>
+					<Text size='sm' color="dimmed">Total Land of {achievements[7].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <MapTrifold />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Expansionist 5',
+				message: <div>
+					<Text>Expansionist 5</Text>
+					<Text size='sm' color="dimmed">Total Land of {achievements[7].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <MapTrifold />,
 			}
 		}
@@ -251,27 +373,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'networth') {
 		if (level === '0') {
 			return {
-				message: 'Net Worth 1',
+				message: <div>
+					<Text>Net Worth 1</Text>
+					<Text size='sm' color="dimmed">Reach Net Worth of ${achievements[8].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Scales />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Net Worth 2',
+				message: <div>
+					<Text>Net Worth 2</Text>
+					<Text size='sm' color="dimmed">Reach Net Worth of ${achievements[8].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Scales />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Net Worth 3',
+				message: <div>
+					<Text>Net Worth 3</Text>
+					<Text size='sm' color="dimmed">Reach Net Worth of ${achievements[8].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Scales />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Net Worth 4',
+				message: <div>
+					<Text>Net Worth 4</Text>
+					<Text size='sm' color="dimmed">Reach Net Worth of ${achievements[8].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Scales />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Net Worth 5',
+				message: <div>
+					<Text>Net Worth 5</Text>
+					<Text size='sm' color="dimmed">Reach Net Worth of ${achievements[8].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Scales />,
 			}
 		}
@@ -281,27 +418,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'peasants') {
 		if (level === '0') {
 			return {
-				message: 'Populist 1',
+				message: <div>
+					<Text>Populist 1</Text>
+					<Text size='sm' color="dimmed">Total Population of {achievements[9].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <UsersThree />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Populist 2',
+				message: <div>
+					<Text>Populist 2</Text>
+					<Text size='sm' color="dimmed">Total Population of {achievements[9].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <UsersThree />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Populist 3',
+				message: <div>
+					<Text>Populist 3</Text>
+					<Text size='sm' color="dimmed">Total Population of {achievements[9].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <UsersThree />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Populist 4',
+				message: <div>
+					<Text>Populist 4</Text>
+					<Text size='sm' color="dimmed">Total Population of {achievements[9].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <UsersThree />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Populist 5',
+				message: <div>
+					<Text>Populist 5</Text>
+					<Text size='sm' color="dimmed">Total Population of {achievements[9].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <UsersThree />,
 			}
 		}
@@ -311,27 +463,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'trpArm') {
 		if (level === '0') {
 			return {
-				message: 'Guerilla Master 1',
+				message: <div>
+					<Text>Guerilla Master 1</Text>
+					<Text size='sm' color="dimmed">Total Guerilla Units of {achievements[10].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Sword />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Guerilla Master 2',
+				message: <div>
+					<Text>Guerilla Master 2</Text>
+					<Text size='sm' color="dimmed">Total Guerilla Units of {achievements[10].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Sword />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Guerilla Master 3',
+				message: <div>
+					<Text>Guerilla Master 3</Text>
+					<Text size='sm' color="dimmed">Total Guerilla Units of {achievements[10].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Sword />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Guerilla Master 4',
+				message: <div>
+					<Text>Guerilla Master 4</Text>
+					<Text size='sm' color="dimmed">Total Guerilla Units of {achievements[10].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Sword />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Guerilla Master 5',
+				message: <div>
+					<Text>Guerilla Master 5</Text>
+					<Text size='sm' color="dimmed">Total Guerilla Units of {achievements[10].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Sword />,
 			}
 		}
@@ -341,27 +508,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'trpLnd') {
 		if (level === '0') {
 			return {
-				message: 'Siege Master 1',
+				message: <div>
+					<Text>Siege Master 1</Text>
+					<Text size='sm' color="dimmed">Total Siege Units of {achievements[11].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <ShieldChevron />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Siege Master 2',
+				message: <div>
+					<Text>Siege Master 2</Text>
+					<Text size='sm' color="dimmed">Total Siege Units of {achievements[11].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <ShieldChevron />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Siege Master 3',
+				message: <div>
+					<Text>Siege Master 3</Text>
+					<Text size='sm' color="dimmed">Total Siege Units of {achievements[11].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <ShieldChevron />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Siege Master 4',
+				message: <div>
+					<Text>Siege Master 4</Text>
+					<Text size='sm' color="dimmed">Total Siege Units of {achievements[11].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <ShieldChevron />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Siege Master 5',
+				message: <div>
+					<Text>Siege Master 5</Text>
+					<Text size='sm' color="dimmed">Total Siege Units of {achievements[11].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <ShieldChevron />,
 			}
 		}
@@ -371,27 +553,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'trpFly') {
 		if (level === '0') {
 			return {
-				message: 'Air Master 1',
+				message: <div>
+					<Text>Air Master 1</Text>
+					<Text size='sm' color="dimmed">Total Air Strike Units of {achievements[12].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <AirplaneTilt />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Air Master 2',
+				message: <div>
+					<Text>Air Master 2</Text>
+					<Text size='sm' color="dimmed">Total Air Strike Units of {achievements[12].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <AirplaneTilt />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Air Master 3',
+				message: <div>
+					<Text>Air Master 3</Text>
+					<Text size='sm' color="dimmed">Total Air Strike Units of {achievements[12].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <AirplaneTilt />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Air Master 4',
+				message: <div>
+					<Text>Air Master 4</Text>
+					<Text size='sm' color="dimmed">Total Air Strike Units of {achievements[12].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <AirplaneTilt />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Air Master 5',
+				message: <div>
+					<Text>Air Master 5</Text>
+					<Text size='sm' color="dimmed">Total Air Strike Units of {achievements[12].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <AirplaneTilt />,
 			}
 		}
@@ -401,27 +598,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'trpSea') {
 		if (level === '0') {
 			return {
-				message: 'Sea Master 1',
+				message: <div>
+					<Text>Sea Master 1</Text>
+					<Text size='sm' color="dimmed">Total Coastal Assault Units of {achievements[13].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <Boat />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Sea Master 2',
+				message: <div>
+					<Text>Sea Master 2</Text>
+					<Text size='sm' color="dimmed">Total Coastal Assault Units of {achievements[13].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <Boat />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Sea Master 3',
+				message: <div>
+					<Text>Sea Master 3</Text>
+					<Text size='sm' color="dimmed">Total Coastal Assault Units of {achievements[13].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <Boat />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Sea Master 4',
+				message: <div>
+					<Text>Sea Master 4</Text>
+					<Text size='sm' color="dimmed">Total Coastal Assault Units of {achievements[13].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <Boat />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Sea Master 5',
+				message: <div>
+					<Text>Sea Master 5</Text>
+					<Text size='sm' color="dimmed">Total Coastal Assault Units of {achievements[13].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <Boat />,
 			}
 		}
@@ -431,27 +643,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'trpWiz') {
 		if (level === '0') {
 			return {
-				message: 'Magic Man 1',
+				message: <div>
+					<Text>Magic Men 1</Text>
+					<Text size='sm' color="dimmed">Total Magic Units of {achievements[14].thresholds[4].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Magic Man 2',
+				message: <div>
+					<Text>Magic Men 2</Text>
+					<Text size='sm' color="dimmed">Total Magic Units of {achievements[14].thresholds[3].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Magic Man 3',
+				message: <div>
+					<Text>Magic Men 3</Text>
+					<Text size='sm' color="dimmed">Total Magic Units of {achievements[14].thresholds[2].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Magic Man 4',
+				message: <div>
+					<Text>Magic Men 4</Text>
+					<Text size='sm' color="dimmed">Total Magic Units of {achievements[14].thresholds[1].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Magic Man 5',
+				message: <div>
+					<Text>Magic Men 5</Text>
+					<Text size='sm' color="dimmed">Total Magic Units of {achievements[14].thresholds[0].toLocaleString()}</Text>
+				</div>,
 				icon: <MagicWand />,
 			}
 		}
@@ -461,27 +688,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'attackGains') {
 		if (level === '0') {
 			return {
-				message: 'Warlord 1',
+				message: <div>
+					<Text>Conqueror 1</Text>
+					<Text size='sm' color="dimmed">Total Attack Gains of {achievements[15].thresholds[4].toLocaleString()} land</Text>
+				</div>,
 				icon: <Skull />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Warlord 2',
+				message: <div>
+					<Text>Conqueror 2</Text>
+					<Text size='sm' color="dimmed">Total Attack Gains of {achievements[15].thresholds[3].toLocaleString()} land</Text>
+				</div>,
 				icon: <Skull />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Warlord 3',
+				message: <div>
+					<Text>Conqueror 3</Text>
+					<Text size='sm' color="dimmed">Total Attack Gains of {achievements[15].thresholds[2].toLocaleString()} land</Text>
+				</div>,
 				icon: <Skull />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Warlord 4',
+				message: <div>
+					<Text>Conqueror 4</Text>
+					<Text size='sm' color="dimmed">Total Attack Gains of {achievements[15].thresholds[1].toLocaleString()} land</Text>
+				</div>,
 				icon: <Skull />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Warlord 5',
+				message: <div>
+					<Text>Conqueror 5</Text>
+					<Text size='sm' color="dimmed">Total Attack Gains of {achievements[15].thresholds[0].toLocaleString()} land</Text>
+				</div>,
 				icon: <Skull />,
 			}
 		}
@@ -491,17 +733,26 @@ export const processAchievement = (achievement) =>
 	else if (root === 'turns') {
 		if (level === '0') {
 			return {
-				message: 'Into the World',
+				message: <div>
+					<Text>Into The World</Text>
+					<Text size='sm' color="dimmed">Exited New Player Protection</Text>
+				</div>,
 				icon: <GitBranch />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Sticking Around',
+				message: <div>
+					<Text>Sticking With It</Text>
+					<Text size='sm' color="dimmed">Used 1,000 Turns</Text>
+				</div>,
 				icon: <GitBranch />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Committed',
+				message: <div>
+					<Text>Committed</Text>
+					<Text size='sm' color="dimmed">Used 2,600 Turns</Text>
+				</div>,
 				icon: <GitBranch />,
 			}
 		}
@@ -511,27 +762,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'attacks') {
 		if (level === '0') {
 			return {
-				message: 'Tactical Edge 1',
+				message: <div>
+					<Text>Tactical Edge 1</Text>
+					<Text size='sm' color="dimmed">{achievements[17].thresholds[4].toLocaleString()} Successful Attacks</Text>
+				</div>,
 				icon: <MedalMilitary />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Tactical Edge 2',
+				message: <div>
+					<Text>Tactical Edge 2</Text>
+					<Text size='sm' color="dimmed">{achievements[17].thresholds[3].toLocaleString()} Successful Attacks</Text>
+				</div>,
 				icon: <MedalMilitary />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Tactical Edge 3',
+				message: <div>
+					<Text>Tactical Edge 3</Text>
+					<Text size='sm' color="dimmed">{achievements[17].thresholds[2].toLocaleString()} Successful Attacks</Text>
+				</div>,
 				icon: <MedalMilitary />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Tactical Edge 4',
+				message: <div>
+					<Text>Tactical Edge 4</Text>
+					<Text size='sm' color="dimmed">{achievements[17].thresholds[1].toLocaleString()} Successful Attacks</Text>
+				</div>,
 				icon: <MedalMilitary />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Tactical Edge 5',
+				message: <div>
+					<Text>Tactical Edge 5</Text>
+					<Text size='sm' color="dimmed">{achievements[17].thresholds[0].toLocaleString()} Successful Attacks</Text>
+				</div>,
 				icon: <MedalMilitary />,
 			}
 		}
@@ -541,27 +807,42 @@ export const processAchievement = (achievement) =>
 	else if (root === 'defends') {
 		if (level === '0') {
 			return {
-				message: 'Iron Tower 1',
+				message: <div>
+					<Text>Iron Wall 1</Text>
+					<Text size='sm' color="dimmed">{achievements[18].thresholds[4].toLocaleString()} Successful Defenses</Text>
+				</div>,
 				icon: <Shield />,
 			}
 		} else if (level === '1') {
 			return {
-				message: 'Iron Tower 2',
+				message: <div>
+					<Text>Iron Wall 2</Text>
+					<Text size='sm' color="dimmed">{achievements[18].thresholds[3].toLocaleString()} Successful Defenses</Text>
+				</div>,
 				icon: <Shield />,
 			}
 		} else if (level === '2') {
 			return {
-				message: 'Iron Tower 3',
+				message: <div>
+					<Text>Iron Wall 3</Text>
+					<Text size='sm' color="dimmed">{achievements[18].thresholds[2].toLocaleString()} Successful Defenses</Text>
+				</div>,
 				icon: <Shield />,
 			}
 		} else if (level === '3') {
 			return {
-				message: 'Iron Tower 4',
+				message: <div>
+					<Text>Iron Wall 4</Text>
+					<Text size='sm' color="dimmed">{achievements[18].thresholds[1].toLocaleString()} Successful Defenses</Text>
+				</div>,
 				icon: <Shield />,
 			}
 		} else if (level === '4') {
 			return {
-				message: 'Iron Tower 5',
+				message: <div>
+					<Text>Iron Wall 5</Text>
+					<Text size='sm' color="dimmed">{achievements[18].thresholds[0].toLocaleString()} Successful Defenses</Text>
+				</div>,
 				icon: <Shield />,
 			}
 		}
@@ -571,7 +852,10 @@ export const processAchievement = (achievement) =>
 	else if (root === 'rank') {
 		if (level === '1') {
 			return {
-				message: 'Top of the World',
+				message: <div>
+					<Text>Top of the World</Text>
+					<Text size='sm' color="dimmed">Take the number 1 rank</Text>
+				</div>,
 				icon: <Trophy />,
 			}
 		}
@@ -581,7 +865,10 @@ export const processAchievement = (achievement) =>
 	else if (root === 'buil') {
 		if (level === 'd') {
 			return {
-				message: 'Fully Built',
+				message: <div>
+					<Text>Fully Built</Text>
+					<Text size='sm' color="dimmed">Build on all available land</Text>
+				</div>,
 				icon: <Hammer />,
 			}
 		}
@@ -591,7 +878,10 @@ export const processAchievement = (achievement) =>
 	else if (root === 'joinCla') {
 		if (level === 'n') {
 			return {
-				message: 'Joined a Clan',
+				message: <div>
+					<Text>Join a Clan</Text>
+					<Text size='sm' color="dimmed">Join or create a clan</Text>
+				</div>,
 				icon: <UsersFour />,
 			}
 		}

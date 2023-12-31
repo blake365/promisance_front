@@ -77,7 +77,7 @@ export default function Summary()
 	if (upcoming > 0) {
 		roundStatus = `Round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days, ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((upcoming % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
 	} else if (remaining < 0) {
-		roundStatus = 'The round has ended, thanks for playing!'
+		roundStatus = 'The round has ended, thanks for playing! A new round will start soon.'
 	} else {
 		roundStatus = `Round will end in ${Math.floor(remaining / (1000 * 60 * 60 * 24))} days, ${Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
 	}

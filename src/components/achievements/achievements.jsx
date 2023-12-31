@@ -82,7 +82,7 @@ function Achievements()
             <Title order={1} align='center' mb='sm'>Achievements</Title>
 
             <Group position='center'>
-                {categories.map((category) =>
+                {categories.map((category, index) =>
                 {
                     // console.log(category)
                     let categoryArray = []
@@ -108,8 +108,9 @@ function Achievements()
                                         disallowClose
                                         shadow={0}
                                         radius={0}
+                                        h={87}
                                     >
-                                        {achievement.awarded ? 'Awarded on ' + new Date(achievement.time).toLocaleDateString() : '...'}
+                                        {achievement.awarded ? 'Awarded on ' + new Date(achievement.time).toLocaleDateString() : ''}
                                     </Notification>
                                 </div>
                             )
@@ -117,7 +118,7 @@ function Achievements()
 
                     })
                     return (
-                        <Box h={375} w={400}>
+                        <Box h={466} w={400} key={index} mt='sm'>
                             <Title order={3} align='center' mb='sm'>{categoryName(category, era)}</Title>
                             {categoryAchievements}
                         </Box>

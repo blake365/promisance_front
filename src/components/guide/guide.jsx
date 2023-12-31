@@ -36,6 +36,7 @@ import IndyGuide from "./guidepages/indy";
 import MageGuide from "./guidepages/mage";
 import LotteryGuide from "./guidepages/lottery";
 import NewTipsGuide from "./guidepages/newPlayer";
+import AchievementsGuide from "./guidepages/achievements";
 
 export default function Guide(props)
 {
@@ -118,6 +119,8 @@ export default function Guide(props)
             return <LotteryGuide />
         case 'New%20Player':
             return <NewTipsGuide empire={props.empire} />
+        case 'Achievements':
+            return <AchievementsGuide />
         default:
             return <GuideIndex />
     }
