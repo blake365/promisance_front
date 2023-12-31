@@ -45,7 +45,7 @@ const Sidebar = () =>
 		'Foreign Aid',
 	]
 	const statsLinks = [
-		// 'Advanced Stats',
+		'Charts',
 		'Achievements',
 	]
 	const managementLinks = [
@@ -161,7 +161,7 @@ const Sidebar = () =>
 						</Button>
 					)
 				})}
-				<Title order={4}>Advanced Stats</Title>
+				<Title order={4}>Additional Stats</Title>
 				{statsLinks.map((link, index) =>
 				{
 					let variant = 'subtle'
