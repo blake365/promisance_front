@@ -1,4 +1,4 @@
-import { Container, Title, Loader, Text, Card, Tabs } from '@mantine/core'
+import { Container, Title, Loader, Text, Stack, Tabs } from '@mantine/core'
 import FooterSocial from '../layout/footer'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
@@ -40,7 +40,7 @@ const RoundArchive = () =>
 
     }, [])
 
-    // console.log(round)
+    console.log(round)
 
     return (
         <div>
@@ -62,17 +62,23 @@ const RoundArchive = () =>
                             </Tabs.List>
 
                             <Tabs.Panel value='empires'>
-                                {round.empireHistory.map((empire) =>
-                                {
-                                    // console.log(empire)
-                                    return (
-                                        <HistoryCard empire={empire} key={empire.id} />
-                                    )
-                                })}
+                                <Stack spacing='xs' align='center' mt='sm'>
+                                    {round.empireHistory.map((empire) =>
+                                    {
+                                        // console.log(empire)
+
+                                        return (
+                                            <HistoryCard empire={empire} key={empire.id} />
+                                        )
+
+                                    })}
+                                </Stack>
                             </Tabs.Panel>
 
                             <Tabs.Panel value='clans'>
-                                {round.clanHistory.map((clan, index) =>
+                                {round.clanHistory.sort(
+                                    (a, b) => (Number(a.clanHistoryTotalNet) > Number(b.clanHistoryTotalNet)) ? -1 : 1
+                                ).map((clan, index) =>
                                 {
                                     // console.log(clan)
                                     return (

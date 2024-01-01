@@ -22,7 +22,7 @@ const HistoryCard = ({ empire }) =>
     let era = eraConverter(empire.empireHistoryEra)
 
     return (
-        <Card shadow="sm" radius="sm" sx={{ width: '100%', maxWidth: 600 }} key={empire.id} withBorder my='sm'>
+        <Card shadow="sm" radius="sm" sx={{ width: '100%', maxWidth: 600 }} key={empire.id} withBorder>
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
             <Card.Section onClick={toggle} sx={{ cursor: 'pointer' }} inheritPadding>
