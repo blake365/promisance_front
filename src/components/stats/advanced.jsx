@@ -13,7 +13,7 @@ import
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { Button, Container, Title, Text } from '@mantine/core';
+import { Button, Title, Text } from '@mantine/core';
 import { eraArray } from '../../config/eras';
 import { TURNS_PROTECTION } from '../../config/config';
 
@@ -146,7 +146,6 @@ function AdvancedStats()
         return array.map((item) => new Date(item.createdAt).toLocaleString());
     }
 
-    let food = []
     let labels = []
 
     useEffect(() =>
@@ -175,9 +174,9 @@ function AdvancedStats()
     // console.log(data)
 
     return (
-        <Container>
+        <>
             <Title align='center'>Stat Charts</Title>
-            <Text align='center' mb='sm'>Stats are collected every 4 hours for empires who have used greater than {TURNS_PROTECTION} turns. </Text>
+            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected every 4 hours for empires who have used greater than {TURNS_PROTECTION} turns. </Text >)}
             <Line
                 options={options}
                 data={data}
@@ -201,7 +200,7 @@ function AdvancedStats()
                     </Button>
                 )
             })}
-        </Container>
+        </>
     );
 }
 

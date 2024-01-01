@@ -1,13 +1,13 @@
 import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor, Loader } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useEffect } from 'react'
 
 const HomeNews = lazy(() => import('../layout/homeNews'));
 const HomeScores = lazy(() => import('../layout/homeScores'));
 import FooterSocial from '../layout/footer'
 import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
@@ -20,8 +20,22 @@ export default function Home()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-
     dispatch(getTime())
+
+    const now = new Date().getTime()
+
+    let roundStatus = false
+    let upcoming = new Date(ROUND_START).getTime() - now
+    let remaining = new Date(ROUND_END).getTime() - now
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
+    }
+
     onLCP(console.log)
 
 
@@ -36,6 +50,7 @@ export default function Home()
             setError(err)
         })
     }
+
 
     return (
         <main style={{ backgroundColor: '#F1F3F5' }}>
@@ -72,7 +87,8 @@ export default function Home()
                                 </Card>
                                 <Card maw={380} h={220} p='lg' withBorder shadow='sm'>
                                     <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
-                                    <Button size='md' sx={{ marginTop: 10 }} component='a' onClick={demoRegister}>Demo Account</Button>
+                                    <Button size='md' sx={{ marginTop: 10 }} disabled={roundStatus} component='a' onClick={demoRegister}>Demo Account</Button>
+                                    {roundStatus ? (<Text color='red' align='center' size='sm'>Demo accounts are only available when the round is active.</Text>) : ('')}
                                     <Text color='red' align='center' size='sm'>{error && error.error}</Text>
                                 </Card>
                             </Flex>
@@ -124,15 +140,7 @@ export default function Home()
                                     </Card.Section>
                                 </Card>
                             </Grid.Col>
-                            {/* <Grid.Col sm={6} xs={12}>
-                            
-
-                        </Grid.Col>
-                        <Grid.Col sm={6} xs={12}>
-                            
-                        </Grid.Col> */}
                         </Grid>
-
                     </Grid.Col>
                 </Grid>
 
@@ -150,7 +158,8 @@ export default function Home()
                         </Card>
                         <Card maw={380} h={220} p='lg' withBorder >
                             <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
-                            <Button size='md' sx={{ marginTop: 10 }} component='a' onClick={demoRegister}>Demo Account</Button>
+                            <Button size='md' sx={{ marginTop: 10 }} disabled={roundStatus} component='a' onClick={demoRegister}>Demo Account</Button>
+                            {roundStatus ? (<Text color='red' align='center' size='sm'>Demo accounts are only available when the round is active.</Text>) : ('')}
                             <Text color='red' align='center' size='sm'>{error && error.error}</Text>
                         </Card>
                     </Flex>
@@ -159,14 +168,6 @@ export default function Home()
                     <Title order={1} align='center' mb='lg'>Current Game Info</Title>
                     <Card withBorder >
                         <Grid justify="space-between" grow columns={15}>
-                            {/* <Grid.Col span={3}>
-                                <Center h={50} >
-                                    <Text weight='bold' align='center' >
-                                        Total Players
-                                    </Text>
-                                </Center>
-                                <Text></Text>
-                            </Grid.Col> */}
                             <Grid.Col span={3}>
                                 <Center h={30} miw={100} >
                                     <Text weight='bold' align='center' >

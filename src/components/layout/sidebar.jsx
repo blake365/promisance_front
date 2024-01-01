@@ -16,9 +16,6 @@ const Sidebar = () =>
 		'Clan Stats',
 		'Mailbox',
 		'World News',
-		// 'Graveyard',
-		// 'Empire Search',
-		// 'Discord',
 	]
 	const turnLinks = [
 		'Favorites',
@@ -40,25 +37,20 @@ const Sidebar = () =>
 	const foreignLinks = [
 		'Clans',
 		'War Council',
-		// 'Mage Council',
 		'Intel Center',
 		'Foreign Aid',
 	]
 	const statsLinks = [
-		'Charts',
 		'Achievements',
+		'Charts',
 	]
 	const managementLinks = [
 		'Empire Settings',
 	]
 
-
 	let location = useLocation()
-
 	// console.log(location.pathname.split('/app/')[1])
-
 	let locationString = location.pathname.split('/app/')[1]
-
 	// console.log(locationString.split('%').length > 1)
 
 	return (
@@ -73,7 +65,6 @@ const Sidebar = () =>
 					} else if (locationString === link) {
 						variant = 'filled'
 					}
-
 					return (
 						<Button
 							component={Link}
@@ -205,6 +196,15 @@ const Sidebar = () =>
 						</Button>
 					)
 				})}
+				<Button
+					component={'a'}
+					compact
+					href={`https://www.buymeacoffee.com/blakemorgan`}
+					fullWidth
+					variant='subtle'
+					target='_blank'
+					rightIcon={<ArrowSquareOut />}
+				>Support Dev</Button>
 			</Stack>
 		</Fragment>
 	)

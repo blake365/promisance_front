@@ -19,7 +19,7 @@ const ClanHistoryCard = ({ clan, index }) =>
         async function fetchMembers()
         {
             const members = await Axios.get(`/archives/empires/${clan.clan_id}`)
-            console.log(members.data)
+            // console.log(members.data)
             return members.data
         }
 
@@ -61,7 +61,7 @@ const ClanHistoryCard = ({ clan, index }) =>
                         </Group>
                         <Group ml='sm' noWrap spacing='xs'>
                             <Crown size={22} weight='fill' />
-                            <Text>{leader.empireHistoryName}</Text>
+                            <Text>{leader && leader.empireHistoryName}</Text>
                         </Group>
                     </Group>
                     <Group spacing='lg'>

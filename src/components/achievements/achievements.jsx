@@ -81,7 +81,7 @@ function Achievements()
         <div>
             <Title order={1} align='center' mb='sm'>Achievements</Title>
 
-            <Group position='center'>
+            <Group position='center' sx={{ display: 'flex', alignItems: 'flex-start' }}>
                 {categories.map((category, index) =>
                 {
                     // console.log(category)
@@ -104,7 +104,6 @@ function Achievements()
                                         title={message}
                                         color={achievement.awarded ? 'blue' : 'gray'}
                                         icon={icon}
-                                        withCloseButton={false}
                                         disallowClose
                                         shadow={0}
                                         radius={0}
@@ -118,7 +117,7 @@ function Achievements()
 
                     })
                     return (
-                        <Box h={466} w={400} key={index} mt='sm'>
+                        <Box w={400} key={index} mt='sm'>
                             <Title order={3} align='center' mb='sm'>{categoryName(category, era)}</Title>
                             {categoryAchievements}
                         </Box>

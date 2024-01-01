@@ -14,12 +14,14 @@ import
 const App = lazy(() => import('./App'))
 
 import Summary from './components/summary'
+import Explore from './components/useTurns/explore'
+import Build from './components/useTurns/build'
 const Overview = lazy(() => import('./components/overview'));
 const Farm = lazy(() => import('./components/useTurns/farm'));
 const Cash = lazy(() => import('./components/useTurns/cash'));
-const Explore = lazy(() => import('./components/useTurns/explore'));
+// const Explore = lazy(() => import('./components/useTurns/explore'));
 const Industry = lazy(() => import('./components/useTurns/industry'));
-const Build = lazy(() => import('./components/useTurns/build'));
+// const Build = lazy(() => import('./components/useTurns/build'));
 const Meditate = lazy(() => import('./components/useTurns/meditate'));
 const ManageEmpire = lazy(() => import('./components/manageEmpire'));
 const PrivateMarket = lazy(() => import('./components/markets/PrivateMarket'));
@@ -132,10 +134,10 @@ ReactDOM.render(
 								<Route path='favorites' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Favorites /></Suspense>} />
 								<Route path='farm' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Farm /></Suspense>} />
 								<Route path='cash' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Cash /></Suspense>} />
-								<Route path='explore' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Explore /></Suspense>} />
+								<Route path='explore' element={<Explore />} />
 								<Route path='meditate' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Meditate /></Suspense>} />
 								<Route path='industry' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Industry /></Suspense>} />
-								<Route path='build' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Build /></Suspense>} />
+								<Route path='build' element={<Build />} />
 								<Route path='demolish' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Demolish /></Suspense>} />
 								<Route path='Heal' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Heal /></Suspense>} />
 								<Route path='Black%20Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><PrivateMarket /></Suspense>} />

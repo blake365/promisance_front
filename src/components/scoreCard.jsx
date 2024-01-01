@@ -2,14 +2,14 @@ import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, The
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { Mountains, Scales, Hourglass, Sword } from "@phosphor-icons/react"
-import ScoresAttack from './diplomacy/scoresAttack'
-import ScoresSpell from './diplomacy/scoresSpell'
-import ScoresNews from './news/scoresNews'
-import ScoresIntel from './diplomacy/scoresIntel'
-import { useEffect, useState } from 'react'
+import { Mountains, Scales, Hourglass, Sword, Shield } from "@phosphor-icons/react"
+import { useEffect, useState, lazy, Suspense } from 'react'
+const ScoresAttack = lazy(() => import('./diplomacy/scoresAttack'));
+const ScoresSpell = lazy(() => import('./diplomacy/scoresSpell'));
+const ScoresNews = lazy(() => import('./news/scoresNews'));
+const ScoresIntel = lazy(() => import('./diplomacy/scoresIntel'));
+const ScoresAid = lazy(() => import('./diplomacy/scoresAid'));
 import Axios from 'axios'
-import ScoresAid from './diplomacy/scoresAid'
 import { TURNS_PROTECTION } from '../config/config'
 import { useSelector } from 'react-redux'
 
@@ -148,58 +148,69 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
-                        <Group ml='xs' spacing='xs' noWrap >
+                        <Group ml='xs' spacing='xs' noWrap>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100} %</Text>
                         </Group>
-
                     </Group>
                 </Group>
             </Card.Section>
 
             {!home &&
                 <Collapse in={opened}>
-                    <Text size='sm'>Last Action: {actionDate.toLocaleString()}</Text>
+                    <Group>
+                        <Text size='sm'>Last Action: {actionDate.toLocaleString()} </Text>
+                        <Group ml='xs' spacing='xs' noWrap>
+                            <Sword size={22} weight='regular' />
+                            <Text>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>
+                        </Group>
+                        <Group ml='xs' spacing='xs' noWrap>
+                            <Shield size={22} weight='regular' />
+                            <Text>{empire.defTotal} ({empire.defSucc ? Math.round(empire.defSucc / empire.defTotal * 100) : ('0')}%)</Text>
+                        </Group>
+                    </Group>
                     <Text>{empire.profile}</Text>
-                    <Tabs defaultValue="" keepMounted={false}>
-                        <Tabs.List>
-                            {/* <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab> */}
-                            <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
-                            <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
-                            <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
-                            <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
-                            {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
-                            <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
-                        </Tabs.List>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Tabs defaultValue="" keepMounted={false}>
+                            <Tabs.List>
+                                {/* <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab> */}
+                                <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
+                                <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
+                                <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
+                                <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
+                                {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
+                                <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
+                            </Tabs.List>
 
-                        <Tabs.Panel value="Send Message" pt="xs">
-                            Send Message tab content
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Send Message" pt="xs">
+                                Send Message tab content
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Attack" pt="xs">
-                            <ScoresAttack enemy={empire} />
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Attack" pt="xs">
+                                <ScoresAttack enemy={empire} />
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Cast Spell" pt="xs">
-                            <ScoresSpell enemy={empire} />
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Cast Spell" pt="xs">
+                                <ScoresSpell enemy={empire} />
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Intel" pt="xs">
-                            <ScoresIntel enemy={empire} />
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Intel" pt="xs">
+                                <ScoresIntel enemy={empire} />
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Trade" pt="xs">
-                            Trade tab content
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Trade" pt="xs">
+                                Trade tab content
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Send Aid" pt="xs">
-                            <ScoresAid friend={empire} />
-                        </Tabs.Panel>
+                            <Tabs.Panel value="Send Aid" pt="xs">
+                                <ScoresAid friend={empire} />
+                            </Tabs.Panel>
 
-                        <Tabs.Panel value="Recent News" pt="xs">
-                            <ScoresNews enemy={empire} />
-                        </Tabs.Panel>
-                    </Tabs>
+                            <Tabs.Panel value="Recent News" pt="xs">
+                                <ScoresNews enemy={empire} />
+                            </Tabs.Panel>
+                        </Tabs>
+                    </Suspense>
                 </Collapse>
             }
             <Card.Section sx={{ height: '2px' }}>

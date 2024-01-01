@@ -1,4 +1,4 @@
-import { Stack, Title, Loader } from '@mantine/core'
+import { Stack, Title, Loader, Text } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadScores } from '../store/scoresSlice'
@@ -7,18 +7,8 @@ import ScoreCard from './scoreCard'
 
 export default function Scores()
 {
-
     const dispatch = useDispatch()
-
-    // get scores
-    // scores is a list of empires ordered by networth, highest to lowest
-
-    // design empire card
-    // add actions to card
-    // add online indicator
-
     const [loading, setLoading] = useState(false)
-
     const { empire } = useSelector((state) => state.empire)
 
     let myEmpire = empire
@@ -33,14 +23,15 @@ export default function Scores()
         setLoading(false)
     }, [])
 
-    // console.log(scores[0])
+    // console.log(scores.length)
 
     return (
         <main>
-            <Stack spacing='sm' align='center'>
+            <Stack spacing='xs' align='center'>
                 <Title order={1} align='center'>
                     Scores
                 </Title>
+                <Text size='sm'>Ranks are updated every 10 minutes.</Text>
                 {loading ? <Loader /> : (scores.map(empire =>
                 {
                     // console.log(empire.clanReturn)
