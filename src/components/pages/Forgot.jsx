@@ -3,18 +3,17 @@ import
     Paper,
     createStyles,
     TextInput,
-    PasswordInput,
     Button,
     Title,
     Text,
     Anchor
 } from '@mantine/core';
 import { useForm } from '@mantine/form'
-import { login } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 let bg = '/images/login.webp'
 
@@ -42,11 +41,13 @@ const useStyles = createStyles(() => ({
 }));
 
 
-export default function NewLogin()
+export default function Forgot()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
+    const [message, setMessage] = useState(null)
+    const [disabled, setDisabled] = useState(false)
 
     const navigate = useNavigate()
 
@@ -66,49 +67,53 @@ export default function NewLogin()
 
     const form = useForm({
         initialValues: {
-            username: '',
-            password: '',
+            email: '',
         },
     })
+
+    const submitReset = async (values) =>
+    {
+        const res = await Axios.post('/auth/forgot-password', values)
+        console.log(res)
+        if (res.data.message) {
+            setMessage(res.data.message)
+            setDisabled(true)
+        } else if (res.data.error) {
+            setError(res.data.error)
+        }
+    }
 
     const { classes } = useStyles();
     return (
         <div className={classes.wrapper}>
             <Paper className={classes.form} radius={0} >
-                <Title order={2} ta="center" mt={90} mb={50}>
-                    Welcome back to NeoPromisance!
+                <Title order={2} ta="center" mt={90} mb={10}>
+                    Forgot Your Password?
                 </Title>
+                <Text ta="center" mb={50}>
+                    Enter your email below.
+                </Text>
                 <form onSubmit={form.onSubmit((values) =>
-                    dispatch(login(values))
-                        .unwrap()
-                        .then(() => navigate('/app'))
-                        .catch((error) =>
-                        {
-                            console.log(error)
-                            setError(error)
-                        })
+                {
+                    console.log(values)
+                    submitReset(values)
+                }
                 )
                 }>
-                    <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
-                    <Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
-                    <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
-                    <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-                    <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
-                        Login
+                    <TextInput required label="Email" placeholder="" size="md" {...form.getInputProps('email')} />
+                    <Text color='red' align='center' mt='md'>{error && error}</Text>
+                    <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
+                        Request Password Reset
                     </Button>
-                    <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
-
+                    <Text color='green' weight='bold' align='center' mt='md'>{message && message}</Text>
                 </form>
                 <Text ta="center" mt="md">
                     Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
-                </Text>
-                <Text ta="center">
-                    <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
                 </Text>
                 <Text ta="center" mt="md">
                     <Anchor component={Link} to='/'>Return home</Anchor>
                 </Text>
             </Paper>
-        </div >
+        </div>
     );
 }

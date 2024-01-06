@@ -3,18 +3,17 @@ import
     Paper,
     createStyles,
     TextInput,
-    PasswordInput,
     Button,
     Title,
     Text,
     Anchor
 } from '@mantine/core';
 import { useForm } from '@mantine/form'
-import { login } from '../../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 let bg = '/images/login.webp'
 
@@ -42,13 +41,18 @@ const useStyles = createStyles(() => ({
 }));
 
 
-export default function NewLogin()
+export default function Reset()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
-
+    const [message, setMessage] = useState(null)
+    const [disabled, setDisabled] = useState(false)
     const navigate = useNavigate()
+    const location = useLocation()
+
+    let token = location.pathname.split('/')[2]
+    // console.log(token)
 
     useEffect(() =>
     {
@@ -62,53 +66,63 @@ export default function NewLogin()
         }
     }, [isLoggedIn, user, navigate])
 
-    const dispatch = useDispatch()
-
     const form = useForm({
         initialValues: {
-            username: '',
+            token: token,
             password: '',
         },
+        validate: (values) => ({
+            password: values.password.length < 3 ? 'Too short name' : null,
+        }),
     })
+
+
+    const submitReset = async (values) =>
+    {
+        const res = await Axios.post('/auth/confirm-token', values)
+        // console.log(res)
+        if (res.data.message) {
+            setMessage(res.data.message)
+            setDisabled(true)
+        } else if (res.data.error) {
+            setError(res.data.error)
+        }
+    }
 
     const { classes } = useStyles();
     return (
         <div className={classes.wrapper}>
             <Paper className={classes.form} radius={0} >
-                <Title order={2} ta="center" mt={90} mb={50}>
-                    Welcome back to NeoPromisance!
+                <Title order={2} ta="center" mt={90} mb={10}>
+                    Forgot Your Password?
                 </Title>
+                <Text ta="center" mb={50}>
+                    Enter a new password.
+                </Text>
                 <form onSubmit={form.onSubmit((values) =>
-                    dispatch(login(values))
-                        .unwrap()
-                        .then(() => navigate('/app'))
-                        .catch((error) =>
-                        {
-                            console.log(error)
-                            setError(error)
-                        })
+                {
+                    // console.log(values)
+                    submitReset(values)
+                }
                 )
                 }>
-                    <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
-                    <Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
-                    <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
-                    <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-                    <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
-                        Login
+                    <TextInput required label="New Password" placeholder="" size="md" {...form.getInputProps('password')} />
+                    <Text color='red' align='center' mt='md'>{error && error}</Text>
+                    <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
+                        Submit New Password
                     </Button>
-                    <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
-
+                    {message && <>
+                        <Text color='green' align='center' mt='md'>{message}</Text>
+                        <Anchor component={Link} align='center' to='/login'>Return to Login</Anchor>
+                    </>}
                 </form>
                 <Text ta="center" mt="md">
                     Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
-                </Text>
-                <Text ta="center">
-                    <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
                 </Text>
                 <Text ta="center" mt="md">
                     <Anchor component={Link} to='/'>Return home</Anchor>
                 </Text>
             </Paper>
-        </div >
+        </div>
     );
 }

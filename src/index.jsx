@@ -69,6 +69,8 @@ import { inject } from '@vercel/analytics';
 
 import { TourProvider } from '@reactour/tour'
 import { steps } from './tour/steps'
+import Forgot from './components/pages/Forgot'
+import Reset from './components/pages/Reset'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -107,6 +109,8 @@ ReactDOM.render(
 							<Route path='*' element={<NothingFoundBackground />} />
 							<Route path='/login' element={<NewLogin />} />
 							<Route path='/register' element={<Signup />} />
+							<Route path='/forgot' element={<Forgot />} />
+							<Route path='/reset-password/:token' element={<Reset />} />
 							<Route path='/create' element={<CreateEmpire />} />
 							<Route path='/demo' element={<CreateDemoEmpire />} />
 							<Route path='/privacy' element={<PrivacyPolicy />} />
