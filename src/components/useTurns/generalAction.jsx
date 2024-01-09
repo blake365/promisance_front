@@ -80,7 +80,7 @@ export default function GeneralAction(props)
 		flavorText = `For each turn you spend ${props.flavor}, your empire will grow by ${props.explore} ${props.item}.`
 	}
 	if (props.type === 'heal') {
-		flavorText = `Using turns in any way will heal your empire but for each turn you spend ${props.flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 75% of its baseline value.`
+		flavorText = `Using turns in any way will heal your empire but for each turn you spend ${props.flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 66% of its baseline value.`
 	}
 
 	let roundStatus = false

@@ -10,7 +10,7 @@ export default function ScoresNews({ enemy })
         take: 10,
         view: true,
         empire: enemy.id,
-        type: null
+        type: 'attack'
     }
     // get news
     // news is a list of recent events ordered by date, newest to oldest

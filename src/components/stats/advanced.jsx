@@ -28,10 +28,33 @@ ChartJS.register(
 );
 
 const options = {
+    type: 'line',
     responsive: true,
     plugins: {
         legend: {
             position: 'top',
+        },
+    },
+    interaction: {
+        mode: 'index',
+        intersect: false,
+    },
+    stacked: false,
+    scales: {
+        y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+        },
+        y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+
+            // grid line settings
+            grid: {
+                drawOnChartArea: false, // only want the grid lines for one axis to show up
+            },
         },
     },
 };
@@ -85,15 +108,24 @@ function statName(name, era)
 function AdvancedStats()
 {
     const [rawData, setRawData] = useState([])
-    const [stat, setStat] = useState('cash')
+    const [stat1, setStat1] = useState('cash')
+    const [stat2, setStat2] = useState('networth')
     const [data, setData] = useState({
         labels: [],
         datasets: [
             {
-                label: '...',
+                labels: [],
                 data: [],
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                yAxisId: 'y',
+            },
+            {
+                labels: [],
+                data: [],
+                borderColor: 'rgb(99, 255, 132)',
+                backgroundColor: 'rgba(99, 255, 132, 0.5)',
+                yAxisId: 'y1',
             },
         ],
     })
@@ -153,23 +185,32 @@ function AdvancedStats()
         if (rawData.length > 0) {
             // console.log(rawData)
             labels = getLabels(rawData)
-            let dataSet = reduceArrayByKey(rawData, stat)
+            let dataSet = reduceArrayByKey(rawData, stat1)
+            let dataSet2 = reduceArrayByKey(rawData, stat2)
             // console.log(data)
 
             let newdata = {
                 labels: labels,
                 datasets: [
                     {
-                        label: statName(stat, era),
+                        label: statName(stat1, era),
                         data: dataSet.map((item) => item.item),
                         borderColor: 'rgb(255, 99, 132)',
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: statName(stat2, era),
+                        data: dataSet2.map((item) => item.item),
+                        borderColor: 'rgb(99, 255, 132)',
+                        backgroundColor: 'rgba(99, 255, 132, 0.5)',
+                        yAxisID: 'y1',
                     },
                 ],
             };
             setData(newdata)
         }
-    }, [rawData, stat])
+    }, [rawData, stat1, stat2])
 
     // console.log(data)
 
@@ -188,12 +229,34 @@ function AdvancedStats()
                         compact
                         m={2}
                         size='sm'
-                        variant='default'
+                        // variant='default'
+                        color={stat === stat1 ? 'red' : 'gray'}
                         key={stat}
                         onClick={() =>
                         {
                             // console.log(stat)
-                            setStat(stat)
+                            setStat1(stat)
+                        }}
+                    >
+                        {statName(stat, era)}
+                    </Button>
+                )
+            })}
+            <hr />
+            {statSelector.map((stat) =>
+            {
+                return (
+                    <Button
+                        compact
+                        m={2}
+                        size='sm'
+                        // variant='default'
+                        color={stat === stat2 ? 'green' : 'gray'}
+                        key={stat}
+                        onClick={() =>
+                        {
+                            // console.log(stat)
+                            setStat2(stat)
                         }}
                     >
                         {statName(stat, era)}

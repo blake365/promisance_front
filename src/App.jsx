@@ -94,7 +94,7 @@ function App()
 		{
 			// console.log(achievements[key])
 			// console.log(new Date(achievements[key].timeAwarded).getTime())
-			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 2000 > Date.now()) {
+			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 1000 > Date.now()) {
 				// console.log(key)
 				const { message, icon } = processAchievement(key)
 				// console.log(message)

@@ -34,7 +34,6 @@ export default function PublicMarketSell({ empire })
     const getCost = (emp, base) =>
     {
         let cost = base
-
         return Math.round(cost)
     }
 
@@ -48,13 +47,12 @@ export default function PublicMarketSell({ empire })
     const processItems = (items) =>
     {
         // console.log(items)
-
         let processedItems = []
 
         // take items that are on the market. 
         // create a new object that has the item type, and amount
-        // if the item is greater than 24 hours old, do not add it
-        // if the item is less than 24 hours old, add it to the array
+        // if the item is greater than 12 hours old, do not add it
+        // if the item is less than 12 hours old, add it to the array
         // if items are the same type, add them together to get the total amount
         // return the array
 
@@ -62,7 +60,7 @@ export default function PublicMarketSell({ empire })
         {
             let age = Math.floor((now - new Date(item.createdAt)) / 1000 / 60 / 60)
             // console.log(age)
-            if (age < 24) {
+            if (age < 12) {
                 let newItem = {
                     type: item.type,
                     amount: parseInt(item.amount),

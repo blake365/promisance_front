@@ -49,8 +49,6 @@ function categoryName(name, era)
         return 'Buildings'
     } else if (name === 'joinClan') {
         return 'Clans'
-    } else {
-        return name
     }
 }
 
@@ -65,6 +63,9 @@ function Achievements()
     let achievementArray = Object.keys(achievements).map((key) =>
     {
         // console.log(key, achievements[key].awarded)
+        if (key === 'indy' || key === 'magic') {
+            return
+        }
         return { name: key, awarded: achievements[key].awarded, time: achievements[key].timeAwarded }
     })
 
@@ -88,16 +89,24 @@ function Achievements()
                     let categoryArray = []
                     if (category === 'food') {
                         categoryArray = food.sort((a, b) => a.name.localeCompare(b.name))
-                    } else {
+                    }
+                    else {
                         categoryArray = achievementArray.filter((achievement) => achievement.name.includes(category)).sort((a, b) => a.name.localeCompare(b.name))
                     }
+
                     // console.log(categoryArray)
                     let categoryAchievements = categoryArray.map((achievement) =>
                     {
                         // console.log(achievement)
-                        if (achievement) {
+                        if (achievement.name.length === 6 && achievement.name.includes('magic')) {
+                            return
+                        } else if (achievement.name.length === 5 && achievement.name.includes('indy')) {
+                            return
+                        } else if (achievement) {
                             const { message, icon } = processAchievement(achievement.name)
-
+                            if (achievement.name === 'indy' || achievement.name === 'magic') {
+                                return
+                            }
                             return (
                                 <div key={achievement.name}>
                                     <Notification
