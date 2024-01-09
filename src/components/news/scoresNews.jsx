@@ -6,11 +6,9 @@ import WorldNewsItem from './worldNewsItem'
 export default function ScoresNews({ enemy })
 {
     let body = {
-        skip: 0,
         take: 10,
         view: true,
         empire: enemy.id,
-        type: 'attack'
     }
     // get news
     // news is a list of recent events ordered by date, newest to oldest
@@ -26,7 +24,7 @@ export default function ScoresNews({ enemy })
         const getNews = async () =>
         {
             try {
-                const res = await Axios.post('/news/search', body);
+                const res = await Axios.post('/news/scores', body);
                 const data = res.data;
                 return data;
             } catch (error) {
