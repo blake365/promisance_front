@@ -86,7 +86,7 @@ function App()
 
 	useEffect(() =>
 	{
-		// console.log('achievements changed')
+		console.log('achievements changed')
 		// console.log(achievements)
 		// if achievements changes, check where awarded is true and if timeAwarded is within 2 seconds of current time
 		// if true, show notification

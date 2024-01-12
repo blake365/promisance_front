@@ -217,52 +217,56 @@ function AdvancedStats()
     return (
         <>
             <Title align='center'>Stat Charts</Title>
-            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected every 4 hours for empires who have used greater than {TURNS_PROTECTION} turns. </Text >)}
+            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {TURNS_PROTECTION} turns. </Text >)}
             <Line
                 options={options}
                 data={data}
             />
-            {statSelector.map((stat) =>
-            {
-                return (
-                    <Button
-                        compact
-                        m={2}
-                        size='sm'
-                        // variant='default'
-                        color={stat === stat1 ? 'red' : 'gray'}
-                        key={stat}
-                        onClick={() =>
-                        {
-                            // console.log(stat)
-                            setStat1(stat)
-                        }}
-                    >
-                        {statName(stat, era)}
-                    </Button>
-                )
-            })}
+            <div style={{ maxWidth: '100%', overflowX: 'scroll', display: 'flex', flexDirection: 'row' }}>
+                {statSelector.map((stat) =>
+                {
+                    return (
+                        <Button
+                            compact
+                            m={2}
+                            size='sm'
+                            // variant='default'
+                            color={stat === stat1 ? 'red' : 'gray'}
+                            key={stat}
+                            onClick={() =>
+                            {
+                                // console.log(stat)
+                                setStat1(stat)
+                            }}
+                        >
+                            {statName(stat, era)}
+                        </Button>
+                    )
+                })}
+            </div>
             <hr />
-            {statSelector.map((stat) =>
-            {
-                return (
-                    <Button
-                        compact
-                        m={2}
-                        size='sm'
-                        // variant='default'
-                        color={stat === stat2 ? 'green' : 'gray'}
-                        key={stat}
-                        onClick={() =>
-                        {
-                            // console.log(stat)
-                            setStat2(stat)
-                        }}
-                    >
-                        {statName(stat, era)}
-                    </Button>
-                )
-            })}
+            <div style={{ maxWidth: '100%', overflowX: 'scroll', display: 'flex', flexDirection: 'row' }}>
+                {statSelector.map((stat) =>
+                {
+                    return (
+                        <Button
+                            compact
+                            m={2}
+                            size='sm'
+                            // variant='default'
+                            color={stat === stat2 ? 'green' : 'gray'}
+                            key={stat}
+                            onClick={() =>
+                            {
+                                // console.log(stat)
+                                setStat2(stat)
+                            }}
+                        >
+                            {statName(stat, era)}
+                        </Button>
+                    )
+                })}
+            </div>
         </>
     );
 }
