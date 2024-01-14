@@ -31,12 +31,12 @@ const useStyles = createStyles(() => ({
     },
     form: {
         minHeight: '100vh',
-        maxWidth: 450,
+        maxWidth: 500,
         padding: 80,
         background: 'rgba(255,255,255,0.85)',
-        '@media (max-width: 400)': {
+        '@media (max-width: 400px)': {
             maxWidth: '100%',
-            padding: 60,
+            padding: 40,
         },
     },
 }));
@@ -90,21 +90,21 @@ export default function NewLogin()
                 )
                 }>
                     <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
-                    <Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
+                    <Text size='sm' my={0} color='dimmed' align='left'>Username is case sensitive. <Anchor component={Link} to='/forgot-username'>Forgot Username?</Anchor></Text>
                     <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
+                    <Text size='sm' align='left'>
+                        <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
+                    </Text>
                     <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
                     <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
-
                 </form>
                 <Text ta="center" mt="md">
                     Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
                 </Text>
-                <Text ta="center">
-                    <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
-                </Text>
+
                 <Text ta="center" mt="md">
                     <Anchor component={Link} to='/'>Return home</Anchor>
                 </Text>

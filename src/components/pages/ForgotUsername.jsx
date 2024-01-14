@@ -41,7 +41,7 @@ const useStyles = createStyles(() => ({
 }));
 
 
-export default function Forgot()
+export default function ForgotUsername()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
@@ -73,7 +73,7 @@ export default function Forgot()
 
     const submitReset = async (values) =>
     {
-        const res = await Axios.post('/auth/forgot-password', values)
+        const res = await Axios.post('/auth/forgot-username', values)
         console.log(res)
         if (res.data.message) {
             setMessage(res.data.message)
@@ -88,7 +88,7 @@ export default function Forgot()
         <div className={classes.wrapper}>
             <Paper className={classes.form} radius={0} >
                 <Title order={2} ta="center" mt={90} mb={10}>
-                    Forgot Your Password?
+                    Forgot Your Username?
                 </Title>
                 <Text ta="center" mb={50}>
                     Enter your email below.
@@ -103,10 +103,13 @@ export default function Forgot()
                     <TextInput required label="Email" placeholder="" size="md" {...form.getInputProps('email')} />
                     <Text color='red' align='center' mt='md'>{error && error}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
-                        Request Password Reset
+                        Request Username
                     </Button>
                     <Text color='green' weight='bold' align='center' mt='md'>{message && message}</Text>
                 </form>
+                <Text ta="center" mt="md">
+                    Return to <Anchor component={Link} to='/login'>Login</Anchor>
+                </Text>
                 <Text ta="center" mt="md">
                     Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
                 </Text>

@@ -1,9 +1,10 @@
-import { Button, createStyles, Anchor, TextInput, Title, Box, Text, PasswordInput, Paper } from '@mantine/core'
+import { Button, createStyles, Anchor, TextInput, Title, Text, PasswordInput, Paper } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { register } from '../../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+let bg = '/images/login.webp'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -14,20 +15,18 @@ const useStyles = createStyles(() => ({
 		backgroundPosition: 'center center',
 		backgroundRepeat: 'no-repeat',
 		backgroundImage:
-			`url('/images/login.webp')`,
+			`url(${bg})`,
 	},
-
 	form: {
 		minHeight: '100vh',
-		maxWidth: 450,
+		maxWidth: 500,
 		padding: 80,
 		background: 'rgba(255,255,255,0.85)',
-		'@media (max-width: 400)': {
+		'@media (max-width: 400px)': {
 			maxWidth: '100%',
-			padding: 60,
+			padding: 40,
 		},
 	},
-
 }));
 
 export default function Signup()

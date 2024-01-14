@@ -71,6 +71,7 @@ import { TourProvider } from '@reactour/tour'
 import { steps } from './tour/steps'
 import Forgot from './components/pages/Forgot'
 import Reset from './components/pages/Reset'
+import ForgotUsername from './components/pages/ForgotUsername'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -110,6 +111,7 @@ ReactDOM.render(
 							<Route path='/login' element={<NewLogin />} />
 							<Route path='/register' element={<Signup />} />
 							<Route path='/forgot' element={<Forgot />} />
+							<Route path='/forgot-username' element={<ForgotUsername />} />
 							<Route path='/reset-password/:token' element={<Reset />} />
 							<Route path='/create' element={<CreateEmpire />} />
 							<Route path='/demo' element={<CreateDemoEmpire />} />
