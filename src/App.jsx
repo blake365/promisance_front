@@ -467,10 +467,6 @@ function App()
 										<Group spacing='xs' position='center'>
 											<Button compact variant='outline' onClick={() =>
 											{
-												if (setIsOpen) {
-													dispatch(setPage(null))
-													setIsOpen(false)
-												}
 												setModalOpened(true)
 											}}
 												// rightIcon={<Compass size={18} />}

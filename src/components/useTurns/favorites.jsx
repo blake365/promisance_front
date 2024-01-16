@@ -1,8 +1,7 @@
 import { Grid, Paper, Text, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
-
-
 import Build from './build'
+import Demolish from './demolish'
 import Cash from './cash'
 import Explore from './explore'
 import Farm from './farm'
@@ -17,6 +16,8 @@ const MapComponents = (title) =>
 {
     if (title === 'Build') {
         return <Build />
+    } else if (title === 'Demolish') {
+        return <Demolish />
     } else if (title === 'Cash') {
         return <Cash />
     } else if (title === 'Explore') {

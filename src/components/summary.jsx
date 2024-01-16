@@ -1,4 +1,4 @@
-import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Modal, Button, Center } from '@mantine/core'
+import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Modal, Button, Center, ActionIcon, Tooltip } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTour } from '@reactour/tour';
 import { steps } from '../tour/steps'
-import { Compass } from '@phosphor-icons/react'
+import { Compass, Question } from '@phosphor-icons/react'
 
 export default function Summary()
 {
@@ -146,7 +146,6 @@ export default function Summary()
 					Empire Summary
 				</Title>
 				<div>
-
 					<>
 						<Modal
 							opened={newPlayerModal}
@@ -170,13 +169,22 @@ export default function Summary()
 							</Text>
 						</Modal>
 						<Card>
-							<Group position='center' align='center' spacing={5}>
-								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-								<Title order={2} align='center' >
-									{empire?.name}
-								</Title>
+							<Group position='apart'>
+								<div>
+								</div>
+								<Group position='center' align='center' spacing={5}>
+									<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+									<Title order={2} align='center' >
+										{empire?.name}
+									</Title>
+								</Group>
+								<Tooltip label='Personalized Tips' align='top' position='top' withArrow withinPortal>
+									<ActionIcon color="green" size="md" radius="xl" variant="filled" component={Link} to='/app/New%20Player'>
+										<Question size={21} />
+									</ActionIcon>
+								</Tooltip>
 							</Group>
-							{empire.turnsUsed < 200 && (<Center my='sm'>
+							{empire.turnsUsed < TURNS_PROTECTION && (<Center my='sm'>
 								<Button compact variant='outline' align='center' onClick={() =>
 								{
 									setMeta('new player tour')
@@ -184,13 +192,13 @@ export default function Summary()
 									setCurrentStep(0)
 									setIsOpen(true)
 								}}
-									rightIcon={<Compass />}
+									leftIcon={<Compass size={20} />}
 									sx={{
 										border: '1px solid #40c057',
 										boxShadow: '0 0 2px 1px #40c057',
 										color: '#40c057',
 									}}
-									className='sixth-step'>First Turns Tour</Button>
+									className='sixth-step'>Getting Started Tour</Button>
 							</Center>)}
 
 							<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>

@@ -11,6 +11,7 @@ import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState } from 'react'
+import { FavoriteButton } from '../utilities/maxbutton'
 
 export default function Demolish()
 {
@@ -208,7 +209,7 @@ export default function Demolish()
 			<Center mb={10}>
 				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Demolish
+						Demolish <FavoriteButton empire={empire} title='Demolish' />
 					</Title>
 					<Text align='center'>
 						Each structure demolished frees up one acre of land and

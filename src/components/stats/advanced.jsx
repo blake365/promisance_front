@@ -271,7 +271,7 @@ function AdvancedStats()
                 </Button>
                 <Input
                     size='xs'
-                    w={50}
+                    w={60}
                     min={10}
                     max={5000}
                     placeholder={take ? take : 'all'}

@@ -1,13 +1,15 @@
-import { raceArray } from "../../../config/races"
-import { eraArray } from "../../../config/eras"
-import GuideLink from "../../utilities/guidelink"
-import { TURNS_PROTECTION } from "../../../config/config"
+import { raceArray } from "../../config/races"
+import { eraArray } from "../../config/eras"
+import { TURNS_PROTECTION } from "../../config/config"
 import { Compass } from "@phosphor-icons/react"
-import { Table, Text } from "@mantine/core"
-import classes from '../guide.module.css'
+import { Table, Text, Title, Paper, Container, Stack } from "@mantine/core"
+import classes from './guide.module.css'
+import { useSelector } from "react-redux"
 
-export default function NewTipsGuide({ empire })
+export default function NewPlayerTips()
 {
+    const { empire } = useSelector((state) => state.empire)
+
     const yourTraits = (empire) =>
     {
         let raceStrength = ''
@@ -151,25 +153,27 @@ export default function NewTipsGuide({ empire })
     }
 
     return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
-
-            <h2>Personalized Tips</h2>
-            {empire.turnsUsed <= TURNS_PROTECTION && (<p>
-                You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {TURNS_PROTECTION} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
-            </p>)}
-            <p>
-                If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages.
-            </p>
-            <p>
-                You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to build up your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
-            </p>
-            <p>
-                Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a Spell Shield, Advancing Eras, and opening Time Gates.
-            </p>
-            <div>
-                {yourTraits(empire)}
-            </div>
-        </div>
+        <Container>
+            <Paper p='lg'>
+                <Title align='center'>Personalized Tips</Title>
+                <Stack mt='sm'>
+                    {empire.turnsUsed <= TURNS_PROTECTION && (<Text>
+                        You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {TURNS_PROTECTION} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
+                    </Text>)}
+                    <Text>
+                        If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages. If you want to repeat the Getting Started Tour, you can access it from the Empire Settings page.
+                    </Text>
+                    <Text>
+                        You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
+                    </Text>
+                    <Text>
+                        Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a Spell Shield, Advancing Eras, and opening Time Gates.
+                    </Text>
+                    <div>
+                        {yourTraits(empire)}
+                    </div>
+                </Stack>
+            </Paper>
+        </Container>
     )
 }

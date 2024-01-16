@@ -72,6 +72,7 @@ import { steps } from './tour/steps'
 import Forgot from './components/pages/Forgot'
 import Reset from './components/pages/Reset'
 import ForgotUsername from './components/pages/ForgotUsername'
+const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
 
 inject();
 // import Guide from './components/guide/guide'
@@ -162,6 +163,7 @@ ReactDOM.render(
 								<Route path='Lottery' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Lottery /></Suspense>} />
 								<Route path='Achievements' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Achievements /></Suspense>} />
 								<Route path='Charts' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdvancedStats /></Suspense>} />
+								<Route path='New%20Player' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><NewPlayerTips /></Suspense>} />
 							</Route>
 						</Routes>
 					</BrowserRouter>
