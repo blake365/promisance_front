@@ -13,10 +13,11 @@ import
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { Button, Title, Text, Input, Group } from '@mantine/core';
+import { Button, Title, Text, Input, Group, Tooltip as Tooltips } from '@mantine/core';
 import { eraArray } from '../../config/eras';
 import { TURNS_PROTECTION } from '../../config/config';
 import { useForm } from '@mantine/form';
+import { Download } from '@phosphor-icons/react';
 
 ChartJS.register(
     CategoryScale,
@@ -104,6 +105,30 @@ function statName(name, era)
         return name
     }
 }
+
+const FileDownloadButton = ({ id }) =>
+{
+    const handleDownload = async () =>
+    {
+        try {
+            const response = await Axios.get(`/snapshots/${id}/download`);
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `empire-${id}-snapshots.csv`); // or any other extension
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    return (
+        <Tooltips label='Download CSV' withArrow>
+            <Button mt='lg' onClick={handleDownload}><Download size={20} /></Button>
+        </Tooltips>
+    );
+};
 
 
 function AdvancedStats()
@@ -235,7 +260,7 @@ function AdvancedStats()
     return (
         <>
             <Title align='center'>Stat Charts</Title>
-            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {TURNS_PROTECTION} turns. </Text >)}
+            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {TURNS_PROTECTION} turns.</Text >)}
             <Text align='center'>Showing {take ? take : 'all'} data points</Text>
             <Group position='center' spacing='xs'>
                 <Button variant='default' compact onClick={() =>
@@ -311,6 +336,7 @@ function AdvancedStats()
                     )
                 })}
             </div>
+            <FileDownloadButton id={empire.id} />
         </>
     );
 }
