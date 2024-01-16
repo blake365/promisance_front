@@ -13,9 +13,10 @@ import
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { Button, Title, Text } from '@mantine/core';
+import { Button, Title, Text, Input, Group } from '@mantine/core';
 import { eraArray } from '../../config/eras';
 import { TURNS_PROTECTION } from '../../config/config';
+import { useForm } from '@mantine/form';
 
 ChartJS.register(
     CategoryScale,
@@ -24,12 +25,12 @@ ChartJS.register(
     LineElement,
     Tooltip,
     Legend,
-    TimeScale
+    TimeScale,
 );
 
 const options = {
-    type: 'line',
-    responsive: true,
+    // type: 'line',
+    // responsive: true,
     plugins: {
         legend: {
             position: 'top',
@@ -110,6 +111,9 @@ function AdvancedStats()
     const [rawData, setRawData] = useState([])
     const [stat1, setStat1] = useState('cash')
     const [stat2, setStat2] = useState('networth')
+    const [take, setTake] = useState(200)
+    const [skip, setSkip] = useState(0)
+    const [page, setPage] = useState(0)
     const [data, setData] = useState({
         labels: [],
         datasets: [
@@ -138,7 +142,7 @@ function AdvancedStats()
         const getSnapshots = async () =>
         {
             try {
-                const res = await Axios.get(`/snapshots/${empire.id}`);
+                const res = await Axios.post(`/snapshots/${empire.id}/paginate`, { take: take, page: page });
                 const data = res.data;
                 return data;
             } catch (error) {
@@ -159,7 +163,7 @@ function AdvancedStats()
                 console.error('Error setting Snapshots data:', error);
             });
 
-    }, [])
+    }, [page, take])
 
     const statSelector = ['cash', 'food', 'land', 'networth', 'peasants', 'trpArm', 'trpLnd', 'trpFly', 'trpSea', 'trpWiz', 'income', 'expenses', 'foodpro', 'foodcon', 'indyProd', 'magicProd', 'attackGains', 'attackLosses', 'exploreGains']
 
@@ -213,11 +217,51 @@ function AdvancedStats()
     }, [rawData, stat1, stat2])
 
     // console.log(data)
+    const form = useForm({
+        initialValues: {
+            take: take,
+            skip: skip,
+        },
+
+        validationRules: {
+            turns: (value) => value <= props.empire.turns && value > 0,
+        },
+
+        errorMessages: {
+            turns: 'Invalid number of turns',
+        },
+    })
 
     return (
         <>
             <Title align='center'>Stat Charts</Title>
             {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {TURNS_PROTECTION} turns. </Text >)}
+            <Text align='center'>Showing {take ? take : 'all'} data points</Text>
+            <Group position='center' spacing='xs'>
+                <Button variant='default' compact onClick={() =>
+                {
+                    setPage(prevPage => prevPage + 1)
+                }} disabled={page * take >= rawData.length + take || !take}>
+                    &lt;
+                </Button>
+                <Input
+                    size='xs'
+                    w={50}
+                    min={10}
+                    max={5000}
+                    placeholder={take ? take : 'all'}
+                    default={take}
+                    hideControls
+                    value={take}
+                    onChange={(e) => setTake(e.target.value)}
+                />
+                <Button variant='default' compact onClick={() =>
+                {
+                    setPage(prevPage => Math.max(0, prevPage - 1))
+                }} disabled={page === 0}>
+                    &gt;
+                </Button>
+            </Group>
             <Line
                 options={options}
                 data={data}

@@ -151,7 +151,7 @@ export default function ScoresIntel({ enemy })
                                 {intel.map((item) =>
                                 {
                                     return (<Accordion.Item value={item.uuid} key={item.uuid}>
-                                        <Accordion.Control>{item.name}(#{item.spiedEmpireId}) - {new Date(item.createdAt).toLocaleString()}</Accordion.Control>
+                                        <Accordion.Control>{item.name} - {new Date(item.createdAt).toLocaleString()}</Accordion.Control>
                                         <Accordion.Panel>
                                             <Intel empire={item} />
                                         </Accordion.Panel>

@@ -11,7 +11,7 @@ import NetProduced from '../utilities/NetProduced'
 const attackResult = (result, era) =>
 {
 	if (result.result === 'success') {
-
+		// console.log(result.message)
 		if (result.attackType === 'pillage') {
 			let youLost = []
 			let youKilled = []
@@ -29,8 +29,7 @@ const attackResult = (result, era) =>
 			}
 
 			return (<>
-				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
-				</span></Text>
+				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
 				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
@@ -51,8 +50,7 @@ const attackResult = (result, era) =>
 		}
 		else if (result.attackType !== 'all out' && result.attackType !== 'surprise') {
 			return (<>
-				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
-				</span></Text>
+				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
 				<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
 				<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
 			</>)
@@ -88,8 +86,7 @@ const attackResult = (result, era) =>
 			}
 
 			return (<>
-				<Text align='center' weight='bold'><span style={{ color: 'green' }}>{result.message}
-				</span></Text>
+				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
 				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
@@ -137,6 +134,7 @@ const attackResult = (result, era) =>
 			}
 
 			return (<>
+				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
 				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
 				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
@@ -158,9 +156,10 @@ const attackResult = (result, era) =>
 
 		} else {
 			return (<>
+				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
 				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
-				<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
-				<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+				<Text align='center'>You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+				<Text align='center'>You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
 			</>)
 		}
 
@@ -169,7 +168,7 @@ const attackResult = (result, era) =>
 
 const spellResult = (result) =>
 {
-	// console.log(result)
+	console.log(result)
 	if (result.result === 'success' || result.result === 'shielded') {
 		if (result.food) {
 			return (<>
@@ -179,7 +178,18 @@ const spellResult = (result) =>
 			return (<>
 				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> ${result.cash.toLocaleString()}</span>.</Text>
 			</>)
-		} else {
+		}
+		else if (result.fight) {
+			let lines = result.message.split('/n')
+			return lines.map((line, index) =>
+			{
+				let weight = 'normal'
+				if (index === 0) weight = 'bold'
+				return <Text align='center' weight='bold' color={result.message.includes('ashamed') ? 'orange' : 'green'}>{line}</Text>
+			})
+
+		}
+		else {
 			// covers time era changes
 			let lines = result.message.split('/n')
 			return lines.map((line, index) =>
