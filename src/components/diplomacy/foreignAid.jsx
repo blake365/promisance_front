@@ -6,14 +6,12 @@ import
     Select,
     Text,
     Stack,
-    Card,
     NumberInput,
 } from '@mantine/core'
-import { useEffect, useState, forwardRef } from 'react'
+import { useState, forwardRef } from 'react'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
 import { MaxButton } from '../utilities/maxbutton'
 
@@ -21,15 +19,18 @@ import { eraArray } from '../../config/eras'
 import { Scales } from "@phosphor-icons/react"
 import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { useLoadOtherEmpires } from '../../hooks/useLoadOtherEmpires'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function ForeignAid()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
 
     const dispatch = useDispatch()
+    const loadEmpire = useLoadEmpire(empire.uuid)
+    const loadOtherEmpires = useLoadOtherEmpires(empire.id, empire.turnsUsed)
 
-    const [otherEmpires, setOtherEmpires] = useState()
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -75,17 +76,6 @@ export default function ForeignAid()
         'trpArm', 'trpLnd', 'trpFly', 'trpSea', 'cash', 'food', 'runes'
     ]
 
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const sendAid = async (values) =>
     {
         // console.log('sending aid')
@@ -93,13 +83,13 @@ export default function ForeignAid()
         setError('')
         try {
             const res = await Axios.post(`/aid/`, values)
-            console.log(res.data)
+            // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)
             } else {
                 window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
-                loadEmpireTest()
+                loadEmpire()
                 form.reset()
             }
             setLoading(false)
@@ -109,38 +99,6 @@ export default function ForeignAid()
             setLoading(false)
         }
     }
-
-
-    useEffect(() =>
-    {
-        const loadOtherEmpires = async () =>
-        {
-            try {
-                const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
-                let otherEmpires = res.data.map(({ name, empireId, networth, mode }) => ({ name, empireId, networth, mode }))
-
-                let dataFormat = otherEmpires.map((empire) =>
-                {
-                    if (empire.mode !== 'demo') {
-                        return {
-                            value: empire.empireId.toLocaleString(),
-                            networth: empire.networth.toLocaleString(),
-                            name: empire.name,
-                            empireId: empire.empireId,
-                            label: `${empire.name}`
-                        }
-                    }
-                }
-                ).filter((empire) => empire !== undefined)
-                // console.log(dataFormat)
-                setOtherEmpires(dataFormat)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        loadOtherEmpires()
-    }, [empire.networth])
-
 
     const SelectItem = forwardRef(
         ({ empireId, name, networth, mode, ...others }, ref) => (
@@ -158,18 +116,7 @@ export default function ForeignAid()
         shipsNeeded = 10000
     }
 
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    // console.log(upcoming / 60 / 10000 / 60, remaining)
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0 || remaining / 1000 / 60 / 60 < 24) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    const roundStatus = checkRoundStatus(true)
 
     return (
         <section>
@@ -188,7 +135,6 @@ export default function ForeignAid()
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
-
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         console.log(values)
@@ -197,7 +143,7 @@ export default function ForeignAid()
                         window.scroll({ top: 0, behavior: 'smooth' })
                     })}>
                         <Stack spacing='sm' align='center' >
-                            {otherEmpires && (
+                            {loadOtherEmpires && (
                                 <Select
                                     searchable
                                     searchValue={selectedEmpire}
@@ -206,9 +152,8 @@ export default function ForeignAid()
                                     placeholder="Pick one"
                                     withAsterisk
                                     itemComponent={SelectItem}
-                                    data={otherEmpires}
+                                    data={loadOtherEmpires}
                                     withinPortal
-
                                     {...form.getInputProps('receiverId')}
                                 />
                             )}

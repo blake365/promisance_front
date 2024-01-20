@@ -1,130 +1,26 @@
 import
 {
     Center,
-    Title,
-    Button,
-    Select,
-    Text,
+    Title, Text,
     Stack,
     Card,
-    Group,
-    Loader,
-    Accordion
+    Group, Accordion
 } from '@mantine/core'
-import { useEffect, useState, forwardRef } from 'react'
-import { useForm } from '@mantine/form'
+import { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
-import { setResult } from '../../store/turnResultsSlice'
+import { useSelector } from 'react-redux'
 import { eraArray } from '../../config/eras'
-import { raceArray } from '../../config/races'
-import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Intel from './intel'
 
 import { baseCost } from '../../functions/functions'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import SpellForm from './spellForm'
 
 export default function IntelCenter()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
 
-    const dispatch = useDispatch()
-
-    const [otherEmpires, setOtherEmpires] = useState()
-    const [selectedEmpire, setSelectedEmpire] = useState('')
     const [intel, setIntel] = useState()
-    const [loading, setLoading] = useState(false)
-
-    const form = useForm({
-        initialValues: {
-            attackerId: empire.id,
-            type: 'magic attack',
-            defenderId: '',
-            spell: 'spy'
-        },
-
-        validationRules: {
-            number: (value) => empire.turns >= 2 && value > 0,
-        },
-
-        errorMessages: {
-            number: "Not enough turns",
-        },
-    })
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(() =>
-    {
-        const loadOtherEmpires = async () =>
-        {
-            try {
-                const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
-                let otherEmpires = res.data.map(({ name, empireId, land, era, race, networth }) => ({ name, empireId, land, era, race, networth }))
-
-                let dataFormat = otherEmpires.map((empire) =>
-                ({
-                    value: empire.empireId.toLocaleString(),
-                    land: empire.land.toLocaleString(),
-                    networth: empire.networth.toLocaleString(),
-                    race: raceArray[empire.race].name,
-                    era: eraArray[empire.era].name,
-                    name: empire.name,
-                    empireId: empire.empireId,
-                    label: `${empire.name}`
-                })
-                )
-                // console.log(otherEmpires)
-                setOtherEmpires(dataFormat)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        loadOtherEmpires()
-    }, [])
-
-    const SelectItem = forwardRef(
-        ({ land, era, empireId, name, race, networth, ...others }, ref) => (
-            <div ref={ref} {...others}>
-                <div>
-                    <Text size='sm' weight='bold'>{name}</Text>
-                    <Text size='sm'><Mountains /> {land} acres</Text>
-                    <Text size='sm'><Scales /> ${networth}</Text>
-                    <Text size='sm'><Hourglass /> {era}</Text>
-                    <Text size='sm'><Alien /> {race}</Text>
-                </div>
-            </div>
-        )
-    );
-
-
-    const sendSpellAttack = async (values) =>
-    {
-        setLoading(true)
-        try {
-            const res = await Axios.post(`/magic/attack`, values)
-            // console.log(res.data)
-            dispatch(setResult([res.data]))
-            loadEmpireTest()
-            form.reset()
-            window.scroll({ top: 0, behavior: 'smooth' })
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-        }
-    }
-
 
     // load intel
     useEffect(() =>
@@ -142,19 +38,7 @@ export default function IntelCenter()
         loadIntel().then((data) => setIntel(data))
     }, [empire.turns])
 
-    // console.log(intel)
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
-
+    const roundStatus = checkRoundStatus()
 
     return (
         <section>
@@ -177,37 +61,7 @@ export default function IntelCenter()
                         <Text align='left' py='xs'>
                             Ratio Needed: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
                         </Text>
-                        <Text align='center'>
-
-                        </Text >
-                        <form onSubmit={form.onSubmit((values) =>
-                        {
-                            console.log(values)
-                            sendSpellAttack(values)
-                            window.scroll({ top: 0, behavior: 'smooth' })
-                            // dispatch(clearResult)
-                        })}>
-                            <Stack spacing='sm' align='center'>
-                                {otherEmpires && (
-                                    <Select
-                                        searchable
-                                        searchValue={selectedEmpire}
-                                        onSearchChange={setSelectedEmpire}
-                                        label="Select an Empire to Get Stats"
-                                        placeholder="Pick one"
-                                        withAsterisk
-                                        itemComponent={SelectItem}
-                                        data={otherEmpires}
-                                        withinPortal
-                                        sx={{ width: '100%' }}
-                                        {...form.getInputProps('defenderId')}
-                                    />
-                                )}
-                                <Button color='indigo' type='submit' disabled={roundStatus || empire.mode === 'demo'} loading={loading}>
-                                    Cast Spell
-                                </Button>
-                            </Stack>
-                        </form>
+                        <SpellForm empire={empire} roundStatus={roundStatus} spy />
                     </Card>
                     {intel && intel.length > 0 ? (
                         <Accordion variant="separated" defaultValue={intel[0].uuid} sx={{

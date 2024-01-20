@@ -276,7 +276,6 @@ function AdvancedStats()
                     max={5000}
                     placeholder={take ? take : 'all'}
                     default={take}
-                    hideControls
                     value={take}
                     onChange={(e) => setTake(e.target.value)}
                 />
