@@ -13,15 +13,13 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
 import { empireLoaded } from '../../store/empireSlice'
-import { useState } from 'react'
+import { showNotification } from '@mantine/notifications'
 
 
 export default function Cash()
 {
 	const { empire } = useSelector((state) => state.empire)
 	const dispatch = useDispatch()
-
-	const [update, setUpdate] = useState()
 
 	const form = useForm({
 		initialValues: {
@@ -42,12 +40,19 @@ export default function Cash()
 	{
 		try {
 			const res = await Axios.post(`/empire/${empire.uuid}/tax`, values)
-			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
-			setUpdate('Success')
+			showNotification({
+				title: 'Tax Rate Updated',
+				color: 'yellow',
+				autoClose: 2000,
+			})
 		} catch (error) {
 			console.log(error)
-			setUpdate(error)
+			showNotification({
+				title: 'Error Updating Tax Rate',
+				color: 'orange',
+				autoClose: 2000,
+			})
 		}
 	}
 
@@ -82,7 +87,6 @@ export default function Cash()
 							<Button type='submit' color='yellow'>Update</Button>
 						</Stack>
 					</form>
-					<div>{update}</div>
 				</Stack>
 			</Center>
 		</main>

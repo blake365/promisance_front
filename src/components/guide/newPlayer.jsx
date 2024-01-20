@@ -167,7 +167,7 @@ export default function NewPlayerTips()
                         You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
                     </Text>
                     <Text>
-                        Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a Spell Shield, Advancing Eras, and opening Time Gates.
+                        Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a {eraArray[empire.era].spell_shield} to protect against magic attacks, Advancing Eras to optimize your stats, and opening Time Gates to attack across eras.
                     </Text>
                     <div>
                         {yourTraits(empire)}

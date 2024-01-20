@@ -14,11 +14,12 @@ import { useState } from 'react'
 import { useTour } from '@reactour/tour'
 import { Compass } from '@phosphor-icons/react'
 import { buildSteps } from '../../tour/buildSteps'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function Build()
 {
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
-
 	let buildNumberArray = []
 	let totalBuild = 0
 	let errors = {
@@ -29,6 +30,7 @@ export default function Build()
 	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
+	const loadEmpire = useLoadEmpire(empire.uuid)
 
 	const getBuildAmounts = (empire) =>
 	{
@@ -125,17 +127,6 @@ export default function Build()
 		errors.error = error
 	}
 
-	const loadEmpireTest = async () =>
-	{
-		try {
-			const res = await Axios.get(`/empire/${empire.uuid}`)
-			// console.log(res.data)
-			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	const doBuild = async (values) =>
 	{
 		setLoading(true)
@@ -144,7 +135,7 @@ export default function Build()
 			// dispatch(setResult(res.data))
 			// console.log(res.data)
 			dispatch(setResult(res.data))
-			loadEmpireTest()
+			loadEmpire()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -155,17 +146,7 @@ export default function Build()
 		}
 	}
 
-	let roundStatus = false
-	let upcoming = time.start - time.time
-	let remaining = time.end - time.time
-
-	if (upcoming > 0) {
-		roundStatus = true
-	} else if (remaining < 0) {
-		roundStatus = true
-	} else {
-		roundStatus = false
-	}
+	const roundStatus = checkRoundStatus()
 
 	return (
 		<main>

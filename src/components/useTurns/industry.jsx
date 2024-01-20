@@ -11,11 +11,11 @@ import
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import GeneralAction from './generalAction'
 import { eraArray } from '../../config/eras'
+import { showNotification } from '@mantine/notifications'
 
 export default function Industry()
 {
@@ -25,10 +25,7 @@ export default function Industry()
 		error: '',
 	}
 
-	const [update, setUpdate] = useState()
-
 	const { empire } = useSelector((state) => state.empire)
-
 	const dispatch = useDispatch()
 
 	const form = useForm({
@@ -86,10 +83,18 @@ export default function Industry()
 			const res = await Axios.post(`/empire/${empire.uuid}/industry`, values)
 			// console.log(res.data)
 			dispatch(empireLoaded(res.data))
-			setUpdate('Success')
+			showNotification({
+				title: 'Industry Settings Updated',
+				color: 'red',
+				autoClose: 2000,
+			})
 		} catch (error) {
 			console.log(error)
-			setUpdate(error)
+			showNotification({
+				title: 'Error Updating Industry Settings',
+				color: 'orange',
+				autoClose: 2000,
+			})
 		}
 	}
 

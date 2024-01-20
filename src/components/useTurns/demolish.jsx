@@ -2,7 +2,6 @@ import { Button, Center, NumberInput, Stack, Table, Title, Text } from '@mantine
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
@@ -12,6 +11,8 @@ import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState } from 'react'
 import { FavoriteButton } from '../utilities/maxbutton'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function Demolish()
 {
@@ -21,9 +22,8 @@ export default function Demolish()
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
-	const { time } = useSelector((state) => state.time)
 	const [loading, setLoading] = useState(false)
-
+	const loadEmpire = useLoadEmpire(empire.uuid)
 	const dispatch = useDispatch()
 
 	const getDemolishAmounts = (empire) =>
@@ -145,26 +145,13 @@ export default function Demolish()
 		errors.error = error
 	}
 
-	const loadEmpireTest = async () =>
-	{
-		try {
-			const res = await Axios.get(`/empire/${empire.uuid}`)
-			// console.log(res.data)
-			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	const doDemolish = async (values) =>
 	{
 		setLoading(true)
 		try {
 			const res = await Axios.post('/demolish', values)
-			// dispatch(setResult(res.data))
-			// console.log(res.data)
 			dispatch(setResult(res.data))
-			loadEmpireTest()
+			loadEmpire()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -192,17 +179,7 @@ export default function Demolish()
 		}
 	}
 
-	let roundStatus = false
-	let upcoming = time.start - time.time
-	let remaining = time.end - time.time
-
-	if (upcoming > 0) {
-		roundStatus = true
-	} else if (remaining < 0) {
-		roundStatus = true
-	} else {
-		roundStatus = false
-	}
+	const roundStatus = checkRoundStatus()
 
 	return (
 		<main>

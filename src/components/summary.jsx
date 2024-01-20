@@ -1,78 +1,26 @@
-import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Modal, Button, Center, ActionIcon, Tooltip } from '@mantine/core'
+import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, ActionIcon, Tooltip } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import { useTour } from '@reactour/tour';
 import { steps } from '../tour/steps'
 import { Compass, Question } from '@phosphor-icons/react'
+import { setBgImage } from '../functions/setBgImage'
+import NewPlayerModal from './layout/newPlayerModal'
 
 export default function Summary()
 {
-	const [newPlayerModal, setNewPlayerModal] = useState(false)
-	const [raceStrength, setRaceStrength] = useState('')
 	const { empire } = useSelector((state) => state.empire)
-
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
-
 	const { time } = useSelector((state) => state.time)
-	// console.log(time)
-	let bgimage = '/images/summaries/default.webp'
 
-	let cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
-	let indy = Math.round(empire.bldTroop / empire.land * 100)
-	let mage = Math.round(empire.bldWiz / empire.land * 100)
-	let farm = Math.round(empire.bldFood / empire.land * 100)
+	const bgimage = setBgImage(empire)
 
-	if (empire.turnsUsed < TURNS_PROTECTION) {
-		bgimage = '/images/summaries/default.webp'
-	} else if (cash > indy && cash > mage && cash > farm) {
-		if (empire.era === 0) {
-			bgimage = '/images/summaries/cashpast.webp'
-		} else if (empire.era === 1) {
-			bgimage = '/images/summaries/cashpresent.webp'
-		} else if (empire.era === 2) {
-			bgimage = '/images/summaries/cashfuture.webp'
-		}
-	} else if (indy > cash && indy > mage && indy > farm) {
-		if (empire.era === 0) {
-			bgimage = '/images/summaries/indypast.webp'
-		} else if (empire.era === 1) {
-			bgimage = '/images/summaries/indypresent.webp'
-		} else if (empire.era === 2) {
-			bgimage = '/images/summaries/indyfuture.webp'
-		}
-	} else if (mage > cash && mage > indy && mage > farm) {
-		if (empire.era === 0) {
-			bgimage = '/images/summaries/magepast.webp'
-		} else if (empire.era === 1) {
-			bgimage = '/images/summaries/magepresent.webp'
-		} else if (empire.era === 2) {
-			bgimage = '/images/summaries/magefuture.webp'
-		}
-	} else if (farm > cash && farm > indy && farm > mage) {
-		if (empire.era === 0) {
-			bgimage = '/images/summaries/farmpast.webp'
-		} else if (empire.era === 1) {
-			bgimage = '/images/summaries/farmpresent.webp'
-		} else if (empire.era === 2) {
-			bgimage = '/images/summaries/farmfuture.webp'
-		}
-	} else {
-		bgimage = '/images/summaries/default.webp'
-	}
 	let roundStatus = 'Round has not started'
-
-	// console.log(time)
-
-	// console.log(ROUND_START)
 	let upcoming = time.start - time.time
-	// console.log(upcoming)
 	let remaining = time.end - time.time
-	// console.log(ROUND_END)
-	// console.log(remaining)
 
 	if (upcoming > 0) {
 		roundStatus = `Round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days, ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((upcoming % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
@@ -81,62 +29,6 @@ export default function Summary()
 	} else {
 		roundStatus = `Round will end in ${Math.floor(remaining / (1000 * 60 * 60 * 24))} days, ${Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
 	}
-
-	// if empire is less than 5 minutes old, show new player modal
-	useEffect(() =>
-	{
-		// console.log(time - new Date(empire.createdAt).getTime())
-		if (empire && time.time && time.time - new Date(empire.createdAt).getTime() <= 120000) {
-			// console.log('new player')
-			// console.log(raceArray[empire.race].name)
-			// switch cases for raceStrength
-			switch (raceArray[empire.race].name) {
-				case 'Human':
-					setRaceStrength('being a generalist. You can go any direction you want with your empire. Your people can succeed in any era.')
-					break
-				case 'Elf':
-					setRaceStrength('magic. You should focus your buildings on Mage Towers, use turns in Meditate, and cast spells in the Magic Center. Your people are best suited for the Past era.')
-					break
-				case 'Dwarf':
-					setRaceStrength('industry. You should focus your buildings on Blacksmiths and use turns in Industry. Your people are best suited for the Future era.')
-					break
-				case 'Orc':
-					setRaceStrength('industry and military. You should focus your buildings on Blacksmiths and use turns in Industry. Your people are best suited for the Future era.')
-					break
-				case 'Gnome':
-					setRaceStrength('economy and markets. You should focus your buildings on Huts and Markets,  use turns in Cash, buy things from the Black Market. Your people are best suited for the Future era.')
-					break
-				case 'Troll':
-					setRaceStrength('military. You should focus your buildings on Blacksmiths, Huts and Markets, and use your attack bonus to win battles. Your people are best suited for the Future era.')
-					break
-				case 'Drow':
-					setRaceStrength('magic and military. You should focus your buildings on Mage Towers, use turns in Meditate, and cast spells in the Magic Center. Your people are best suited for the Past era.')
-					break
-				case 'Gremlin':
-					setRaceStrength('food production. You should focus your buildings on Farms, use turns in Farm, sell your food on the Public Market. Your people are best suited for the Present era.')
-					break
-				case 'Goblin':
-					setRaceStrength('industry. You should focus your buildings on Blacksmiths and use your turns in Industry. Your people are best suited for the Future era.')
-					break
-				case 'Hobbit':
-					setRaceStrength('food production. You should focus your buildings on Farms and use turns in Farm. Your people are best suited for the Present era.')
-					break
-				case 'Ghoul':
-					setRaceStrength('food production and industry. You should focus your buildings on Blacksmiths and Farms, and use your turns in either Industry or Farm. Your people are best suited for the Present and Future era.')
-					break
-				case 'Vampire':
-					setRaceStrength('economy and industry. You should focus your buildings on Huts, Markets, and Blacksmiths, and use your turns in either Cash or Industry. Your people are best suited for the Future era.')
-					break
-				case 'Minotaur':
-					setRaceStrength('military and economy. You should focus your buildings on Huts and Markets, and use your attack and defense bonuses to win battles. Your people are best suited for the Future era.')
-					break
-				case 'Pixie':
-					setRaceStrength('magic and economy. You should focus your buildings on Mage Towers, Huts, and Markets, use turns in Meditate or Cash, and cast spells in the Magic Center. Beware of your low attack and defense stats. Your people are best suited for the Past era.')
-					break
-			}
-			setNewPlayerModal(true)
-		}
-	}, [])
 
 	return (
 		<main>
@@ -147,27 +39,7 @@ export default function Summary()
 				</Title>
 				<div>
 					<>
-						<Modal
-							opened={newPlayerModal}
-							onClose={() => setNewPlayerModal(false)}
-							title="Welcome to NeoPromisance!"
-							centered
-							overflow="inside"
-							size="lg"
-						>
-							<Text>
-								You are the founder of a new empire in the world of Promisance. You are currently in the protection period. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
-							</Text>
-							<Text mt='sm'>
-								If you are brand new to the game, the <strong>First Turns Tour</strong> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Additional walkthrough tours are indicated with the Compass <Compass /> icon and are available on the Build and Attack pages.
-							</Text>
-							<Text mt='sm'>
-								You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building buildings tailored to your economy, military, magic, or food production. You can also focus on a combination of these things.
-							</Text>
-							<Text mt='sm'>
-								As a {raceArray[empire.race].name} your people are strongest in {raceStrength}
-							</Text>
-						</Modal>
+						<NewPlayerModal empire={empire} time={time} />
 						<Card>
 							<Group position='apart'>
 								<div>

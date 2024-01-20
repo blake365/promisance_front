@@ -18,17 +18,18 @@ import { getPower_self, baseCost } from '../../functions/functions'
 import { eraArray } from '../../config/eras'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { useState } from 'react'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
 export default function MagicCenter()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
     const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
-
+    const loadEmpire = useLoadEmpire(empire.uuid)
     const form = useForm({
         initialValues: {
             empireId: empire.id,
@@ -65,7 +66,7 @@ export default function MagicCenter()
             // console.log(res.data)
             dispatch(setResult(res.data))
             window.scroll({ top: 0, behavior: 'smooth' })
-            loadEmpireTest()
+            loadEmpire()
             setLoading(false)
         } catch (error) {
             console.log(error)
@@ -115,18 +116,7 @@ export default function MagicCenter()
 
     const { nextEra, canAdvance, prevEra, canRegress } = eraCheck(empire)
 
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
-
+    const roundStatus = checkRoundStatus()
 
     return (
         <section >

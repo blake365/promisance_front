@@ -10,17 +10,17 @@ import
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
+import { useDispatch } from 'react-redux'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { useState } from 'react'
 import { useTour } from '@reactour/tour'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 
 export default function GeneralAction(props)
 {
 	// const empire = useSelector((state) => state.empire)
-	const { time } = useSelector((state) => state.time)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
 
@@ -43,16 +43,7 @@ export default function GeneralAction(props)
 		},
 	})
 
-	const loadEmpireTest = async () =>
-	{
-		try {
-			const res = await Axios.get(`/empire/${props.empire.uuid}`)
-			// console.log(res.data)
-			dispatch(empireLoaded(res.data))
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	const loadEmpire = useLoadEmpire(props.empire.uuid)
 
 	const doTurns = async (values) =>
 	{
@@ -60,7 +51,7 @@ export default function GeneralAction(props)
 		try {
 			const res = await Axios.post('/useturns', values)
 			dispatch(setResult(res.data))
-			loadEmpireTest()
+			loadEmpire()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -83,17 +74,7 @@ export default function GeneralAction(props)
 		flavorText = `Using turns in any way will heal your empire but for each turn you spend ${props.flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 66% of its baseline value.`
 	}
 
-	let roundStatus = false
-	let upcoming = time.start - time.time
-	let remaining = time.end - time.time
-
-	if (upcoming > 0) {
-		roundStatus = true
-	} else if (remaining < 0) {
-		roundStatus = true
-	} else {
-		roundStatus = false
-	}
+	const roundStatus = checkRoundStatus()
 
 	return (
 		<section >

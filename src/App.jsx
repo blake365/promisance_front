@@ -193,7 +193,6 @@ function App()
 	let pageState = locationArr[last]
 	let pageName = pageState.replace('%20', ' ')
 	// console.log(pageState)
-
 	// console.log(clanMail)
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
