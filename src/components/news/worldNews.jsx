@@ -9,7 +9,7 @@ export default function WorldNews()
 {
     let body = {
         skip: 0,
-        take: 10,
+        take: 50,
         view: true
     }
     // get news
@@ -81,7 +81,7 @@ export default function WorldNews()
         initialValues: {
             empire: null,
             type: null,
-            number: 20
+            number: 50
         },
     })
 

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import { logoutEmpire } from '../../store/empireSlice';
 
 let bg = '/images/login.webp'
 
@@ -45,24 +46,25 @@ const useStyles = createStyles(() => ({
 export default function NewLogin()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
-    // let { empire } = useSelector((state) => state.empire)
+    let { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() =>
     {
         // console.log(user)
         // console.log(user.empires)
-        if ((isLoggedIn && user.empires?.length === 0) || (isLoggedIn && user.empires === undefined)) {
+        if (!isLoggedIn && empire) {
+            dispatch(logoutEmpire())
+        } else if ((isLoggedIn && user.empires?.length === 0) || (isLoggedIn && user.empires === undefined)) {
             return navigate('/create')
         } else if (isLoggedIn && user.empires.length > 0) {
             // dispatch(empireLoaded(user.empires[0]))
             return navigate('/app/')
         }
-    }, [isLoggedIn, user, navigate])
+    }, [isLoggedIn])
 
-    const dispatch = useDispatch()
 
     const form = useForm({
         initialValues: {

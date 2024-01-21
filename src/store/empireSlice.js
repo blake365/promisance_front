@@ -41,6 +41,18 @@ export const fetchEmpire = createAsyncThunk(
 	}
 )
 
+export const logoutEmpire = createAsyncThunk(
+	'empire/logout',
+	async (thunkAPI) => {
+		try {
+			return initialState
+		} catch (e) {
+			// console.log(e)
+			return thunkAPI.rejectWithValue()
+		}
+	}
+)
+
 export const empireSlice = createSlice({
 	name: 'empire',
 	initialState: initialState,
@@ -69,6 +81,10 @@ export const empireSlice = createSlice({
 			state.status = 'succeeded'
 			state.empire = action.payload.empire
 		},
+		[logoutEmpire.fulfilled]: (state, action) => {
+			state.status = 'idle'
+			state.empire = null
+		},
 		[PURGE]: (state, action) => {
 			// console.log(action)
 			state = initialState
@@ -76,7 +92,6 @@ export const empireSlice = createSlice({
 	},
 })
 
-// export const { turnsUsed } = empireSlice.actions
 export const { empireLoaded } = empireSlice.actions
 
 export const empireSelector = (state) => state.empire

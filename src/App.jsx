@@ -26,7 +26,7 @@ import Sidebar from './components/layout/sidebar'
 import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
-import { fetchEmpire, empireLoaded } from './store/empireSlice'
+import { fetchEmpire, empireLoaded, logoutEmpire } from './store/empireSlice'
 import { load, logout } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
 import { useLocation } from 'react-router-dom'
@@ -38,7 +38,6 @@ import { fetchEffects } from './store/effectSlice'
 import BonusTurns from './components/layout/bonusTurns';
 import { persistor } from './store/store';
 import { resetUser } from './store/userSlice';
-
 import { useTour } from '@reactour/tour';
 import { processAchievement } from './functions/processAchievement';
 import GuideModalButton from './components/guide/guideModalButton';
@@ -65,6 +64,7 @@ function App()
 			return persistor.purge();
 		})
 		dispatch(resetUser())
+		dispatch(logoutEmpire())
 		navigate('/login')
 	}
 	// console.log(empire)
@@ -241,6 +241,7 @@ function App()
 												return persistor.purge();
 											})
 											dispatch(logout())
+											dispatch(logoutEmpire())
 										}}
 										variant='subtle'
 										color='red'
