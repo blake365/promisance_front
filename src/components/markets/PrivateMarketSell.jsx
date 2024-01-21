@@ -1,15 +1,15 @@
-import { Button, Center, Group, NumberInput, Card, SimpleGrid, Text, Stack } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { Button, Center, NumberInput, Text, Stack } from '@mantine/core'
+import { useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
-import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_MAXSELL, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_RUNES } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
 import classes from './markets.module.css'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { showNotification } from '@mantine/notifications'
 
 
 // TODO: make it mobile friendly
@@ -17,11 +17,8 @@ import classes from './markets.module.css'
 
 export default function PrivateMarketSell()
 {
-    const [result, setResult] = useState(null)
-
     const { empire } = useSelector((state) => state.empire)
-
-    const dispatch = useDispatch()
+    const loadEmpire = useLoadEmpire(empire.uuid)
 
     const getCost = (emp, base, multiplier) =>
     {
@@ -39,7 +36,6 @@ export default function PrivateMarketSell()
     }
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
-
 
     const trpArmCost = getCost(empire, PVTM_TRPARM, 0.32)
     const trpLndCost = getCost(empire, PVTM_TRPLND, 0.34)
@@ -100,28 +96,49 @@ export default function PrivateMarketSell()
         form.setFieldValue('sellRunes', 0)
     }
 
-    // console.log(result)
-
-    const loadEmpireTest = async () =>
+    const interpretResult = (result) =>
     {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
+        let returnArray = []
+        if (result.resultSellArm.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellArm.amount.toLocaleString()} ${eraArray[empire.era].trparm} for $${result.resultSellArm.price.toLocaleString()}`)
         }
+        if (result.resultSellLnd.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellLnd.amount.toLocaleString()} ${eraArray[empire.era].trplnd} for $${result.resultSellLnd.price.toLocaleString()}`)
+        }
+        if (result.resultSellFly.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellFly.amount.toLocaleString()} ${eraArray[empire.era].trpfly} for $${result.resultSellFly.price.toLocaleString()}`)
+        }
+        if (result.resultSellSea.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellSea.amount.toLocaleString()} ${eraArray[empire.era].trpsea} for $${result.resultSellSea.price.toLocaleString()}`)
+        }
+        if (result.resultSellFood.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellFood.amount.toLocaleString()} ${eraArray[empire.era].food} for $${result.resultSellFood.price.toLocaleString()}`)
+        }
+        if (result.resultSellRunes.amount > 0) {
+            returnArray.push(`You Sold ${result.resultSellRunes.amount.toLocaleString()} ${eraArray[empire.era].runes} for $${result.resultSellRunes.price.toLocaleString()}`)
+        }
+        return returnArray
     }
 
     const doSell = async (values) =>
     {
         try {
             const res = await Axios.post('/privatemarket/sell', values)
-            setResult(res.data)
-            loadEmpireTest()
+            const result = res.data
+            const resultArray = interpretResult(result)
+            showNotification({
+                title: 'Items Sold',
+                message: resultArray.map((item) => <Text>{item}</Text>),
+                color: 'blue',
+            })
+            loadEmpire()
             form.reset()
         } catch (error) {
             console.log(error)
+            showNotification({
+                title: 'Error Selling Goods',
+                color: 'orange',
+            })
         }
     }
 
@@ -132,7 +149,7 @@ export default function PrivateMarketSell()
                     <form
                         onSubmit={form.onSubmit((values) =>
                         {
-                            console.log(values)
+                            // console.log(values)
                             doSell(values)
                         })
                         }
@@ -216,23 +233,10 @@ export default function PrivateMarketSell()
                             </table>
                         </div>
                         <Center mt='md'>
-                            <Button type='submit'> Sell Goods </Button>
+                            <Button type='submit'>Sell Goods</Button>
                         </Center>
                     </form>
-                    {result &&
-                        <Card shadow='sm' padding='sm' withBorder >
-                            <Stack spacing='xs' align='center'>
-                                {result?.resultSellArm.amount > 0 ? <Text>You Sold {result.resultSellArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultSellArm.price.toLocaleString()}</Text> : ''}
-                                {result?.resultSellLnd.amount > 0 ? <Text>You Sold {result.resultSellLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultSellLnd.price.toLocaleString()}</Text> : ''}
-                                {result?.resultSellFly.amount > 0 ? <Text>You Sold {result.resultSellFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultSellFly.price.toLocaleString()}</Text> : ''}
-                                {result?.resultSellSea.amount > 0 ? <Text>You Sold {result.resultSellSea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultSellSea.price.toLocaleString()}</Text> : ''}
-                                {result?.resultSellFood.amount > 0 ? <Text>You Sold {result.resultSellFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultSellFood.price.toLocaleString()}</Text> : ''}
-                                {result?.resultSellRunes.amount > 0 ? <Text>You Sold {result.resultSellRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultSellRunes.price.toLocaleString()}</Text> : ''}
-                            </Stack>
-                        </Card>
-                    }
                 </Stack>
-
             </Center>
         </main>
     )

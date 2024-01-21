@@ -11,7 +11,6 @@ import
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { forwardRef } from 'react'
 import { getPower_self, baseCost } from '../../functions/functions'
@@ -45,17 +44,6 @@ export default function MagicCenter()
             number: "Can't cast spell that many times",
         },
     })
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const doMagic = async (values) =>
     {

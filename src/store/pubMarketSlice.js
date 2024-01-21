@@ -21,6 +21,7 @@ export const fetchOtherItems = createAsyncThunk(
 	'market/otherItems',
 	async (values, thunkAPI) => {
 		try {
+			// console.log('fetchOtherItems')
 			// console.log(values)
 			const res = await Axios.post('/publicmarket/pubSellOthers', values)
 			let data = res.data

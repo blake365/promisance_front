@@ -1,34 +1,21 @@
 import { Button, Center, Title, Text, Stack } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
 import { useEffect, useState } from 'react'
 import { LOTTERY_MAXTICKETS, TURNS_PROTECTION } from '../../config/config'
 import { generalLog } from '../../functions/functions'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { showNotification } from '@mantine/notifications'
 
 export default function Lottery()
 {
-
-    const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(false)
     const [jackpot, setJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [totalTickets, setTotalTickets] = useState(0)
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
-    // let loanDefault = empire.loan
-    const dispatch = useDispatch()
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const loadEmpire = useLoadEmpire(empire.uuid)
 
     const buyTicket = async () =>
     {
@@ -40,11 +27,19 @@ export default function Lottery()
         try {
             const res = await Axios.post(`/lottery/buyTicket`, values)
             // console.log(res.data)
-            setResult(res.data)
-            loadEmpireTest()
+            showNotification({
+                title: 'Lottery Ticket Purchased',
+                color: 'blue',
+                autoClose: 2000,
+            })
+            loadEmpire()
         } catch (error) {
             console.log(error)
-            setResult(error.response.data)
+            showNotification({
+                title: 'Error purchasing lottery ticket.',
+                color: 'orange',
+                autoClose: 2000,
+            })
         }
         setLoading(false)
     }
@@ -85,7 +80,6 @@ export default function Lottery()
             }
         }
 
-
         fetchJackpot().then((res) => setJackpot(res))
         getTickets().then((res) => setTickets(res))
         getTotalTickets().then((res) => setTotalTickets(res))
@@ -94,19 +88,7 @@ export default function Lottery()
 
     let ticketCost = Math.round(empire.networth / generalLog(empire.networth, 25))
 
-
-    // console.log(result[0].action)
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0 || remaining / 1000 / 60 / 60 < 24) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    const roundStatus = checkRoundStatus(true)
 
     return (
         <main>

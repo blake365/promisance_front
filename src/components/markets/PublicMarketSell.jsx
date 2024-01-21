@@ -1,8 +1,7 @@
 import { Button, Center, NumberInput, Text, Stack, Loader } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START, PUBMKT_MAXTIME } from '../../config/config'
@@ -10,26 +9,17 @@ import { MaxButton } from '../utilities/maxbutton'
 
 import classes from './markets.module.css'
 import MyItem from './myItem'
-
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { showNotification } from '@mantine/notifications'
+import { fetchMyItems } from '../../store/pubMarketSlice'
 // make it mobile friendly
 
 export default function PublicMarketSell({ empire })
 {
-    // Public Market Workflow:
-    // search empire for number of units available
-    // player sets price and number of units to sell
-    // add db entry with type, number, price, empireID, time to Market table
-    // deduct items from selling empire
-    // show items for sale for current empire
-    // remove items after X hours and return to seller
-
     const dispatch = useDispatch()
-    // const [result, setResult] = useState(null)
-
+    const loadEmpire = useLoadEmpire(empire.uuid)
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
-
-    // console.log(myItems)
 
     const getCost = (emp, base) =>
     {
@@ -48,14 +38,6 @@ export default function PublicMarketSell({ empire })
     {
         // console.log(items)
         let processedItems = []
-
-        // take items that are on the market. 
-        // create a new object that has the item type, and amount
-        // if the item is greater than 12 hours old, do not add it
-        // if the item is less than 12 hours old, add it to the array
-        // if items are the same type, add them together to get the total amount
-        // return the array
-
         items.forEach((item) =>
         {
             let age = Math.floor((now - new Date(item.createdAt)) / 1000 / 60 / 60)
@@ -70,8 +52,6 @@ export default function PublicMarketSell({ empire })
             }
         })
 
-        // take the processed items if the type is the same, add the amount together and consolidate into one object
-        // console.log(processedItems)
         processedItems = processedItems.reduce((acc, curr) =>
         {
             let found = acc.find((item) => item.type === curr.type)
@@ -204,16 +184,29 @@ export default function PublicMarketSell({ empire })
     }
 
     // console.log(result)
-
-    const loadEmpireTest = async () =>
+    const interpretResults = (result) =>
     {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
+        return result.map((element, index) =>
+        {
+            let item = ''
+            if (index === 0) {
+                item = 'trparm'
+            } else if (index === 1) {
+                item = 'trplnd'
+            } else if (index === 2) {
+                item = 'trpfly'
+            } else if (index === 3) {
+                item = 'trpsea'
+            } else if (index === 4) {
+                item = 'food'
+            } else if (index === 5) {
+                item = 'runes'
+            }
+
+            if (element.amount > 0) {
+                return <Text>Listed {element.amount.toLocaleString()} {eraArray[empire.era][item]} for ${element.price}</Text>
+            }
+        })
     }
 
     const doSell = async (values) =>
@@ -221,9 +214,15 @@ export default function PublicMarketSell({ empire })
         try {
             const res = await Axios.post('/publicmarket/pubSell', values)
             // dispatch(fetchMyItems())
-            // setResult(res.data)
+            // console.log(res.data)
             // console.log(values)
-            loadEmpireTest()
+            showNotification({
+                title: 'Items Listed On Market',
+                message: interpretResults(res.data),
+            })
+            dispatch(fetchMyItems({ empireId: empire.id }))
+            form.reset()
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }
@@ -243,10 +242,8 @@ export default function PublicMarketSell({ empire })
     return (
         <main>
             <Center my={10}>
-
                 {!myItems ? (
                     <Loader />) : (
-
                     <Stack spacing='sm' align='center'>
                         <Text weight='bold' align='center'>Items you sell will take {PUBMKT_START} hours to appear on the market.</Text>
                         <form
@@ -354,10 +351,9 @@ export default function PublicMarketSell({ empire })
                                 </table>
                             </div>
                             <Center mt='md'>
-                                <Button type='submit'> Sell Goods </Button>
+                                <Button type='submit'>Sell Goods</Button>
                             </Center>
                         </form>
-
 
                         <div className={classes.tablecontainer}>
                             <table className={classes.widetable}>

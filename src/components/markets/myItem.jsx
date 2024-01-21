@@ -1,31 +1,18 @@
 import { Button, NumberInput } from '@mantine/core'
-import { useDispatch } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { PUBMKT_START } from '../../config/config'
-
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { showNotification } from '@mantine/notifications'
+import { fetchMyItems } from '../../store/pubMarketSlice'
+import { useDispatch } from 'react-redux'
 
 export default function MyItem({ element, empire })
 {
-
-    // console.log(element)
-    // console.log(empire)
-
     const dispatch = useDispatch()
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const loadEmpire = useLoadEmpire(empire.uuid)
 
     const editForm = useForm({
         initialValues: {
@@ -40,10 +27,13 @@ export default function MyItem({ element, empire })
     {
         try {
             const res = await Axios.post('/publicmarket/pubEditPrice', values)
-            // dispatch(fetchMyItems())
             // setResult(res.data)
-            // console.log(values)
-            loadEmpireTest()
+            showNotification({
+                title: 'Price Changed',
+                autoClose: 2000,
+            })
+            dispatch(fetchMyItems({ empireId: empire.id }))
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }
@@ -56,9 +46,12 @@ export default function MyItem({ element, empire })
             const res = await Axios.post('/publicmarket/pubRecall', body)
             // setResult(res.data)
             // console.log(values)
-            // dispatch(fetchMyItems())
-            // dispatch(fetchOtherItems(marketValues))
-            loadEmpireTest()
+            showNotification({
+                title: 'Items Recalled',
+                autoClose: 2000,
+            })
+            dispatch(fetchMyItems({ empireId: empire.id }))
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }
@@ -77,8 +70,7 @@ export default function MyItem({ element, empire })
     }
 
     // console.log(element)
-    let createdAt = new Date(element.createdAt)
-    createdAt = createdAt.getTime()
+    let createdAt = new Date(element.createdAt).getTime()
     let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
     // hoursOnMarket -= PUBMKT_START
     let timeRemaining = Math.round((PUBMKT_START - hoursOnMarket) * 100) / 100
@@ -88,15 +80,15 @@ export default function MyItem({ element, empire })
         hoursOnMarket = Math.round((hoursOnMarket - 6) * 100) / 100
     }
 
-    // console.log(timeRemaining)
+    console.log(hoursOnMarket)
 
     return (
-        <tr tr key={element.id}>
+        <tr key={element.id}>
             <td align='center'>{unitArray[element.type]}</td>
             <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
             <td align='center'>${element.price.toLocaleString()}</td>
             <td align='center'>{hoursOnMarket}</td>
-            {hoursOnMarket >= 6 && <td align='center'>
+            {hoursOnMarket >= 0 && <td align='center'>
                 <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
                     editForm.onSubmit((values) =>
                     {
@@ -108,7 +100,6 @@ export default function MyItem({ element, empire })
                         }
                         // console.log(body)
                         doEdit(body)
-
                     })}>
                     <NumberInput
                         hideControls
@@ -127,7 +118,6 @@ export default function MyItem({ element, empire })
                 </form>
             </td>
             }
-
         </tr>
     )
 }

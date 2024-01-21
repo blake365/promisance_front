@@ -1,15 +1,15 @@
-import { Button, Center, NumberInput, Card, Stack, Text } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { Button, Center, NumberInput, Stack, Text } from '@mantine/core'
+import { useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
-import { useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_RUNES, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
 import classes from './markets.module.css'
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { showNotification } from '@mantine/notifications'
 
 
 // DONE: build sell side of market
@@ -19,17 +19,15 @@ import classes from './markets.module.css'
 
 export default function PrivateMarketBuy()
 {
-    const [result, setResult] = useState(null)
 
     let buyNumberArray = []
-
     let totalPrice = 0
     let errors = {
         error: '',
     }
-    const { empire } = useSelector((state) => state.empire)
 
-    const dispatch = useDispatch()
+    const { empire } = useSelector((state) => state.empire)
+    const loadEmpire = useLoadEmpire(empire.uuid)
 
     const getCost = (emp, base) =>
     {
@@ -66,11 +64,6 @@ export default function PrivateMarketBuy()
             return Math.floor(empire.cash / priceArray[index])
         }
     })
-
-    // 23 4003
-
-    // console.log(availArray)
-    // console.log(priceArray)
 
     const form = useForm({
         initialValues: {
@@ -131,13 +124,6 @@ export default function PrivateMarketBuy()
         return value
     })
 
-    // console.log(spendArray)
-
-    // totalBuy = buyNumberArray
-    //     .filter(Number)
-    //     .reduce((partialSum, a) => partialSum + a, 0)
-    // console.log(totalBuy)
-
     totalPrice = spendArray
         .filter(Number)
         .reduce((partialSum, a) => partialSum + a, 0)
@@ -149,28 +135,49 @@ export default function PrivateMarketBuy()
         errors.error = error
     }
 
-    // console.log(result)
-
-    const loadEmpireTest = async () =>
+    const interpretResult = (result) =>
     {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
+        let returnArray = []
+        if (result?.resultBuyArm.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuyArm.amount.toLocaleString()} ${eraArray[empire.era].trparm} for $${result.resultBuyArm.price.toLocaleString()}`)
         }
+        if (result?.resultBuyLnd.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuyLnd.amount.toLocaleString()} ${eraArray[empire.era].trplnd} for $${result.resultBuyLnd.price.toLocaleString()}`)
+        }
+        if (result?.resultBuyFly.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuyFly.amount.toLocaleString()} ${eraArray[empire.era].trpfly} for $${result.resultBuyFly.price.toLocaleString()}`)
+        }
+        if (result?.resultBuySea.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuySea.amount.toLocaleString()} ${eraArray[empire.era].trpsea} for $${result.resultBuySea.price.toLocaleString()}`)
+        }
+        if (result?.resultBuyFood.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuyFood.amount.toLocaleString()} ${eraArray[empire.era].food} for $${result.resultBuyFood.price.toLocaleString()}`)
+        }
+        if (result?.resultBuyRunes.amount > 0) {
+            returnArray.push(`You purchased ${result.resultBuyRunes.amount.toLocaleString()} ${eraArray[empire.era].runes} for $${result.resultBuyRunes.price.toLocaleString()}`)
+        }
+        return returnArray
     }
 
     const doBuy = async (values) =>
     {
         try {
             const res = await Axios.post('/privatemarket/buy', values)
-            setResult(res.data)
-            loadEmpireTest()
+            const result = res.data
+            const resultArray = interpretResult(result)
+            showNotification({
+                title: 'Purchase Successful',
+                message: resultArray.map((item) => <Text>{item}</Text>),
+                color: 'blue',
+            })
+            loadEmpire()
             form.reset()
         } catch (error) {
             console.log(error)
+            showNotification({
+                title: 'Error Purchasing Goods',
+                color: 'orange',
+            })
         }
     }
 
@@ -180,7 +187,7 @@ export default function PrivateMarketBuy()
                 <Stack spacing='sm' align='center'>
                     <form
                         onSubmit={
-                            totalPrice <= empire.cash
+                            totalPrice < empire.cash
                                 ? form.onSubmit((values) =>
                                 {
                                     // console.log(values)
@@ -271,38 +278,17 @@ export default function PrivateMarketBuy()
                                             </tr>
                                         )
                                     })}
-
-
                                 </tbody>
                             </table>
                         </div>
-                        <Center mt='md'>
-                            <div style={{ color: 'red' }}>{errors.error}</div>
-                            {errors.error ? (
-                                <Button color='black' type='submit' disabled>
-                                    Buy Goods
-                                </Button>
-                            ) : (
-                                <Button color='black' type='submit'>
-                                    Buy Goods
-                                </Button>
-                            )}
-                        </Center>
+                        <Stack align='center'>
+                            <Text style={{ color: 'red' }}>{errors.error}</Text>
+                            <Button type='submit' disabled={errors.error}>
+                                Buy Goods
+                            </Button>
+                        </Stack>
                     </form>
-                    {result &&
-                        <Card shadow='sm' padding='sm' withBorder >
-                            <Stack spacing='xs' align='center'>
-                                {result?.resultBuyArm.amount > 0 ? <Text>You purchased {result.resultBuyArm.amount.toLocaleString()} {eraArray[empire.era].trparm} for ${result.resultBuyArm.price.toLocaleString()}</Text> : ''}
-                                {result?.resultBuyLnd.amount > 0 ? <Text>You purchased {result.resultBuyLnd.amount.toLocaleString()} {eraArray[empire.era].trplnd} for ${result.resultBuyLnd.price.toLocaleString()}</Text> : ''}
-                                {result?.resultBuyFly.amount > 0 ? <Text>You purchased {result.resultBuyFly.amount.toLocaleString()} {eraArray[empire.era].trpfly} for ${result.resultBuyFly.price.toLocaleString()}</Text> : ''}
-                                {result?.resultBuySea.amount > 0 ? <Text>You purchased {result.resultBuySea.amount.toLocaleString()} {eraArray[empire.era].trpsea} for ${result.resultBuySea.price.toLocaleString()}</Text> : ''}
-                                {result?.resultBuyFood.amount > 0 ? <Text>You purchased {result.resultBuyFood.amount.toLocaleString()} {eraArray[empire.era].food} for ${result.resultBuyFood.price.toLocaleString()}</Text> : ''}
-                                {result?.resultBuyRunes.amount > 0 ? <Text>You purchased {result.resultBuyRunes.amount.toLocaleString()} {eraArray[empire.era].runes} for ${result.resultBuyRunes.price.toLocaleString()}</Text> : ''}
-                            </Stack>
-                        </Card>
-                    }
                 </Stack>
-
             </Center>
         </main>
     )

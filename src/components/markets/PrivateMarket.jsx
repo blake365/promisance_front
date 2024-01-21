@@ -1,23 +1,12 @@
 import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
 import PrivateMarketBuy from "./PrivateMarketBuy"
 import PrivateMarketSell from "./PrivateMarketSell"
-import { useSelector } from "react-redux"
+import { checkRoundStatus } from "../../functions/checkRoundStatus"
 
 export default function PrivateMarket()
 {
-    const { time } = useSelector((state) => state.time)
 
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    const roundStatus = checkRoundStatus()
 
     return (
         <main>

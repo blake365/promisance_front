@@ -7,22 +7,19 @@ import { useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
 import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
-
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { showNotification } from '@mantine/notifications'
 // DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
 // DONE: form validation
 // DONE: added max buttons
 
 export default function WorldBank()
 {
-    const [result, setResult] = useState(null)
 
-    // let errors = {
-    //     error: '',
-    // }
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
+    const loadEmpire = useLoadEmpire(empire.uuid)
     // let loanDefault = empire.loan
-    const dispatch = useDispatch()
 
     const size = calcSizeBonus(empire)
     const loanRate = (Math.round((BANK_LOANRATE + size) * 100) / 100 / 100).toFixed(2)
@@ -94,42 +91,45 @@ export default function WorldBank()
         loanForm.setFieldValue('repayAmt', 0)
     }
 
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // setResult(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const doBanking = async (values) =>
     {
         try {
             const res = await Axios.post(`/empire/${empire.uuid}/bank`, values)
             // console.log(res.data)
-            setResult(res.data)
+            const result = res.data
+            showNotification({
+                title: 'Banking',
+                message: result.map((item, index) =>
+                {
+                    if (item.action === 'deposit') {
+                        return <div key={index}>You deposited ${item.amount.toLocaleString()} into the bank.</div>
+                    }
+                    if (item.action === 'withdraw') {
+                        return <div key={index}>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
+                    }
+                    if (item.action === 'loan') {
+                        return <div key={index}>You took out a loan for ${item.amount.toLocaleString()}.</div>
+                    }
+                    if (item.action === 'repay') {
+                        return <div key={index}>You repaid ${item.amount.toLocaleString()} toward your loan.</div>
+                    }
+                }),
+                autoClose: 2000
+            })
             savingsForm.reset()
-            loadEmpireTest()
+            loadEmpire()
         } catch (error) {
             console.log(error)
+            showNotification({
+                title: 'Banking Error',
+                message: 'Something went wrong.',
+                autoClose: 2000,
+                color: 'orange'
+            })
         }
     }
 
-    // console.log(result[0].action)
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    const roundStatus = checkRoundStatus()
 
     return (
         <main>
@@ -176,7 +176,6 @@ export default function WorldBank()
                                     {
                                         doBanking(values)
                                     })
-
                                 }
                             >
                                 <Stack align='center' spacing='sm'>
@@ -304,24 +303,6 @@ export default function WorldBank()
                             </form>
                         </Card>
                     </SimpleGrid>
-
-                    {result &&
-                        result.map((item, index) =>
-                        {
-                            if (item.action === 'deposit') {
-                                return <div key={index}>You deposited ${item.amount.toLocaleString()} into the bank.</div>
-                            }
-                            if (item.action === 'withdraw') {
-                                return <div key={index}>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
-                            }
-                            if (item.action === 'loan') {
-                                return <div key={index}>You took out a loan for ${item.amount.toLocaleString()}.</div>
-                            }
-                            if (item.action === 'repay') {
-                                return <div key={index}>You repaid ${item.amount.toLocaleString()} toward your loan.</div>
-                            }
-                        })
-                    }
                 </Stack>
             </Center>
         </main>

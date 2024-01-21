@@ -172,7 +172,6 @@ export default function Industry()
 							)}
 						</Stack>
 					</form>
-					<div>{update}</div>
 				</Stack>
 			</Center>
 		</main>
