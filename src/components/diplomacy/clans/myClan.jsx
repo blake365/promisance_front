@@ -1,7 +1,7 @@
 // forms to create and join a clan
 import { Title, Text, Stack, Tabs, Paper, Loader, Button } from "@mantine/core"
 
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Axios from "axios"
 import MemberCard from "./memberCard"
@@ -9,32 +9,20 @@ import ClanIntel from "./clanIntel"
 import ClanNews from "./clanNews"
 import ClanChat from "./clanChat"
 import ClanRelations from "./clanRelations"
-import { empireLoaded } from '../../../store/empireSlice'
+import { checkRoundStatus } from '../../../functions/checkRoundStatus'
+import { useLoadEmpire } from "../../../hooks/useLoadEmpire"
 
 // show clan info, clan members, clan chat
 function MyClan()
 {
-    const dispatch = useDispatch()
 
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
-
+    const loadEmpire = useLoadEmpire(empire.uuid)
     const [clan, setClan] = useState(null)
     const [members, setMembers] = useState(null)
     const [clanMail, setClanMail] = useState(0)
     const [response, setResponse] = useState(null)
 
-    // console.log(empire)
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const checkForClanMail = async () =>
     {
@@ -82,7 +70,7 @@ function MyClan()
             const res = await Axios.post('/clans/disband', { clanId: clan.id, empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
-            loadEmpireTest()
+            loadEmpire()
         } catch (error) {
             console.log(error)
             setResponse(error?.response?.data?.error)
@@ -95,24 +83,14 @@ function MyClan()
             const res = await Axios.post('/clans/leave', { empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
-            loadEmpireTest()
+            loadEmpire()
         } catch (error) {
             console.log(error)
             setResponse(error?.response?.data?.error)
         }
     }
 
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    const roundStatus = checkRoundStatus()
 
     return (
         <section>

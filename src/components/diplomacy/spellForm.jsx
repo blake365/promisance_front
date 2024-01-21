@@ -11,8 +11,9 @@ import { baseCost } from '../../functions/functions'
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
+import { loadScores } from '../../store/scoresSlice'
 
-const SpellForm = ({ empire, roundStatus, spy }) =>
+const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
 {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -21,13 +22,16 @@ const SpellForm = ({ empire, roundStatus, spy }) =>
 
     const loadEmpire = useLoadEmpire(empire.uuid)
     const dispatch = useDispatch()
-    const otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+    let otherEmpires = null
+    if (!defenderId) {
+        otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+    }
 
     const spellForm = useForm({
         initialValues: {
             attackerId: empire.id,
             type: 'magic attack',
-            defenderId: '',
+            defenderId: defenderId ? defenderId : '',
             spell: spy ? 'spy' : ''
         },
 
@@ -53,6 +57,9 @@ const SpellForm = ({ empire, roundStatus, spy }) =>
                 window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult([res.data]))
                 loadEmpire()
+            }
+            if (defenderId) {
+                dispatch(loadScores())
             }
             setLoading(false)
         } catch (error) {

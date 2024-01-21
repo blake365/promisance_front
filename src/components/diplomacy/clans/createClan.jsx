@@ -8,19 +8,18 @@ import
     Text,
     Card,
 } from '@mantine/core';
-import { useForm } from '@mantine/form'
-import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useForm } from '@mantine/form';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import Axios from 'axios';
-import { empireLoaded } from '../../../store/empireSlice'
-
+import { useLoadEmpire } from '../../../hooks/useLoadEmpire';
+import { showNotification } from '@mantine/notifications';
 
 export default function CreateClan({ disabled })
 {
     const { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
-
-    const dispatch = useDispatch()
+    const loadEmpire = useLoadEmpire(empire.uuid)
 
     const form = useForm({
         initialValues: {
@@ -30,26 +29,23 @@ export default function CreateClan({ disabled })
         },
     })
 
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const createClan = async (values) =>
     {
         try {
             const res = await Axios.post('/clans/create', values)
             // console.log(res)
-            loadEmpireTest()
+            showNotification({
+                title: 'Clan Created',
+                autoClose: 2000,
+            })
+            loadEmpire()
         } catch (err) {
             setError(err.response.data)
             console.log(err)
+            showNotification({
+                title: 'Error Creating Clan',
+                autoClose: 2000,
+            })
         }
     }
 

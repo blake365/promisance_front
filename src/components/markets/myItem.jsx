@@ -80,7 +80,7 @@ export default function MyItem({ element, empire })
         hoursOnMarket = Math.round((hoursOnMarket - 6) * 100) / 100
     }
 
-    console.log(hoursOnMarket)
+    // console.log(hoursOnMarket)
 
     return (
         <tr key={element.id}>
@@ -88,7 +88,7 @@ export default function MyItem({ element, empire })
             <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
             <td align='center'>${element.price.toLocaleString()}</td>
             <td align='center'>{hoursOnMarket}</td>
-            {hoursOnMarket >= 0 && <td align='center'>
+            {hoursOnMarket >= 6 && <td align='center'>
                 <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
                     editForm.onSubmit((values) =>
                     {

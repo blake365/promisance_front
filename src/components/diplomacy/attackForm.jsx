@@ -10,8 +10,9 @@ import { MAX_ATTACKS } from "../../config/config";
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
+import { loadScores } from '../../store/scoresSlice'
 
-const AttackForm = ({ empire, roundStatus }) =>
+const AttackForm = ({ empire, roundStatus, defenderId }) =>
 {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -19,7 +20,10 @@ const AttackForm = ({ empire, roundStatus }) =>
     const [selectedAttack, setSelectedAttack] = useState('')
 
     const loadEmpire = useLoadEmpire(empire.uuid)
-    const otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+    let otherEmpires = null
+    if (!defenderId) {
+        otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+    }
     const dispatch = useDispatch()
 
     const form = useForm({
@@ -27,7 +31,7 @@ const AttackForm = ({ empire, roundStatus }) =>
             empireId: empire.id,
             type: 'attack',
             number: 1,
-            defenderId: '',
+            defenderId: defenderId ? defenderId : '',
             attackType: ''
         },
 
@@ -53,6 +57,9 @@ const AttackForm = ({ empire, roundStatus }) =>
                 window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
                 loadEmpire()
+            }
+            if (defenderId) {
+                dispatch(loadScores())
             }
             setLoading(false)
         } catch (error) {
@@ -94,7 +101,7 @@ const AttackForm = ({ empire, roundStatus }) =>
             </Card.Section>
             <form onSubmit={form.onSubmit((values) =>
             {
-                console.log(values)
+                // console.log(values)
                 sendAttack(values)
                 // dispatch(clearResult)
                 // window.scroll({ top: 0, behavior: 'smooth' })

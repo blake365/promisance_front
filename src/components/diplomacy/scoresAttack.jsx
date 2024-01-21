@@ -1,94 +1,21 @@
 import
 {
-    Center,
-    Button,
-    Select,
-    Text,
+    Center, Text,
     Stack,
     Card,
     Table,
-    Group,
-    Title
+    Group
 } from '@mantine/core'
-import { useState, forwardRef } from 'react'
-import { useForm } from '@mantine/form'
-import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
-import { setResult } from '../../store/turnResultsSlice'
+import { useSelector } from 'react-redux'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
-import { loadScores } from '../../store/scoresSlice'
 import { offense, defense } from '../../functions/functions'
 
-import { MAX_ATTACKS } from '../../config/config'
+import AttackForm from './attackForm'
 
 export default function ScoresAttack({ enemy })
 {
     const { empire } = useSelector((state) => state.empire)
-    const dispatch = useDispatch()
-
-    const [selectedAttack, setSelectedAttack] = useState('')
-    const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
-
-    const form = useForm({
-        initialValues: {
-            empireId: empire.id,
-            type: 'attack',
-            number: 1,
-            defenderId: enemy.id,
-            attackType: ''
-        },
-        validationRules: {
-            number: (value) => empire.turns >= 2 && value > 0,
-        },
-        errorMessages: {
-            number: "Can't attack that many times",
-        },
-    })
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const sendAttack = async (values) =>
-    {
-        setLoading(true)
-        setError('')
-        try {
-            const res = await Axios.post(`/attack`, values)
-            // console.log(res.data)
-            if ("error" in res.data) {
-                setError(res.data.error)
-            } else {
-                window.scroll({ top: 0, behavior: 'smooth' })
-                dispatch(setResult(res.data))
-                loadEmpireTest()
-                dispatch(loadScores())
-            }
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-        }
-    }
-
-    const SelectAttack = forwardRef(
-        ({ label, sub, ...others }, ref) => (
-            <div ref={ref} {...others}>
-                <Text size='md'>{label}</Text>
-                <Text size='xs' m={0}>{sub}</Text>
-            </div>
-        )
-    )
 
     function formatNumber(num)
     {
@@ -108,46 +35,8 @@ export default function ScoresAttack({ enemy })
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
-                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     <Group position='center'>
-                        <Card sx={{ width: '300px' }}>
-
-                            <form onSubmit={form.onSubmit((values) =>
-                            {
-                                // console.log(values)
-                                sendAttack(values)
-                                // window.scroll({ top: 0, behavior: 'smooth' })
-                                // dispatch(clearResult)
-                            })}>
-                                <Stack spacing='sm' align='center'>
-                                    <Select
-                                        value={selectedAttack}
-                                        onChange={setSelectedAttack}
-                                        label="Select an Attack Type"
-                                        placeholder="Pick one"
-                                        withAsterisk
-                                        withinPortal
-                                        itemComponent={SelectAttack}
-                                        data={[
-                                            { value: 'trparm', label: 'Guerilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
-                                            { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
-                                            { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
-                                            { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
-                                            { value: 'standard', label: 'All Out Attack', sub: 'attack with all units' },
-                                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
-                                            { value: 'pillage', label: 'Pillage', sub: 'attack with all units' }
-                                        ]}
-                                        {...form.getInputProps('attackType')}
-                                    />
-
-                                    <Button color='red' type='submit' loading={loading}>
-                                        Attack
-                                    </Button>
-                                    <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
-                                </Stack>
-                            </form>
-
-                        </Card>
+                        <AttackForm empire={empire} defenderId={enemy.id} roundStatus={false} />
                         <Card mb='sm'>
                             <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'baseline', height: '49px' }}>
                                 <Text weight={500}>Your Army:</Text>
@@ -204,7 +93,6 @@ export default function ScoresAttack({ enemy })
                                     </tbody>
                                 </Table>
                             </Card.Section>
-
                         </Card>
                     </Group>
 

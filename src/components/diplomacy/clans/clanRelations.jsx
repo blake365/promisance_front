@@ -1,13 +1,11 @@
 // clan scoreboard
-import { Stack, Title, Loader } from '@mantine/core'
+import { Stack, Loader } from '@mantine/core'
 import { useState, useEffect } from 'react'
-
 import Axios from 'axios'
 import ClanCard from './clanCard'
 
 export default function ClanRelations({ myClan, empireId })
 {
-
     const [loading, setLoading] = useState(false)
     const [clans, setClans] = useState(null)
     // console.log(scores)
@@ -15,7 +13,6 @@ export default function ClanRelations({ myClan, empireId })
     useEffect(() =>
     {
         setLoading(true)
-
         async function fetchScores()
         {
             const clans = await Axios.get('/clans/getClansData')
@@ -24,7 +21,6 @@ export default function ClanRelations({ myClan, empireId })
         }
         // fetch clans
         fetchScores()
-
         setLoading(false)
     }, [])
 

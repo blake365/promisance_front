@@ -15,7 +15,7 @@ import { empireLoaded } from '../../store/empireSlice'
 import { setResult } from '../../store/turnResultsSlice'
 import { MaxButton } from '../utilities/maxbutton'
 import { loadScores } from '../../store/scoresSlice'
-
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { eraArray } from '../../config/eras'
 import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
@@ -23,8 +23,7 @@ import classes from './aid.module.css'
 export default function ScoresAid({ friend })
 {
     const { empire } = useSelector((state) => state.empire)
-    const { time } = useSelector((state) => state.time)
-
+    const loadEmpire = useLoadEmpire(empire.uuid)
     const dispatch = useDispatch()
 
     const [error, setError] = useState('')
@@ -71,17 +70,6 @@ export default function ScoresAid({ friend })
         'trpArm', 'trpLnd', 'trpFly', 'trpSea', 'cash', 'food', 'runes'
     ]
 
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const sendAid = async (values) =>
     {
         // console.log('sending aid')
@@ -95,7 +83,7 @@ export default function ScoresAid({ friend })
             } else {
                 window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
-                loadEmpireTest()
+                loadEmpire()
                 form.reset()
                 dispatch(loadScores())
             }
@@ -111,19 +99,6 @@ export default function ScoresAid({ friend })
     let shipsNeeded = Math.round(empire.trpSea * 0.02)
     if (shipsNeeded < 10000) {
         shipsNeeded = 10000
-    }
-
-    let roundStatus = false
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
-
-    // console.log(upcoming / 60 / 10000 / 60, remaining)
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0 || remaining / 10000 / 60 / 60 < 24) {
-        roundStatus = true
-    } else {
-        roundStatus = false
     }
 
     return (

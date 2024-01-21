@@ -9,22 +9,19 @@ import
     Card,
     Select,
 } from '@mantine/core';
-import { useForm } from '@mantine/form'
-import { useDispatch, useSelector } from 'react-redux'
-import { useState, forwardRef, useEffect } from 'react'
+import { useForm } from '@mantine/form';
+import { useSelector } from 'react-redux';
+import { useState, forwardRef, useEffect } from 'react';
 import Axios from 'axios';
-import { empireLoaded } from '../../../store/empireSlice'
-
-
+import { useLoadEmpire } from '../../../hooks/useLoadEmpire';
+import { showNotification } from '@mantine/notifications';
 
 export default function JoinClan({ disabled })
 {
-    const dispatch = useDispatch()
     const { empire } = useSelector((state) => state.empire)
-    const [error, setError] = useState(null)
+    const loadEmpire = useLoadEmpire(empire.uuid)
     const [clans, setClans] = useState([])
     const [selectedClan, setSelectedClan] = useState('')
-
 
     const form = useForm({
         initialValues: {
@@ -40,7 +37,7 @@ export default function JoinClan({ disabled })
         {
             try {
                 const res = await Axios.get(`/clans/getClans`)
-                console.log(res.data)
+                // console.log(res.data)
                 if (res.data.length > 0) {
                     let clans = res.data.map(({ clanName, id }) => ({ clanName, id }))
                     let dataFormat = clans.map((clan) =>
@@ -50,7 +47,7 @@ export default function JoinClan({ disabled })
                         label: clan.clanName
                     })
                     )
-                    console.log(dataFormat)
+                    // console.log(dataFormat)
                     setClans(dataFormat)
                 }
 
@@ -71,26 +68,25 @@ export default function JoinClan({ disabled })
         )
     );
 
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const joinClan = async (values) =>
     {
         try {
             const res = await Axios.post('/clans/join', values)
             // console.log(res)
-            loadEmpireTest()
+            showNotification({
+                title: 'Clan Joined',
+                autoClose: 2000,
+            })
+            loadEmpire()
         } catch (err) {
-            setError(err.response.data)
+            // setError(err.response.data),
             console.log(err)
+            showNotification({
+                title: 'Error Joining Clan',
+                message: Object.values(err.response.data)[0],
+                color: 'orange',
+                autoClose: 5000,
+            })
         }
     }
 
@@ -120,14 +116,11 @@ export default function JoinClan({ disabled })
                         {...form.getInputProps('clanName')}
                     />
                     <TextInput required label="Clan Password" placeholder="password" mt="md" size="md" {...form.getInputProps('clanPassword')} />
-                    <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
                         Join Clan
                     </Button>
                 </Card>
             </form>) : (<Text align='center'>No clans have been created yet.</Text>)}
-
-
         </Paper>
     );
 }

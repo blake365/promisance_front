@@ -5,30 +5,19 @@ import
     Text
 } from '@mantine/core'
 import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../../store/empireSlice'
+import { useSelector } from 'react-redux'
+import { useLoadEmpire } from '../../../hooks/useLoadEmpire'
 
 
 export default function ClanRole({ member, role, clan })
 {
     const { empire } = useSelector((state) => state.empire)
+    const loadEmpire = useLoadEmpire(empire.uuid)
     // if you are the leader, you can promote to assistant, demote to member, or remove from clan
     // console.log(clan)
     // console.log(member)
     // if you are assistant or member, you cannot do anything
     // console.log(role)
-    const dispatch = useDispatch()
-
-    const loadEmpireTest = async () =>
-    {
-        try {
-            const res = await Axios.get(`/empire/${empire.uuid}`)
-            // console.log(res.data)
-            dispatch(empireLoaded(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     let permission = false
     if (empire.id === clan.empireIdLeader) {
@@ -41,7 +30,7 @@ export default function ClanRole({ member, role, clan })
         try {
             const res = await Axios.post('/clans/assignRole', { memberId: member.id, clanRole: 'assistant', empireId: empire.id })
             // console.log(res)
-            loadEmpireTest()
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }
@@ -52,7 +41,7 @@ export default function ClanRole({ member, role, clan })
         try {
             const res = await Axios.post('/clans/removeRole', { memberId: member.id, clanRole: role.toLowerCase(), empireId: empire.id })
             // console.log(res)
-            loadEmpireTest()
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }
@@ -62,8 +51,8 @@ export default function ClanRole({ member, role, clan })
     {
         try {
             const res = await Axios.post('/clans/kick', { empireId: member.id })
-            console.log(res)
-            loadEmpireTest()
+            // console.log(res)
+            loadEmpire()
         } catch (error) {
             console.log(error)
         }

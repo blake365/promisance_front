@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux'
 
 const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 {
-
     const [active, setActive] = useState(false)
     const [opened, { toggle }] = useDisclosure(false);
     // console.log(empire)

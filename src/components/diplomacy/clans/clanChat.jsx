@@ -24,7 +24,6 @@ const getMessages = async (body) =>
                 await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
             }
         }
-
         return data
     } catch (error) {
         console.error('Error fetching messages:', error)
