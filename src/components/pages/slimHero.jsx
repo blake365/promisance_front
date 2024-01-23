@@ -10,11 +10,11 @@ const useStyles = createStyles((theme) => ({
         backgroundPosition: 'center',
         '@media (max-width: 480px)': {
             backgroundImage:
-                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/militarysmall.webp)',
+                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/sit.webp)',
         },
         '@media (min-width: 480px)': {
             backgroundImage:
-                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/military2.webp)',
+                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/sit.webp)',
         },
         paddingTop: '3rem',
         paddingBottom: '3rem',

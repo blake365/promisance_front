@@ -1,17 +1,21 @@
 import { Group, ThemeIcon, Tooltip, RingProgress, Center, Stack } from '@mantine/core'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
+import { useEffect } from 'react'
+import { fetchEffects } from '../../store/effectSlice'
 
-// add a whole new redux slice for empire effects
-
-export default function EffectIcons()
+export default function EffectIcons({ empire, pageState })
 {
     // console.log(data.empire)
+    const dispatch = useDispatch()
     let effects = useSelector((state) => state.effects.effects)
     let now = new Date()
 
-    // console.log(effects)
-    // console.log(now)
+    useEffect(() =>
+        dispatch(fetchEffects({
+            id: empire.id
+        }))
+        , [empire, pageState])
 
     return (
         <div>

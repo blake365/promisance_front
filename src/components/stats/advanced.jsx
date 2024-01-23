@@ -136,7 +136,7 @@ function AdvancedStats()
     const [rawData, setRawData] = useState([])
     const [stat1, setStat1] = useState('cash')
     const [stat2, setStat2] = useState('networth')
-    const [take, setTake] = useState(200)
+    const [take, setTake] = useState(600)
     const [skip, setSkip] = useState(0)
     const [page, setPage] = useState(0)
     const [data, setData] = useState({

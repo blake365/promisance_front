@@ -1,13 +1,13 @@
 import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor, Loader } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
-import { useState, lazy, Suspense, useEffect } from 'react'
-
+import { useState, Suspense } from 'react'
+import lazy from '../utilities/lazyWrapper'
 const HomeNews = lazy(() => import('../layout/homeNews'));
 const HomeScores = lazy(() => import('../layout/homeScores'));
 import FooterSocial from '../layout/footer'
 import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'

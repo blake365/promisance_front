@@ -5,7 +5,7 @@ import { NewspaperClipping } from "@phosphor-icons/react"
 import Axios from "axios"
 import { useState, useEffect } from "react"
 
-const NewsDrawerButton = ({ kickOut, empire }) =>
+const NewsDrawerButton = ({ kickOut, empire, pageState }) =>
 {
     const [drawer, { open, close }] = useDisclosure(false)
     const [news, setNews] = useState(0)
@@ -24,7 +24,7 @@ const NewsDrawerButton = ({ kickOut, empire }) =>
     useEffect(() =>
     {
         checkForNews()
-    })
+    }, [empire, pageState])
 
     return (
         <div>

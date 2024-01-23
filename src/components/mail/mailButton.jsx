@@ -4,7 +4,7 @@ import { Envelope } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 
-const MailButton = ({ empire, kickOut }) =>
+const MailButton = ({ empire, kickOut, pageState }) =>
 {
     const [mail, setMail] = useState(0)
 
@@ -22,7 +22,7 @@ const MailButton = ({ empire, kickOut }) =>
     useEffect(() =>
     {
         checkForMail()
-    })
+    }, [empire, pageState])
 
     return (
         <Indicator color="green" disabled={mail < 1} label={mail} size={20} overflowCount={50} zIndex={3}>

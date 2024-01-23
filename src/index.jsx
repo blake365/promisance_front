@@ -1,14 +1,14 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
-
+import lazy from './components/utilities/lazyWrapper'
 import { Loader, Center } from '@mantine/core'
-
+import * as Sentry from '@sentry/react'
 import
 {
-	BrowserRouter, Routes, Route,
+	BrowserRouter, Routes, Route, useLocation, useNavigationType, createRoutesFromChildren, matchRoutes
 } from 'react-router-dom'
 
 const App = lazy(() => import('./App'))
@@ -86,6 +86,38 @@ if (import.meta.env.PROD) {
 // console.log(import.meta.env.PROD)
 Axios.defaults.withCredentials = true
 
+Sentry.init({
+	dsn: "https://76ee19015c2862df287976ffc01c33db@o4505988856676352.ingest.sentry.io/4505988859559936",
+	ignoreErrors: ['401', '403', '404', '500', '503', "unauthenticated", "Unauthorized",],
+	integrations: [
+		new Sentry.BrowserTracing({
+			// See docs for support of different versions of variation of react router
+			// https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+			routingInstrumentation: Sentry.reactRouterV6Instrumentation(
+				React.useEffect,
+				useLocation,
+				useNavigationType,
+				createRoutesFromChildren,
+				matchRoutes
+			),
+		}),
+		new Sentry.Replay()
+	],
+	// Set tracesSampleRate to 1.0 to capture 100%
+	// of transactions for performance monitoring.
+	tracesSampleRate: 0.8,
+
+	// Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+	tracePropagationTargets: ["localhost", "neopromisance.com", "api.neopromisance.com"],
+
+	// Capture Replay for 10% of all sessions,
+	// plus for 100% of sessions with an error
+	replaysSessionSampleRate: 0.1,
+	replaysOnErrorSampleRate: 1.0,
+});
+
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -106,7 +138,7 @@ ReactDOM.render(
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<BrowserRouter>
-						<Routes>
+						<SentryRoutes>
 							<Route path='/' element={<Home />} />
 							<Route path='*' element={<NothingFoundBackground />} />
 							<Route path='/login' element={<NewLogin />} />
@@ -165,7 +197,7 @@ ReactDOM.render(
 								<Route path='Charts' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdvancedStats /></Suspense>} />
 								<Route path='New%20Player' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><NewPlayerTips /></Suspense>} />
 							</Route>
-						</Routes>
+						</SentryRoutes>
 					</BrowserRouter>
 				</PersistGate>
 			</Provider>
