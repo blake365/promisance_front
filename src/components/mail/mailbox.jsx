@@ -1,4 +1,4 @@
-import { Button, Stack, Title, Loader, Text, Tabs, Select, Group, TextInput, Card, Textarea } from '@mantine/core'
+import { Button, Stack, Title, Text, Tabs, Select, Group, Card, Textarea } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -21,12 +21,11 @@ const getMail = async (body) =>
 
 export default function Mailbox()
 {
-    const [loading, setLoading] = useState(true)
     const [convos, setConvos] = useState([])
     // const [loaded, setLoaded] = useState(body.take)
     const [empires, setEmpires] = useState()
     const [selectedEmpire1, setEmpire1] = useState()
-
+    const [activeTab, setActiveTab] = useState()
     const { empire } = useSelector((state) => state.empire)
 
     // let myId = empire.id
@@ -41,12 +40,11 @@ export default function Mailbox()
             .then((data) =>
             {
                 setConvos(data);
-                setLoading(false);
+                setActiveTab(data[0].conversationId.toString())
             })
             .catch((error) =>
             {
                 console.error('Error setting conversation data:', error);
-                setLoading(false);
             });
     }, []);
 
@@ -116,14 +114,19 @@ export default function Mailbox()
 
                 <Stack spacing='sm'>
                     {convos.length > 0 ? (
-                        <Tabs defaultValue={convos[0].conversationId.toString()} orientation="vertical" keepMounted={false} variant='pills'>
+                        <Tabs value={activeTab} onTabChange={setActiveTab} orientation="vertical" keepMounted={false} variant='pills' key='39i2390'>
                             <Tabs.List h='70vh' sx={{ overflowY: 'scroll' }} key='930i2'>
-                                {convos.map((item) =>
+                                {convos.map((item, index) =>
                                 {
                                     // console.log(item)
                                     let otherEmpire = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
                                     // console.log(item)
-                                    return (<Tabs.Tab key={item.uuid} value={item.conversationId.toString()} sx={{ maxWidth: 110, overflow: 'scroll', textOverflow: 'ellipsis', paddingLeft: 5 }}>{otherEmpire}</Tabs.Tab>)
+                                    return (<Tabs.Tab key={index} value={item.conversationId.toString()}
+                                        sx={{
+                                            maxWidth: 110,
+                                            overflow: 'scroll',
+                                            paddingLeft: 5,
+                                        }}>{otherEmpire}</Tabs.Tab>)
                                 })}
                             </Tabs.List>
 

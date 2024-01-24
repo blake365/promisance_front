@@ -53,6 +53,8 @@ export default function ClanChat({ empire })
                 {
                     setMessages(data)
                     setLoading(false)
+                    const messageContainer = messageContainerRef.current
+                    if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
                 }
                 )
                 .catch((error) =>
@@ -60,9 +62,6 @@ export default function ClanChat({ empire })
                     console.error('Error setting messages:', error)
                     // setLoading(false)
                 })
-
-            const messageContainer = messageContainerRef.current
-            if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
         }
         setLoading(false)
     }, [])
@@ -138,6 +137,8 @@ export default function ClanChat({ empire })
                                 if (message.empireId === empire.id) color = 'cornflowerblue'
                                 let fontColor = ''
                                 if (message.empireId === empire.id) fontColor = 'black'
+                                const messageContainer = messageContainerRef.current
+                                if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
                                 return (
                                     <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                         <Group position='apart'>

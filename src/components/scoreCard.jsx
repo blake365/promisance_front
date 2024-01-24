@@ -3,12 +3,14 @@ import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
 import { Mountains, Scales, Hourglass, Sword, Shield } from "@phosphor-icons/react"
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useEffect, useState, Suspense } from 'react'
+import lazy from './utilities/lazyWrapper'
 const ScoresAttack = lazy(() => import('./diplomacy/scoresAttack'));
 const ScoresSpell = lazy(() => import('./diplomacy/scoresSpell'));
 const ScoresNews = lazy(() => import('./news/scoresNews'));
 const ScoresIntel = lazy(() => import('./diplomacy/scoresIntel'));
 const ScoresAid = lazy(() => import('./diplomacy/scoresAid'));
+const ScoresChat = lazy(() => import('./mail/scoresChat'));
 import Axios from 'axios'
 import { TURNS_PROTECTION } from '../config/config'
 import { useSelector } from 'react-redux'
@@ -25,8 +27,8 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     {
         try {
             const res = await Axios.get(`/session/${empire.id}`)
-            // console.log(res)
-            return res.data
+            // console.log(res.data.result)
+            return res.data.result
         } catch (error) {
             console.log(error)
         }
@@ -44,7 +46,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 
         checkForSession().then((res) =>
         {
-            if (res.length > 0) {
+            if (res) {
                 setActive(true)
             }
         })
@@ -172,17 +174,17 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tabs defaultValue="" keepMounted={false}>
                             <Tabs.List>
-                                {/* <Tabs.Tab value="Send Message" disabled={disabled}>Send Message</Tabs.Tab> */}
                                 <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
                                 <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
                                 <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
                                 <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
                                 {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
                                 <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
+                                <Tabs.Tab value="Chat" disabled={disabled}>Chat</Tabs.Tab>
                             </Tabs.List>
 
-                            <Tabs.Panel value="Send Message" pt="xs">
-                                Send Message tab content
+                            <Tabs.Panel value="Chat" pt="xs">
+                                <ScoresChat enemy={empire} />
                             </Tabs.Panel>
 
                             <Tabs.Panel value="Attack" pt="xs">

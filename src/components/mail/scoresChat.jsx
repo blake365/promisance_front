@@ -1,23 +1,33 @@
-import { Button, Group, Card, Text, Loader, Stack, Box, Textarea, Anchor } from '@mantine/core'
+import { Button, Group, Card, Text, Stack, Box, Textarea, Center, Anchor } from '@mantine/core'
 import { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import { useForm } from '@mantine/form'
-import { useSelector } from 'react-redux'
 import { PaperPlaneRight } from '@phosphor-icons/react'
+import { useSelector } from 'react-redux'
+
+export const concatenateIntegers = (a, b) =>
+{
+    const strA = a.toString()
+    const strB = b.toString()
+
+    return parseInt(strA + strB)
+}
 
 const getMessages = async (body) =>
 {
-    // console.log(body)
-
     try {
         const res = await Axios.post(`/messages/messages`, body)
         const data = res.data
-        const lastMessage = data[data.length - 1]
-        // console.log(lastMessage)
-        // console.log(body.reader === lastMessage.empireIdDestination)
         // console.log(data)
-        if (body.reader === lastMessage.empireIdDestination) {
-            await Axios.get(`/messages/${body.conversationId}/read`)
+
+        if (data && data.length > 0) {
+            const lastMessage = data[data.length - 1]
+            // console.log(lastMessage)
+            console.log(body.reader === lastMessage.empireId)
+            // console.log(data)
+            if (body.reader !== lastMessage.empireId) {
+                await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
+            }
         }
         return data
     } catch (error) {
@@ -25,26 +35,37 @@ const getMessages = async (body) =>
     }
 }
 
-export default function Chatbox({ conversation, source, sourceName, destinationId, destinationName })
+
+export default function ScoresChat({ enemy })
 {
 
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
-    const [report, setReport] = useState(false)
     const messageContainerRef = useRef(null)
+    const [report, setReport] = useState(false)
+
+    let conversationId = concatenateIntegers(empire.id, enemy.id)
 
     let body = {
-        conversationId: conversation.conversationId,
-        empireId: source,
-        reader: empire.id
+        empireId: empire.id,
+        conversationId: conversationId
     }
 
-    // console.log(body)
+    const form = useForm({
+        initialValues: {
+            sourceId: empire.id,
+            sourceName: empire.name,
+            destinationId: enemy.id,
+            destinationName: enemy.name,
+            message: ''
+        },
+    })
 
     useEffect(() =>
     {
-        if (empire) {
+        setLoading(true)
+        if (empire && body.conversationId) {
             getMessages(body)
                 .then((data) =>
                 {
@@ -60,26 +81,15 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                     // setLoading(false)
                 })
         }
-
+        setLoading(false)
     }, [])
-
-
-    const form = useForm({
-        initialValues: {
-            sourceId: source,
-            sourceName: sourceName,
-            destinationId: destinationId,
-            destinationName: destinationName,
-            message: ''
-        },
-    })
 
     const sendMessage = async (values) =>
     {
         setLoading(true)
         try {
             const res = await Axios.post(`/messages/message/new`, values)
-            const data = res.data
+            // const data = res.data
             // console.log(data)
             getMessages(body).then((data) =>
             {
@@ -96,7 +106,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     const reportMessages = async () =>
     {
         try {
-            const res = await Axios.post(`/messages/report`, { conversationId: conversation.conversationId })
+            const res = await Axios.post(`/messages/report`, { conversationId: body.conversationId })
             const data = res.data
             // console.log(data)
             setReport(true)
@@ -106,16 +116,16 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     }
 
     return (
-        <Card radius='sm' mx='xs' p='xs' h='70vh' sx={{
-            '@media (max-width: 800px)': {
-                width: '94%',
-            },
-            '@media (min-width: 800px)': {
-                width: '500px',
-            }
-        }}>
-            <Stack gap='sm' justify='space-between' h='100%'>
-                {loading ? (<Loader />) : (
+        <Center>
+            <Stack gap={0} justify='space-between' mb='sm' mah={300} sx={{
+                '@media (max-width: 800px)': {
+                    width: '94%',
+                },
+                '@media (min-width: 800px)': {
+                    width: '500px',
+                }
+            }}>
+                {messages.length < 1 ? (<Text align='center' color='dimmed'>Start the conversation</Text>) : (
                     <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
                         {messages.map((message, index) =>
                         {
@@ -137,19 +147,19 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                                 timeSince = 'just now'
                             }
                             let ml = 0
-                            if (message.empireIdSource === source) ml = 'auto'
+                            if (message.empireIdSource === empire.id) ml = 'auto'
                             let align = 'left'
-                            if (message.empireIdSource === source) align = 'right'
+                            if (message.empireIdSource === empire.id) align = 'right'
                             let color = ''
-                            if (message.empireIdSource === source) color = 'lightblue'
+                            if (message.empireIdSource === empire.id) color = 'lightblue'
                             let fontColor = ''
-                            if (message.empireIdSource === source) fontColor = 'black'
+                            if (message.empireIdSource === empire.id) fontColor = 'black'
                             const messageContainer = messageContainerRef.current
                             if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
                             return (
                                 <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                     <Group position='apart'>
-                                        <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
+                                        <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== empire.id ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
                                     </Group>
                                     <Text align={align} color={fontColor}>{message.messageBody}</Text>
@@ -172,6 +182,6 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                 {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>Report conversation for inappropriate or abusive language.</Anchor>)
                 }
             </Stack>
-        </Card >
+        </Center>
     )
 }
