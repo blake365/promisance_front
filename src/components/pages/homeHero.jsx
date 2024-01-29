@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
         backgroundPosition: 'center',
         '@media (max-width: 480px)': {
             backgroundImage:
-                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/sit.webp)',
+                'linear-gradient(250deg, rgba(250, 250, 250, 0) 0%, #000000 70%), url(/images/sitsmall2.webp)',
         },
         '@media (min-width: 480px)': {
             backgroundImage:
@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => ({
     title: {
         color: 'white',
         fill: 'white',
-        '@media (max-width: 400px)': {
+        '@media (max-width: 415px)': {
             fontSize: '2.5rem',
         },
         '@media (min-width: 700px)': {
@@ -58,10 +58,7 @@ export function HeroImageRight()
         <div className={classes.root}>
             <Container size="lg">
                 <div className={classes.inner}>
-                    <div >
-                        <Text color='white'>
-                            Welcome to
-                        </Text>
+                    <div>
                         <Group align='center' spacing={4}>
                             <img src={neoIcon} className={classes.svg} alt='logo' />
                             <Title component={Link} to='/' className={classes.title} mb='lg'>
