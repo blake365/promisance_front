@@ -19,6 +19,7 @@ import
 	ScrollArea,
 	Button,
 	Image,
+	Drawer,
 } from '@mantine/core'
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import neoIcon from './icons/neoIcon.svg'
@@ -279,7 +280,7 @@ function App()
 								</Header>
 							}
 						>
-							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }}>
+							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)}>
 								{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 									<InfoBar data={empire} />
 									<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
