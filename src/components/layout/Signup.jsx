@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 let bg = '/images/login.webp'
+import { IconBrandGoogle } from '@tabler/icons-react'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -123,6 +124,9 @@ export default function Signup()
 					</Text>
 					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
 					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
+					<Button component='a' href='http://localhost:5001/api/auth/auth/google' mt="md" fullWidth size="md" color='orange' leftIcon={<IconBrandGoogle />}>
+						Login with Google
+					</Button>
 				</form>
 				<Text ta="center" mt="md">
 					Already have an account? <Anchor component={Link} to='/login'>Login</Anchor>

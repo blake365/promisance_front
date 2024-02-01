@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import { logoutEmpire } from '../../store/empireSlice';
-import Axios from 'axios'
+import { IconBrandGoogle } from '@tabler/icons-react';
 let bg = '/images/login.webp'
 
 const useStyles = createStyles(() => ({
@@ -107,9 +107,9 @@ export default function NewLogin()
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
-                    {/* <Anchor href='http://localhost:5001/api/auth/auth/google' mt="xl" size="md" color='red'>
-                        Google Login
-                    </Anchor> */}
+                    <Button component='a' href='http://localhost:5001/api/auth/auth/google' mt="md" fullWidth size="md" color='orange' leftIcon={<IconBrandGoogle />}>
+                        Login with Google
+                    </Button>
                     <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
                 </form>
                 <Text ta="center" mt="md">
