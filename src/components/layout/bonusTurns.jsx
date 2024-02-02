@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { TURNS_MAXIMUM } from '../../config/config'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function BonusTurns()
 {
@@ -29,10 +30,12 @@ export default function BonusTurns()
         bonus = effects.filter(effect => (effect.empireEffectName === 'bonus turns'))
     }
 
+    const round = checkRoundStatus()
 
     return (
-        <div>
-            {status === 'succeeded' && empire.flags === 0 && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= TURNS_MAXIMUM - 10}>Bonus Turns</Button>) : ('')}
-        </div>
+        round ? '' :
+            <div>
+                {status === 'succeeded' && empire.flags === 0 && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= TURNS_MAXIMUM - 10}>Bonus Turns</Button>) : ('')}
+            </div>
     )
 }
