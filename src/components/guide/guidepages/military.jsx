@@ -29,14 +29,14 @@ export default function MilitaryGuide({ empire })
             </Group>
             <dl>
                 <dt>{eraArray[era].trparm}</dt>
-                <dd>The basic military unit. Not the strongest unit, but with a cheaper price tag these can be mobilized in large groups to cause plenty of damage to your enemy.<br />Base cost ${PVTM_TRPARM}, offensive power {eraArray[era].o_trparm}, defensive power {eraArray[era].d_trparm}.</dd>
+                <dd>The basic military unit used in Guerrilla Strikes. Not the strongest unit, but with a cheaper price tag these can be mobilized in large groups to cause plenty of damage to your enemy.<br />Base cost ${PVTM_TRPARM}, offensive power {eraArray[era].o_trparm}, defensive power {eraArray[era].d_trparm}.</dd>
                 <dt>{eraArray[era].trplnd}</dt>
                 <dd>A strong
-                    {eraArray[era].o_trplnd > eraArray[era].d_trplnd ? 'offensive' : 'defensive'} unit.  Can be used in attacks to gain land from your enemies.<br />Base cost ${PVTM_TRPLND}, offensive power {eraArray[era].o_trplnd}, defensive power {eraArray[era].d_trplnd}.</dd>
+                    {eraArray[era].o_trplnd > eraArray[era].d_trplnd ? 'offensive' : 'defensive'} unit used in Lay Seige.  Can be used in attacks to gain land from your enemies.<br />Base cost ${PVTM_TRPLND}, offensive power {eraArray[era].o_trplnd}, defensive power {eraArray[era].d_trplnd}.</dd>
                 <dt>{eraArray[era].trpfly}</dt>
-                <dd>An aerial attack is sometimes the best way to go; these can also capture land in special attacks and have an edge in {eraArray[era].o_trpfly > eraArray[era].d_trpfly ? 'offense' : 'defense'}.<br />Base cost ${PVTM_TRPFLY}, offensive power {eraArray[era].o_trpfly}, defensive power {eraArray[era].d_trpfly}.</dd>
+                <dd>An Air Strike attack is sometimes the best way to go; these can also capture land in special attacks and have an edge in {eraArray[era].o_trpfly > eraArray[era].d_trpfly ? 'offense' : 'defense'}.<br />Base cost ${PVTM_TRPFLY}, offensive power {eraArray[era].o_trpfly}, defensive power {eraArray[era].d_trpfly}.</dd>
                 <dt>{eraArray[era].trpsea}</dt>
-                <dd>These are used not only for military purposes, but also to ship foreign aid to other empires.  With both strong offensive and defensive capabilities, it is the most expensive unit, but also the most powerful.<br />Base cost ${PVTM_TRPSEA}, offensive power {eraArray[era].o_trpsea}, defensive power {eraArray[era].d_trpsea}.</dd>
+                <dd>This unit is used in Coastal Assaults but they are used not only for military purposes as they are needed to ship foreign aid to other empires.  With both strong offensive and defensive capabilities, it is the most expensive unit, but also the most powerful.<br />Base cost ${PVTM_TRPSEA}, offensive power {eraArray[era].o_trpsea}, defensive power {eraArray[era].d_trpsea}.</dd>
             </dl>
         </div>
     )

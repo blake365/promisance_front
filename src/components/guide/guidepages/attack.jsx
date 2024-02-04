@@ -14,7 +14,7 @@ export default function AttackGuide({ empire })
             <p>In order to attack another empire, it must either be in the same era as yours or a Time Gate must be open between your empires, either opened by you or by your target.</p>
             <p>Six different attack methods are available for you to use, each having their own advantages and disadvantages. Guerrilla Strike, Lay Seige, Air Strike, and Coastal Assault will use one troop type for both the attacker and the defender. All Out Attack, Surprise Attack, and Pillage will use the entire army for both the attacker and defender.</p>
             <dl>
-                <dt>Guerilla Strike</dt>
+                <dt>Guerrilla Strike</dt>
                 <dd>By sending in only your {eraArray[empire.era].trparm}, you can avoid your target's other forces. If successful, all structures on captured land are destroyed.</dd>
                 <dt>Lay Siege</dt>
                 <dd>By sending in only your {eraArray[empire.era].trplnd}, you can not only steal your target's land but also destroy additional structures on the land you do not capture. {eraArray[empire.era].blddef} and {eraArray[empire.era].bldwiz} are especially vulnerable.</dd>

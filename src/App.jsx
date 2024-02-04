@@ -19,7 +19,6 @@ import
 	ScrollArea,
 	Button,
 	Image,
-	Drawer,
 } from '@mantine/core'
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import neoIcon from './icons/neoIcon.svg'
@@ -55,6 +54,7 @@ function App()
 	const empireStatus = useSelector(state => state.empire.status)
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const { empire } = useSelector((state) => state.empire)
+
 	// const { time } = useSelector((state) => state.time)
 	const kickOut = (error) =>
 	{

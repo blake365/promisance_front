@@ -133,7 +133,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
                         withinPortal
                         itemComponent={SelectAttack}
                         data={[
-                            { value: 'trparm', label: 'Guerilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
+                            { value: 'trparm', label: 'Guerrilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
                             { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
                             { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
                             { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
