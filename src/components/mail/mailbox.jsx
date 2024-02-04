@@ -22,7 +22,7 @@ const getMail = async (body) =>
 export default function Mailbox()
 {
     const [convos, setConvos] = useState([])
-    // const [loaded, setLoaded] = useState(body.take)
+    const [loading, setLoading] = useState(false)
     const [empires, setEmpires] = useState()
     const [selectedEmpire1, setEmpire1] = useState()
     const [activeTab, setActiveTab] = useState()
@@ -88,10 +88,12 @@ export default function Mailbox()
             const res = await Axios.post(`/messages/message/new`, values)
             const data = res.data
             // console.log(data)
+            let destination = data.conversationId.toString()
             getMail(body)
                 .then((data) =>
                 {
                     setConvos(data);
+                    setActiveTab(destination)
                     setLoading(false);
                 })
                 .catch((error) =>
