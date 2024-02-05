@@ -124,7 +124,7 @@ export default function Signup()
 					</Text>
 					<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
 					<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
-					<Button component='a' href='http://localhost:5001/api/auth/auth/google' mt="md" fullWidth size="md" color='orange' leftIcon={<IconBrandGoogle />}>
+					<Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
 						Login with Google
 					</Button>
 				</form>

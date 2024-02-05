@@ -107,7 +107,7 @@ export default function NewLogin()
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
                     </Button>
-                    <Button component='a' href='http://localhost:5001/api/auth/auth/google' mt="md" fullWidth size="md" color='orange' leftIcon={<IconBrandGoogle />}>
+                    <Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
                         Login with Google
                     </Button>
                     <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>

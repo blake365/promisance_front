@@ -24,6 +24,7 @@ const Industry = lazy(() => import('./components/useTurns/industry'));
 // const Build = lazy(() => import('./components/useTurns/build'));
 const Meditate = lazy(() => import('./components/useTurns/meditate'));
 const ManageEmpire = lazy(() => import('./components/manageEmpire'));
+// import ManageEmpire from './components/manageEmpire'
 const PrivateMarket = lazy(() => import('./components/markets/PrivateMarket'));
 const PublicMarket = lazy(() => import('./components/markets/publicMarket'));
 const WorldBank = lazy(() => import('./components/markets/WorldBank'));

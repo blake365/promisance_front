@@ -19,6 +19,7 @@ import
 	ScrollArea,
 	Button,
 	Image,
+	Center,
 } from '@mantine/core'
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import neoIcon from './icons/neoIcon.svg'
@@ -32,7 +33,6 @@ import ThemeToggle from './components/utilities/themeToggle'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
 import { getTime } from './store/timeSlice'
-
 import EffectIcons from './components/layout/EffectIcons'
 import BonusTurns from './components/layout/bonusTurns';
 import { persistor } from './store/store';
@@ -196,7 +196,9 @@ function App()
 
 	function FallbackComponent()
 	{
-		return <Title>An error has occurred, please refresh the website</Title>;
+		return (<Center>
+			<Title>An error has occurred, please refresh the website</Title>
+		</Center>)
 	}
 
 	const myFallback = <FallbackComponent />;

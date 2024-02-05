@@ -41,11 +41,13 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 
         // console.log(now - actionDate)
         if (now - actionDate < 300000) {
+            // console.log('recently active')
             setActive(true)
         }
 
         checkForSession().then((res) =>
         {
+            // console.log(res)
             if (res) {
                 setActive(true)
             }
