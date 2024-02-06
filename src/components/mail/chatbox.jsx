@@ -152,7 +152,10 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
                                     </Group>
-                                    <Text align={align} color={fontColor}>{message.messageBody}</Text>
+                                    <Text align={align} color={fontColor} sx={{
+                                        overflowWrap: 'break-word',
+                                        wordBreak: 'break-word',
+                                    }}>{message.messageBody}</Text>
                                 </Card>
                             )
                         })}

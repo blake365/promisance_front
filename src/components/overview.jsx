@@ -110,7 +110,7 @@ export default function Overview()
 
 				<div>
 					<Group spacing='sm' align='center' position='center' mb='sm'>
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Group position='left' spacing={4}>
 								<Avatar size="xs" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Text weight={800} size='lg'>
@@ -135,7 +135,7 @@ export default function Overview()
 							</SimpleGrid>
 						</Card>
 
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Text weight={800} size='lg'>Agriculture</Text>
 							<SimpleGrid cols={2} spacing={1}>
 								<Text>Food:</Text>
@@ -157,7 +157,7 @@ export default function Overview()
 							</SimpleGrid>
 						</Card>
 
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Text weight={800} size='lg'>Economy</Text>
 							<SimpleGrid cols={2} spacing={1}>
 								<Text>Money:</Text>
@@ -180,7 +180,7 @@ export default function Overview()
 							</SimpleGrid>
 						</Card>
 
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 
 							<Grid columns={16}>
 								<Col span={8}>
@@ -224,7 +224,7 @@ export default function Overview()
 								</Col>
 							</Grid>
 						</Card>
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 
 
 							<Grid columns={14}>
@@ -259,7 +259,7 @@ export default function Overview()
 
 							</Grid>
 						</Card>
-						<Card sx={{ width: '400px', minHeight: '295px' }}>
+						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Text weight={800} size='lg'>
 								Relations
 							</Text>

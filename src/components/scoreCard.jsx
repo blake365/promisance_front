@@ -182,7 +182,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                                 <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
                                 {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
                                 <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
-                                <Tabs.Tab value="Chat" disabled={disabled}>Chat</Tabs.Tab>
+                                <Tabs.Tab value="Chat">Chat</Tabs.Tab>
                             </Tabs.List>
 
                             <Tabs.Panel value="Chat" pt="xs">

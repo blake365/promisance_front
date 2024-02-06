@@ -18,16 +18,13 @@ const getMessages = async (body) =>
     try {
         const res = await Axios.post(`/messages/messages`, body)
         const data = res.data
+        if (data.length < 1) return data
+        const lastMessage = data[data.length - 1]
+        // console.log(lastMessage)
+        // console.log(body.reader === lastMessage.empireIdDestination)
         // console.log(data)
-
-        if (data && data.length > 0) {
-            const lastMessage = data[data.length - 1]
-            // console.log(lastMessage)
-            console.log(body.reader === lastMessage.empireId)
-            // console.log(data)
-            if (body.reader !== lastMessage.empireId) {
-                await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
-            }
+        if (body.reader === lastMessage.empireIdDestination) {
+            await Axios.get(`/messages/${body.conversationId}/read`)
         }
         return data
     } catch (error) {
@@ -45,11 +42,12 @@ export default function ScoresChat({ enemy })
     const messageContainerRef = useRef(null)
     const [report, setReport] = useState(false)
 
-    let conversationId = concatenateIntegers(empire.id, enemy.id)
+    let conversationId = concatenateIntegers(enemy.id, empire.id)
 
     let body = {
         empireId: empire.id,
-        conversationId: conversationId
+        conversationId: conversationId,
+        reader: empire.id
     }
 
     const form = useForm({
@@ -162,7 +160,12 @@ export default function ScoresChat({ enemy })
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== empire.id ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
                                     </Group>
-                                    <Text align={align} color={fontColor}>{message.messageBody}</Text>
+                                    <Text align={align} color={fontColor}
+                                        sx={{
+                                            overflowWrap: 'break-word',
+                                            wordBreak: 'break-word',
+                                        }}
+                                    >{message.messageBody}</Text>
                                 </Card>
                             )
                         })}
