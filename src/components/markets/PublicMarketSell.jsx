@@ -12,6 +12,7 @@ import MyItem from './myItem'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
 import { fetchMyItems } from '../../store/pubMarketSlice'
+import { useRef } from 'react'
 // make it mobile friendly
 
 export default function PublicMarketSell({ empire })
@@ -20,6 +21,7 @@ export default function PublicMarketSell({ empire })
     const loadEmpire = useLoadEmpire(empire.uuid)
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
+    const buttonRef = useRef()
 
     const getCost = (emp, base) =>
     {
@@ -221,6 +223,7 @@ export default function PublicMarketSell({ empire })
                 message: interpretResults(res.data),
             })
             dispatch(fetchMyItems({ empireId: empire.id }))
+            buttonRef.current.focus()
             form.reset()
             loadEmpire()
         } catch (error) {
@@ -351,7 +354,7 @@ export default function PublicMarketSell({ empire })
                                 </table>
                             </div>
                             <Center mt='md'>
-                                <Button type='submit'>Sell Goods</Button>
+                                <Button type='submit' ref={buttonRef}>Sell Goods</Button>
                             </Center>
                         </form>
 

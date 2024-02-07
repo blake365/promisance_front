@@ -10,6 +10,7 @@ import { MaxButton } from '../utilities/maxbutton'
 import classes from './markets.module.css'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
+import { useRef } from 'react'
 
 
 // TODO: make it mobile friendly
@@ -19,6 +20,7 @@ export default function PrivateMarketSell()
 {
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
+    const buttonRef = useRef()
 
     const getCost = (emp, base, multiplier) =>
     {
@@ -132,6 +134,7 @@ export default function PrivateMarketSell()
                 color: 'blue',
             })
             loadEmpire()
+            buttonRef.current.focus()
             form.reset()
         } catch (error) {
             console.log(error)
@@ -233,7 +236,7 @@ export default function PrivateMarketSell()
                             </table>
                         </div>
                         <Center mt='md'>
-                            <Button type='submit'>Sell Goods</Button>
+                            <Button type='submit' ref={buttonRef}>Sell Goods</Button>
                         </Center>
                     </form>
                 </Stack>

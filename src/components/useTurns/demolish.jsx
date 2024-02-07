@@ -9,7 +9,7 @@ import { OneTurn, MaxButton, HalfButton } from '../utilities/maxbutton'
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
@@ -145,6 +145,8 @@ export default function Demolish()
 		errors.error = error
 	}
 
+	const buttonRef = useRef()
+
 	const doDemolish = async (values) =>
 	{
 		setLoading(true)
@@ -152,6 +154,7 @@ export default function Demolish()
 			const res = await Axios.post('/demolish', values)
 			dispatch(setResult(res.data))
 			loadEmpire()
+			buttonRef.current.focus()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -470,10 +473,9 @@ export default function Demolish()
 								</tbody>
 							</Table>
 
-							<Button type='submit' color='orange' disabled={errors?.error || roundStatus} loading={loading}>
+							<Button type='submit' color='orange' disabled={errors?.error || roundStatus} loading={loading} ref={buttonRef}>
 								Begin Demolition
 							</Button>
-
 						</Stack>
 					</form>
 					<Button component={Link} to='/app/build' compact variant='outline' color='blue' sx={{ marginTop: '1rem' }}>Build Buildings</Button>

@@ -2,7 +2,6 @@ import { Button, Center, NumberInput, Stack, Table, Title, Text, ActionIcon } fr
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
@@ -10,7 +9,7 @@ import { FavoriteButton, HalfButton, MaxButton, OneTurn } from '../utilities/max
 import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTour } from '@reactour/tour'
 import { Compass } from '@phosphor-icons/react'
 import { buildSteps } from '../../tour/buildSteps'
@@ -19,6 +18,8 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function Build()
 {
+	const buttonRef = useRef()
+
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	let buildNumberArray = []
 	let totalBuild = 0
@@ -26,7 +27,6 @@ export default function Build()
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
-	const { time } = useSelector((state) => state.time)
 	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
@@ -131,11 +131,13 @@ export default function Build()
 	{
 		setLoading(true)
 		try {
+			// console.log(values)
 			const res = await Axios.post('/build', values)
 			// dispatch(setResult(res.data))
 			// console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpire()
+			buttonRef.current.focus()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -187,7 +189,6 @@ export default function Build()
 								{
 									dispatch(clearResult)
 									doBuild(values)
-
 								})
 								: setErrors("Can't build that many buildings")
 						}
@@ -238,7 +239,6 @@ export default function Build()
 												}
 											/>
 										</td>
-
 									</tr>
 									<tr className='bld-step-twopointfive'>
 										<td>{eraArray[empire.era].bldcash}</td>
@@ -273,7 +273,6 @@ export default function Build()
 												}
 											/>
 										</td>
-
 									</tr>
 									<tr className='bld-third-step'>
 										<td>{eraArray[empire.era].bldtrp}</td>
@@ -457,7 +456,7 @@ export default function Build()
 							</Table>
 							<div style={{ color: 'red' }}>{errors.error}</div>
 
-							<Button type='submit' disabled={errors.error || roundStatus} loading={loading}>
+							<Button type='submit' disabled={errors.error || roundStatus} loading={loading} ref={buttonRef}>
 								Begin Construction
 							</Button>
 

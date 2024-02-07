@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { empireLoaded } from '../../store/empireSlice'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
 import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
@@ -20,7 +20,8 @@ export default function WorldBank()
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
     // let loanDefault = empire.loan
-
+    const bankRef = useRef()
+    const loanRef = useRef()
     const size = calcSizeBonus(empire)
     const loanRate = (Math.round((BANK_LOANRATE + size) * 100) / 100 / 100).toFixed(2)
     const savingRate = (Math.round((BANK_SAVERATE - size) * 100) / 100 / 100).toFixed(2)
@@ -116,6 +117,11 @@ export default function WorldBank()
                 }),
                 autoClose: 2000
             })
+            if (item.action === 'deposit' || item.action === 'withdraw') {
+                bankRef.current.focus()
+            } else {
+                loanRef.current.focus()
+            }
             savingsForm.reset()
             loadEmpire()
         } catch (error) {
@@ -225,7 +231,7 @@ export default function WorldBank()
                                         }
                                         }
                                     />
-                                    <Button type='submit' disabled={roundStatus}>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus} ref={bankRef}>Submit</Button>
                                 </Stack>
                             </form>
                         </Card>
@@ -298,7 +304,7 @@ export default function WorldBank()
                                         }
                                         }
                                     />
-                                    <Button type='submit' disabled={roundStatus}>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus} ref={loanRef}>Submit</Button>
                                 </Stack>
                             </form>
                         </Card>

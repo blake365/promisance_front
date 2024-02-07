@@ -6,7 +6,7 @@ import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
 import { PVTM_FOOD, PVTM_RUNES, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
-
+import { useRef } from 'react'
 import classes from './markets.module.css'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
@@ -26,6 +26,7 @@ export default function PrivateMarketBuy()
         error: '',
     }
 
+    const buttonRef = useRef()
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
 
@@ -45,7 +46,6 @@ export default function PrivateMarketBuy()
     }
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
-
 
     const trpArmCost = getCost(empire, PVTM_TRPARM)
     const trpLndCost = getCost(empire, PVTM_TRPLND)
@@ -171,6 +171,7 @@ export default function PrivateMarketBuy()
                 color: 'blue',
             })
             loadEmpire()
+            buttonRef.current.focus()
             form.reset()
         } catch (error) {
             console.log(error)
@@ -283,7 +284,7 @@ export default function PrivateMarketBuy()
                         </div>
                         <Stack align='center'>
                             <Text style={{ color: 'red' }}>{errors.error}</Text>
-                            <Button type='submit' disabled={errors.error}>
+                            <Button type='submit' disabled={errors.error} ref={buttonRef}>
                                 Buy Goods
                             </Button>
                         </Stack>

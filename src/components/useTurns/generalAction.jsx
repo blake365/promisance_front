@@ -13,7 +13,7 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTour } from '@reactour/tour'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -23,7 +23,7 @@ export default function GeneralAction(props)
 	// const empire = useSelector((state) => state.empire)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
-
+	const buttonRef = useRef()
 	const { setCurrentStep } = useTour()
 
 	const form = useForm({
@@ -52,6 +52,7 @@ export default function GeneralAction(props)
 			const res = await Axios.post('/useturns', values)
 			dispatch(setResult(res.data))
 			loadEmpire()
+			buttonRef.current.focus()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -107,7 +108,7 @@ export default function GeneralAction(props)
 								color={props.color}
 								{...form.getInputProps('condensed', { type: 'checkbox' })}
 							/>
-							<Button color={props.color} type='submit' disabled={roundStatus} loading={loading}>
+							<Button color={props.color} type='submit' disabled={roundStatus} loading={loading} ref={buttonRef}>
 								{props.title}
 							</Button>
 						</Stack>
