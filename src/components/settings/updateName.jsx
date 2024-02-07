@@ -16,8 +16,7 @@ export default function UpdateName({ status, empire })
             name: empire.name
         },
         validate: {
-            name: hasLength({ max: 255 }, 'Name must have 255 or less characters'),
-            name: hasLength({ min: 3 }, 'Name must have 3 or more characters'),
+            name: hasLength({ min: 3, max: 255 }, 'Name must have between 3 and 255'),
         },
     })
 

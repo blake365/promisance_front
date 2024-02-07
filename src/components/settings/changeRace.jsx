@@ -58,11 +58,14 @@ function ChangeRace({ status, empire })
     return (
         <form onSubmit={raceForm.onSubmit((values) =>
         {
-            console.log(values)
-            if (empire.turns >= Math.floor(TURNS_MAXIMUM / 2)) {
+            // console.log(values)
+            if (empire.turns >= Math.floor(TURNS_MAXIMUM / 2) || empire.turnsUsed <= TURNS_PROTECTION) {
                 updateRace(values)
             } else {
-                setRaceUpdate('Not enough turns')
+                showNotification({
+                    title: 'Not Enough Turns',
+                    color: 'orange',
+                })
             }
         })}>
             <Stack spacing='sm' align='center'>

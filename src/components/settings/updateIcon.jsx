@@ -25,7 +25,7 @@ let iconObjects = icons.map((icon) =>
 const SelectItem = forwardRef(({ icon, label, ...others }, ref) => (
     <div ref={ref} {...others}>
         <Group>
-            <Avatar src={icon} size='sm' />
+            <Avatar src={icon} size='sm' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
             <Text>{label}</Text>
         </Group>
     </div>
