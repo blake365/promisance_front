@@ -117,11 +117,14 @@ export default function WorldBank()
                 }),
                 autoClose: 2000
             })
-            if (item.action === 'deposit' || item.action === 'withdraw') {
-                bankRef.current.focus()
-            } else {
-                loanRef.current.focus()
-            }
+            result.map((item) =>
+            {
+                if (item.action === 'deposit' || item.action === 'withdraw') {
+                    return bankRef.current.focus()
+                } else {
+                    return loanRef.current.focus()
+                }
+            })
             savingsForm.reset()
             loadEmpire()
         } catch (error) {
