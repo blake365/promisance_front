@@ -1,6 +1,6 @@
-
 import { useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
+import { eraArray } from '../../config/eras'
 
 export default function Meditate()
 {
@@ -11,11 +11,10 @@ export default function Meditate()
 			title='Meditate'
 			type='meditate'
 			flavor='meditating'
-			item='mana'
+			item={eraArray[empire.era].runes}
 			color='grape'
 			empire={empire}
 			imglink='/images/meditate.webp'
-
 		/>
 	)
 }

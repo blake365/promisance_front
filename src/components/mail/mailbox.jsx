@@ -126,8 +126,9 @@ export default function Mailbox()
                                     return (<Tabs.Tab key={index} value={item.conversationId.toString()}
                                         sx={{
                                             maxWidth: 110,
-                                            overflow: 'scroll',
+                                            overflowX: 'scroll',
                                             paddingLeft: 5,
+                                            scrollbarWidth: 'none'
                                         }}>{otherEmpire}</Tabs.Tab>)
                                 })}
                             </Tabs.List>
