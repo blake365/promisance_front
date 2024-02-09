@@ -79,25 +79,25 @@ export default function MagicCenter()
     // check era to see if they can advance or regress
     const eraCheck = (empire) =>
     {
-        let nextEra
+        let nextEra = 'None'
         if (eraArray[empire.era].era_next !== -1) {
             nextEra = eraArray[eraArray[empire.era].era_next].name
-        } else { nextEra = null }
+        }
 
-        let canAdvance
-        if (nextEra) {
+        let canAdvance = false
+        if (nextEra !== 'None') {
             canAdvance = true
-        } else canAdvance = false
+        }
 
-        let prevEra
+        let prevEra = 'None'
         if (eraArray[empire.era].era_prev !== -1) {
             prevEra = eraArray[eraArray[empire.era].era_prev].name
-        } else { prevEra = null }
+        }
 
-        let canRegress
-        if (prevEra) {
+        let canRegress = false
+        if (prevEra !== 'None') {
             canRegress = true
-        } else canRegress = false
+        }
 
         return { nextEra, canAdvance, prevEra, canRegress }
     }
