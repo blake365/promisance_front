@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { loadScores } from '../store/scoresSlice'
 
 import ScoreCard from './scoreCard'
+import { TURNS_FREQ } from '../config/config'
 
 export default function Scores()
 {
@@ -31,7 +32,7 @@ export default function Scores()
                 <Title order={1} align='center'>
                     Scores
                 </Title>
-                <Text size='sm'>Ranks are updated every 10 minutes.</Text>
+                <Text size='sm'>Ranks are updated every {TURNS_FREQ} minutes.</Text>
                 {loading ? <Loader /> : (scores.map(empire =>
                 {
                     // console.log(empire.clanReturn)
@@ -52,7 +53,6 @@ export default function Scores()
 
                     return <ScoreCard empire={empire} myEmpire={myEmpire} key={empire.id} home={false} clan={clanString} />
                 }))}
-
             </Stack>
         </main>
     )

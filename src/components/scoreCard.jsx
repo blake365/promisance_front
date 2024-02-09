@@ -116,7 +116,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     }
 
     return (
-        <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder >
+        <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder>
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
             <Card.Section onClick={toggle} sx={{ cursor: !home ? 'pointer' : '' }}>
@@ -128,10 +128,12 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                         <Indicator color='blue' position='top-start' disabled={!active}>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} imageProps={{ loading: 'lazy' }} />
+
                                 <Title order={4} color={color}>
-                                    {empire.name} {clan && clan} {atWar && <ThemeIcon size="sm" radius="sm" color='red'>
-                                        <Sword />
-                                    </ThemeIcon>}
+                                    {empire.name} {clan && clan} {atWar &&
+                                        <ThemeIcon size="sm" radius="sm" color='red'>
+                                            <Sword />
+                                        </ThemeIcon>}
                                 </Title>
                             </Group>
                         </Indicator>

@@ -41,13 +41,11 @@ export default function HomeScores()
                 <Title order={1} align='center'>
                     Top Ten
                 </Title>
-                <Stack spacing='xs'>
-                    {loading && <Loader />}
-                    {scores && scores.map(empire =>
-                    {
-                        return <ScoreCard empire={empire} myId={null} key={empire.id} home={true} />
-                    })}
-                </Stack>
+                {loading && <Loader />}
+                {scores && scores.map(empire =>
+                {
+                    return <ScoreCard empire={empire} myId={null} key={empire.id} home={true} />
+                })}
             </Stack>
         </section>
     )

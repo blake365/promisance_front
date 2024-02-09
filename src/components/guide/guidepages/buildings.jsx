@@ -17,7 +17,7 @@ export default function BuildingsGuide({ empire })
                 <dt>{eraArray[empire.era].bldtrp}</dt>
                 <dd>These produce your military units; the percentage of resources allocated to each unit type produced is controlled through the industry settings on the industrial focus page.</dd>
                 <dt>{eraArray[empire.era].bldcost}</dt>
-                <dd>These allow you to reduce your military expenses by more efficiently housing your units. They will also lower the price of all military units purchased from the Private Market. These also increase the rate at which your Private Market refills.</dd>
+                <dd>These allow you to reduce your military expenses by more efficiently housing your units. They will also lower the price of all military units purchased from the Black Market. These also increase the rate at which your Black Market refills.</dd>
                 <dt>{eraArray[empire.era].bldwiz}</dt>
                 <dd>These serve to train and house {eraArray[empire.era].trpwiz}, as well as produce {eraArray[empire.era].runes} with which they may cast their spells.</dd>
                 <dt>{eraArray[empire.era].bldfood}</dt>

@@ -24,12 +24,14 @@ const NewsDrawerButton = ({ kickOut, empire, pageState }) =>
     useEffect(() =>
     {
         checkForNews()
-    }, [empire, pageState])
+    }, [empire, pageState, drawer])
 
     return (
         <div>
             <Indicator color="green" disabled={news < 1} label={news} size={20} overflowCount={50} zIndex={3}>
-                <Button onClick={open} size='sm' compact color=''><NewspaperClipping size='1.2rem' /></Button>
+                <Button onClick={open} size='sm' compact color=''>
+                    <NewspaperClipping size='1.2rem' />
+                </Button>
             </Indicator>
             <Drawer opened={drawer} onClose={close} position='right' size='lg' title='' >
                 <EmpireNews />

@@ -25,7 +25,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     {
         try {
             const res = await Axios.get(`/session/${empire.id}`)
-            // console.log(res)
+            console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)
@@ -35,7 +35,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     const getEffects = async () =>
     {
         try {
-            const effects = await Axios.post('/empire/effects', { empireId: empire.id })
+            const effects = await Axios.post('/empire/effects', { empireId: empire.id, clanId: clan.id })
             return { effects: effects.data }
         } catch (error) {
             console.log(error)
@@ -56,7 +56,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
 
         checkForSession().then((res) =>
         {
-            if (res.length > 0) {
+            if (res.result) {
                 setActive(true)
             }
         })
@@ -72,9 +72,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
 
     let color = ''
     let disabled = false
-
     // console.log(clan.split(' ')[2])
-
     if (empire.id === myId) {
         color = 'deepskyblue'
     }
@@ -163,7 +161,6 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
                                     if (effect.empireEffectName === 'bonus turns' || effect.empireEffectName === 'join clan' || effect.empireEffectName === 'leave clan') {
                                         return
                                     }
-
 
                                     return (
                                         <Tooltip withinPortal
