@@ -32,7 +32,7 @@ export default function MilitaryGuide({ empire })
                 <dd>The basic military unit used in Guerrilla Strikes. Not the strongest unit, but with a cheaper price tag these can be mobilized in large groups to cause plenty of damage to your enemy.<br />Base cost ${PVTM_TRPARM}, offensive power {eraArray[era].o_trparm}, defensive power {eraArray[era].d_trparm}.</dd>
                 <dt>{eraArray[era].trplnd}</dt>
                 <dd>A strong
-                    {eraArray[era].o_trplnd > eraArray[era].d_trplnd ? 'offensive' : 'defensive'} unit used in Lay Seige.  Can be used in attacks to gain land from your enemies.<br />Base cost ${PVTM_TRPLND}, offensive power {eraArray[era].o_trplnd}, defensive power {eraArray[era].d_trplnd}.</dd>
+                    {eraArray[era].o_trplnd > eraArray[era].d_trplnd ? 'offensive' : 'defensive'} unit used in Seige Attacks.  Can be used in attacks to gain land from your enemies.<br />Base cost ${PVTM_TRPLND}, offensive power {eraArray[era].o_trplnd}, defensive power {eraArray[era].d_trplnd}.</dd>
                 <dt>{eraArray[era].trpfly}</dt>
                 <dd>An Air Strike attack is sometimes the best way to go; these can also capture land in special attacks and have an edge in {eraArray[era].o_trpfly > eraArray[era].d_trpfly ? 'offense' : 'defense'}.<br />Base cost ${PVTM_TRPFLY}, offensive power {eraArray[era].o_trpfly}, defensive power {eraArray[era].d_trpfly}.</dd>
                 <dt>{eraArray[era].trpsea}</dt>
