@@ -45,6 +45,7 @@ import RefreshButton from './components/utilities/refreshButton';
 import MailButton from './components/mail/mailButton';
 import ClanMailButton from './components/diplomacy/clans/clanMessagesButton';
 import * as Sentry from '@sentry/react';
+import RepeatButton from './components/utilities/repeatButton';
 
 function App()
 {
@@ -305,6 +306,7 @@ function App()
 										</Grid.Col>
 									</Grid>
 									<TurnResultContainer empire={empire} />
+									<RepeatButton empire={empire} kickOut={kickOut} />
 									<Outlet />
 								</>)}
 							</main>

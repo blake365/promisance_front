@@ -18,6 +18,8 @@ import { pubMarketSlice } from './pubMarketSlice'
 import { effectSlice } from './effectSlice'
 import { scoresSlice } from './scoresSlice'
 import { timeSlice } from './timeSlice'
+import { mailSlice } from './mailSlice'
+import { repeatSlice } from './repeatSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -34,6 +36,8 @@ const reducers = combineReducers({
 	market: pubMarketSlice.reducer,
 	effects: effectSlice.reducer,
 	scores: scoresSlice.reducer,
+	mail: mailSlice.reducer,
+	repeat: repeatSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)

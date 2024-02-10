@@ -17,6 +17,7 @@ import { useState, useRef } from 'react'
 import { useTour } from '@reactour/tour'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
+import { setRepeat } from '../../store/repeatSlice'
 
 export default function GeneralAction(props)
 {
@@ -50,6 +51,7 @@ export default function GeneralAction(props)
 		setLoading(true)
 		try {
 			const res = await Axios.post('/useturns', values)
+			dispatch(setRepeat({ route: '/useturns', body: values, color: props.color }))
 			dispatch(setResult(res.data))
 			loadEmpire()
 			buttonRef.current.focus()

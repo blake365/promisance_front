@@ -19,6 +19,7 @@ import { FavoriteButton } from '../utilities/maxbutton'
 import { useState } from 'react'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { setRepeat } from '../../store/repeatSlice'
 
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
@@ -51,6 +52,7 @@ export default function MagicCenter()
         // console.log(values)
         try {
             const res = await Axios.post('/magic', values)
+            dispatch(setRepeat({ route: '/magic', body: values, color: 'grape' }))
             // console.log(res.data)
             dispatch(setResult(res.data))
             window.scroll({ top: 0, behavior: 'smooth' })

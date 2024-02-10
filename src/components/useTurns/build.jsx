@@ -15,6 +15,7 @@ import { Compass } from '@phosphor-icons/react'
 import { buildSteps } from '../../tour/buildSteps'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { setRepeat } from '../../store/repeatSlice'
 
 export default function Build()
 {
@@ -133,7 +134,7 @@ export default function Build()
 		try {
 			// console.log(values)
 			const res = await Axios.post('/build', values)
-			// dispatch(setResult(res.data))
+			dispatch(setRepeat({ route: '/build', body: values, color: 'blue' }))
 			// console.log(res.data)
 			dispatch(setResult(res.data))
 			loadEmpire()
