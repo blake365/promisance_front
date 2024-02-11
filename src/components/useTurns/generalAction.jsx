@@ -31,7 +31,7 @@ export default function GeneralAction(props)
 		initialValues: {
 			empireId: props.empire.id,
 			type: props.type,
-			turns: 0,
+			turns: props.type === 'heal' ? (100 - props.empire.health) / 2 : 0,
 			condensed: true,
 		},
 

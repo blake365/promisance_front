@@ -5,7 +5,7 @@ import
 	SimpleGrid,
 	Grid,
 	Text,
-	Group, Col, Avatar, Stack
+	Group, Col, Avatar, Stack, Popover, Anchor
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
 
@@ -15,6 +15,10 @@ import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense,
 import NetProduced from './utilities/NetProduced'
 import { BASE_LUCK } from '../config/config'
 import { setBgImage } from '../functions/setBgImage'
+import TinyAction from './useTurns/tinyAction'
+import TinyBuild from './useTurns/tinyBuild'
+import TaxRate from './settings/taxRate'
+import IndyRates from './settings/indyRates'
 
 const RaceBonus = ({ value }) =>
 {
@@ -60,6 +64,7 @@ export default function Overview()
 
 	const race = raceArray[empire.race]
 	const era = eraArray[empire.era]
+	const buildings = ['bldPop', 'bldCash', 'bldTrp', 'bldCost', 'bldWiz', 'bldFood', 'bldDef']
 
 	let luck = Math.round(BASE_LUCK / size)
 
@@ -122,7 +127,14 @@ export default function Overview()
 								<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
 								<Text>Turns Used:</Text>
 								<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
-								<Text>Health:</Text>
+								<Popover withArrow shadow="md">
+									<Popover.Target>
+										<Anchor>Health:</Anchor>
+									</Popover.Target>
+									<Popover.Dropdown>
+										<TinyAction title='Heal' type='heal' color='red' empire={empire} />
+									</Popover.Dropdown>
+								</Popover>
 								<Text align='right'>{empire.health}%</Text>
 								<Text>Networth:</Text>
 								<Text align='right'>${empire.networth.toLocaleString()}</Text>
@@ -132,6 +144,15 @@ export default function Overview()
 								<Text align='right'>{raceArray[empire.race].name}</Text>
 								<Text>Era:</Text>
 								<Text align='right'>{eraArray[empire.era].name}</Text>
+								<Popover withArrow shadow="md">
+									<Popover.Target>
+										<Anchor>Tax Rate:</Anchor>
+									</Popover.Target>
+									<Popover.Dropdown>
+										<TaxRate tiny empire={empire} />
+									</Popover.Dropdown>
+								</Popover>
+								<Text align='right'>{empire.tax}%</Text>
 							</SimpleGrid>
 						</Card>
 
@@ -140,16 +161,29 @@ export default function Overview()
 							<SimpleGrid cols={2} spacing={1}>
 								<Text>Food:</Text>
 								<Text align='right'>{empire.food.toLocaleString()}</Text>
-								<Text>Production: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Text>
+								<Popover withArrow shadow="md">
+									<Popover.Target>
+										<Anchor>Production: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Anchor>
+									</Popover.Target>
+									<Popover.Dropdown>
+										<TinyAction title='Farm' type='farm' color='green' empire={empire} />
+									</Popover.Dropdown>
+								</Popover>
 								<Text align='right'>{foodpro.toLocaleString()}</Text>
 								<Text>Consumption: <RaceBonus value={race.mod_foodcon} /></Text>
 								<Text align='right'>{foodcon.toLocaleString()}</Text>
 								<NetProduced title='Net' value={foodpro - foodcon} />
-
 								<Text mt='md' weight={800} size='lg'>Other</Text>
 								<Text></Text>
-								<Text align='left'>Explore: <RaceBonus value={era.mod_explore + race.mod_explore} />
-								</Text>
+								<Popover withArrow shadow="md">
+									<Popover.Target>
+										<Anchor align='left'>Explore: <RaceBonus value={era.mod_explore + race.mod_explore} />
+										</Anchor>
+									</Popover.Target>
+									<Popover.Dropdown>
+										<TinyAction title='Explore' type='explore' color='blue' empire={empire} />
+									</Popover.Dropdown>
+								</Popover>
 								<Text align='right'>+{newLand} acres</Text>
 								<Text align='left'>Black Market: <RaceBonus value={race.mod_market} /></Text>
 								<Text></Text>
@@ -164,7 +198,14 @@ export default function Overview()
 								<Text align='right'>${empire.cash.toLocaleString()}</Text>
 								<Text>Per Capita Income:</Text>
 								<Text align='right'>${cpi.toLocaleString()}</Text>
-								<Text>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Text>
+								<Popover withArrow shadow="md">
+									<Popover.Target>
+										<Anchor>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Anchor>
+									</Popover.Target>
+									<Popover.Dropdown>
+										<TinyAction title='Cash' type='cash' color='yellow' empire={empire} />
+									</Popover.Dropdown>
+								</Popover>
 								<Text align='right'>${income.toLocaleString()}</Text>
 								<Text>Expenses: <RaceBonus value={race.mod_expenses} /></Text>
 								<Text align='right'>${expenses.toLocaleString()}</Text>
@@ -187,14 +228,18 @@ export default function Overview()
 									<Text weight={800} size='lg'>
 										Land Division
 									</Text>
-
-									<Text>{eraArray[empire.era].bldpop}:</Text>
-									<Text>{eraArray[empire.era].bldcash}:</Text>
-									<Text>{eraArray[empire.era].bldtrp}:</Text>
-									<Text>{eraArray[empire.era].bldcost}:</Text>
-									<Text>{eraArray[empire.era].bldwiz}:</Text>
-									<Text>{eraArray[empire.era].bldfood}:</Text>
-									<Text>{eraArray[empire.era].blddef}:</Text>
+									{buildings.map((building, index) => (
+										<div key={index}>
+											<Popover withArrow shadow="md">
+												<Popover.Target>
+													<Anchor>{eraArray[empire.era][building.toLowerCase()]}:</Anchor>
+												</Popover.Target>
+												<Popover.Dropdown>
+													<TinyBuild building={building} empire={empire} />
+												</Popover.Dropdown>
+											</Popover>
+										</div>
+									))}
 									<Text>Unused Land:</Text>
 									<Text>Total Land:</Text>
 								</Col>
@@ -225,10 +270,8 @@ export default function Overview()
 							</Grid>
 						</Card>
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
-
-
-							<Grid columns={14}>
-								<Col span={7}>
+							<Grid columns={16}>
+								<Col span={8}>
 									<Text weight={800} size='lg'>
 										Military
 									</Text>
@@ -236,27 +279,55 @@ export default function Overview()
 									<Text>{eraArray[empire.era].trplnd}:</Text>
 									<Text>{eraArray[empire.era].trpfly}:</Text>
 									<Text>{eraArray[empire.era].trpsea}:</Text>
-
 									<Text> </Text>
 									<Text mt='sm'>Off Power: <RaceBonus value={race.mod_offense} /></Text>
 									<Text>Def Power: <RaceBonus value={race.mod_defense} /></Text>
 									<Text mt='sm'>{eraArray[empire.era].trpwiz}: <RaceBonus value={race.mod_magic} /></Text>
-									<Text>{eraArray[empire.era].runes}: <RaceBonus value={race.mod_runepro + era.mod_runepro} /></Text>
+									<Popover withArrow shadow="md">
+										<Popover.Target>
+											<Anchor>{eraArray[empire.era].runes}: <RaceBonus value={race.mod_runepro + era.mod_runepro} /></Anchor>
+										</Popover.Target>
+										<Popover.Dropdown>
+											<TinyAction title='Meditate' type='meditate' color='grape' empire={empire} />
+										</Popover.Dropdown>
+									</Popover>
 								</Col>
-								<Col span={7}>
-									<Text align='right'>Industry: <RaceBonus value={race.mod_industry + era.mod_industry} /></Text>
+								<Col span={5} align='right'>
+									<Popover withArrow shadow="md">
+										<Popover.Target>
+											<Anchor >Industry: </Anchor>
+										</Popover.Target>
+										<Popover.Dropdown>
+											<TinyAction title='Industry' type='industry' color='red' empire={empire} />
+										</Popover.Dropdown>
+									</Popover>
 									<Text align='right'>{empire.trpArm.toLocaleString()}</Text>
 									<Text align='right'>{empire.trpLnd.toLocaleString()}</Text>
 									<Text align='right'>{empire.trpFly.toLocaleString()}</Text>
 									<Text align='right'>{empire.trpSea.toLocaleString()}</Text>
-
 									<Text align='right'> </Text>
 									<Text align='right' mt='sm'>{oPower.toLocaleString()}</Text>
 									<Text align='right'>{dPower.toLocaleString()}</Text>
 									<Text align='right' mt='sm'>{empire.trpWiz.toLocaleString()}</Text>
-									<Text align='right' >{empire.runes.toLocaleString()}</Text>
+									<Text align='right'>{empire.runes.toLocaleString()}</Text>
 								</Col>
 
+								<Col span={3}>
+									<Popover withArrow shadow="md">
+										<Popover.Target>
+											<Anchor>
+												<Text align='right'><RaceBonus value={race.mod_industry + era.mod_industry} /></Text>
+												<Text align='right'>{empire.indArmy}%</Text>
+												<Text align='right'>{empire.indLnd}%</Text>
+												<Text align='right'>{empire.indFly}%</Text>
+												<Text align='right'>{empire.indSea}%</Text>
+											</Anchor>
+										</Popover.Target>
+										<Popover.Dropdown>
+											<IndyRates tiny empire={empire} />
+										</Popover.Dropdown>
+									</Popover>
+								</Col>
 							</Grid>
 						</Card>
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
@@ -268,7 +339,6 @@ export default function Overview()
 									<Text>Member of Clan:</Text>
 									<Text>Role:</Text>
 									<Text>Enemies:</Text>
-
 									<Text mt='sm'>Offensive Actions:</Text>
 									<Text>Defenses:</Text>
 									{/* <Text>Kills:</Text> */}
@@ -277,7 +347,6 @@ export default function Overview()
 									<Text align='right'>{clan ? (clan.clanName) : ('None')}</Text>
 									<Text align='right'>{clan ? (clanRole(empire.id, clan)) : 'None'}</Text>
 									<Text align='right'>{enemies}</Text>
-
 									<Text align='right' mt='sm'>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>
 									<Text align='right'>{empire.defTotal} ({empire.defSucc ? Math.round(empire.defSucc / empire.defTotal * 100) : ('0')}%)</Text>
 									{/* <Text align='right'>{empire.kills}</Text> */}

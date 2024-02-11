@@ -24,7 +24,7 @@ const MapComponents = (title) =>
         return <Explore />
     }
     else if (title === 'Farm') {
-        return <Farm />
+        return <Farm favorite />
     }
     else if (title === 'Industry') {
         return <Industry />
