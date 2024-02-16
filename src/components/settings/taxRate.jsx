@@ -81,12 +81,13 @@ export default function TaxRate({ empire, tiny })
                                     variant = 'filled'
                                 }
                                 return (
-                                    <Button color={buttonColor} variant={variant} size='xs' key={tax} onClick={() => updateTax({ empireId: empire.id, tax: tax })}>{tax}%</Button>
+                                    <Button color={buttonColor} px='xs' variant={variant} key={tax} onClick={() => updateTax({ empireId: empire.id, tax: tax })}>{tax}%</Button>
                                 )
                             })}
                         </Group>
                         <Group spacing='xs' align='end'>
                             <NumberInput
+                                w={80}
                                 label='Custom'
                                 min={0}
                                 max={100}

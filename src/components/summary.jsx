@@ -40,12 +40,12 @@ export default function Summary()
 				<div>
 					<NewPlayerModal empire={empire} time={time} />
 					<Card>
-						<Group position='apart'>
+						<Group position='apart' maw='80vw' sx={{ overflow: 'hidden' }}>
 							<div>
 							</div>
-							<Group position='center' align='center' spacing={5}>
+							<Group position='center' align='center' spacing={5} >
 								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-								<Title order={2} align='center' >
+								<Title order={2} align='center'>
 									{empire?.name}
 								</Title>
 							</Group>

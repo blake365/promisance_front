@@ -1,4 +1,4 @@
-import { Group, Paper, Text, Title, Button } from '@mantine/core'
+import { Center, Switch, Paper, Text, Title, Button } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import Build from './build'
 import Demolish from './demolish'
@@ -12,73 +12,150 @@ import Heal from './heal'
 import AttackMini from '../diplomacy/attackMini'
 import SpellMini from '../diplomacy/spellMini'
 import TinyBuild from './tinyBuild'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import Axios from 'axios'
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 
-const MapComponents = (title, empire, size) =>
+
+const MapComponents = ({ title, empire, size, index }) =>
 {
     // console.log(title)
+    let child = null
     if (title === 'Build') {
-        return <Build />
+        child = <Build />
     } else if (title === 'Demolish') {
-        return <Demolish />
+        child = <Demolish />
     } else if (title === 'Cash') {
-        return <Cash size={size} />
+        child = <Cash size={size} />
     } else if (title === 'Explore') {
-        return <Explore size={size} />
+        child = <Explore size={size} />
     }
     else if (title === 'Farm') {
-        return <Farm size={size} />
+        child = <Farm size={size} />
     }
     else if (title === 'Industry') {
-        return <Industry size={size} />
+        child = <Industry size={size} />
     }
     else if (title === 'Meditate') {
-        return <Meditate size={size} />
+        child = <Meditate size={size} />
     }
     else if (title === 'MagicCenter') {
-        return <MagicCenter />
+        child = <MagicCenter />
     }
     else if (title === 'Heal') {
-        return <Heal size={size} />
+        child = <Heal size={size} />
     } else if (title === 'Attack') {
-        return <AttackMini />
+        child = <AttackMini />
     } else if (title === 'Spell') {
-        return <SpellMini />
+        child = <SpellMini />
     } else if (title.includes('bld')) {
         // console.log(title)
-        return <TinyBuild show={true} building={title} empire={empire} />
+        child = <TinyBuild show={true} building={title} empire={empire} />
     }
+
+    return (
+        <Draggable draggableId={title} index={index}>
+            {(provided) => (
+                <Paper key={index} shadow="sm" p="md" sx={{
+                    maxWidth: '550px',
+                    minWidth: '250px',
+                    margin: '0.5rem'
+                }}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                >
+                    {child}
+                </Paper>
+            )}
+        </Draggable>
+    )
 }
 
-// TODO: ability to reorder favorites
+const FavoritesList = React.memo(function favoritesList({ favorites, size })
+{
+    return favorites.map((favorite, index) =>
+    {
+        // console.log(favorite)
+        return <MapComponents key={favorite} title={favorite} index={index} size={size} />
+    })
+})
+
 
 export default function Favorites()
 {
     const { empire } = useSelector((state) => state.empire)
-    const [size, setSize] = useState(false)
+    const [checked, setChecked] = useState(empire.favSize)
+    const [state, setState] = useState({ favorites: empire.favorites })
+
+    const loadEmpire = useLoadEmpire(empire.uuid)
+
+    const reorder = (list, startIndex, endIndex) =>
+    {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+    };
+
+    async function onDragEnd(result)
+    {
+        if (!result.destination) {
+            return;
+        }
+
+        if (result.destination.index === result.source.index) {
+            return;
+        }
+
+        const favorites = reorder(
+            state.favorites,
+            result.source.index,
+            result.destination.index
+        );
+        // console.log(favorites)
+        setState({ favorites });
+        await Axios.post(`/empire/${empire.uuid}/favorites/order`, { favorites: favorites })
+        loadEmpire()
+    }
+
+    const handleSizeChange = (checked) =>
+    {
+        Axios.post(`/empire/${empire.uuid}/favorites/size`, { favSize: !checked })
+        setChecked(!checked)
+    }
+
     // console.log(empire.favorites)
     return (
         <main>
-            <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>
+            <Title order={1} align='center'>
                 Favorites
             </Title>
+            <Text size='sm' color='dimmed' align='center' mb='xs'>drag to reorder</Text>
+            <Center>
+                <Switch
+                    label="compact"
+                    checked={checked}
+                    onChange={(event) => handleSizeChange(checked)}
+                />
+            </Center>
             {empire.favorites.length === 0 && <Text align='center'>Add favorites from the actions in the <b>Use Turns</b> category</Text>}
-            <Button onClick={() => setSize(!size)} compact>{size === true ? 'small' : 'normal'}</Button>
-            <Group position='center' spacing={5}>
-                {empire.favorites.map((favorite) =>
-                {
-                    return (
-                        <Paper key={favorite} shadow="sm" p="md" sx={{
-                            maxWidth: '550px',
-                            minWidth: '250px',
-                            margin: '0.5rem'
-                        }}>
-                            {MapComponents(favorite, empire, size)}
-                        </Paper>
-                    )
-                }
-                )}
-            </Group>
+            <Center>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="favorites">
+                        {(provided) => (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                            >
+                                <FavoritesList favorites={state.favorites} size={checked} />
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </Center>
         </main>
     )
 }

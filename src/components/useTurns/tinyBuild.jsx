@@ -1,5 +1,5 @@
 import { Button, NumberInput, Group, Text } from '@mantine/core'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
@@ -13,9 +13,10 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
 import { eraArray } from '../../config/eras'
 
-export default function TinyBuild({ building, empire, show })
+export default function TinyBuild({ building, show })
 {
 	// console.log(building)
+	const { empire } = useSelector((state) => state.empire)
 	const buttonRef = useRef()
 	if (building === 'bldTrp') {
 		building = 'bldTroop'
@@ -149,7 +150,7 @@ export default function TinyBuild({ building, empire, show })
 
 	const roundStatus = checkRoundStatus()
 
-	console.log(show)
+	// console.log(show)
 
 	let bldAbbrev = building.toLowerCase()
 	if (bldAbbrev === 'bldtroop') {
@@ -169,7 +170,7 @@ export default function TinyBuild({ building, empire, show })
 					: setErrors("Can't build that many buildings")
 			}
 		>
-			<Group spacing='sm'>
+			<Group spacing='sm' position='center'>
 				{show ? <Text>{bldName}</Text> : null}
 				<NumberInput
 					hideControls

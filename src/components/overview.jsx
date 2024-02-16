@@ -144,14 +144,7 @@ export default function Overview()
 								<Text align='right'>{raceArray[empire.race].name}</Text>
 								<Text>Era:</Text>
 								<Text align='right'>{eraArray[empire.era].name}</Text>
-								<Popover withArrow shadow="md">
-									<Popover.Target>
-										<Anchor>Tax Rate:</Anchor>
-									</Popover.Target>
-									<Popover.Dropdown>
-										<TaxRate tiny empire={empire} />
-									</Popover.Dropdown>
-								</Popover>
+								<Text>Tax Rate:</Text>
 								<Text align='right'>{empire.tax}%</Text>
 							</SimpleGrid>
 						</Card>
@@ -198,7 +191,7 @@ export default function Overview()
 								<Text align='right'>${empire.cash.toLocaleString()}</Text>
 								<Text>Per Capita Income:</Text>
 								<Text align='right'>${cpi.toLocaleString()}</Text>
-								<Popover withArrow shadow="md">
+								<Popover withArrow shadow="md" withinPortal>
 									<Popover.Target>
 										<Anchor>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Anchor>
 									</Popover.Target>
@@ -293,7 +286,7 @@ export default function Overview()
 									</Popover>
 								</Col>
 								<Col span={5} align='right'>
-									<Popover withArrow shadow="md">
+									<Popover withArrow shadow="md" withinPortal>
 										<Popover.Target>
 											<Anchor >Industry: </Anchor>
 										</Popover.Target>
@@ -313,20 +306,13 @@ export default function Overview()
 								</Col>
 
 								<Col span={3}>
-									<Popover withArrow shadow="md" withinPortal>
-										<Popover.Target>
-											<Anchor>
-												<Text align='right'><RaceBonus value={race.mod_industry + era.mod_industry} /></Text>
-												<Text align='right'>{empire.indArmy}%</Text>
-												<Text align='right'>{empire.indLnd}%</Text>
-												<Text align='right'>{empire.indFly}%</Text>
-												<Text align='right'>{empire.indSea}%</Text>
-											</Anchor>
-										</Popover.Target>
-										<Popover.Dropdown>
-											<IndyRates tiny empire={empire} />
-										</Popover.Dropdown>
-									</Popover>
+
+									<Text align='right'><RaceBonus value={race.mod_industry + era.mod_industry} /></Text>
+									<Text align='right'>{empire.indArmy}%</Text>
+									<Text align='right'>{empire.indLnd}%</Text>
+									<Text align='right'>{empire.indFly}%</Text>
+									<Text align='right'>{empire.indSea}%</Text>
+
 								</Col>
 							</Grid>
 						</Card>
