@@ -23,7 +23,7 @@ import { setRepeat } from '../../store/repeatSlice'
 
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
-export default function MagicCenter()
+export default function MagicCenter({ size })
 {
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(false)
@@ -112,13 +112,15 @@ export default function MagicCenter()
         <section >
             <Center>
                 <Stack spacing='sm' align='center'>
-                    <img src='/images/magic.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='magic center' />
-                    <Title order={1} align='center'>
-                        Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
-                    </Title>
-                    <Text align='center'>
-                        Cast spells to create a shield, generate food or money, or change eras. Spells take two turns to cast.
-                    </Text>
+                    {!size && <>
+                        <img src='/images/magic.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='magic center' />
+                        <Title order={1} align='center'>
+                            Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
+                        </Title>
+                        <Text align='center'>
+                            Cast spells to create a shield, generate food or money, or change eras. Spells take two turns to cast.
+                        </Text>
+                    </>}
                     <Text align='center'>
                         Your current magic power is {magicPower}.
                     </Text>

@@ -23,9 +23,9 @@ const MapComponents = ({ title, empire, size, index }) =>
     // console.log(title)
     let child = null
     if (title === 'Build') {
-        child = <Build />
+        child = <Build size={size} favorite />
     } else if (title === 'Demolish') {
-        child = <Demolish />
+        child = <Demolish size={size} />
     } else if (title === 'Cash') {
         child = <Cash size={size} />
     } else if (title === 'Explore') {
@@ -41,14 +41,14 @@ const MapComponents = ({ title, empire, size, index }) =>
         child = <Meditate size={size} />
     }
     else if (title === 'MagicCenter') {
-        child = <MagicCenter />
+        child = <MagicCenter size={size} />
     }
     else if (title === 'Heal') {
         child = <Heal size={size} />
     } else if (title === 'Attack') {
-        child = <AttackMini />
+        child = <AttackMini size={size} />
     } else if (title === 'Spell') {
-        child = <SpellMini />
+        child = <SpellMini size={size} />
     } else if (title.includes('bld')) {
         // console.log(title)
         child = <TinyBuild show={true} building={title} empire={empire} />
@@ -135,7 +135,7 @@ export default function Favorites()
             <Text size='sm' color='dimmed' align='center' mb='xs'>drag to reorder</Text>
             <Center>
                 <Switch
-                    label="compact"
+                    label="Compact"
                     checked={checked}
                     onChange={(event) => handleSizeChange(checked)}
                 />

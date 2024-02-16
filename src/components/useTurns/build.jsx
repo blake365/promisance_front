@@ -17,7 +17,7 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
 
-export default function Build()
+export default function Build({ size })
 {
 	const buttonRef = useRef()
 
@@ -155,34 +155,36 @@ export default function Build()
 		<main>
 			<Center mb={10}>
 				<Stack spacing='sm' align='center' >
-					<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
-					<Title order={1} align='center'>
-						Build <FavoriteButton empire={empire} title='Build' />
-						<ActionIcon size='md' onClick={() =>
-						{
-							setMeta('build tour')
-							setSteps(buildSteps)
-							setCurrentStep(0)
-							setIsOpen(true)
-						}}
-							sx={{
-								color: '#40c057',
-								display: 'inline',
-							}}><Compass size={24} /></ActionIcon>
-					</Title>
-					<div className='bld-first-step'>
-						<Text align='center'>
-							Each structure consumes one acre of unused land and costs $
-							{buildCost.toLocaleString()} to build.
-						</Text>
-						<Text align='center'>
-							You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
-						</Text>
-						<Text align='center'>
-							With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
-							structures
-						</Text>
-					</div>
+					{!size && <>
+						<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
+						<Title order={1} align='center'>
+							Build <FavoriteButton empire={empire} title='Build' />
+							<ActionIcon size='md' onClick={() =>
+							{
+								setMeta('build tour')
+								setSteps(buildSteps)
+								setCurrentStep(0)
+								setIsOpen(true)
+							}}
+								sx={{
+									color: '#40c057',
+									display: 'inline',
+								}}><Compass size={24} /></ActionIcon>
+						</Title>
+						<div className='bld-first-step'>
+							<Text align='center'>
+								Each structure consumes one acre of unused land and costs $
+								{buildCost.toLocaleString()} to build.
+							</Text>
+							<Text align='center'>
+								You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
+							</Text>
+							<Text align='center'>
+								With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
+								structures
+							</Text>
+						</div>
+					</>}
 					<form
 						onSubmit={
 							totalBuild <= canBuild

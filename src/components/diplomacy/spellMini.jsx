@@ -12,7 +12,7 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import SpellForm from './spellForm'
 
 
-export default function SpellMini()
+export default function SpellMini({ size })
 {
     const { empire } = useSelector((state) => state.empire)
 
@@ -22,13 +22,15 @@ export default function SpellMini()
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
-                    <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
-                    <Title order={1} align='center'>
-                        Cast Spell <FavoriteButton title='Spell' empire={empire} />
-                    </Title>
-                    <Text align='center'>
-                        Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
-                    </Text>
+                    {!size && <>
+                        <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
+                        <Title order={1} align='center'>
+                            Cast Spell <FavoriteButton title='Spell' empire={empire} />
+                        </Title>
+                        <Text align='center'>
+                            Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
+                        </Text>
+                    </>}
                     <SpellForm empire={empire} roundStatus={roundStatus} />
                 </Stack>
             </Center>

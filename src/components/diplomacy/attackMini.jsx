@@ -13,7 +13,7 @@ import { offense, defense } from '../../functions/functions'
 import AttackForm from './attackForm'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
-export default function AttackMini()
+export default function AttackMini({ size })
 {
     const { empire } = useSelector((state) => state.empire)
 
@@ -37,13 +37,17 @@ export default function AttackMini()
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
-                    <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
-                    <Title order={1} align='center'>
-                        Attack <FavoriteButton title='Attack' empire={empire} />
-                    </Title>
-                    <Text align='center'>
-                        Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
-                    </Text>
+                    {!size &&
+                        <>
+                            <img src='/images/war.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='war council' />
+                            <Title order={1} align='center'>
+                                Attack <FavoriteButton title='Attack' empire={empire} />
+                            </Title>
+                            <Text align='center'>
+                                Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
+                            </Text>
+                        </>
+                    }
                     <AttackForm empire={empire} roundStatus={roundStatus} />
                     <Card>
                         <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'baseline', height: '49px' }}>
