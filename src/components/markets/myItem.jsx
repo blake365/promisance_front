@@ -77,7 +77,7 @@ export default function MyItem({ element, empire })
     if (hoursOnMarket < 6) {
         hoursOnMarketString = `In transit for ${timeRemaining} more hours`
     } else {
-        hoursOnMarketString = `${hoursOnMarket - PUBMKT_START}`
+        hoursOnMarketString = `${truncate(hoursOnMarket - PUBMKT_START, 1)}`
         hoursOnMarket = Math.round((hoursOnMarket - PUBMKT_START) * 100) / 100
     }
 
