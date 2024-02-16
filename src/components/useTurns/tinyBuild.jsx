@@ -170,11 +170,11 @@ export default function TinyBuild({ building, show })
 					: setErrors("Can't build that many buildings")
 			}
 		>
-			<Group spacing='sm' position='center'>
+			<Group spacing='sm' position='right'>
 				{show ? <Text>{bldName}</Text> : null}
 				<NumberInput
 					hideControls
-					maw={200}
+					maw={180}
 					min={0}
 					defaultValue={0}
 					max={canBuild}

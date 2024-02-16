@@ -1,7 +1,6 @@
 import { Button, NumberInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-// import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
 import { PUBMKT_START } from '../../config/config'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'

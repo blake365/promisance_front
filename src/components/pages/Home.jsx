@@ -51,7 +51,6 @@ export default function Home()
         })
     }
 
-
     return (
         <main style={{ backgroundColor: '#F1F3F5' }}>
             <HeroImageRight />

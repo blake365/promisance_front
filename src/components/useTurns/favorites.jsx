@@ -1,4 +1,4 @@
-import { Center, Switch, Paper, Text, Title } from '@mantine/core'
+import { Center, Switch, Paper, Text, Title, Flex } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import Build from './build'
 import Demolish from './demolish'
@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 import Axios from 'axios'
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
-
+import { useMediaQuery } from '@mantine/hooks';
 
 const MapComponents = ({ title, empire, size, index }) =>
 {
@@ -82,12 +82,38 @@ const FavoritesList = React.memo(function favoritesList({ favorites, size })
     })
 })
 
+const moveCol = (source, destination, droppableSource, droppableDestination) =>
+{
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
+
+const reorderCol = (list, startIndex, endIndex) =>
+{
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
+
 
 export default function Favorites()
 {
     const { empire } = useSelector((state) => state.empire)
     const [checked, setChecked] = useState(empire.favSize)
     const [state, setState] = useState({ favorites: empire.favorites })
+
+    const [colState, setColState] = useState([empire.favColumns.column1, empire.favColumns.column2])
 
     const loadEmpire = useLoadEmpire(empire.uuid)
 
@@ -120,12 +146,43 @@ export default function Favorites()
         loadEmpire()
     }
 
+    async function onDragEndCol(result)
+    {
+        const { source, destination } = result;
+
+        // dropped outside the list
+        if (!destination) {
+            return;
+        }
+        const sInd = +source.droppableId;
+        const dInd = +destination.droppableId;
+
+        if (sInd === dInd) {
+            const items = reorderCol(colState[sInd], source.index, destination.index);
+            const newState = [...colState];
+            newState[sInd] = items;
+            setColState(newState);
+            await Axios.post(`/empire/${empire.uuid}/favorites/orderColumns`, { favorites: newState })
+            loadEmpire()
+        } else {
+            const result = moveCol(colState[sInd], colState[dInd], source, destination);
+            const newState = [...colState];
+            newState[sInd] = result[sInd];
+            newState[dInd] = result[dInd];
+            setColState(newState.filter(group => group.length));
+            await Axios.post(`/empire/${empire.uuid}/favorites/orderColumns`, { favorites: newState })
+            loadEmpire()
+        }
+    }
+
     const handleSizeChange = (checked) =>
     {
         Axios.post(`/empire/${empire.uuid}/favorites/size`, { favSize: !checked })
         setChecked(!checked)
     }
 
+    const smScreen = useMediaQuery('(max-width: 768px)')
+    // console.log(colState)
     // console.log(empire.favorites)
     return (
         <main>
@@ -141,21 +198,46 @@ export default function Favorites()
                 />
             </Center>
             {empire.favorites.length === 0 && <Text align='center' mt='lg'>Add favorites by clicking the star icon from the actions in the <b>Use Turns</b> category</Text>}
-            <Center>
-                <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="favorites">
-                        {(provided) => (
-                            <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                <FavoritesList favorites={state.favorites} size={checked} />
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
-            </Center>
+
+            {!smScreen ? (
+                <Flex align='start' justify='center' wrap='wrap'>
+                    <DragDropContext onDragEnd={onDragEndCol}>
+                        {colState.map((col, index) =>
+                        {
+                            // console.log(col)
+                            return (
+                                <Droppable key={index} droppableId={`${index}`}>
+                                    {(provided) => (
+                                        <div
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}
+                                        >
+                                            <FavoritesList favorites={col} size={checked} />
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            )
+                        })}
+                    </DragDropContext>
+                </Flex>
+            ) : (
+                <Center>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="favorites">
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                >
+                                    <FavoritesList favorites={state.favorites} size={checked} />
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                </Center>
+            )}
         </main>
     )
 }

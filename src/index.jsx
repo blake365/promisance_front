@@ -38,8 +38,8 @@ const ForeignAid = lazy(() => import('./components/diplomacy/foreignAid'));
 const Lottery = lazy(() => import('./components/markets/Lottery'));
 const ClanPage = lazy(() => import('./components/diplomacy/clans/clanPage'));
 const ClanStats = lazy(() => import('./components/diplomacy/clans/clanStats'));
-// const Favorites = lazy(() => import('./components/useTurns/favorites'));
-import Favorites from './components/useTurns/favorites'
+const Favorites = lazy(() => import('./components/useTurns/favorites'));
+// import Favorites from './components/useTurns/favorites'
 const WorldNews = lazy(() => import('./components/news/worldNews'));
 const IntelCenter = lazy(() => import('./components/diplomacy/intelCenter'));
 const Achievements = lazy(() => import('./components/achievements/achievements'))
