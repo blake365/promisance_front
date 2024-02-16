@@ -76,12 +76,13 @@ export default function MyItem({ element, empire })
     // hoursOnMarket -= PUBMKT_START
     let timeRemaining = Math.round((PUBMKT_START - hoursOnMarket) * 100) / 100
     if (hoursOnMarket < 6) {
-        hoursOnMarketString = `In Transit for ${timeRemaining} more hours`
+        hoursOnMarketString = `In transit for ${timeRemaining} more hours`
     } else {
-        hoursOnMarket = Math.round((hoursOnMarket - 6) * 100) / 100
+        hoursOnMarketString = `${hoursOnMarket - PUBMKT_START}`
+        hoursOnMarket = Math.round((hoursOnMarket - PUBMKT_START) * 100) / 100
     }
 
-    console.log(hoursOnMarket)
+    // console.log(hoursOnMarket)
 
     return (
         <tr key={element.id}>
@@ -89,7 +90,7 @@ export default function MyItem({ element, empire })
             <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
             <td align='center'>${element.price.toLocaleString()}</td>
             <td align='center'>{hoursOnMarketString}</td>
-            {hoursOnMarket >= 6 ? <td align='center'>
+            {hoursOnMarket >= PUBMKT_START ? <td align='center'>
                 <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
                     editForm.onSubmit((values) =>
                     {
@@ -117,7 +118,7 @@ export default function MyItem({ element, empire })
                     <Button size='xs' compact type='submit'>Edit</Button>
                     <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
                 </form>
-            </td> : <td align='center'>Wait {6 + timeRemaining} hours</td>
+            </td> : <td align='center'>Wait {PUBMKT_START + timeRemaining} hours</td>
             }
         </tr>
     )
