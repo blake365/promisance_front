@@ -1,4 +1,4 @@
-import { Center, Switch, Paper, Text, Title, Button } from '@mantine/core'
+import { Center, Switch, Paper, Text, Title } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import Build from './build'
 import Demolish from './demolish'
@@ -140,7 +140,7 @@ export default function Favorites()
                     onChange={(event) => handleSizeChange(checked)}
                 />
             </Center>
-            {empire.favorites.length === 0 && <Text align='center'>Add favorites from the actions in the <b>Use Turns</b> category</Text>}
+            {empire.favorites.length === 0 && <Text align='center' mt='lg'>Add favorites by clicking the star icon from the actions in the <b>Use Turns</b> category</Text>}
             <Center>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="favorites">

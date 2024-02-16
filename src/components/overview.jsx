@@ -127,7 +127,7 @@ export default function Overview()
 								<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
 								<Text>Turns Used:</Text>
 								<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
-								<Popover withArrow shadow="md">
+								<Popover withArrow shadow="lg">
 									<Popover.Target>
 										<Anchor>Health:</Anchor>
 									</Popover.Target>
@@ -154,7 +154,7 @@ export default function Overview()
 							<SimpleGrid cols={2} spacing={1}>
 								<Text>Food:</Text>
 								<Text align='right'>{empire.food.toLocaleString()}</Text>
-								<Popover withArrow shadow="md">
+								<Popover withArrow shadow="lg">
 									<Popover.Target>
 										<Anchor>Production: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Anchor>
 									</Popover.Target>
@@ -168,7 +168,7 @@ export default function Overview()
 								<NetProduced title='Net' value={foodpro - foodcon} />
 								<Text mt='md' weight={800} size='lg'>Other</Text>
 								<Text></Text>
-								<Popover withArrow shadow="md">
+								<Popover withArrow shadow="lg">
 									<Popover.Target>
 										<Anchor align='left'>Explore: <RaceBonus value={era.mod_explore + race.mod_explore} />
 										</Anchor>
@@ -191,7 +191,7 @@ export default function Overview()
 								<Text align='right'>${empire.cash.toLocaleString()}</Text>
 								<Text>Per Capita Income:</Text>
 								<Text align='right'>${cpi.toLocaleString()}</Text>
-								<Popover withArrow shadow="md" withinPortal>
+								<Popover withArrow shadow="lg" withinPortal>
 									<Popover.Target>
 										<Anchor>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Anchor>
 									</Popover.Target>
@@ -223,7 +223,7 @@ export default function Overview()
 									</Text>
 									{buildings.map((building, index) => (
 										<div key={index}>
-											<Popover withArrow shadow="md">
+											<Popover withArrow shadow="lg">
 												<Popover.Target>
 													<Anchor>{eraArray[empire.era][building.toLowerCase()]}:</Anchor>
 												</Popover.Target>
@@ -276,7 +276,7 @@ export default function Overview()
 									<Text mt='sm'>Off Power: <RaceBonus value={race.mod_offense} /></Text>
 									<Text>Def Power: <RaceBonus value={race.mod_defense} /></Text>
 									<Text mt='sm'>{eraArray[empire.era].trpwiz}: <RaceBonus value={race.mod_magic} /></Text>
-									<Popover withArrow shadow="md">
+									<Popover withArrow shadow="lg">
 										<Popover.Target>
 											<Anchor>{eraArray[empire.era].runes}: <RaceBonus value={race.mod_runepro + era.mod_runepro} /></Anchor>
 										</Popover.Target>
@@ -286,7 +286,7 @@ export default function Overview()
 									</Popover>
 								</Col>
 								<Col span={5} align='right'>
-									<Popover withArrow shadow="md" withinPortal>
+									<Popover withArrow shadow="lg" withinPortal>
 										<Popover.Target>
 											<Anchor >Industry: </Anchor>
 										</Popover.Target>
