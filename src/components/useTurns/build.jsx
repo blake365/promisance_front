@@ -1,4 +1,4 @@
-import { Button, Center, NumberInput, Stack, Table, Title, Text, ActionIcon } from '@mantine/core'
+import { Button, Center, NumberInput, Stack, Table, Title, Text, ActionIcon, Group } from '@mantine/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -208,7 +208,7 @@ export default function Build()
 								</thead>
 								<tbody>
 									<tr className='bld-second-step'>
-										<td>{eraArray[empire.era].bldpop}</td>
+										<td><Group spacing={2}><FavoriteButton size={16} empire={empire} title='bldPop' />{eraArray[empire.era].bldpop}</Group></td>
 										<td>
 											{empire.bldPop} (
 											{Math.round((empire.bldPop / empire.land) * 100)}%)
@@ -242,7 +242,7 @@ export default function Build()
 										</td>
 									</tr>
 									<tr className='bld-step-twopointfive'>
-										<td>{eraArray[empire.era].bldcash}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldCash' size={16} empire={empire} />{eraArray[empire.era].bldcash}</Group></td>
 										<td>
 											{empire.bldCash} (
 											{Math.round((empire.bldCash / empire.land) * 100)}%)
@@ -276,7 +276,7 @@ export default function Build()
 										</td>
 									</tr>
 									<tr className='bld-third-step'>
-										<td>{eraArray[empire.era].bldtrp}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldTrp' size={16} empire={empire} />{eraArray[empire.era].bldtrp}</Group></td>
 										<td>
 											{empire.bldTroop} (
 											{Math.round((empire.bldTroop / empire.land) * 100)}%)
@@ -311,7 +311,7 @@ export default function Build()
 
 									</tr>
 									<tr className='bld-fourth-step'>
-										<td>{eraArray[empire.era].bldcost}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldCost' size={16} empire={empire} />{eraArray[empire.era].bldcost}</Group></td>
 										<td>
 											{empire.bldCost} (
 											{Math.round((empire.bldCost / empire.land) * 100)}%)
@@ -346,7 +346,7 @@ export default function Build()
 
 									</tr>
 									<tr className='bld-fifth-step'>
-										<td>{eraArray[empire.era].bldwiz}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldWiz' size={16} empire={empire} />{eraArray[empire.era].bldwiz}</Group></td>
 										<td>
 											{empire.bldWiz} (
 											{Math.round((empire.bldWiz / empire.land) * 100)}%)
@@ -381,7 +381,7 @@ export default function Build()
 
 									</tr>
 									<tr className='bld-sixth-step'>
-										<td>{eraArray[empire.era].bldfood}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldFood' size={16} empire={empire} />{eraArray[empire.era].bldfood}</Group></td>
 										<td>
 											{empire.bldFood} (
 											{Math.round((empire.bldFood / empire.land) * 100)}%)
@@ -415,7 +415,7 @@ export default function Build()
 										</td>
 									</tr>
 									<tr className='bld-seventh-step'>
-										<td>{eraArray[empire.era].blddef}</td>
+										<td><Group spacing={2}><FavoriteButton title='bldDef' size={16} empire={empire} />{eraArray[empire.era].blddef}</Group></td>
 										<td>
 											{empire.bldDef} (
 											{Math.round((empire.bldDef / empire.land) * 100)}%)

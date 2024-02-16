@@ -1,4 +1,4 @@
-import { Button, NumberInput, Group } from '@mantine/core'
+import { Button, NumberInput, Group, Text } from '@mantine/core'
 import { useDispatch } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -11,9 +11,11 @@ import { useState, useRef } from 'react'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
+import { eraArray } from '../../config/eras'
 
-export default function TinyBuild({ building, empire })
+export default function TinyBuild({ building, empire, show })
 {
+	// console.log(building)
 	const buttonRef = useRef()
 	if (building === 'bldTrp') {
 		building = 'bldTroop'
@@ -50,7 +52,7 @@ export default function TinyBuild({ building, empire })
 		return { canBuild, buildRate, buildCost }
 	}
 
-	const { canBuild, buildRate, buildCost } = getBuildAmounts(empire)
+	const { canBuild, buildRate } = getBuildAmounts(empire)
 
 	const form = useForm({
 		initialValues: {
@@ -147,6 +149,14 @@ export default function TinyBuild({ building, empire })
 
 	const roundStatus = checkRoundStatus()
 
+	console.log(show)
+
+	let bldAbbrev = building.toLowerCase()
+	if (bldAbbrev === 'bldtroop') {
+		bldAbbrev = 'bldtrp'
+	}
+	const bldName = eraArray[empire.era][bldAbbrev]
+
 	return (
 		<form
 			onSubmit={
@@ -160,6 +170,7 @@ export default function TinyBuild({ building, empire })
 			}
 		>
 			<Group spacing='sm'>
+				{show ? <Text>{bldName}</Text> : null}
 				<NumberInput
 					hideControls
 					maw={200}

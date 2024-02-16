@@ -2,7 +2,7 @@ import
 {
 	Button,
 	Center,
-	Group, NumberInput
+	Group, NumberInput, Stack
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
@@ -13,6 +13,8 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { setRepeat } from '../../store/repeatSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
+import TaxRate from '../settings/taxRate'
+import IndyRates from '../settings/indyRates'
 
 export default function TinyAction(props)
 {
@@ -63,29 +65,33 @@ export default function TinyAction(props)
 	return (
 		<section >
 			<Center>
-				<form onSubmit={form.onSubmit((values) =>
-				{
-					dispatch(clearResult)
-					doTurns(values)
-				})}>
-					<Group spacing='xs'>
-						{/* <FavoriteButton title={props.title} empire={props.empire} /> */}
-						<NumberInput
-							// label={`Spend how many turns ${props.flavor}?`}
-							// description={flavorText}
-							min={0}
-							defaultValue={0}
-							stepHoldDelay={500}
-							stepHoldInterval={100}
-							max={props.empire.turns}
-							{...form.getInputProps('turns')}
-							maw={100}
-						/>
-						<Button color={props.color} type='submit' disabled={roundStatus} loading={loading} ref={buttonRef}>
-							{props.title}
-						</Button>
-					</Group>
-				</form>
+				<Stack align='center'>
+					<form onSubmit={form.onSubmit((values) =>
+					{
+						dispatch(clearResult)
+						doTurns(values)
+					})}>
+						<Group spacing='xs'>
+							{/* <FavoriteButton title={props.title} empire={props.empire} /> */}
+							<NumberInput
+								// label={`Spend how many turns ${props.flavor}?`}
+								// description={flavorText}
+								min={0}
+								defaultValue={0}
+								stepHoldDelay={500}
+								stepHoldInterval={100}
+								max={props.empire.turns}
+								{...form.getInputProps('turns')}
+								maw={100}
+							/>
+							<Button color={props.color} type='submit' disabled={roundStatus} loading={loading} ref={buttonRef}>
+								{props.title}
+							</Button>
+						</Group>
+					</form>
+					{props.title === 'Cash' ? <TaxRate empire={props.empire} tiny /> : null}
+					{props.title === 'Industry' ? <IndyRates empire={props.empire} tiny /> : null}
+				</Stack>
 			</Center>
 		</section>
 	)

@@ -1,35 +1,29 @@
 import
 {
-	Button,
-	Center,
 	Divider,
-	NumberInput,
-	SimpleGrid,
-	Stack,
-	Text,
-	Title,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import Axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { empireLoaded } from '../../store/empireSlice'
+import { useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
-import { eraArray } from '../../config/eras'
-import { showNotification } from '@mantine/notifications'
-import IndyRates from '../settings/indyRates'
 
-export default function Industry()
+import IndyRates from '../settings/indyRates'
+import TinyAction from './tinyAction'
+
+export default function Industry({ size })
 {
 
 	const { empire } = useSelector((state) => state.empire)
-
-	return (
-		<main style={{ paddingBottom: '1rem' }}>
-			<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
-				item='troops' color='red' empire={empire} imglink='/images/industry.webp'
-			/>
-			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-			<IndyRates empire={empire} />
-		</main>
-	)
+	if (size) {
+		return (<TinyAction title='Industry' type='industry' flavor='focusing on industry'
+			item='troops' color='red' empire={empire} />)
+	} else {
+		return (
+			<main style={{ paddingBottom: '1rem' }}>
+				<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
+					item='troops' color='red' empire={empire} imglink='/images/industry.webp'
+				/>
+				<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+				<IndyRates empire={empire} />
+			</main>
+		)
+	}
 }

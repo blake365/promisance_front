@@ -201,9 +201,19 @@ const spellResult = (result) =>
 		}
 	} else if (result.result === 'fail') {
 		//untested
-		return (<>
-			<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
-		</>)
+		if (result.fight) {
+			let lines = result.message.split('/n')
+			return lines.map((line, index) =>
+			{
+				let weight = 'normal'
+				if (index === 0) weight = 'bold'
+				return <Text align='center' weight='bold' color={result.message.includes('ashamed') ? 'orange' : 'red'}>{line}</Text>
+			})
+		} else {
+			return (<>
+				<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
+			</>)
+		}
 	}
 }
 

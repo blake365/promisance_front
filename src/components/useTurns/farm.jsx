@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import GeneralAction from './generalAction'
 import TinyAction from './tinyAction'
 
-export default function Farm({ favorite })
+export default function Farm({ size })
 {
 	const { empire } = useSelector((state) => state.empire)
 
-	if (favorite) {
+	if (size) {
 		return (<TinyAction
 			title='Farm'
 			type='farm'

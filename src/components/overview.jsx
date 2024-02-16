@@ -313,7 +313,7 @@ export default function Overview()
 								</Col>
 
 								<Col span={3}>
-									<Popover withArrow shadow="md">
+									<Popover withArrow shadow="md" withinPortal>
 										<Popover.Target>
 											<Anchor>
 												<Text align='right'><RaceBonus value={race.mod_industry + era.mod_industry} /></Text>

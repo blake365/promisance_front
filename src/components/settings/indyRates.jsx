@@ -121,7 +121,7 @@ export default function IndyRates({ tiny, empire })
                     <Stack align='center' spacing='xs'>
                         <Group position='center' spacing='sm'>
                             <NumberInput
-                                w={80}
+                                w={100}
                                 label={eraArray[empire.era].trparm}
                                 min={0}
                                 max={100}
@@ -131,7 +131,7 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indArmy')}
                             />
                             <NumberInput
-                                w={80}
+                                w={100}
                                 label={eraArray[empire.era].trplnd}
                                 min={0}
                                 max={100}
@@ -141,7 +141,7 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indLnd')}
                             />
                             <NumberInput
-                                w={80}
+                                w={100}
                                 label={eraArray[empire.era].trpfly}
                                 min={0}
                                 max={100}
@@ -151,7 +151,7 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indFly')}
                             />
                             <NumberInput
-                                w={80}
+                                w={100}
                                 label={eraArray[empire.era].trpsea}
                                 min={0}
                                 max={100}
