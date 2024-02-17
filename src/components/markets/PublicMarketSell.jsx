@@ -234,6 +234,7 @@ export default function PublicMarketSell({ empire })
     // console.log(result)
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
+    const prices = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD, PVTM_RUNES]
 
     // console.log(myItems)
 
@@ -295,8 +296,6 @@ export default function PublicMarketSell({ empire })
                                                 eraTroop = 'runes'
                                             }
 
-                                            // console.log(canSell[index])
-
                                             return (
                                                 <tr key={index}>
                                                     <td align='center'>
@@ -308,7 +307,8 @@ export default function PublicMarketSell({ empire })
                                                     <td align='center'>
                                                         <NumberInput
                                                             hideControls
-                                                            min={1}
+                                                            min={prices[index] * 0.25}
+                                                            max={prices[index] * 2}
                                                             {...form.getInputProps(`${price}`)}
                                                             styles={{ input: { textAlign: 'center' } }}
                                                             parser={(value) =>

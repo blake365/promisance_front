@@ -2,7 +2,7 @@ import { Button, NumberInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_START } from '../../config/config'
+import { PUBMKT_START, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_FOOD, PVTM_RUNES } from '../../config/config'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
 import { fetchMyItems } from '../../store/pubMarketSlice'
@@ -12,12 +12,13 @@ export default function MyItem({ element, empire })
 {
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
+    const prices = [PVTM_TRPARM, PVTM_TRPLND, PVTM_TRPFLY, PVTM_TRPSEA, PVTM_FOOD, PVTM_RUNES]
 
     const editForm = useForm({
         initialValues: {
             empireId: empire.id,
             type: 'edit',
-            price: 1,
+            price: element.price,
             itemId: null
         }
     })
@@ -35,6 +36,11 @@ export default function MyItem({ element, empire })
             loadEmpire()
         } catch (error) {
             console.log(error)
+            showNotification({
+                title: 'Error Changing Price',
+                autoClose: 2000,
+                color: 'orange'
+            })
         }
     }
 
@@ -57,7 +63,6 @@ export default function MyItem({ element, empire })
     }
     let now = new Date()
     // console.log(now.getTime())
-
 
     let unitArray = [eraArray[empire.era].trparm, eraArray[empire.era].trplnd, eraArray[empire.era].trpfly, eraArray[empire.era].trpsea, eraArray[empire.era].food, eraArray[empire.era].runes]
 
@@ -104,7 +109,8 @@ export default function MyItem({ element, empire })
                     })}>
                     <NumberInput
                         hideControls
-                        min={1}
+                        min={prices[element.type] * 0.25}
+                        max={prices[element.type] * 2}
                         {...editForm.getInputProps('price')}
                         parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
                         formatter={(value) =>
