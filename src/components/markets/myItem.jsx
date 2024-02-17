@@ -117,7 +117,7 @@ export default function MyItem({ element, empire })
                     <Button size='xs' compact type='submit'>Edit</Button>
                     <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
                 </form>
-            </td> : <td align='center'>Wait {PUBMKT_START + timeRemaining} hours</td>
+            </td> : <td align='center'>Wait {truncate(PUBMKT_START + timeRemaining, 1)} hours</td>
             }
         </tr>
     )
