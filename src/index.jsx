@@ -75,6 +75,7 @@ import Forgot from './components/pages/Forgot'
 import Reset from './components/pages/Reset'
 import ForgotUsername from './components/pages/ForgotUsername'
 const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
+import ModeSelect from './components/pages/ModeSelect'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -145,6 +146,7 @@ ReactDOM.render(
 							<Route path='*' element={<NothingFoundBackground />} />
 							<Route path='/login' element={<NewLogin />} />
 							<Route path='/register' element={<Signup />} />
+							<Route path='/select' element={<ModeSelect />} />
 							<Route path='/forgot' element={<Forgot />} />
 							<Route path='/forgot-username' element={<ForgotUsername />} />
 							<Route path='/reset-password/:token' element={<Reset />} />
