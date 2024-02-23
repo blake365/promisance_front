@@ -6,7 +6,7 @@ import
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -23,11 +23,22 @@ export default function TinyAction(props)
 	const [loading, setLoading] = useState(false)
 	const buttonRef = useRef()
 
+	let turns = 0
+
+	useEffect(() =>
+	{
+		if (props.type === 'heal') {
+			turns = (100 - props.empire.health) / 2
+		}
+		form.setValues({ turns: turns })
+	}, [props.type, props.empire.health]);
+
+
 	const form = useForm({
 		initialValues: {
 			empireId: props.empire.id,
 			type: props.type,
-			turns: props.type === 'heal' ? (100 - props.empire.health) / 2 : 0,
+			turns: turns,
 			condensed: true,
 		},
 

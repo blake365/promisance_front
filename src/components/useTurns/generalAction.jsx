@@ -13,7 +13,7 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { FavoriteButton } from '../utilities/maxbutton'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTour } from '@reactour/tour'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -27,11 +27,21 @@ export default function GeneralAction(props)
 	const buttonRef = useRef()
 	const { setCurrentStep } = useTour()
 
+	let turns = 0
+
+	useEffect(() =>
+	{
+		if (props.type === 'heal') {
+			turns = (100 - props.empire.health) / 2;
+		}
+		form.setValues({ turns: turns })
+	}, [props.type, props.empire.health]);
+
 	const form = useForm({
 		initialValues: {
 			empireId: props.empire.id,
 			type: props.type,
-			turns: props.type === 'heal' ? (100 - props.empire.health) / 2 : 0,
+			turns: turns,
 			condensed: true,
 		},
 
