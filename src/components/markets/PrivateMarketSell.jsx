@@ -178,6 +178,9 @@ export default function PrivateMarketSell()
                                         <th weight='bold' align='center'>
                                             Sell:
                                         </th>
+                                        <th weight='bold' align='center'>
+                                            Revenue:
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -228,6 +231,9 @@ export default function PrivateMarketSell()
                                                         {...form.getInputProps(sell)}
                                                         rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PVTM_MAXSELL / 10000)} />}
                                                     />
+                                                </td>
+                                                <td align='center'>
+                                                    ${Math.floor(priceArray[index] * form.values[sell]).toLocaleString()}
                                                 </td>
                                             </tr>
                                         )

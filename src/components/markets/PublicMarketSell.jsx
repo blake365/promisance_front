@@ -21,20 +21,32 @@ export default function PublicMarketSell({ empire })
     const loadEmpire = useLoadEmpire(empire.uuid)
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
+    const { otherItems } = useSelector((state) => state.market)
+
+    console.log(otherItems)
     const buttonRef = useRef()
 
-    const getCost = (emp, base) =>
+    const getCost = (unit, base) =>
     {
         let cost = base
+        let postedItem = otherItems[unit][0].price
+
+        console.log(postedItem)
+        if (postedItem > 0) {
+            cost = postedItem
+        }
+
         return Math.round(cost)
     }
 
     let now = new Date()
 
-    const trpArmCost = getCost(empire, PVTM_TRPARM)
-    const trpLndCost = getCost(empire, PVTM_TRPLND)
-    const trpFlyCost = getCost(empire, PVTM_TRPFLY)
-    const trpSeaCost = getCost(empire, PVTM_TRPSEA)
+    const trpArmCost = getCost('arm', PVTM_TRPARM)
+    const trpLndCost = getCost('lnd', PVTM_TRPLND)
+    const trpFlyCost = getCost('fly', PVTM_TRPFLY)
+    const trpSeaCost = getCost('sea', PVTM_TRPSEA)
+    const foodCost = getCost('food', PVTM_FOOD)
+    const runesCost = getCost('runes', PVTM_RUNES)
 
     const processItems = (items) =>
     {
@@ -111,6 +123,7 @@ export default function PublicMarketSell({ empire })
 
     // console.log(canSell)
 
+    console.log(trpArmCost)
     const form = useForm({
         initialValues: {
             empireId: empire.id,
@@ -124,9 +137,9 @@ export default function PublicMarketSell({ empire })
             sellSea: 0,
             priceSea: trpSeaCost,
             sellFood: 0,
-            priceFood: PVTM_FOOD,
+            priceFood: foodCost,
             sellRunes: 0,
-            priceRunes: PVTM_RUNES,
+            priceRunes: runesCost,
         },
 
         validationRules: {
@@ -278,6 +291,9 @@ export default function PublicMarketSell({ empire })
                                             <th weight='bold' align='center'>
                                                 Sell:
                                             </th>
+                                            <th weight='bold' align='center'>
+                                                Revenue:
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -287,7 +303,11 @@ export default function PublicMarketSell({ empire })
                                             let troop = `trp${unit}`
                                             let price = `price${unit}`
                                             let sell = `sell${unit}`
-
+                                            let defPrice = getCost(unit.toLowerCase(), form.values[price])
+                                            // console.log(otherItems[unit.toLowerCase()][0].price
+                                            if (otherItems[unit.toLowerCase()][0].price !== 0 && otherItems[unit.toLowerCase()][0].price !== form.values[price]) {
+                                                defPrice = otherItems[unit.toLowerCase()][0].price
+                                            }
                                             if (unit === 'Food') {
                                                 troop = 'food'
                                                 eraTroop = 'food'
@@ -309,6 +329,7 @@ export default function PublicMarketSell({ empire })
                                                             hideControls
                                                             min={prices[index] * 0.25}
                                                             max={prices[index] * 2}
+                                                            defaultValue={defPrice}
                                                             {...form.getInputProps(`${price}`)}
                                                             styles={{ input: { textAlign: 'center' } }}
                                                             parser={(value) =>
@@ -347,7 +368,11 @@ export default function PublicMarketSell({ empire })
                                                             }
                                                         />
                                                     </td>
-                                                </tr>)
+                                                    <td align='center'>
+                                                        ${(form.values[sell] * form.values[price]).toLocaleString()}
+                                                    </td>
+                                                </tr>
+                                            )
                                         })}
 
                                     </tbody>

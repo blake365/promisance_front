@@ -219,6 +219,9 @@ export default function PrivateMarketBuy()
                                         <th weight='bold' align='center'>
                                             Buy:
                                         </th>
+                                        <th weight='bold' align='center'>
+                                            Spend:
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -258,6 +261,7 @@ export default function PrivateMarketBuy()
                                                 </td>
                                                 <td align='center'>
                                                     <NumberInput
+                                                        w={130}
                                                         hideControls
                                                         min={0}
                                                         max={avail}
@@ -275,6 +279,9 @@ export default function PrivateMarketBuy()
                                                         {...form.getInputProps(buy)}
                                                         rightSection={<MaxButton formName={form} fieldName={buy} maxValue={avail} />}
                                                     />
+                                                </td>
+                                                <td align='center'>
+                                                    ${(price * form.values[buy]).toLocaleString()}
                                                 </td>
                                             </tr>
                                         )

@@ -119,6 +119,10 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
                             Can Afford:
                         </Text>
                         {cash === 0 ? <Text align='right'>0</Text> : (<Text align='right'>{cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}</Text>)}
+                        <Text italic>Spend:</Text>
+                        <Text align='right' italic>
+                            ${(form.values.buy * item[0].price).toLocaleString()}
+                        </Text>
                     </SimpleGrid>
                 </Card.Section>
             )}

@@ -5,15 +5,14 @@
 
 .widetable {
     width: auto;
-    border-collapse: collapse;
 }
 
 .widetable th,
 .widetable td {
-    width: 120px;
+    min-width: 120px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 440px) {
 
     .tablecontainer {
         overflow-x: auto;
