@@ -36,8 +36,8 @@ export default function HomeScores()
     scores = scores.slice(0, 10)
 
     return (
-        <section>
-            <Stack spacing='sm' align='center' maw={500}>
+        <section style={{ maxWidth: '100%' }}>
+            <Stack spacing='xs' align='center'>
                 <Title order={1} align='center'>
                     Top Ten
                 </Title>

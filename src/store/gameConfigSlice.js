@@ -6,8 +6,8 @@ const initialState = {
 		GAME_TITLE: 'NeoPromisance',
 		GAME_ID: 0,
 
-		ROUND_START: new Date('2024-02-05T08:00:00'),
-		ROUND_END: new Date('2024-02-29T23:30:00'),
+		ROUND_START: '2024-02-05T08:00:00',
+		ROUND_END: '2024-02-29T23:30:00',
 
 		ROUND_NAME: 'February 2024 - Beta',
 		ROUND_DESCRIPTION: 'February 2024',

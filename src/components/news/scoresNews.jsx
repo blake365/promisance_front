@@ -6,7 +6,7 @@ import WorldNewsItem from './worldNewsItem'
 export default function ScoresNews({ enemy })
 {
     let body = {
-        take: 10,
+        take: 20,
         view: true,
         empire: enemy.id,
     }

@@ -116,19 +116,18 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     }
 
     return (
-        <Card shadow="sm" radius="sm" sx={{ width: '100%', }} key={empire.id} withBorder>
+        <Card shadow="sm" radius="sm" sx={{ width: '100%', overflowX: 'hidden' }} key={empire.id} withBorder>
             <Card.Section sx={{ height: '2px' }}>
             </Card.Section>
             <Card.Section onClick={toggle} sx={{ cursor: !home ? 'pointer' : '' }}>
-                <Group spacing="xs" my='xs'>
-                    <Group w='100%' noWrap>
+                <Group my='xs' spacing='xs'>
+                    <Group w='100%' noWrap >
                         <Text mx='xs' align='center' sx={{ width: 25 }} weight='bolder'>
                             {empire.rank}
                         </Text>
                         <Indicator color='blue' position='top-start' disabled={!active}>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} imageProps={{ loading: 'lazy' }} />
-
                                 <Title order={4} color={color}>
                                     {empire.name} {clan && clan} {atWar &&
                                         <ThemeIcon size="sm" radius="sm" color='red'>
@@ -138,24 +137,24 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                             </Group>
                         </Indicator>
                     </Group>
-                    <Group spacing='lg'>
-                        <Group ml='xs' sx={{ width: '180px' }} spacing='xs' noWrap>
+                    <Group sx={{ gap: '7px' }}>
+                        <Group ml='xs' sx={{ width: '160px' }} spacing={3} noWrap>
                             <Scales size={22} weight='fill' />
                             <Text>${empire.networth.toLocaleString()}</Text></Group>
-                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing={3} noWrap sx={{ width: '100px' }}>
                             <Mountains size={22} weight='fill' />
                             <Text>{empire.land.toLocaleString()}</Text></Group>
-                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '90px' }}>
+                        <Group ml='xs' spacing={3} noWrap sx={{ width: '90px' }}>
                             <Hourglass size={22} weight='regular' />
                             <Text>{eraArray[empire.era].name}</Text></Group>
-                        <Group ml='xs' spacing='xs' noWrap sx={{ width: '100px' }}>
+                        <Group ml='xs' spacing={5} noWrap sx={{ width: '100px' }}>
                             <Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} alt={raceArray[empire.race].name.toLowerCase()} />
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
-                        <Group ml='xs' spacing='xs' noWrap>
+                        <Group ml='xs' spacing={3} noWrap>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
-                            <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100} %</Text>
+                            <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100}%</Text>
                         </Group>
                     </Group>
                 </Group>

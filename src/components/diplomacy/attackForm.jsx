@@ -11,6 +11,7 @@ import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
 import { loadScores } from '../../store/scoresSlice'
+import { setRepeat } from "../../store/repeatSlice"
 
 const AttackForm = ({ empire, roundStatus, defenderId }) =>
 {
@@ -50,6 +51,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
         setError('')
         try {
             const res = await Axios.post(`/attack`, values)
+            dispatch(setRepeat({ route: '/attack', body: values, color: 'red' }))
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

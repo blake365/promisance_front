@@ -31,6 +31,19 @@ const RepeatButton = ({ empire, kickOut }) =>
         }
     }
 
+    // if route is for an attack, set a 3 second delay where button is disabled
+    useEffect(() =>
+    {
+        if (repeatAction.route === '/attack' || repeatAction.route === '/magic/attack') {
+            setLoading(true);
+            setTimeout(() =>
+            {
+                setLoading(false);
+            }, 4000);
+        }
+    }, [empire])
+
+
     useEffect(() =>
     {
         dispatch(clearRepeat())

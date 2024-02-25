@@ -21,7 +21,7 @@ export default function IntelCenter()
     const { empire } = useSelector((state) => state.empire)
 
     const [intel, setIntel] = useState()
-
+    const [accordionDefault, setAccordionDefault] = useState('')
     // load intel
     useEffect(() =>
     {
@@ -37,6 +37,15 @@ export default function IntelCenter()
         }
         loadIntel().then((data) => setIntel(data))
     }, [empire.turns])
+
+    useEffect(() =>
+    {
+        console.log(intel)
+        if (intel && intel.length > 0) {
+            console.log(intel[0].uuid)
+            setAccordionDefault(intel[0].uuid)
+        }
+    }, [intel])
 
     const roundStatus = checkRoundStatus()
 
@@ -64,7 +73,7 @@ export default function IntelCenter()
                         <SpellForm empire={empire} roundStatus={roundStatus} spy />
                     </Card>
                     {intel && intel.length > 0 ? (
-                        <Accordion variant="separated" defaultValue={intel[0].uuid} sx={{
+                        <Accordion multiple variant="separated" defaultValue={[accordionDefault]} sx={{
                             minWidth: 350, width: 700,
                             '@media (max-width: 650px)': {
                                 width: 700,
@@ -85,7 +94,6 @@ export default function IntelCenter()
                                     </Accordion.Panel>
                                 </Accordion.Item>)
                             })}
-
                         </Accordion>
                     ) : (<div>No Intel Gathered</div>)}
                 </Stack>

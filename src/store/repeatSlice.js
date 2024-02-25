@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
 	status: 'idle',
-	repeat: null,
+	repeat: {
+		route: '',
+		body: null,
+		color: null,
+	},
 }
 
 export const repeatSlice = createSlice({
