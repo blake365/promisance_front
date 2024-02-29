@@ -21,6 +21,7 @@ import { timeSlice } from './timeSlice'
 import { mailSlice } from './mailSlice'
 import { repeatSlice } from './repeatSlice'
 import { gameConfigSlice } from './gameConfigSlice'
+import { gamesSlice } from './gamesSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -40,6 +41,7 @@ const reducers = combineReducers({
 	mail: mailSlice.reducer,
 	repeat: repeatSlice.reducer,
 	gameConfig: gameConfigSlice.reducer,
+	games: gamesSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)
