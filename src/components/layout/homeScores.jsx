@@ -37,7 +37,7 @@ export default function HomeScores()
 
     return (
         <section style={{ maxWidth: '100%' }}>
-            <Stack spacing='xs' align='center'>
+            <Stack spacing='xs' align='center' maw={500}>
                 <Title order={1} align='center'>
                     Top Ten
                 </Title>

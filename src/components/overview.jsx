@@ -17,8 +17,6 @@ import { BASE_LUCK } from '../config/config'
 import { setBgImage } from '../functions/setBgImage'
 import TinyAction from './useTurns/tinyAction'
 import TinyBuild from './useTurns/tinyBuild'
-import TaxRate from './settings/taxRate'
-import IndyRates from './settings/indyRates'
 
 const RaceBonus = ({ value }) =>
 {

@@ -12,7 +12,9 @@ export const create = createAsyncThunk(
 	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.post('/empire/', values)
+			// pass gameId as query param
+			// const res = await Axios.post(`/empire?gameId=${gameId}`, values)
+			const res = await Axios.post(`/empire/`, values)
 			// console.log(res)
 			let data = res.data
 			return data

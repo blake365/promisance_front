@@ -130,7 +130,7 @@ export function calcProvisions(empire) {
 	let production =
 		10 * empire.freeLand +
 		empire.bldFood *
-			85 *
+			75 *
 			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
 
 	production *=
@@ -142,12 +142,11 @@ export function calcProvisions(empire) {
 	let foodpro = Math.round(production)
 
 	let consumption =
-		empire.trpArm * 0.05 * 0.7 +
-		empire.trpLnd * 0.03 * 0.7 +
-		empire.trpFly * 0.02 * 0.7 +
-		empire.trpSea * 0.01 * 0.7 +
-		empire.peasants * 0.01 * 0.7 +
-		empire.trpWiz * 0.2 * 0.7
+		empire.trpArm * 0.0166 +
+		empire.trpLnd * 0.025 +
+		empire.trpFly * 0.0333 +
+		empire.trpSea * 0.025 +
+		empire.trpWiz * 0.17
 
 	consumption *= (100 - raceArray[empire.race].mod_foodcon) / 100
 
@@ -170,19 +169,19 @@ export function calcPCI(empire) {
 export function calcFinances(pci, empire, size) {
 	let income = Math.round(
 		(pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 500) *
+			empire.bldCash * 550) *
 			Math.max(0.8, size)
 	)
 
 	// let loan = Math.round(empire.loan / 200)
 
 	let expenses = Math.round(
-		empire.trpArm * 0.5 * 0.8 +
-			empire.trpLnd * 1.25 * 0.8 +
-			empire.trpFly * 2 * 0.8 +
-			empire.trpSea * 3.5 * 0.8 +
-			empire.land * 4 * 0.8 +
-			empire.trpWiz * 0.5 * 0.8
+		empire.trpArm * 0.13 +
+			empire.trpLnd * 0.5 +
+			empire.trpFly * 1.5 +
+			empire.trpSea * 3 +
+			empire.land * 3.2 +
+			empire.trpWiz * 0.53
 	)
 
 	// console.log(empire.loan)
