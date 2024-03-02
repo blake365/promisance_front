@@ -50,8 +50,8 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/attack`, values)
-            dispatch(setRepeat({ route: '/attack', body: values, color: 'red' }))
+            const res = await Axios.post(`/attack?gameId=${empire.game_id}`, values)
+            dispatch(setRepeat({ route: `/attack?gameId=${empire.game_id}`, body: values, color: 'red' }))
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

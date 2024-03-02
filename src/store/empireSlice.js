@@ -9,12 +9,12 @@ const initialState = {
 
 export const create = createAsyncThunk(
 	'empire/created',
-	async (values, thunkAPI) => {
+	async ({ values, gameId }, thunkAPI) => {
 		try {
-			// console.log(values)
+			console.log(values, gameId)
 			// pass gameId as query param
 			// const res = await Axios.post(`/empire?gameId=${gameId}`, values)
-			const res = await Axios.post(`/empire/`, values)
+			const res = await Axios.post(`/empire?gameId=${gameId}`, values)
 			// console.log(res)
 			let data = res.data
 			return data

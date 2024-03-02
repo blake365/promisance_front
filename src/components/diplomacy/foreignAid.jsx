@@ -82,7 +82,7 @@ export default function ForeignAid()
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/aid/`, values)
+            const res = await Axios.post(`/aid?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

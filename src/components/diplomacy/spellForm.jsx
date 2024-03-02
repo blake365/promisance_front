@@ -50,8 +50,8 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/magic/attack`, values)
-            dispatch(setRepeat({ route: '/magic/attack', body: values, color: 'indigo' }))
+            const res = await Axios.post(`/magic/attack?gameId=${empire.game_id}`, values)
+            dispatch(setRepeat({ route: `/magic/attack?gameId=${empire.game_id}`, body: values, color: 'indigo' }))
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

@@ -53,9 +53,12 @@ export default function CreateEmpire()
 {
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-
+	const { games } = useSelector((state) => state.games)
+	console.log(games)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
+	const gameId = 1
 
 	useEffect(() =>
 	{
@@ -100,7 +103,7 @@ export default function CreateEmpire()
 							onSubmit={form.onSubmit((values) =>
 							{
 								// console.log(values)
-								dispatch(create(values))
+								dispatch(create({ values, gameId }))
 									.unwrap()
 									.then(() =>
 									{

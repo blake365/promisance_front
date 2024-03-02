@@ -151,7 +151,8 @@ export default function Demolish()
 	{
 		setLoading(true)
 		try {
-			const res = await Axios.post('/demolish', values)
+			const res = await Axios.post(`/demolish?gameId=${empire.game_id}`, values)
+			dispatch(setRepeat({ route: `/demolish?gameId=${empire.game_id}`, body: values, color: 'orange' }))
 			dispatch(setResult(res.data))
 			loadEmpire()
 			buttonRef.current.focus()
