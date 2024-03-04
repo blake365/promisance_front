@@ -19,11 +19,15 @@ export const fetchMyItems = createAsyncThunk(
 
 export const fetchOtherItems = createAsyncThunk(
 	'market/otherItems',
-	async (values, thunkAPI) => {
+	async ({ empireId, gameId }, thunkAPI) => {
 		try {
 			// console.log('fetchOtherItems')
-			// console.log(values)
-			const res = await Axios.post('/publicmarket/pubSellOthers', values)
+			// console.log(empireId, gameId)
+			const body = { empireId: empireId }
+			const res = await Axios.post(
+				`/publicmarket/pubSellOthers?gameId=${gameId}`,
+				body
+			)
 			let data = res.data
 			// console.log(data)
 			return data

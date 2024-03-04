@@ -34,7 +34,7 @@ export default function WorldNews()
         const getNews = async () =>
         {
             try {
-                const res = await Axios.post('/news/', body);
+                const res = await Axios.post(`/news?gameId=${empire.game_id}`, body);
                 const data = res.data;
                 return data;
             } catch (error) {
@@ -91,7 +91,7 @@ export default function WorldNews()
         setLoading(true);
         try {
 
-            const res = await Axios.post('/news/', body);
+            const res = await Axios.post(`/news?gameId=${empire.game_id}`, body);
             const data = res.data;
             setNews([...news, ...data]);
             setLoaded(loaded + body.take)
@@ -120,7 +120,7 @@ export default function WorldNews()
         console.log(searchBody)
         setLoading(true);
         try {
-            const res = await Axios.post('/news/search', searchBody);
+            const res = await Axios.post(`/news/search?gameId=${empire.game_id}`, searchBody);
             const data = res.data;
             setNews(data);
             setLoading(false);

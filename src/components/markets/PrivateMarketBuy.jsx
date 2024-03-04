@@ -162,12 +162,12 @@ export default function PrivateMarketBuy()
     const doBuy = async (values) =>
     {
         try {
-            const res = await Axios.post('/privatemarket/buy', values)
+            const res = await Axios.post(`/privatemarket/buy?gameId=${empire.game_id}`, values)
             const result = res.data
             const resultArray = interpretResult(result)
             showNotification({
                 title: 'Purchase Successful',
-                message: resultArray.map((item) => <Text>{item}</Text>),
+                message: resultArray.map((item, index) => <Text key={index}>{item}</Text>),
                 color: 'blue',
             })
             loadEmpire()

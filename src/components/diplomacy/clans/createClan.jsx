@@ -32,7 +32,7 @@ export default function CreateClan({ disabled })
     const createClan = async (values) =>
     {
         try {
-            const res = await Axios.post('/clans/create', values)
+            const res = await Axios.post(`/clans/create?gameId=${empire.game_id}`, values)
             // console.log(res)
             showNotification({
                 title: 'Clan Created',

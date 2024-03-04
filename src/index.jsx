@@ -109,14 +109,14 @@ Sentry.init({
 	],
 	// Set tracesSampleRate to 1.0 to capture 100%
 	// of transactions for performance monitoring.
-	tracesSampleRate: 0.8,
+	tracesSampleRate: 0.5,
 
 	// Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
 	tracePropagationTargets: ["localhost", "neopromisance.com", "api.neopromisance.com"],
 
 	// Capture Replay for 10% of all sessions,
 	// plus for 100% of sessions with an error
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0,
 	replaysOnErrorSampleRate: 1.0,
 });
 

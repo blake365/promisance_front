@@ -125,7 +125,7 @@ export default function PrivateMarketSell()
     const doSell = async (values) =>
     {
         try {
-            const res = await Axios.post('/privatemarket/sell', values)
+            const res = await Axios.post(`/privatemarket/sell?gameId=${empire.game_id}`, values)
             const result = res.data
             const resultArray = interpretResult(result)
             showNotification({

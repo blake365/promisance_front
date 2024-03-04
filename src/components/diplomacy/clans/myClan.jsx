@@ -161,7 +161,7 @@ function MyClan()
                         </Tabs.Panel>
 
                         <Tabs.Panel value='Clan Relations' pt="xs">
-                            <ClanRelations myClan={clan} empireId={empire.id} />
+                            <ClanRelations myClan={clan} empireId={empire.id} gameId={empire.game_id} />
                         </Tabs.Panel>
 
                     </Tabs>

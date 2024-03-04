@@ -24,7 +24,7 @@ export default function ScoresNews({ enemy })
         const getNews = async () =>
         {
             try {
-                const res = await Axios.post('/news/scores', body);
+                const res = await Axios.post(`/news/scores?gameId=${enemy.game_id}`, body);
                 const data = res.data;
                 return data;
             } catch (error) {

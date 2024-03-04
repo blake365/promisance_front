@@ -23,7 +23,7 @@ export default function PublicMarketSell({ empire })
     const { myItems } = useSelector((state) => state.market)
     const { otherItems } = useSelector((state) => state.market)
 
-    console.log(otherItems)
+    // console.log(otherItems)
     const buttonRef = useRef()
 
     const getCost = (unit, base) =>
@@ -31,7 +31,7 @@ export default function PublicMarketSell({ empire })
         let cost = base
         let postedItem = otherItems[unit][0].price
 
-        console.log(postedItem)
+        // console.log(postedItem)
         if (postedItem > 0) {
             cost = postedItem
         }
@@ -123,7 +123,7 @@ export default function PublicMarketSell({ empire })
 
     // console.log(canSell)
 
-    console.log(trpArmCost)
+    // console.log(trpArmCost)
     const form = useForm({
         initialValues: {
             empireId: empire.id,
@@ -227,7 +227,7 @@ export default function PublicMarketSell({ empire })
     const doSell = async (values) =>
     {
         try {
-            const res = await Axios.post('/publicmarket/pubSell', values)
+            const res = await Axios.post(`/publicmarket/pubSell?gameId=${empire.game_id}`, values)
             // dispatch(fetchMyItems())
             // console.log(res.data)
             // console.log(values)

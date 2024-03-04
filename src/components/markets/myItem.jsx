@@ -26,7 +26,7 @@ export default function MyItem({ element, empire })
     const doEdit = async (values) =>
     {
         try {
-            const res = await Axios.post('/publicmarket/pubEditPrice', values)
+            const res = await Axios.post(`/publicmarket/pubEditPrice?gameId=${empire.game_id}`, values)
             // setResult(res.data)
             showNotification({
                 title: 'Price Changed',

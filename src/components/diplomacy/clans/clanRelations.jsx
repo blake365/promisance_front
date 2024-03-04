@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import ClanCard from './clanCard'
 
-export default function ClanRelations({ myClan, empireId })
+export default function ClanRelations({ myClan, empireId, gameId })
 {
     const [loading, setLoading] = useState(false)
     const [clans, setClans] = useState(null)
@@ -15,7 +15,7 @@ export default function ClanRelations({ myClan, empireId })
         setLoading(true)
         async function fetchScores()
         {
-            const clans = await Axios.get('/clans/getClansData')
+            const clans = await Axios.get(`/clans/getClansData?gameId=${gameId}`)
             // console.log(clans.data)
             setClans(clans.data)
         }
