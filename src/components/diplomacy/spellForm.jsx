@@ -25,7 +25,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
     const dispatch = useDispatch()
     let otherEmpires = null
     if (!defenderId) {
-        otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+        otherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.offTotal)
     }
 
     const spellForm = useForm({
@@ -61,7 +61,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
                 loadEmpire()
             }
             if (defenderId) {
-                dispatch(loadScores())
+                dispatch(loadScores(empire.game_id))
             }
             setLoading(false)
         } catch (error) {

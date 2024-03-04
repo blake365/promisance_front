@@ -29,7 +29,7 @@ export default function ForeignAid()
 
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
-    const loadOtherEmpires = useLoadOtherEmpires(empire.id, empire.turnsUsed)
+    const loadOtherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.turnsUsed)
 
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [error, setError] = useState('')

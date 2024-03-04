@@ -23,7 +23,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
     const loadEmpire = useLoadEmpire(empire.uuid)
     let otherEmpires = null
     if (!defenderId) {
-        otherEmpires = useLoadOtherEmpires(empire.id, empire.offTotal)
+        otherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.offTotal)
     }
     const dispatch = useDispatch()
 
@@ -61,7 +61,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
                 loadEmpire()
             }
             if (defenderId) {
-                dispatch(loadScores())
+                dispatch(loadScores(empire.game_id))
             }
             setLoading(false)
         } catch (error) {

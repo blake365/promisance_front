@@ -84,7 +84,7 @@ export default function ScoresAid({ friend })
                 dispatch(setResult(res.data))
                 loadEmpire()
                 form.reset()
-                dispatch(loadScores())
+                dispatch(loadScores(empire.game_id))
             }
             setLoading(false)
         } catch (error) {

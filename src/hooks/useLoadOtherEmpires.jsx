@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { raceArray } from '../config/races';
 import { eraArray } from '../config/eras';
 
-export const useLoadOtherEmpires = (empireId, trigger) =>
+export const useLoadOtherEmpires = (gameId, empireId, trigger) =>
 {
     const [otherEmpires, setOtherEmpires] = useState([]);
 
@@ -12,7 +12,7 @@ export const useLoadOtherEmpires = (empireId, trigger) =>
         const loadOtherEmpires = async () =>
         {
             try {
-                const res = await Axios.post(`/empire/otherEmpires`, { empireId });
+                const res = await Axios.post(`/empire/otherEmpires?gameId=${gameId}`, { empireId });
                 let dataFormat = res.data.map((empire) => ({
                     value: empire.empireId.toLocaleString(),
                     land: empire.land.toLocaleString(),

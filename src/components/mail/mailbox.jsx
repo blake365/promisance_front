@@ -53,7 +53,7 @@ export default function Mailbox()
         const loadEmpires = async () =>
         {
             try {
-                const res = await Axios.post(`/empire/otherEmpires`, { empireId: empire.empireId })
+                const res = await Axios.post(`/empire/otherEmpires?gameId=${empire.game_id}`, { empireId: empire.empireId })
                 let empires = res.data.map(({ name, empireId }) => ({ name, empireId }))
                 let dataFormat = empires.map((empire) =>
                 ({

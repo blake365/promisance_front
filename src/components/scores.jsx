@@ -20,7 +20,7 @@ export default function Scores()
     useEffect(() =>
     {
         setLoading(true)
-        dispatch(loadScores())
+        dispatch(loadScores(empire.game_id))
         setLoading(false)
     }, [])
 

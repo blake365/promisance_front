@@ -1,18 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
 
-export const loadScores = createAsyncThunk('scores/', async (thunkAPI) => {
-	try {
-		const res = await Axios.get('empire/scores')
-		// console.log(res)
-		let data = res.data
-		// console.log(data)
-		return data
-	} catch (e) {
-		console.log(e)
-		return thunkAPI.rejectWithValue()
+export const loadScores = createAsyncThunk(
+	'scores/',
+	async (gameId, thunkAPI) => {
+		try {
+			const res = await Axios.get(`empire/scores?gameId=${gameId}`)
+			// console.log(res)
+			let data = res.data
+			// console.log(data)
+			return data
+		} catch (e) {
+			console.log(e)
+			return thunkAPI.rejectWithValue()
+		}
 	}
-})
+)
 
 export const scoresSlice = createSlice({
 	name: 'scores',

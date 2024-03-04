@@ -59,7 +59,7 @@ export default function WorldNews()
         const loadEmpires = async () =>
         {
             try {
-                const res = await Axios.get(`/empire/`)
+                const res = await Axios.get(`/empire?gameId=${empire.game_id}`)
                 let empires = res.data.map(({ name, empireId }) => ({ name, empireId }))
                 let dataFormat = empires.map((empire) =>
                 ({
