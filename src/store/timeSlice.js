@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
-import { ROUND_START, ROUND_END } from '../config/config'
 
-export const getTime = createAsyncThunk('time/', async (thunkAPI) => {
+export const getTime = createAsyncThunk('time/', async (game_id, thunkAPI) => {
 	try {
-		const res = await Axios.get('time')
+		const res = await Axios.get(`/time?gameId=${game_id}`)
 		// console.log(res)
 		const { time, start, end } = res.data
 		// console.log(time, start, end)

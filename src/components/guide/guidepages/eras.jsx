@@ -1,7 +1,6 @@
 import { Table } from "@mantine/core"
 import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
-
 import classes from '../guide.module.css'
 
 export default function EraGuide({ empire })

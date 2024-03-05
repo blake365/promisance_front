@@ -12,6 +12,7 @@ import
 } from 'react-router-dom'
 
 const App = lazy(() => import('./App'))
+// import App from './App'
 
 import Summary from './components/summary'
 import Explore from './components/useTurns/explore'
@@ -169,7 +170,10 @@ ReactDOM.render(
 								<Route path='News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
 							</Route>
 
-							<Route path='/app/' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><App /></Suspense>}>
+							<Route path='/app/' element={
+								<Suspense fallback={<Center><Loader size='xl' /></Center>}><App /></Suspense>
+								// <App />
+							}>
 								<Route path='*' element={<NothingFoundBackground />} />
 								{/* <Route path='guide' element={<Guide />} /> */}
 								<Route path='' element={<Summary />} />

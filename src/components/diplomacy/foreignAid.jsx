@@ -17,7 +17,6 @@ import { MaxButton } from '../utilities/maxbutton'
 
 import { eraArray } from '../../config/eras'
 import { Scales } from "@phosphor-icons/react"
-import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { useLoadOtherEmpires } from '../../hooks/useLoadOtherEmpires'
@@ -26,7 +25,7 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 export default function ForeignAid()
 {
     const { empire } = useSelector((state) => state.empire)
-
+    const { turnsProtection, aidMaxCredits, aidDelay } = useSelector((state) => state.games.activeGame)
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
     const loadOtherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.turnsUsed)
@@ -130,11 +129,11 @@ export default function ForeignAid()
                         Send resources and troops to other players.
                     </Text>
                     <Text align='center'>
-                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every 4 hours, up to a maximum of 5.
+                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay / 60 / 60} hours, up to a maximum of {aidMaxCredits} credits.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
-                    {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
+                    {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         console.log(values)
@@ -181,7 +180,7 @@ export default function ForeignAid()
                                     </tbody>
                                 </table>
                             </div>
-                            <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
+                            <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
                                 Send Aid
                             </Button>
                             <Text size='sm'>{empire.aidCredits} credits remaining</Text>

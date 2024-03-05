@@ -4,7 +4,6 @@ import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { PVTM_FOOD, PVTM_MAXSELL, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_RUNES } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 
 import classes from './markets.module.css'
@@ -19,13 +18,14 @@ import { useRef } from 'react'
 export default function PrivateMarketSell()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes, pvtmMaxSell } = useSelector((state) => state.games.activeGame)
     const loadEmpire = useLoadEmpire(empire.uuid)
     const buttonRef = useRef()
 
     const getCost = (emp, base, multiplier) =>
     {
         let cost = base * multiplier
-        let costBonus = 1 + ((1 - PVTM_SHOPBONUS) * (emp.bldCost / emp.land) + PVTM_SHOPBONUS * (emp.bldCash / emp.land))
+        let costBonus = 1 + ((1 - pvtmShopBonus) * (emp.bldCost / emp.land) + pvtmShopBonus * (emp.bldCash / emp.land))
 
         cost *= costBonus
         cost /= (2 - ((100 + raceArray[emp.race].mod_market) / 100))
@@ -39,12 +39,12 @@ export default function PrivateMarketSell()
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
 
-    const trpArmCost = getCost(empire, PVTM_TRPARM, 0.38)
-    const trpLndCost = getCost(empire, PVTM_TRPLND, 0.4)
-    const trpFlyCost = getCost(empire, PVTM_TRPFLY, 0.42)
-    const trpSeaCost = getCost(empire, PVTM_TRPSEA, 0.44)
-    const foodCost = Math.round(PVTM_FOOD * 0.30)
-    const runesCost = Math.round(PVTM_RUNES * 0.20)
+    const trpArmCost = getCost(empire, pvtmTrpArm, 0.38)
+    const trpLndCost = getCost(empire, pvtmTrpLnd, 0.4)
+    const trpFlyCost = getCost(empire, pvtmTrpFly, 0.42)
+    const trpSeaCost = getCost(empire, pvtmTrpSea, 0.44)
+    const foodCost = Math.round(pvtmFood * 0.30)
+    const runesCost = Math.round(pvtmRunes * 0.20)
 
     const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, foodCost, runesCost]
 
@@ -61,10 +61,10 @@ export default function PrivateMarketSell()
         },
 
         validationRules: {
-            sellArm: (value) => value <= empire.trpArm * (PVTM_MAXSELL / 10000),
-            sellLnd: (value) => value <= empire.trpLnd * (PVTM_MAXSELL / 10000),
-            sellFly: (value) => value <= empire.trpFly * (PVTM_MAXSELL / 10000),
-            sellSea: (value) => value <= empire.trpSea * (PVTM_MAXSELL / 10000),
+            sellArm: (value) => value <= empire.trpArm * (pvtmMaxSell / 10000),
+            sellLnd: (value) => value <= empire.trpLnd * (pvtmMaxSell / 10000),
+            sellFly: (value) => value <= empire.trpFly * (pvtmMaxSell / 10000),
+            sellSea: (value) => value <= empire.trpSea * (pvtmMaxSell / 10000),
             sellFood: (value) => value <= empire.food,
             sellRunes: (value) => value <= empire.runes,
         },
@@ -210,13 +210,13 @@ export default function PrivateMarketSell()
                                                     ${Math.floor(priceArray[index]).toLocaleString()}
                                                 </td>
                                                 <td align='center'>
-                                                    {Math.floor(empire[troop] * (PVTM_MAXSELL / 10000)).toLocaleString()}
+                                                    {Math.floor(empire[troop] * (pvtmMaxSell / 10000)).toLocaleString()}
                                                 </td>
                                                 <td align='center'>
                                                     <NumberInput
                                                         hideControls
                                                         min={0}
-                                                        max={empire[troop] * (PVTM_MAXSELL / 10000)}
+                                                        max={empire[troop] * (pvtmMaxSell / 10000)}
                                                         parser={(value) =>
                                                             value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
                                                         }
@@ -229,7 +229,7 @@ export default function PrivateMarketSell()
                                                         }
                                                         }
                                                         {...form.getInputProps(sell)}
-                                                        rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (PVTM_MAXSELL / 10000)} />}
+                                                        rightSection={<MaxButton formName={form} fieldName={sell} maxValue={empire[troop] * (pvtmMaxSell / 10000)} />}
                                                     />
                                                 </td>
                                                 <td align='center'>

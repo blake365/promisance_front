@@ -4,9 +4,7 @@ import { useForm } from '@mantine/form'
 import Axios from 'axios'
 // import { useEffect, useState } from 'react'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_MAXFOOD, PUBMKT_MAXSELL, PVTM_FOOD, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PUBMKT_MAXRUNES, PVTM_RUNES, PUBMKT_START, PUBMKT_MAXTIME } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
-
 import classes from './markets.module.css'
 import MyItem from './myItem'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -22,6 +20,7 @@ export default function PublicMarketSell({ empire })
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
     const { otherItems } = useSelector((state) => state.market)
+    const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes, pubMktMaxFood, pubMktMaxSell, pubMktMaxRunes, pubMktStart, pubMktMaxTime } = useSelector((state) => state.games.activeGame)
 
     // console.log(otherItems)
     const buttonRef = useRef()
@@ -41,12 +40,12 @@ export default function PublicMarketSell({ empire })
 
     let now = new Date()
 
-    const trpArmCost = getCost('arm', PVTM_TRPARM)
-    const trpLndCost = getCost('lnd', PVTM_TRPLND)
-    const trpFlyCost = getCost('fly', PVTM_TRPFLY)
-    const trpSeaCost = getCost('sea', PVTM_TRPSEA)
-    const foodCost = getCost('food', PVTM_FOOD)
-    const runesCost = getCost('runes', PVTM_RUNES)
+    const trpArmCost = getCost('arm', pvtmTrpArm)
+    const trpLndCost = getCost('lnd', pvtmTrpLnd)
+    const trpFlyCost = getCost('fly', pvtmTrpFly)
+    const trpSeaCost = getCost('sea', pvtmTrpSea)
+    const foodCost = getCost('food', pvtmFood)
+    const runesCost = getCost('runes', pvtmRunes)
 
     const processItems = (items) =>
     {
@@ -82,7 +81,7 @@ export default function PublicMarketSell({ empire })
         return processedItems
     }
 
-    let canSell = [Math.floor(empire.trpArm * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpLnd * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpFly * (PUBMKT_MAXSELL / 100)), Math.floor(empire.trpSea * (PUBMKT_MAXSELL / 100)), Math.floor(empire.food * (PUBMKT_MAXFOOD / 100)), Math.floor(empire.runes * (PUBMKT_MAXRUNES / 100))]
+    let canSell = [Math.floor(empire.trpArm * (pubMktMaxSell / 100)), Math.floor(empire.trpLnd * (pubMktMaxSell / 100)), Math.floor(empire.trpFly * (pubMktMaxSell / 100)), Math.floor(empire.trpSea * (pubMktMaxSell / 100)), Math.floor(empire.food * (pubMktMaxFood / 100)), Math.floor(empire.runes * (pubMktMaxRunes / 100))]
 
     let processedItems = processItems(myItems)
 
@@ -247,7 +246,7 @@ export default function PublicMarketSell({ empire })
     // console.log(result)
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
-    const prices = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD, PVTM_RUNES]
+    const prices = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, pvtmFood, pvtmRunes]
 
     // console.log(myItems)
 
@@ -262,7 +261,7 @@ export default function PublicMarketSell({ empire })
                 {!myItems ? (
                     <Loader />) : (
                     <Stack spacing='sm' align='center'>
-                        <Text weight='bold' align='center'>Items you sell will take {PUBMKT_START} hours to appear on the market.</Text>
+                        <Text weight='bold' align='center'>Items you sell will take {pubMktStart} hours to appear on the market.</Text>
                         <form
                             onSubmit={form.onSubmit((values) =>
                             {
@@ -399,7 +398,7 @@ export default function PublicMarketSell({ empire })
                         </div>
                         <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
                         <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
-                        <Text weight='bold' align='center'> Items on the market for {PUBMKT_MAXTIME} hours will be returned to you, only 75% will be returned. </Text>
+                        <Text weight='bold' align='center'> Items on the market for {pubMktMaxTime} hours will be returned to you, only 75% will be returned. </Text>
                     </Stack>
                 )}
             </Center>

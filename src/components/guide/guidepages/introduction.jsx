@@ -1,9 +1,12 @@
 import { eraArray } from "../../../config/eras"
-import { GAME_TITLE, TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED, } from "../../../config/config"
 import GuideLink from "../../utilities/guidelink"
+import { useSelector } from "react-redux"
 
 export default function IntroGuide({ empire })
 {
+
+    const { turnsCount, turnsFreq, turnsMax, turnsProtection, turnsStored } = useSelector((state) => state.games.activeGame)
+
     return (
         <div>
             <GuideLink text='Return to Index' page='Index' />
@@ -11,8 +14,8 @@ export default function IntroGuide({ empire })
             <h2>Introduction</h2>
             <p>As leader of a newly founded empire, your goal is to become supreme to all others. Using everything from diplomacy to war, you must strive to build an empire wealthier than all others. Through this all, you will compete against anywhere from hundreds to thousands of other players, all aiming to achieve the same goals.</p>
             <h2>About Turn-Based Games</h2>
-            <p>{GAME_TITLE} is a turn-based game - that is, there is a limit to how often your empire can advance itself or interact with others.</p>
-            <p>In {GAME_TITLE}, you receive {TURNS_COUNT} of these turns every {TURNS_FREQ} minutes. You can only accumulate {TURNS_MAXIMUM} turns at once - if you receive more, they will go into your Stored Turns, of which you may have up to {TURNS_STORED}; every time you receive additional turns, 1 of your stored turns will be released for you to use.</p>
+            <p>NeoPromisance is a turn-based game - that is, there is a limit to how often your empire can advance itself or interact with others.</p>
+            <p>In NeoPromisance, you receive {turnsCount} of these turns every {turnsFreq} minutes. You can only accumulate {turnsMax} turns at once - if you receive more, they will go into your Stored Turns, of which you may have up to {turnsStored}; every time you receive additional turns, 1 of your stored turns will be released for you to use.</p>
             <p>All of the actions listed in the "Use Turns" section of the side menu will consume a variable number of turns when you perform them - the <GuideLink page='Cash' text='cash' />, <GuideLink page='Farm' text='farm' />, and <GuideLink page='Explore' text='explore' /> options allow you to specify how much time to spend, while <GuideLink page='Build' text='building' /> and <GuideLink page='demolish' text='demolishing' /> consume turns based on how quickly your empire can perform these actions.</p>
             <p><GuideLink page='War%20Council' text='Attacking' /> an empire, sending <GuideLink page='Foreign%20Aid' text='aid' />, or casting a <GuideLink page='Magic%20Center' text='spell' /> (whether on yourself or on another empire) consumes <b>2</b> turns.</p>
             <p>Other actions, such as participating in the <GuideLink page='Black%20Market' text='black market' /> or <GuideLink page='Public%20Market' text='public market' />, joining or managing a <GuideLink page='Clans' text='clan' />, <GuideLink page='Empire%20Settings' text='managing your empire' />, or sending <GuideLink page='Mailbox' text='messages' /> to other empires, do not consume any turns.</p>

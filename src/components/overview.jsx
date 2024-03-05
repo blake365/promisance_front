@@ -8,12 +8,10 @@ import
 	Group, Col, Avatar, Stack, Popover, Anchor
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
-
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
-import { BASE_LUCK } from '../config/config'
 import { setBgImage } from '../functions/setBgImage'
 import TinyAction from './useTurns/tinyAction'
 import TinyBuild from './useTurns/tinyBuild'
@@ -38,7 +36,7 @@ const RaceBonus = ({ value }) =>
 export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
-
+	const { baseLuck } = useSelector((state) => state.games.activeGame)
 	// console.log(empire)
 	let size = calcSizeBonus(empire)
 
@@ -64,7 +62,7 @@ export default function Overview()
 	const era = eraArray[empire.era]
 	const buildings = ['bldPop', 'bldCash', 'bldTrp', 'bldCost', 'bldWiz', 'bldFood', 'bldDef']
 
-	let luck = Math.round(BASE_LUCK / size)
+	let luck = Math.round(baseLuck / size)
 
 	let clan = empire.clan
 

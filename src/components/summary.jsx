@@ -1,6 +1,5 @@
 import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, ActionIcon, Tooltip } from '@mantine/core'
 import { useSelector } from 'react-redux'
-import { TURNS_COUNT, TURNS_FREQ, TURNS_MAXIMUM, TURNS_PROTECTION, TURNS_STORED } from '../config/config'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link } from 'react-router-dom'
@@ -15,6 +14,7 @@ export default function Summary()
 	const { empire } = useSelector((state) => state.empire)
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { time } = useSelector((state) => state.time)
+	const { turnsCount, turnsFreq, turnsMax, turnsProtection, turnsStored } = useSelector((state) => state.games.activeGame)
 
 	const bgimage = setBgImage(empire)
 
@@ -55,7 +55,7 @@ export default function Summary()
 								</ActionIcon>
 							</Tooltip>
 						</Group>
-						{empire.turnsUsed < TURNS_PROTECTION && (<Center my='sm'>
+						{empire.turnsUsed < turnsProtection && (<Center my='sm'>
 							<Button compact variant='outline' align='center' onClick={() =>
 							{
 								setMeta('new player tour')
@@ -87,11 +87,11 @@ export default function Summary()
 									<tbody>
 										<tr>
 											<td style={{ width: '50%' }}>Turns</td>
-											<td align='right'>{empire?.turns} (max {TURNS_MAXIMUM})</td>
+											<td align='right'>{empire?.turns} (max {turnsMax})</td>
 										</tr>
 										<tr>
 											<td>Stored Turns</td>
-											<td align='right'>{empire?.storedturns} (max {TURNS_STORED})</td>
+											<td align='right'>{empire?.storedturns} (max {turnsStored})</td>
 										</tr>
 										<tr>
 											<td>Rank</td>
@@ -175,11 +175,11 @@ export default function Summary()
 							</Grid.Col>
 						</Grid>
 						<Stack align='center' spacing={0} mt='xs'>
-							{empire.turnsUsed < TURNS_PROTECTION ? (<>
-								<Text align='center' mb='sm' color='green'>You are under new player protection for {TURNS_PROTECTION - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {TURNS_PROTECTION} turns.</Text>
+							{empire.turnsUsed < turnsProtection ? (<>
+								<Text align='center' mb='sm' color='green'>You are under new player protection for {turnsProtection - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {turnsProtection} turns.</Text>
 
 							</>) : ('')}
-							<Text align='center'>You get {TURNS_COUNT} turn{TURNS_COUNT > 1 ? ('s') : ('')} every {TURNS_FREQ} minutes.</Text>
+							<Text align='center'>You get {turnsCount} turn{turnsCount > 1 ? ('s') : ('')} every {turnsFreq} minutes.</Text>
 							<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
 							<Text align='center'>{roundStatus}</Text>
 						</Stack>

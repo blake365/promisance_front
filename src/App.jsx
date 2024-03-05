@@ -44,8 +44,8 @@ import NewsDrawerButton from './components/news/newsDrawerButton';
 import RefreshButton from './components/utilities/refreshButton';
 import MailButton from './components/mail/mailButton';
 import ClanMailButton from './components/diplomacy/clans/clanMessagesButton';
-import * as Sentry from '@sentry/react';
 import RepeatButton from './components/utilities/repeatButton';
+import { fetchGames, setActiveGame } from './store/gamesSlice';
 
 function App()
 {
@@ -55,6 +55,10 @@ function App()
 	const empireStatus = useSelector(state => state.empire.status)
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const { empire } = useSelector((state) => state.empire)
+
+	// handle condition where there is no active game in redux store
+	const games = useSelector((state) => state.games.games)
+	const activeGame = useSelector((state) => state.games.activeGame)
 
 	// const { time } = useSelector((state) => state.time)
 	const kickOut = (error) =>
@@ -117,8 +121,6 @@ function App()
 
 	useEffect(() =>
 	{
-		dispatch(getTime())
-
 		async function loadUser()
 		{
 			// console.log('loading user')
@@ -157,6 +159,19 @@ function App()
 				navigate('/create')
 			}
 		}
+
+		if (activeGame === null) {
+			dispatch(fetchGames())
+			if (empire?.game_id) {
+				// match game id to game in games array and set active game
+				console.log('hello')
+				const game = games.find(game => game.game_id === empire.game_id)
+				console.log(game)
+				dispatch(setActiveGame(game))
+			}
+		}
+
+		dispatch(getTime(activeGame.game_id))
 
 		dispatch(setPage(pageState))
 
@@ -292,7 +307,7 @@ function App()
 									</Grid.Col>
 									<Grid.Col span={3}>
 										<Group spacing='xs' position='center'>
-											<GuideModalButton pageName={pageName} empire={empire} />
+											<GuideModalButton pageName={pageName} empire={empire} protection={activeGame.turnsProtection} />
 											<RefreshButton empire={empire} />
 										</Group>
 									</Grid.Col>

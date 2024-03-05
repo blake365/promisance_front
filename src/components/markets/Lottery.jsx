@@ -2,7 +2,6 @@ import { Button, Center, Title, Text, Stack } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import Axios from 'axios'
 import { useEffect, useState } from 'react'
-import { LOTTERY_MAXTICKETS, TURNS_PROTECTION } from '../../config/config'
 import { generalLog } from '../../functions/functions'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -15,6 +14,8 @@ export default function Lottery()
     const [tickets, setTickets] = useState(0)
     const [totalTickets, setTotalTickets] = useState(0)
     const { empire } = useSelector((state) => state.empire)
+    const { lotteryMaxTickets, turnsProtection } = useSelector((state) => state.games.activeGame)
+
     const loadEmpire = useLoadEmpire(empire.uuid)
 
     const buyTicket = async () =>
@@ -99,12 +100,12 @@ export default function Lottery()
                         Lottery
                     </Title>
                     {empire.mode === 'demo' && <Text align='center' color='red'>The lottery is not accessible to demo accounts.</Text>}
-                    {empire.turnsUsed <= TURNS_PROTECTION && <Text align='center' color='red'>The lottery is only accessible once you have left protection.</Text>}
+                    {empire.turnsUsed <= turnsProtection && <Text align='center' color='red'>The lottery is only accessible once you have left protection.</Text>}
                     <Text align='center'>
-                        The lottery can be a good way to get extra cash for your empire. There is a lottery drawing every 24 hours and you can buy up to {LOTTERY_MAXTICKETS} lottery tickets each day. Drawings are random and there is no guarantee of a winner. If no winner is found, the jackpot will continue to increase until there is a winner. Lottery results are posted in the World News.
+                        The lottery can be a good way to get extra cash for your empire. There is a lottery drawing every 24 hours and you can buy up to {lotteryMaxTickets} lottery tickets each day. Drawings are random and there is no guarantee of a winner. If no winner is found, the jackpot will continue to increase until there is a winner. Lottery results are posted in the World News.
                     </Text>
                     <Text align='center'>
-                        You currently have <strong>{tickets}/{LOTTERY_MAXTICKETS}</strong> lottery tickets.
+                        You currently have <strong>{tickets}/{lotteryMaxTickets}</strong> lottery tickets.
                     </Text>
                     <Text>
                         Total tickets purchased: <strong>{totalTickets}</strong>.
@@ -115,7 +116,7 @@ export default function Lottery()
                     <Text align='center'>
                         A ticket costs <strong>${ticketCost.toLocaleString()}</strong>.
                     </Text>
-                    <Button onClick={buyTicket} disabled={roundStatus || tickets >= LOTTERY_MAXTICKETS || empire.turnsUsed <= TURNS_PROTECTION || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
+                    <Button onClick={buyTicket} disabled={roundStatus || tickets >= lotteryMaxTickets || empire.turnsUsed <= turnsProtection || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
                 </Stack>
             </Center>
         </main>

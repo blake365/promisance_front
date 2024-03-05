@@ -1,8 +1,9 @@
-import { PUBMKT_MAXTIME, PUBMKT_START } from "../../../config/config"
 import GuideLink from "../../utilities/guidelink"
+import { useSelector } from 'react-redux'
 
 export default function PublicMarketGuide()
 {
+    const { pubMktMaxTime, pubMktStart } = useSelector((state) => state.games.activeGame)
 
     return (
         <div>
@@ -15,13 +16,13 @@ export default function PublicMarketGuide()
 
             <h2>The Public Market - Selling</h2>
             <p>While the private market is a convenient place to rid yourself of excess food and equipment, you likely will not be well compensated. Using the public market, you can sell your goods to other empires willing to purchase them, often at much better prices.</p>
-            <p>Once you place items on the public market, they will take {PUBMKT_START} hour(s) to reach the marketplace and become available for sale.
+            <p>Once you place items on the public market, they will take {pubMktStart} hour(s) to reach the marketplace and become available for sale.
             </p>
             <p>
                 Once items are available on the market, you will be allowed to remove them at your own discretion. Removing items from the market will result in only 75% of them being returned to you.
             </p>
             <p>
-                Items are automatically removed from the market and returned to your empire after {PUBMKT_MAXTIME} hours. Only 75% of them will be returned to you.
+                Items are automatically removed from the market and returned to your empire after {pubMktMaxTime} hours. Only 75% of them will be returned to you.
             </p>
             <p>
                 You may edit the price of items currently on the market, however there is a 10% fee for doing so.

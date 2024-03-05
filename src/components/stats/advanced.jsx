@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import { Button, Title, Text, Input, Group, Tooltip as Tooltips } from '@mantine/core';
 import { eraArray } from '../../config/eras';
-import { TURNS_PROTECTION } from '../../config/config';
 import { useForm } from '@mantine/form';
 import { Download } from '@phosphor-icons/react';
 
@@ -159,6 +158,8 @@ function AdvancedStats()
         ],
     })
     const { empire } = useSelector((state) => state.empire)
+    const { turnsProtection } = useSelector((state) => state.games.activeGame)
+
     const era = empire.era
 
     useEffect(() =>
@@ -260,7 +261,7 @@ function AdvancedStats()
     return (
         <>
             <Title align='center'>Stat Charts</Title>
-            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {TURNS_PROTECTION} turns.</Text >)}
+            {empire.mode === 'demo' ? (<Text align='center' color='red' mb='sm'>Stats not collected for demo accounts. </Text >) : (<Text align='center' mb='sm'>Stats are collected for empires who have used greater than {turnsProtection} turns.</Text >)}
             <Text align='center'>Showing {take ? take : 'all'} data points</Text>
             <Group position='center' spacing='xs'>
                 <Button variant='default' compact onClick={() =>

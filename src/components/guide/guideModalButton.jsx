@@ -4,7 +4,7 @@ import { TURNS_PROTECTION } from "../../config/config"
 import Guide from "./guide";
 import { Button, Modal, Title, Loader } from '@mantine/core'
 
-const GuideModalButton = ({ pageName, empire }) =>
+const GuideModalButton = ({ pageName, empire, protection }) =>
 {
     const [modalOpened, setModalOpened] = useState(false);
 
@@ -17,7 +17,7 @@ const GuideModalButton = ({ pageName, empire }) =>
                 // rightIcon={<Compass size={18} />}
                 sx={() =>
                 {
-                    if (empire.turnsUsed <= TURNS_PROTECTION * 2) {
+                    if (empire.turnsUsed <= protection * 2) {
                         return {
                             border: '1px solid #40c057',
                             boxShadow: '0 0 2px 1px #40c057',

@@ -16,12 +16,12 @@ import { MaxButton } from '../utilities/maxbutton'
 import { loadScores } from '../../store/scoresSlice'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { eraArray } from '../../config/eras'
-import { TURNS_PROTECTION } from '../../config/config'
 import classes from './aid.module.css'
 
 export default function ScoresAid({ friend })
 {
     const { empire } = useSelector((state) => state.empire)
+    const { turnsProtection } = useSelector((state) => state.games.activeGame)
     const loadEmpire = useLoadEmpire(empire.uuid)
     const dispatch = useDispatch()
 
@@ -107,7 +107,7 @@ export default function ScoresAid({ friend })
 
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
-                    {empire.turnsUsed < TURNS_PROTECTION && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {TURNS_PROTECTION} turns.</Text>)}
+                    {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
                     <Card>
                         <form onSubmit={form.onSubmit((values) =>
                         {
@@ -141,7 +141,7 @@ export default function ScoresAid({ friend })
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
+                                <Button color='green' type='submit' disabled={empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>

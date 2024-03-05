@@ -17,6 +17,8 @@ export default function TinyBuild({ building, show })
 {
 	// console.log(building)
 	const { empire } = useSelector((state) => state.empire)
+	const { buildCost: baseBuildCost } = useSelector((state) => state.games.activeGame)
+
 	const buttonRef = useRef()
 	if (building === 'bldTrp') {
 		building = 'bldTroop'
@@ -37,7 +39,7 @@ export default function TinyBuild({ building, show })
 	{
 		let size = calcSizeBonus(empire)
 		// console.log(size)
-		let buildCost = Math.round((BUILD_COST + empire.land * 0.2) * (size / 3))
+		let buildCost = Math.round((baseBuildCost + empire.land * 0.2) * (size / 3))
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
 		buildRate = Math.round(

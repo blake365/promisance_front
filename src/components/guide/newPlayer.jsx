@@ -1,6 +1,5 @@
 import { raceArray } from "../../config/races"
 import { eraArray } from "../../config/eras"
-import { TURNS_PROTECTION } from "../../config/config"
 import { Compass } from "@phosphor-icons/react"
 import { Table, Text, Title, Paper, Container, Stack } from "@mantine/core"
 import classes from './guide.module.css'
@@ -9,6 +8,7 @@ import { useSelector } from "react-redux"
 export default function NewPlayerTips()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { turnsProtection } = useSelector((state) => state.games.activeGame)
 
     const yourTraits = (empire) =>
     {
@@ -157,8 +157,8 @@ export default function NewPlayerTips()
             <Paper p='lg'>
                 <Title align='center'>Personalized Tips</Title>
                 <Stack mt='sm'>
-                    {empire.turnsUsed <= TURNS_PROTECTION && (<Text>
-                        You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {TURNS_PROTECTION} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
+                    {empire.turnsUsed <= turnsProtection && (<Text>
+                        You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {turnsProtection} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
                     </Text>)}
                     <Text>
                         If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages. If you want to repeat the Getting Started Tour, you can access it from the Empire Settings page.

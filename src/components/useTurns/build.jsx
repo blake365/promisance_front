@@ -6,7 +6,6 @@ import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { eraArray } from '../../config/eras'
 import { FavoriteButton, HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
-import { BUILD_COST } from '../../config/config'
 import { Link } from 'react-router-dom'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState, useRef } from 'react'
@@ -28,6 +27,8 @@ export default function Build({ size })
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
+	const { buildCost: baseBuildCost } = useSelector((state) => state.games.activeGame)
+
 	const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
@@ -37,7 +38,7 @@ export default function Build({ size })
 	{
 		let size = calcSizeBonus(empire)
 		// console.log(size)
-		let buildCost = Math.round((BUILD_COST + empire.land * 0.2) * (size / 3))
+		let buildCost = Math.round((baseBuildCost + empire.land * 0.2) * (size / 3))
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
 		buildRate = Math.round(

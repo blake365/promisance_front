@@ -1,10 +1,12 @@
 import { Card, Grid, Table, Title } from '@mantine/core'
 import { eraArray } from '../../config/eras'
-import { TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { raceArray } from '../../config/races'
+import { useSelector } from 'react-redux'
 
 function Intel({ empire })
 {
+
+    const { turnsMax, turnsStored } = useSelector((state) => state.games.activeGame)
     // console.log(empire)
     // console.log(typeof empire.era)
     return (
@@ -25,11 +27,11 @@ function Intel({ empire })
                         <tbody>
                             <tr>
                                 <td style={{ width: '50%' }}>Turns</td>
-                                <td align='right'>{empire?.turns} (max {TURNS_MAXIMUM})</td>
+                                <td align='right'>{empire?.turns} (max {turnsMax})</td>
                             </tr>
                             <tr>
                                 <td>Stored Turns</td>
-                                <td align='right'>{empire?.storedturns} (max {TURNS_STORED})</td>
+                                <td align='right'>{empire?.storedturns} (max {turnsStored})</td>
                             </tr>
                             <tr>
                                 <td>Rank</td>

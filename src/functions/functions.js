@@ -1,5 +1,4 @@
 // functions that are shared between frontend and backend
-
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
 // math

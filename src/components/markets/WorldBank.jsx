@@ -1,11 +1,9 @@
 import { Button, Center, Group, NumberInput, Title, Card, SimpleGrid, Text, Stack } from '@mantine/core'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
-import { empireLoaded } from '../../store/empireSlice'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { MaxButton } from '../utilities/maxbutton'
-import { BANK_LOANRATE, BANK_SAVERATE } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
@@ -18,13 +16,14 @@ export default function WorldBank()
 {
 
     const { empire } = useSelector((state) => state.empire)
+    const { bankSaveRate, bankLoanRate } = useSelector((state) => state.games.activeGame)
     const loadEmpire = useLoadEmpire(empire.uuid)
     // let loanDefault = empire.loan
     const bankRef = useRef()
     const loanRef = useRef()
     const size = calcSizeBonus(empire)
-    const loanRate = (Math.round((BANK_LOANRATE + size) * 100) / 100 / 100).toFixed(2)
-    const savingRate = (Math.round((BANK_SAVERATE - size) * 100) / 100 / 100).toFixed(2)
+    const loanRate = (Math.round((bankLoanRate + size) * 100) / 100 / 100).toFixed(2)
+    const savingRate = (Math.round((bankSaveRate - size) * 100) / 100 / 100).toFixed(2)
     const maxLoan = empire.networth * 50
 
     let bankCapacity = empire.networth * 100

@@ -1,9 +1,10 @@
 import { eraArray } from "../../../config/eras"
-import { MAGIC_ALLOW_REGRESS, TURNS_ERA } from "../../../config/config"
 import GuideLink from "../../utilities/guidelink"
+import { useSelector } from 'react-redux'
 
 export default function MagicCenterGuide({ empire })
 {
+    const { allowMagicRegress } = useSelector((state) => state.games.activeGame)
 
     return (
         <div>
@@ -27,7 +28,7 @@ export default function MagicCenterGuide({ empire })
                 <dd>If your empire currently has an open Time Gate, this spell will close it, protecting your empire from attacks by other empires in different time periods (unless they themselves have open time gates).</dd>
                 <dt>{eraArray[empire.era].spell_advance}</dt>
                 <dd>This spell advances your empire from its current era to the next one (if such an era exists). At least 72 hours must be spent in your current era before you may cast this spell.</dd>
-                {MAGIC_ALLOW_REGRESS ? (<div><dt>{eraArray[empire.era].spell_regress}</dt>
+                {allowMagicRegress ? (<div><dt>{eraArray[empire.era].spell_regress}</dt>
                     <dd>This spell regresses your empire from its current era to the previous one (if such an era exists). At least 72 hours must be spent in your current era before you may cast this spell.</dd></div>)
                     : ("")
                 }

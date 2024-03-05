@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import { logoutEmpire } from '../../store/empireSlice';
 import { IconBrandGoogle } from '@tabler/icons-react';
+import { fetchGames } from '../../store/gamesSlice';
 let bg = '/images/login.webp'
 
 const useStyles = createStyles(() => ({
@@ -61,7 +62,7 @@ export default function NewLogin()
             return navigate('/create')
         } else if (isLoggedIn && user.empires.length > 0) {
             // dispatch(empireLoaded(user.empires[0]))
-            return navigate('/app/')
+            return navigate('/select')
         }
     }, [isLoggedIn])
 
@@ -89,7 +90,11 @@ export default function NewLogin()
                 <form onSubmit={form.onSubmit((values) =>
                     dispatch(login(values))
                         .unwrap()
-                        .then(() => navigate('/app'))
+                        .then(() =>
+                        {
+                            dispatch(fetchGames())
+                            navigate('/select')
+                        })
                         .catch((error) =>
                         {
                             console.log(error)

@@ -4,7 +4,6 @@ import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { eraArray } from '../../config/eras'
 import { raceArray } from '../../config/races'
-import { PVTM_FOOD, PVTM_RUNES, PVTM_SHOPBONUS, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA } from '../../config/config'
 import { MaxButton } from '../utilities/maxbutton'
 import { useRef } from 'react'
 import classes from './markets.module.css'
@@ -20,20 +19,22 @@ import { showNotification } from '@mantine/notifications'
 export default function PrivateMarketBuy()
 {
 
+    const buttonRef = useRef()
+    const { empire } = useSelector((state) => state.empire)
+    const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes } = useSelector((state) => state.games.activeGame)
+
     let buyNumberArray = []
     let totalPrice = 0
     let errors = {
         error: '',
     }
 
-    const buttonRef = useRef()
-    const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
 
     const getCost = (emp, base) =>
     {
         let cost = base
-        let costBonus = 1 - ((1 - PVTM_SHOPBONUS) * (emp.bldCost / emp.land) + PVTM_SHOPBONUS * (emp.bldCash / emp.land))
+        let costBonus = 1 - ((1 - pvtmShopBonus) * (emp.bldCost / emp.land) + pvtmShopBonus * (emp.bldCash / emp.land))
 
         cost *= costBonus
         cost *= (2 - ((100 + raceArray[emp.race].mod_market) / 100))
@@ -47,12 +48,12 @@ export default function PrivateMarketBuy()
 
     const units = ['Arm', 'Lnd', 'Fly', 'Sea', 'Food', 'Runes']
 
-    const trpArmCost = getCost(empire, PVTM_TRPARM)
-    const trpLndCost = getCost(empire, PVTM_TRPLND)
-    const trpFlyCost = getCost(empire, PVTM_TRPFLY)
-    const trpSeaCost = getCost(empire, PVTM_TRPSEA)
+    const trpArmCost = getCost(empire, pvtmTrpArm)
+    const trpLndCost = getCost(empire, pvtmTrpLnd)
+    const trpFlyCost = getCost(empire, pvtmTrpFly)
+    const trpSeaCost = getCost(empire, pvtmTrpSea)
 
-    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, PVTM_FOOD, PVTM_RUNES]
+    const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, pvtmFood, pvtmRunes]
 
     let availArray = [empire.mktArm, empire.mktLnd, empire.mktFly, empire.mktSea, empire.mktFood, empire.mktRunes]
 
@@ -82,8 +83,8 @@ export default function PrivateMarketBuy()
             buyLnd: (value) => value <= empire.cash / trpLndCost,
             buyFly: (value) => value <= empire.cash / trpFlyCost,
             buySea: (value) => value <= empire.cash / trpSeaCost,
-            buyFood: (value) => value <= empire.cash / PVTM_FOOD,
-            buyRunes: (value) => value <= empire.cash / PVTM_RUNES,
+            buyFood: (value) => value <= empire.cash / pvtmFood,
+            buyRunes: (value) => value <= empire.cash / pvtmRunes,
         },
 
         errorMessages: {

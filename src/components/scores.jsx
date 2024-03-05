@@ -4,13 +4,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { loadScores } from '../store/scoresSlice'
 
 import ScoreCard from './scoreCard'
-import { TURNS_FREQ } from '../config/config'
 
 export default function Scores()
 {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const { empire } = useSelector((state) => state.empire)
+    const { turnsFreq } = useSelector((state) => state.games.activeGame)
 
     let myEmpire = empire
 
@@ -22,7 +22,7 @@ export default function Scores()
         setLoading(true)
         dispatch(loadScores(empire.game_id))
         setLoading(false)
-    }, [])
+    }, [empire])
 
     // console.log(scores.length)
 
@@ -32,7 +32,7 @@ export default function Scores()
                 <Title order={1} align='center'>
                     Scores
                 </Title>
-                <Text size='sm'>Ranks are updated every {TURNS_FREQ} minutes.</Text>
+                <Text size='sm'>Ranks are updated every {turnsFreq} minutes.</Text>
                 {loading ? <Loader /> : (scores.map(empire =>
                 {
                     // console.log(empire.clanReturn)

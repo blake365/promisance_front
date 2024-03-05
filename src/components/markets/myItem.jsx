@@ -2,17 +2,19 @@ import { Button, NumberInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Axios from 'axios'
 import { eraArray } from '../../config/eras'
-import { PUBMKT_START, PVTM_TRPARM, PVTM_TRPFLY, PVTM_TRPLND, PVTM_TRPSEA, PVTM_FOOD, PVTM_RUNES } from '../../config/config'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
 import { fetchMyItems } from '../../store/pubMarketSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function MyItem({ element, empire })
 {
+    const { pubMktStart, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes } = useSelector((state) => state.games.activeGame)
+
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
-    const prices = [PVTM_TRPARM, PVTM_TRPLND, PVTM_TRPFLY, PVTM_TRPSEA, PVTM_FOOD, PVTM_RUNES]
+    const prices = [pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes]
+
 
     const editForm = useForm({
         initialValues: {
@@ -77,13 +79,13 @@ export default function MyItem({ element, empire })
     let hoursOnMarketString = ''
     let createdAt = new Date(element.createdAt).getTime()
     let hoursOnMarket = truncate(((now - createdAt) / 3600000), 1)
-    // hoursOnMarket -= PUBMKT_START
-    let timeRemaining = Math.round((PUBMKT_START - hoursOnMarket) * 100) / 100
+    // hoursOnMarket -= pubMktStart
+    let timeRemaining = Math.round((pubMktStart - hoursOnMarket) * 100) / 100
     if (hoursOnMarket < 6) {
         hoursOnMarketString = `In transit for ${timeRemaining} more hours`
     } else {
-        hoursOnMarketString = `${truncate(hoursOnMarket - PUBMKT_START, 1)}`
-        hoursOnMarket = Math.round((hoursOnMarket - PUBMKT_START) * 100) / 100
+        hoursOnMarketString = `${truncate(hoursOnMarket - pubMktStart, 1)}`
+        hoursOnMarket = Math.round((hoursOnMarket - pubMktStart) * 100) / 100
     }
 
     // console.log(hoursOnMarket)
@@ -94,7 +96,7 @@ export default function MyItem({ element, empire })
             <td align='center'>{parseInt(element.amount).toLocaleString()}</td>
             <td align='center'>${element.price.toLocaleString()}</td>
             <td align='center'>{hoursOnMarketString}</td>
-            {hoursOnMarket >= PUBMKT_START ? <td align='center'>
+            {hoursOnMarket >= pubMktStart ? <td align='center'>
                 <form style={{ display: 'flex', alignItems: 'center', width: '200px', justifyContent: 'space-between' }} onSubmit={
                     editForm.onSubmit((values) =>
                     {
@@ -123,7 +125,7 @@ export default function MyItem({ element, empire })
                     <Button size='xs' compact type='submit'>Edit</Button>
                     <Button color='orange' size='xs' compact onClick={() => recallItem(element.id)}>Recall</Button>
                 </form>
-            </td> : <td align='center'>Wait {truncate(PUBMKT_START + timeRemaining, 1)} hours</td>
+            </td> : <td align='center'>Wait {truncate(pubMktStart + timeRemaining, 1)} hours</td>
             }
         </tr>
     )

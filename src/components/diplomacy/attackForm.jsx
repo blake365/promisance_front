@@ -1,12 +1,11 @@
 import { useForm } from "@mantine/form";
 import { useLoadEmpire } from "../../hooks/useLoadEmpire";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, Select, Stack, Text, Button, Group } from "@mantine/core";
 import { useState, forwardRef } from "react";
 import { FavoriteButton } from '../utilities/maxbutton'
 import { useLoadOtherEmpires } from "../../hooks/useLoadOtherEmpires";
 import { eraArray } from "../../config/eras";
-import { MAX_ATTACKS } from "../../config/config";
 import { Mountains, Scales, Hourglass, Alien } from "@phosphor-icons/react"
 import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
@@ -19,6 +18,8 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
     const [error, setError] = useState('')
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [selectedAttack, setSelectedAttack] = useState('')
+
+    const { maxAttacks } = useSelector((state) => state.games.activeGame)
 
     const loadEmpire = useLoadEmpire(empire.uuid)
     let otherEmpires = null
@@ -149,7 +150,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
                     <Button color='red' type='submit' disabled={roundStatus} loading={loading}>
                         Attack
                     </Button>
-                    <Text size='sm'>{MAX_ATTACKS - empire.attacks} attacks remaining</Text>
+                    <Text size='sm'>{maxAttacks - empire.attacks} attacks remaining</Text>
                     {error && (<Text color='red' weight='bold' align="center">{error}</Text>)}
                 </Stack>
             </form>

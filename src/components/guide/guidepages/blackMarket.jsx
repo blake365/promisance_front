@@ -1,9 +1,10 @@
 import { eraArray } from "../../../config/eras"
-import { PVTM_MAXSELL } from "../../../config/config"
 import GuideLink from "../../utilities/guidelink"
+import { useSelector } from "react-redux"
 
 export default function BlackMarketGuide({ empire })
 {
+    const { pvtmMaxSell } = useSelector((state) => state.games.activeGame)
 
     return (
         <div>
@@ -16,7 +17,7 @@ export default function BlackMarketGuide({ empire })
             <h2>The Black Market - Selling</h2>
             <p>Just as you can purchase from the black market, you can also quickly sell your excess goods to it, though for significantly lower returns.</p>
             <p>As is the case with buying, having a large percentage of your empire occupied by {eraArray[empire.era].bldcash} and {eraArray[empire.era].bldcost} will increase the selling prices of military units to up to 50% of their usual purchase price.</p>
-            <p>A maximum of {PVTM_MAXSELL / 100}% of each type of military unit can be sold on the black market in a given time span - in order to sell more, you must wait a while.</p>
+            <p>A maximum of {pvtmMaxSell / 100}% of each type of military unit can be sold on the black market in a given time span - in order to sell more, you must wait a while.</p>
         </div>
     )
 }

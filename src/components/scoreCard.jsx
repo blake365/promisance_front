@@ -12,7 +12,6 @@ const ScoresIntel = lazy(() => import('./diplomacy/scoresIntel'));
 const ScoresAid = lazy(() => import('./diplomacy/scoresAid'));
 const ScoresChat = lazy(() => import('./mail/scoresChat'));
 import Axios from 'axios'
-import { TURNS_PROTECTION } from '../config/config'
 import { useSelector } from 'react-redux'
 
 const ScoreCard = ({ empire, myEmpire, home, clan }) =>
@@ -22,6 +21,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     // console.log(empire)
 
     const { time } = useSelector((state) => state.time)
+    const { turnsProtection } = useSelector((state) => state.games.activeGame)
 
     const checkForSession = async () =>
     {
@@ -79,7 +79,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     let color = ''
     let disabled = false
 
-    if (empire.turnsUsed <= TURNS_PROTECTION) {
+    if (empire.turnsUsed <= turnsProtection) {
         color = 'lightgreen'
         disabled = true
     }

@@ -1,10 +1,9 @@
 import { Stack, Button, Group, Text, Select, Image } from '@mantine/core'
-import { TURNS_MAXIMUM, TURNS_PROTECTION } from '../../config/config'
 import { raceArray } from '../../config/races'
 import { useForm } from '@mantine/form'
 import { forwardRef } from 'react'
 import Axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
 
@@ -26,6 +25,8 @@ const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
 function ChangeRace({ status, empire }) 
 {
     const dispatch = useDispatch()
+
+    const { turnsProtection, turnsMax } = useSelector((state) => state.games.activeGame)
 
     const raceForm = useForm({
         initialValues: {
@@ -59,7 +60,7 @@ function ChangeRace({ status, empire })
         <form onSubmit={raceForm.onSubmit((values) =>
         {
             // console.log(values)
-            if (empire.turns >= Math.floor(TURNS_MAXIMUM / 2) || empire.turnsUsed <= TURNS_PROTECTION) {
+            if (empire.turns >= Math.floor(turnsMax / 2) || empire.turnsUsed <= turnsProtection) {
                 updateRace(values)
             } else {
                 showNotification({
@@ -71,7 +72,7 @@ function ChangeRace({ status, empire })
             <Stack spacing='sm' align='center'>
                 <Group align='center'>
                     <Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={40} width={40} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-                    {empire.turnsUsed > TURNS_PROTECTION ? (<Text w='300px'>{`Change your empire's race. This will cost you ${Math.floor(TURNS_MAXIMUM / 2)} turns, 25% of your food, cash, and runes, and 10% of your population and army. `}</Text>) : (<Text w='300px'>{`Change your empire's race. There is no cost to changing your race while in new player protection.`}</Text>)}
+                    {empire.turnsUsed > turnsProtection ? (<Text w='300px'>{`Change your empire's race. This will cost you ${Math.floor(turnsMax / 2)} turns, 25% of your food, cash, and runes, and 10% of your population and army. `}</Text>) : (<Text w='300px'>{`Change your empire's race. There is no cost to changing your race while in new player protection.`}</Text>)}
                 </Group>
 
                 <Select

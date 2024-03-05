@@ -14,13 +14,12 @@ import BigCarousel from '../layout/embla/Carousel'
 import { getTime } from '../../store/timeSlice'
 import { onLCP } from 'web-vitals'
 
-
 export default function Home()
 {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-    dispatch(getTime())
+    dispatch(getTime(1))
 
     const now = new Date().getTime()
 
