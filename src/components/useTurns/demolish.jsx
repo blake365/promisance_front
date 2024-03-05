@@ -146,6 +146,7 @@ export default function Demolish()
 	}
 
 	const buttonRef = useRef()
+	const buttonRef2 = useRef()
 
 	const doDemolish = async (values) =>
 	{
@@ -169,11 +170,12 @@ export default function Demolish()
 	{
 		setLoading(true)
 		try {
-			const res = await Axios.post('/drop', values)
+			const res = await Axios.post(`/drop?gameId=${empire.game_id}`, values)
 			// dispatch(setResult(res.data))
 			// console.log(res.data)
 			dispatch(setResult(res.data))
-			loadEmpireTest()
+			loadEmpire()
+			buttonRef2.current.focus()
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
@@ -487,7 +489,6 @@ export default function Demolish()
 							dispatch(clearResult)
 							doDrop(values)
 						})
-
 					}>
 						<Stack spacing='sm' align='center' sx={{ marginTop: '2rem' }}>
 							<Text align='center'>You can drop up to {canDrop} unused acres of land, at {dropRate} acres per turn.</Text>
@@ -504,7 +505,7 @@ export default function Demolish()
 									<tr>
 										<td>Unused Land</td>
 										<td>{empire.freeLand.toLocaleString()}</td>
-										<td>{canDrop}</td>
+										<td>{canDrop.toLocaleString()}</td>
 										<td>
 											<NumberInput
 												hideControls
@@ -529,7 +530,7 @@ export default function Demolish()
 									</tr>
 								</tbody>
 							</Table>
-							<Button type='submit' color='red' disabled={roundStatus} loading={loading}>
+							<Button type='submit' color='red' disabled={roundStatus} loading={loading} ref={buttonRef2}>
 								Drop Land
 							</Button>
 						</Stack>
