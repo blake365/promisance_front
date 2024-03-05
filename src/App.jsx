@@ -160,7 +160,7 @@ function App()
 			}
 		}
 
-		if (activeGame === null) {
+		if (!activeGame) {
 			dispatch(fetchGames())
 			if (empire?.game_id) {
 				// match game id to game in games array and set active game
@@ -168,6 +168,7 @@ function App()
 				const game = games.find(game => game.game_id === empire.game_id)
 				console.log(game)
 				dispatch(setActiveGame(game))
+				dispatch(getTime(game.game_id))
 			}
 		}
 

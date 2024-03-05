@@ -19,7 +19,7 @@ export default function Home()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-    dispatch(getTime(1))
+    // dispatch(getTime(1))
 
     const now = new Date().getTime()
 
@@ -36,7 +36,6 @@ export default function Home()
     }
 
     onLCP(console.log)
-
 
     const smScreen = useMediaQuery('(max-width: 768px)')
     const mdScreen = useMediaQuery('(min-width: 992px)')
@@ -162,7 +161,7 @@ export default function Home()
                         </Card>
                     </Flex>
                 </Box>) : ('')}
-                <Box my='lg'>
+                {/* <Box my='lg'>
                     <Title order={1} align='center' mb='lg'>Current Game Info</Title>
                     <Card withBorder >
                         <Grid justify="space-between" grow columns={15}>
@@ -208,13 +207,13 @@ export default function Home()
                             </Grid.Col>
                         </Grid>
                     </Card>
-                </Box>
-                <Group my='md' position='center' align='flex-start'>
+                </Box> */}
+                {/* <Group my='md' position='center' align='flex-start'>
                     <Suspense fallback={<Center><Loader size='xl' /></Center>}>
                         <HomeScores />
                         <HomeNews />
                     </Suspense>
-                </Group>
+                </Group> */}
             </Container>
             <FooterSocial />
         </main>

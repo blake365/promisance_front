@@ -59,12 +59,12 @@ export default function NewLogin()
         if (!isLoggedIn && empire) {
             dispatch(logoutEmpire())
         } else if ((isLoggedIn && user.empires?.length === 0) || (isLoggedIn && user.empires === undefined)) {
-            return navigate('/create')
+            return navigate('/select')
         } else if (isLoggedIn && user.empires.length > 0) {
             // dispatch(empireLoaded(user.empires[0]))
             return navigate('/select')
         }
-    }, [isLoggedIn])
+    }, [])
 
 
     const form = useForm({
@@ -74,10 +74,10 @@ export default function NewLogin()
         },
     })
 
-    const google = async () =>
-    {
-        window.location.href = 'localhost:5001/api/auth/auth/google'
-    }
+    // const google = async () =>
+    // {
+    //     window.location.href = 'localhost:5001/api/auth/auth/google'
+    // }
 
 
     const { classes } = useStyles();

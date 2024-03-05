@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { fetchGames, setActiveGame } from "../../store/gamesSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchEmpire } from "../../store/empireSlice";
+import { getTime } from "../../store/timeSlice";
 
 export default function ModeSelect()
 {
@@ -16,9 +17,7 @@ export default function ModeSelect()
 
     useEffect(() =>
     {
-        if (!games.length) {
-            dispatch(fetchGames())
-        }
+        dispatch(fetchGames())
     }, [])
 
     // get game data from scores to show information on the page
@@ -36,25 +35,26 @@ export default function ModeSelect()
     {
         dispatch(setActiveGame(game))
         // compare user empires and find the one with the same game_id as the game object
-        const empire = user.empires.find(empire =>
-            empire.game_id === game.game_id
-        )
-        // console.log(empire)
-        // if user has no empire for this game, send them to create empire
-
-        dispatch(fetchEmpire(
-            {
-                uuid: empire.uuid,
+        if (user.empires.length > 0) {
+            const empire = user.empires.find(empire =>
+                empire.game_id === game.game_id
+            )
+            // if user has no empire for this game, send them to create empire
+            if (!empire) {
+                navigate('/create')
+            } else {
+                dispatch(fetchEmpire(
+                    {
+                        uuid: empire.uuid,
+                    }
+                ))
+                dispatch(getTime(game.game_id))
+                navigate('/app/')
             }
-        )).then((data) =>
-        {
-            // console.log(data.error)
-            if (data.error) {
-                kickOut(data.error)
-            }
-        })
+        } else {
+            navigate('/create')
+        }
 
-        navigate('/app/')
     }
 
     return (
