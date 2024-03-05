@@ -38,7 +38,7 @@ function ChangeRace({ status, empire })
     const updateRace = async (values) =>
     {
         try {
-            const res = await Axios.post(`/empire/${empire.uuid}/changeRace`, values)
+            const res = await Axios.post(`/empire/${empire.uuid}/changeRace?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({

@@ -17,7 +17,7 @@ export default function BonusTurns()
     const getBonusTurns = async () =>
     {
         try {
-            const res = await Axios.post(`empire/${empire.uuid}/bonus`, { empireId: empire.id })
+            const res = await Axios.post(`empire/${empire.uuid}/bonus?gameId=${empire.game_id}`, { empireId: empire.id })
             dispatch(empireLoaded(res.data))
         } catch (error) {
             console.log(error)

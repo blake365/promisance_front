@@ -48,7 +48,7 @@ export default function MyItem({ element, empire })
     {
         const body = { itemId: id, empireId: empire.id }
         try {
-            const res = await Axios.post('/publicmarket/pubRecall', body)
+            const res = await Axios.post(`/publicmarket/pubRecall?gameId=${empire.game_id}`, body)
             // setResult(res.data)
             // console.log(values)
             showNotification({

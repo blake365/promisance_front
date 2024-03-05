@@ -39,7 +39,6 @@ export default function WorldBank()
     let canLoan = remainingLoanCapacity
     if (maxLoan - empire.loan < 0) { canLoan = 0 }
 
-
     const savingsForm = useForm({
         initialValues: {
             empireId: empire.id,
@@ -95,7 +94,7 @@ export default function WorldBank()
     const doBanking = async (values) =>
     {
         try {
-            const res = await Axios.post(`/empire/${empire.uuid}/bank`, values)
+            const res = await Axios.post(`/empire/${empire.uuid}/bank?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             const result = res.data
             showNotification({

@@ -8,7 +8,7 @@ import { showNotification } from '@mantine/notifications'
 import { fetchOtherItems } from '../../store/pubMarketSlice'
 import { useState } from 'react'
 
-export default function PubBuyCard({ eraItem, type, owned, base, item, cash, empireId, empireUUID, status })
+export default function PubBuyCard({ eraItem, type, owned, base, item, cash, empireId, empireUUID, status, game_id })
 {
     // const { otherItems } = useSelector((state) => state.market)
     const dispatch = useDispatch()
@@ -63,7 +63,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
         // setLoading(true)
         try {
             // console.log(values)
-            const res = await Axios.post('/publicmarket/pubBuy2', values)
+            const res = await Axios.post(`/publicmarket/pubBuy2?gameId=${game_id}`, values)
             // setResult(res.data)
             // console.log(res.data)
             const result = res.data.success

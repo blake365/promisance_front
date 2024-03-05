@@ -8,7 +8,7 @@ export default async function handler(request, response) {
 		now < new Date(ROUND_END).getTime()
 	) {
 		const result = await fetch(
-			'https://api.neopromisance.com/api/cron/thirty',
+			'https://api.neopromisance.com/api/cron/thirty?gameId=1',
 			{
 				headers: {
 					authorization: `Bearer ${process.env.VITE_CRON_SECRET}`,
