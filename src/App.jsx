@@ -248,7 +248,7 @@ function App()
 									ml={10}
 									onClick={() => setOpened(false)}
 								>
-									<Sidebar />
+									<Sidebar name={activeGame?.name} />
 								</Navbar.Section>
 								<Navbar.Section>
 									<Button

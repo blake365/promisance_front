@@ -10,7 +10,7 @@ export default function Scores()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const { empire } = useSelector((state) => state.empire)
-    const { turnsFreq } = useSelector((state) => state.games.activeGame)
+    const { turnsFreq, name } = useSelector((state) => state.games.activeGame)
 
     let myEmpire = empire
 
@@ -30,7 +30,7 @@ export default function Scores()
         <main>
             <Stack spacing='xs' align='center'>
                 <Title order={1} align='center'>
-                    Scores
+                    {name} Scores
                 </Title>
                 <Text size='sm'>Ranks are updated every {turnsFreq} minutes.</Text>
                 {loading ? <Loader /> : (scores.map(empire =>

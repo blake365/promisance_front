@@ -20,13 +20,12 @@ import { scoresSlice } from './scoresSlice'
 import { timeSlice } from './timeSlice'
 import { mailSlice } from './mailSlice'
 import { repeatSlice } from './repeatSlice'
-import { gameConfigSlice } from './gameConfigSlice'
 import { gamesSlice } from './gamesSlice'
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user', 'time'],
+	whitelist: ['user', 'time', 'empire', 'games'],
 }
 
 const reducers = combineReducers({
@@ -40,7 +39,6 @@ const reducers = combineReducers({
 	scores: scoresSlice.reducer,
 	mail: mailSlice.reducer,
 	repeat: repeatSlice.reducer,
-	gameConfig: gameConfigSlice.reducer,
 	games: gamesSlice.reducer,
 })
 

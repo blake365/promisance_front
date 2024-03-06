@@ -14,7 +14,7 @@ export default function FooterSocial()
                         <Anchor color='gray' href='https://guide.neopromisance.com' target="_blank">Guide</Anchor>
                         <Anchor component={Link} to='/rules' color='gray'>Rules</Anchor>
                         <Anchor component={Link} to='/privacy' color='gray'>Privacy Policy</Anchor>
-                        <Anchor component='a' href='https://www.buymeacoffee.com/blakemorgan' target='_blank' color='gray'>Support</Anchor>
+                        <Anchor component='a' href='https://www.buymeacoffee.com/blakemorgan' target='_blank' color='gray'>Donate</Anchor>
                         <ActionIcon size="lg" component='a' href='https://discord.gg/bnuVy2pdgM' aria-label='discord link'>
                             <IconBrandDiscord size="2rem" stroke={1.5} />
                         </ActionIcon>

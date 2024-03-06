@@ -26,7 +26,7 @@ export default function Lottery()
             type: 'lottery',
         }
         try {
-            const res = await Axios.post(`/lottery/buyTicket`, values)
+            const res = await Axios.post(`/lottery/buyTicket?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             showNotification({
                 title: 'Lottery Ticket Purchased',
@@ -50,7 +50,7 @@ export default function Lottery()
         const fetchJackpot = async () =>   
         {
             try {
-                const res = await Axios.get(`/lottery/getJackpot`)
+                const res = await Axios.get(`/lottery/getJackpot?gameId=${empire.game_id}`)
                 // console.log(res.data)
                 return res.data.success
             } catch (error) {

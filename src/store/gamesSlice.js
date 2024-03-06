@@ -5,10 +5,9 @@ export const fetchGames = createAsyncThunk(
 	'games/fetch',
 	async (_, thunkAPI) => {
 		try {
-			const { data } = await Axios.get(`/games`)
-			const { gamesUserIsIn, gamesUserNotIn } = data
-			const games = [...gamesUserIsIn, ...gamesUserNotIn]
-			return { games }
+			const { data } = await Axios.get(`/games/games`)
+			console.log(data)
+			return data
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.data)
 		}
@@ -48,11 +47,7 @@ export const gamesSlice = createSlice({
 		},
 		[fetchGames.fulfilled]: (state, action) => {
 			// console.log('fetchGames.fulfilled', action)
-			state.games = [...state.games, ...action.payload.games]
-		},
-		[createGame.fulfilled]: (state, action) => {
-			// console.log('createGame.fulfilled')
-			state.games = [...state.games, action.payload.game]
+			state.games = action.payload
 		},
 	},
 })

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
 import { load } from '../../store/userSlice'
+import { getTime } from '../../store/timeSlice'
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -113,12 +114,15 @@ export default function CreateEmpire()
 											.then(() =>
 											{
 												console.log('loaded user')
-												navigate('/app/')
+												dispatch(getTime(game_id)).then(() => navigate('/app/'))
 											})
 									})
 									.catch((error) =>
 									{
 										console.log(error)
+										if (error.error === 'User already has an empire in this game') {
+											navigate('/app/')
+										}
 										// setError(error)
 									})
 							})}

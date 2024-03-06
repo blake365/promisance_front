@@ -3,10 +3,10 @@ import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
+import { useSelector } from 'react-redux'
 
-const Sidebar = () =>
+const Sidebar = ({ name }) =>
 {
-
 	const { setCurrentStep } = useTour()
 
 	const infoLinks = [
@@ -55,7 +55,8 @@ const Sidebar = () =>
 
 	return (
 		<Fragment>
-			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
+			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '0.5rem' }}>
+				<Title order={3} bg='blue' align='center' color='white'>{name}</Title>
 				<Title order={4}>Information</Title>
 				{infoLinks.map((link, index) =>
 				{
@@ -204,7 +205,7 @@ const Sidebar = () =>
 					variant='subtle'
 					target='_blank'
 					rightIcon={<ArrowSquareOut />}
-				>Support Dev</Button>
+				>Donate</Button>
 			</Stack>
 		</Fragment>
 	)
