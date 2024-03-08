@@ -8,7 +8,7 @@ import { Loader, Center } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import
 {
-	BrowserRouter, Routes, Route, useLocation, useNavigationType, createRoutesFromChildren, matchRoutes
+	BrowserRouter, Routes, Route, useLocation, useNavigationType, createRoutesFromChildren, matchRoutes, useNavigate
 } from 'react-router-dom'
 
 const App = lazy(() => import('./App'))
@@ -124,6 +124,17 @@ Sentry.init({
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
 
+function RedirectToApp()
+{
+	let navigate = useNavigate();
+	React.useEffect(() =>
+	{
+		navigate('/app/');
+	}, [navigate]);
+
+	return null;
+}
+
 ReactDOM.render(
 	<React.StrictMode>
 		<TourProvider steps={steps} showCloseButton={true} styles={{
@@ -170,6 +181,7 @@ ReactDOM.render(
 								<Route path='News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
 							</Route>
 
+							<Route exact path="/app" element={<RedirectToApp />} />
 							<Route path='/app/' element={
 								<Suspense fallback={<Center><Loader size='xl' /></Center>}><App /></Suspense>
 								// <App />

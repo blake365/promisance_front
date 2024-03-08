@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
+import { PURGE } from 'redux-persist'
 
 export const fetchGames = createAsyncThunk(
 	'games/fetch',
@@ -29,25 +30,38 @@ export const createGame = createAsyncThunk(
 export const gamesSlice = createSlice({
 	name: 'games',
 	initialState: {
-		games: [],
+		games: null,
 		activeGame: null,
+		status: 'idle',
 	},
 	reducers: {
 		setActiveGame: (state, action) => {
 			return {
-				games: [state.games],
+				games: state.games,
 				activeGame: action.payload,
 			}
 		},
 	},
 	extraReducers: {
+		[createGame.pending]: (state, action) => {
+			state.status = 'loading'
+		},
 		[createGame.fulfilled]: (state, action) => {
 			// console.log('createGame.fulfilled')
-			state.games = [...state.games, action.payload.game]
+			;(state.games = [...state.games, action.payload.game]),
+				(state.status = 'succeeded')
+		},
+		[fetchGames.pending]: (state, action) => {
+			state.status = 'loading'
 		},
 		[fetchGames.fulfilled]: (state, action) => {
 			// console.log('fetchGames.fulfilled', action)
 			state.games = action.payload
+			state.status = 'succeeded'
+		},
+		[PURGE]: (state, action) => {
+			// console.log(action)
+			state = initialState
 		},
 	},
 })

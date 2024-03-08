@@ -7,11 +7,12 @@ import { loadScores } from '../../store/scoresSlice'
 import ScoreCard from '../../components/scoreCard'
 
 // finish scores page
-export default function HomeScores()
+export default function HomeScores({ gameId })
 {
 
     const dispatch = useDispatch()
 
+    console.log(gameId)
     // get scores
     // scores is a list of empires ordered by networth, highest to lowest
 
@@ -21,19 +22,53 @@ export default function HomeScores()
 
     const [loading, setLoading] = useState(false)
 
-    let { scores } = useSelector((state) => state.scores)
-    // console.log(scores)
+    const [scores, setScores] = useState([])
+
 
     useEffect(() =>
     {
-        setLoading(true)
-        if (scores.length < 1) {
-            dispatch(loadScores())
-        }
-        setLoading(false)
-    }, [])
+        const getScores = async () =>
+        {
+            try {
+                const res = await Axios.get(`/empire/scores?gameId=${gameId}`);
+                const data = res.data;
+                return data;
+            } catch (error) {
+                // Handle error if the API request fails
+                console.error('Error fetching news:', error);
+                return [];
+            }
+        };
 
-    scores = scores.slice(0, 10)
+        getScores()
+            .then((data) =>
+            {
+                data = data.slice(0, 10)
+                setScores(data);
+                setLoading(false);
+            })
+            .catch((error) =>
+            {
+                console.error('Error setting scores data:', error);
+                setLoading(false);
+            });
+
+    }, []);
+
+
+    // let { scores } = useSelector((state) => state.scores)
+    // // console.log(scores)
+
+    // useEffect(() =>
+    // {
+    //     setLoading(true)
+    //     if (scores.length < 1) {
+    //         dispatch(loadScores(gameId))
+    //     }
+    //     setLoading(false)
+    // }, [])
+
+    // scores = scores.slice(0, 10)
 
     return (
         <section style={{ maxWidth: '100%' }}>

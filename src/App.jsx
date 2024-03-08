@@ -203,6 +203,13 @@ function App()
 	let pageName = pageState.replace('%20', ' ')
 	// console.log(pageState)
 	// console.log(clanMail)
+	// useEffect(() =>
+	// {
+	// 	let pathAfterApp = location.pathname.split('/app')[1];
+	// 	if (pathAfterApp === '') {
+	// 		navigate('/app/');
+	// 	}
+	// }, [location, navigate]);
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
 		key: 'prom-color-scheme',

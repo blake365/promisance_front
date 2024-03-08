@@ -4,7 +4,7 @@ import Axios from 'axios'
 import WorldNewsItem from '../../components/news/worldNewsItem'
 
 
-export default function HomeNews()
+export default function HomeNews({ gameId })
 {
     let body = {
         skip: 0,
@@ -25,7 +25,7 @@ export default function HomeNews()
         const getNews = async () =>
         {
             try {
-                const res = await Axios.post('/news/', body);
+                const res = await Axios.post(`/news?gameId=${gameId}`, body);
                 const data = res.data;
                 return data;
             } catch (error) {

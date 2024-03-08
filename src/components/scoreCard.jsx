@@ -21,7 +21,10 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     // console.log(empire)
 
     const { time } = useSelector((state) => state.time)
-    const { turnsProtection } = useSelector((state) => state.games.activeGame)
+    let turnsProtection = 400
+    if (!home) {
+        turnsProtection = useSelector((state) => state.games?.activeGame.turnsProtection)
+    }
 
     const checkForSession = async () =>
     {
@@ -106,15 +109,19 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
     // console.log(clan)
-    let upcoming = time.start - time.time
-    let remaining = time.end - time.time
+    let upcoming = 1000
+    let remaining = 1000
 
-    if (upcoming > 0) {
-        disabled = true
-    } else if (remaining < 0) {
-        disabled = true
+    if (!home) {
+        upcoming = time.start - time.time
+        remaining = time.end - time.time
+
+        if (upcoming > 0) {
+            disabled = true
+        } else if (remaining < 0) {
+            disabled = true
+        }
     }
-
     return (
         <Card shadow="sm" radius="sm" sx={{ width: '100%', overflowX: 'hidden' }} key={empire.id} withBorder>
             <Card.Section sx={{ height: '2px' }}>

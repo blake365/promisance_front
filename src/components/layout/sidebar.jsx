@@ -1,13 +1,13 @@
 import { Button, Stack, Title } from '@mantine/core'
-import { Fragment } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Fragment, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
-import { useSelector } from 'react-redux'
 
 const Sidebar = ({ name }) =>
 {
 	const { setCurrentStep } = useTour()
+	const navigate = useNavigate()
 
 	const infoLinks = [
 		'Summary',
