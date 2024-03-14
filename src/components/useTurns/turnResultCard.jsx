@@ -116,7 +116,6 @@ const attackResult = (result, era) =>
 			</>)
 		}
 	} else if (result.result === 'fail') {
-
 		if (result.attackType === 'pillage' || result.attackType === 'surprise' || result.attackType === 'all out') {
 			let youLost = []
 			let youKilled = []
@@ -162,13 +161,16 @@ const attackResult = (result, era) =>
 				<Text align='center'>You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
 			</>)
 		}
-
+	} else if (result.result === 'desertion') {
+		return (<>
+			<Text align='center' weight='bold' color='red'>{result.message}</Text>
+		</>)
 	}
 }
 
 const spellResult = (result) =>
 {
-	console.log(result)
+	// console.log(result)
 	if (result.result === 'success' || result.result === 'shielded') {
 		if (result.food) {
 			return (<>
@@ -214,6 +216,10 @@ const spellResult = (result) =>
 				<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
 			</>)
 		}
+	} else if (result.result === 'desertion') {
+		return (<>
+			<Text align='center' weight='bold' color='red'>{result.message}</Text>
+		</>)
 	}
 }
 
@@ -282,8 +288,6 @@ export default function TurnResultCard({ data, era })
 										<Text>War Tax:</Text>
 										<Text align='right'>${(data.wartax).toLocaleString()}</Text>
 									</>) : ('')}
-
-
 									<NetProduced title='Net' value={data.money} money />
 								</SimpleGrid>
 							</div>
