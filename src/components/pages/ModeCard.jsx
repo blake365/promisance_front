@@ -1,5 +1,5 @@
 import { Title, Text, Collapse, Group, Button, Stack, Center, Loader, Card } from "@mantine/core";
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Trophy } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +10,14 @@ import { setActiveGame } from '../../store/gamesSlice';
 import lazy from '../utilities/lazyWrapper'
 const HomeNews = lazy(() => import('../layout/homeNews'));
 const HomeScores = lazy(() => import('../layout/homeScores'));
+import { demo } from '../../store/userSlice';
 
 export default function ModeCard({ game, empireFound, user })
 {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [opened, { toggle }] = useDisclosure(false);
+    const [error, setError] = useState(null);
 
     // console.log(game.game_id)
 
@@ -43,6 +45,30 @@ export default function ModeCard({ game, empireFound, user })
         } else {
             navigate('/create')
         }
+    }
+
+    const demoRegister = () =>
+    {
+        dispatch(setActiveGame(game))
+        dispatch(demo()).unwrap().then(() => navigate('/demo')).catch((err) =>
+        {
+            console.log(err)
+            setError(err)
+        })
+    }
+
+    const now = new Date().getTime()
+
+    let roundStatus = false
+    let upcoming = new Date(game.roundStart).getTime() - now
+    let remaining = new Date(game.roundEnd).getTime() - now
+
+    if (upcoming > 0) {
+        roundStatus = true
+    } else if (remaining < 0) {
+        roundStatus = true
+    } else {
+        roundStatus = false
     }
 
     return (
@@ -74,7 +100,14 @@ export default function ModeCard({ game, empireFound, user })
                     <Text align='left'>
                         <b>Average Net Worth:</b> ${game.avgNetWorth.toLocaleString()}</Text>
                 </Group>
-                {!user ? null : (<Button size="md" maw={200} color={empireFound ? 'blue' : 'teal'} onClick={() => handleGameSelect(game)} >{empireFound ? 'Play' : 'Create Empire'}</Button>)}
+                {!user ? <>
+                    <Button size="md" w={210} color='grape' disabled={roundStatus} onClick={() => demoRegister(game)}>Create Demo Empire</Button>
+                    <Text color='red' align="left" size='sm'>{error && error.error}</Text>
+                </> : empireFound ? (
+                    <Button size="md" w={210} color='blue' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Play</Button>
+                ) : (
+                    <Button size="md" w={210} color='teal' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Create Empire</Button>
+                )}
             </Stack>
             {!opened ? <Text size='sm' align='center' color='dimmed'>Click to See Scores and Events</Text> : <Text size='sm' align='center' color='dimmed'>Click to Collapse</Text>}
             <Collapse in={opened}>

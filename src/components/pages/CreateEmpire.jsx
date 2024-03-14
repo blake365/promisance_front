@@ -54,13 +54,12 @@ export default function CreateEmpire()
 {
 
 	const { isLoggedIn, user } = useSelector((state) => state.user)
-	const { games } = useSelector((state) => state.games)
 	// console.log(games)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	const { game_id } = useSelector((state) => state.games.activeGame)
-	console.log(game_id)
+	// console.log(game_id)
 
 	useEffect(() =>
 	{
@@ -109,11 +108,11 @@ export default function CreateEmpire()
 									.unwrap()
 									.then(() =>
 									{
-										console.log('created')
+										// console.log('created')
 										dispatch(load())
 											.then(() =>
 											{
-												console.log('loaded user')
+												// console.log('loaded user')
 												dispatch(getTime(game_id)).then(() => navigate('/app/'))
 											})
 									})

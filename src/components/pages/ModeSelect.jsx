@@ -54,7 +54,7 @@ export default function ModeSelect()
             <SlimHero />
             <Container size='xl' align='center' py='xl'>
                 <Group mt='md' position="center" key='owjojd'>
-                    {status === 'succeeded' && games.length > 0 ? games.map((game) =>
+                    {games.length > 0 ? games.map((game) =>
                     {
                         let empireFound = false
                         if (user?.empires?.length > 0) {

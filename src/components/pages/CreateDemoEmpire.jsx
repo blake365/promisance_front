@@ -1,11 +1,13 @@
-import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text } from '@mantine/core'
+import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text, Group, Image } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { create } from '../../store/empireSlice'
-import { useEffect } from 'react'
+import { useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
 import { load } from '../../store/userSlice'
+import { getTime } from '../../store/timeSlice'
+
 
 const useStyles = createStyles(() => ({
 	wrapper: {
@@ -34,12 +36,29 @@ const useStyles = createStyles(() => ({
 	}
 }));
 
+const raceObjects = raceArray.slice(0, 8).map((race, index) => ({
+	icon: index,
+	label: race.name,
+	value: index
+}))
+
+const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
+	<div ref={ref} {...others}>
+		<Group>
+			<Image src={`/icons/${raceArray[icon].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+			<Text>{label}</Text>
+		</Group>
+	</div>
+))
+
 export default function CreateDemoEmpire()
 {
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
+	const { game_id } = useSelector((state) => state.games.activeGame)
 
 	useEffect(() =>
 	{
@@ -83,7 +102,7 @@ export default function CreateDemoEmpire()
 							onSubmit={form.onSubmit((values) =>
 							{
 								// console.log(values)
-								dispatch(create(values))
+								dispatch(create({ values, game_id }))
 									.unwrap()
 									.then(() =>
 									{
@@ -92,7 +111,7 @@ export default function CreateDemoEmpire()
 											.then(() =>
 											{
 												// console.log('loaded user')
-												navigate('/app/')
+												dispatch(getTime(game_id)).then(() => navigate('/app/'))
 											})
 									})
 									.catch((error) =>
@@ -111,20 +130,11 @@ export default function CreateDemoEmpire()
 									{...form.getInputProps('name')}
 								/>
 								<Select
-									label="Race"
+									label="Choose Your Race"
 									placeholder="Pick one"
 									required
-									data={[
-										{ value: 0, label: 'Human' },
-										{ value: 1, label: 'Elf' },
-										{ value: 2, label: 'Dwarf' },
-										{ value: 3, label: 'Troll' },
-										{ value: 4, label: 'Gnome' },
-										{ value: 5, label: 'Gremlin' },
-										{ value: 6, label: 'Orc' },
-										{ value: 7, label: 'Drow' },
-										{ value: 8, label: 'Goblin' },
-									]}
+									itemComponent={RaceItem}
+									data={raceObjects}
 									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>

@@ -1,13 +1,12 @@
 import { Button, Stack, Title } from '@mantine/core'
-import { Fragment, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Fragment } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
 
 const Sidebar = ({ name }) =>
 {
 	const { setCurrentStep } = useTour()
-	const navigate = useNavigate()
 
 	const infoLinks = [
 		'Summary',
@@ -56,7 +55,9 @@ const Sidebar = ({ name }) =>
 	return (
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '0.5rem' }}>
-				<Title order={3} bg='blue' align='center' color='white'>{name}</Title>
+				<Button radius={0}><Title order={3} align='center'
+					component={Link} to='/select' color='white'>{name}</Title>
+				</Button>
 				<Title order={4}>Information</Title>
 				{infoLinks.map((link, index) =>
 				{

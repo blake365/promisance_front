@@ -61,7 +61,7 @@ export const gamesSlice = createSlice({
 		},
 		[PURGE]: (state, action) => {
 			// console.log(action)
-			state = initialState
+			state = this.initialState
 		},
 	},
 })

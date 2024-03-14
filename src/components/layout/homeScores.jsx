@@ -1,29 +1,13 @@
-import { Button, Stack, Title, Loader } from '@mantine/core'
+import { Stack, Title, Loader } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { useSelector, useDispatch } from 'react-redux'
-import { loadScores } from '../../store/scoresSlice'
 
 import ScoreCard from '../../components/scoreCard'
 
-// finish scores page
 export default function HomeScores({ gameId })
 {
-
-    const dispatch = useDispatch()
-
-    console.log(gameId)
-    // get scores
-    // scores is a list of empires ordered by networth, highest to lowest
-
-    // design empire card
-    // add actions to card
-    // add online indicator
-
     const [loading, setLoading] = useState(false)
-
     const [scores, setScores] = useState([])
-
 
     useEffect(() =>
     {
