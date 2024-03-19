@@ -20,7 +20,6 @@ import
 } from '@mantine/core'
 
 import neoIcon from '../../icons/neoIcon.svg'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { load, logout } from '../../store/userSlice'
 import ThemeToggle from '../../components/utilities/themeToggle'
@@ -36,9 +35,7 @@ function Admin()
     const [drawer, { open, close }] = useDisclosure(false)
 
     // console.log(location)
-
     const { isLoggedIn, user } = useSelector((state) => state.user)
-
     const navigate = useNavigate()
     // console.log(empire)
 

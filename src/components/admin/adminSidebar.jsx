@@ -1,21 +1,23 @@
 import { Button, Stack, Title } from '@mantine/core'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 
 const AdminSidebar = () =>
 {
+    const activeGame = useSelector((state) => state.games.activeGame)
+
     const infoLinks = [
-        'Return to Game',
+        'Games Index',
         'Summary',
+        'Settings',
         'Users',
         'Empires',
         'Mail',
+        'Clan Mail',
         'Market',
         'News',
-        // 'Graveyard',
-        // 'Empire Search',
-        // 'Discord',
     ]
 
     let location = useLocation()
@@ -26,7 +28,8 @@ const AdminSidebar = () =>
     return (
         <Fragment>
             <Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
-                <Title order={4}>Manage</Title>
+                {activeGame && <Title order={4}>{activeGame.name}</Title>}
+                <Title order={4}>Manage Game</Title>
                 {infoLinks.map((link, index) =>
                 {
                     let variant = 'subtle'
@@ -35,25 +38,24 @@ const AdminSidebar = () =>
                     } else if (locationString === link) {
                         variant = 'filled'
                     }
-
-                    if (link === 'Return to Game') {
-                        return (<Button
-                            component={Link}
-                            compact
-                            to={`/app/`}
-                            variant={variant}
-                            key={index}
-                        >
-                            {link}
-                        </Button>)
-
-                    } else {
-
+                    if (link === 'Games Index') {
                         return (
                             <Button
                                 component={Link}
                                 compact
-                                to={`/admin/${link}`}
+                                to={`/admin/`}
+                                variant={variant}
+                                key={index}
+                            >
+                                {link}
+                            </Button>)
+                    }
+                    else {
+                        return (
+                            <Button
+                                component={Link}
+                                compact
+                                to={`/admin/${activeGame.game_id}/${link}`}
                                 variant={variant}
                                 key={index}
                             >

@@ -101,7 +101,7 @@ export default function ModeCard({ game, empireFound, user })
                         <b>Average Net Worth:</b> ${game.avgNetWorth.toLocaleString()}</Text>
                 </Group>
                 {!user ? <>
-                    <Button size="md" w={210} color='grape' disabled={roundStatus} onClick={() => demoRegister(game)}>Create Demo Empire</Button>
+                    <Button size="md" w={210} variant="outline" disabled={roundStatus} onClick={() => demoRegister(game)}>Create Demo Empire</Button>
                     <Text color='red' align="left" size='sm'>{error && error.error}</Text>
                 </> : empireFound ? (
                     <Button size="md" w={210} color='blue' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Play</Button>

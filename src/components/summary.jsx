@@ -1,4 +1,4 @@
-import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, ActionIcon, Tooltip } from '@mantine/core'
+import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, Box } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
@@ -41,19 +41,18 @@ export default function Summary()
 					<NewPlayerModal empire={empire} time={time} />
 					<Card>
 						<Group position='apart' maw='80vw' sx={{ overflow: 'hidden' }}>
-							<div>
-							</div>
+							<Box miw='55'>
+
+							</Box>
 							<Group position='center' align='center' spacing={5} >
 								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 								<Title order={2} align='center'>
 									{empire?.name}
 								</Title>
 							</Group>
-							<Tooltip label='Personalized Tips' align='top' position='top' withArrow withinPortal>
-								<ActionIcon color="green" size="md" radius="xl" variant="filled" component={Link} to='/app/New%20Player'>
-									<Question size={21} />
-								</ActionIcon>
-							</Tooltip>
+							<Button color="green" size="xs" radius="xl" variant="filled" component={Link} to='/app/New%20Player'>
+								Tips
+							</Button>
 						</Group>
 						{empire.turnsUsed < turnsProtection && (<Center my='sm'>
 							<Button compact variant='outline' align='center' onClick={() =>

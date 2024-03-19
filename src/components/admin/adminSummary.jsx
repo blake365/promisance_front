@@ -44,7 +44,7 @@ function AdminSummary()
     return (
         <div>
             <div>
-                <Title>Summary</Title>
+                <Title>Game Summary</Title>
                 <Text>Users: {stats.users}</Text>
                 <Text>Empires: {stats.empires}</Text>
                 <Text>Mail Messages (reports): {stats.mail} ({stats.reports})</Text>

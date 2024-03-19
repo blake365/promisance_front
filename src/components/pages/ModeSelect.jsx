@@ -52,9 +52,9 @@ export default function ModeSelect()
     return (
         <main style={{ backgroundColor: '#F1F3F5' }}>
             <SlimHero />
-            <Container size='xl' align='center' py='xl'>
+            <Container size='lg' align='center' py='xl'>
                 <Group mt='md' position="center" key='owjojd'>
-                    {games.length > 0 ? games.map((game) =>
+                    {status === 'succeeded' && games.length > 0 ? games.map((game) =>
                     {
                         let empireFound = false
                         if (user?.empires?.length > 0) {

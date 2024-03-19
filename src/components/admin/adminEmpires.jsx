@@ -3,19 +3,21 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash, IconAlertTriangle } from '@tabler/icons-react'
 import classes from './guide.module.css'
+import { useParams } from 'react-router-dom';
 
 function AdminEmpires()
 {
     const [empires, setEmpires] = useState([]);
     const [response, setResponse] = useState(null);
+    const { gameId } = useParams();
 
     useEffect(() =>
     {
         const loadEmpires = async () =>
         {
-            const response = await Axios.get('/admin/empires');
+            const response = await Axios.get(`/admin/empires?gameId=${gameId}`);
             const data = response.data;
-            console.log(data);
+            // console.log(data);
             setEmpires(data);
         }
         loadEmpires()

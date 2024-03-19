@@ -77,7 +77,7 @@ import Reset from './components/pages/Reset'
 import ForgotUsername from './components/pages/ForgotUsername'
 const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
 import ModeSelect from './components/pages/ModeSelect'
-import GamesManager from './components/pages/GamesManager'
+import GamesManager from './components/admin/GamesManager'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -172,13 +172,13 @@ ReactDOM.render(
 							<Route path='/archive/:roundId' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><RoundArchive /></Suspense>} />
 							<Route path='/admin/' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Admin /></Suspense>} >
 								<Route path='*' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><NothingFoundBackground /></Suspense>} />
-								<Route path='' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
-								<Route path='Summary' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
-								<Route path='Users' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminUsers /></Suspense>} />
-								<Route path='Empires' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminEmpires /></Suspense>} />
-								<Route path='Mail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMail /></Suspense>} />
-								<Route path='Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMarket /></Suspense>} />
-								<Route path='News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
+								<Route path='' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><GamesManager /></Suspense>} />
+								<Route path='/admin/:gameId/Summary' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
+								<Route path='/admin/:gameId/Users' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminUsers /></Suspense>} />
+								<Route path='/admin/:gameId/Empires' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminEmpires /></Suspense>} />
+								<Route path='/admin/:gameId/Mail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMail /></Suspense>} />
+								<Route path='/admin/:gameId/Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMarket /></Suspense>} />
+								<Route path='/admin/:gameId/News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
 							</Route>
 
 							<Route exact path="/app" element={<RedirectToApp />} />

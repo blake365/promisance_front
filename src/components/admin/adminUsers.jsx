@@ -3,19 +3,24 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import classes from './guide.module.css'
+import { useParams } from 'react-router-dom';
 
 function AdminUsers()
 {
     const [users, setUsers] = useState([]);
     const [response, setResponse] = useState(null);
 
+    // get the gameId from the path
+    const { gameId } = useParams();
+    // console.log(gameId);
+
     useEffect(() =>
     {
         const loadUsers = async () =>
         {
-            const response = await Axios.get('/admin/users');
+            const response = await Axios.get(`/admin/users?gameId=${gameId}`);
             const data = response.data;
-            console.log(data);
+            // console.log(data);
             setUsers(data);
         }
 

@@ -1,18 +1,14 @@
 import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor, Loader } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
-import { useState, Suspense } from 'react'
-import lazy from '../utilities/lazyWrapper'
-const HomeNews = lazy(() => import('../layout/homeNews'));
-const HomeScores = lazy(() => import('../layout/homeScores'));
+import { useEffect, useState } from 'react'
 import FooterSocial from '../layout/footer'
-import { ROUND_END, ROUND_START, TURNS_COUNT, TURNS_DEMO, TURNS_FREQ, TURNS_MAXIMUM, TURNS_STORED } from '../../config/config'
 import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
-import { getTime } from '../../store/timeSlice'
 import { onLCP } from 'web-vitals'
+import { fetchGames } from '../../store/gamesSlice'
 
 export default function Home()
 {
@@ -21,19 +17,10 @@ export default function Home()
     const [error, setError] = useState(null)
     // dispatch(getTime(1))
 
-    const now = new Date().getTime()
-
-    let roundStatus = false
-    let upcoming = new Date(ROUND_START).getTime() - now
-    let remaining = new Date(ROUND_END).getTime() - now
-
-    if (upcoming > 0) {
-        roundStatus = true
-    } else if (remaining < 0) {
-        roundStatus = true
-    } else {
-        roundStatus = false
-    }
+    useEffect(() =>
+    {
+        dispatch(fetchGames())
+    }, [])
 
     onLCP(console.log)
 
@@ -81,12 +68,6 @@ export default function Home()
                                     <Text>Register a new account to create your empire and start your journey. If you still have questions, there is a built in and <Anchor href='https://guide.neopromisance.com' target="_blank">external ↗</Anchor> guide to answer questions that may arise as you play.
                                     </Text>
                                     <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
-                                </Card>
-                                <Card maw={380} h={220} p='lg' withBorder shadow='sm'>
-                                    <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
-                                    <Button size='md' sx={{ marginTop: 10 }} disabled={roundStatus} component='a' onClick={demoRegister}>Demo Account</Button>
-                                    {roundStatus ? (<Text color='red' align='center' size='sm'>Demo accounts are only available when the round is active.</Text>) : ('')}
-                                    <Text color='red' align='center' size='sm'>{error && error.error}</Text>
                                 </Card>
                             </Flex>
                         </Box>) : ('')}
@@ -153,67 +134,8 @@ export default function Home()
                             </Text>
                             <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
                         </Card>
-                        <Card maw={380} h={220} p='lg' withBorder >
-                            <Text>Try a demo account to get a taste of what's in store. Demo accounts get {TURNS_DEMO.toLocaleString()} turns and cannot be accessed once the session is closed or ends after one hour.</Text>
-                            <Button size='md' sx={{ marginTop: 10 }} disabled={roundStatus} component='a' onClick={demoRegister}>Demo Account</Button>
-                            {roundStatus ? (<Text color='red' align='center' size='sm'>Demo accounts are only available when the round is active.</Text>) : ('')}
-                            <Text color='red' align='center' size='sm'>{error && error.error}</Text>
-                        </Card>
                     </Flex>
                 </Box>) : ('')}
-                {/* <Box my='lg'>
-                    <Title order={1} align='center' mb='lg'>Current Game Info</Title>
-                    <Card withBorder >
-                        <Grid justify="space-between" grow columns={15}>
-                            <Grid.Col span={3}>
-                                <Center h={30} miw={100} >
-                                    <Text weight='bold' align='center' >
-                                        Max Turns
-                                    </Text>
-                                </Center>
-                                <Text>{TURNS_MAXIMUM}</Text>
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <Center h={30} miw={100} >
-                                    <Text weight='bold' align='center' >
-                                        Stored Turns
-                                    </Text>
-                                </Center>
-                                <Text>{TURNS_STORED}</Text>
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <Center h={30} miw={100} >
-                                    <Text weight='bold' align='center' >
-                                        Turn Rate
-                                    </Text>
-                                </Center>
-                                <Text>{TURNS_COUNT} turn / {TURNS_FREQ} minutes</Text>
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <Center h={30} miw={100} >
-                                    <Text weight='bold' align='center' >
-                                        Round Start Date
-                                    </Text>
-                                </Center>
-                                <Text>{ROUND_START.toLocaleDateString()}</Text>
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <Center h={30} miw={100} >
-                                    <Text weight='bold' align='center' >
-                                        Round End Date
-                                    </Text>
-                                </Center>
-                                <Text>{ROUND_END.toLocaleDateString()}</Text>
-                            </Grid.Col>
-                        </Grid>
-                    </Card>
-                </Box> */}
-                {/* <Group my='md' position='center' align='flex-start'>
-                    <Suspense fallback={<Center><Loader size='xl' /></Center>}>
-                        <HomeScores />
-                        <HomeNews />
-                    </Suspense>
-                </Group> */}
             </Container>
             <FooterSocial />
         </main>

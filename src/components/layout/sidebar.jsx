@@ -55,8 +55,8 @@ const Sidebar = ({ name }) =>
 	return (
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '0.5rem' }}>
-				<Button radius={0}><Title order={3} align='center'
-					component={Link} to='/select' color='white'>{name}</Title>
+				<Button radius={0} component={Link} to='/select'><Title order={3} align='center'
+					color='white' w={'100%'}>{name}</Title>
 				</Button>
 				<Title order={4}>Information</Title>
 				{infoLinks.map((link, index) =>

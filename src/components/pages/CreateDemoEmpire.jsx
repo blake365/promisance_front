@@ -43,7 +43,7 @@ const raceObjects = raceArray.slice(0, 8).map((race, index) => ({
 }))
 
 const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
-	<div ref={ref} {...others}>
+	<div ref={ref} {...others} key={label}>
 		<Group>
 			<Image src={`/icons/${raceArray[icon].name.toLowerCase()}.svg`} height={22} width={22} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 			<Text>{label}</Text>
