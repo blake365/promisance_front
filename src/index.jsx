@@ -65,6 +65,7 @@ const AdminEmpires = lazy(() => import('./components/admin/adminEmpires'));
 const AdminMail = lazy(() => import('./components/admin/adminMail'));
 const AdminMarket = lazy(() => import('./components/admin/adminMarket'));
 const AdminNews = lazy(() => import('./components/admin/adminNews'));
+const AdminClanMail = lazy(() => import('./components/admin/adminClanMail'));
 
 import Axios from 'axios'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -179,6 +180,7 @@ ReactDOM.render(
 								<Route path='/admin/:gameId/Mail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMail /></Suspense>} />
 								<Route path='/admin/:gameId/Market' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMarket /></Suspense>} />
 								<Route path='/admin/:gameId/News' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminNews /></Suspense>} />
+								<Route path='/admin/:gameId/ClanMail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminClanMail /></Suspense>} />
 							</Route>
 
 							<Route exact path="/app" element={<RedirectToApp />} />

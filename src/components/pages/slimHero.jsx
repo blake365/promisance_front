@@ -92,6 +92,7 @@ export function SlimHero()
                                 dispatch(logout())
                                 dispatch(logoutEmpire())
                             }} size='lg' color='red'>Logout</Button>
+                            {user.role === 'admin' && <Button component={Link} to='/admin/' size='lg' color='teal'>Admin</Button>}
                         </>
                         )}
                 </Group>

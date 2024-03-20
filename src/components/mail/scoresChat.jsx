@@ -86,7 +86,7 @@ export default function ScoresChat({ enemy })
     {
         setLoading(true)
         try {
-            const res = await Axios.post(`/messages/message/new`, values)
+            const res = await Axios.post(`/messages/message/new?gameId=${empire.game_id}`, values)
             // const data = res.data
             // console.log(data)
             getMessages(body).then((data) =>

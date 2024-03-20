@@ -15,7 +15,7 @@ const AdminSidebar = () =>
         'Users',
         'Empires',
         'Mail',
-        'Clan Mail',
+        'ClanMail',
         'Market',
         'News',
     ]
@@ -30,6 +30,14 @@ const AdminSidebar = () =>
             <Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
                 {activeGame && <Title order={4}>{activeGame.name}</Title>}
                 <Title order={4}>Manage Game</Title>
+                <Button
+                    component={Link}
+                    compact
+                    to='/app/'
+                    variant='outline'
+                >
+                    Go to Game
+                </Button>
                 {infoLinks.map((link, index) =>
                 {
                     let variant = 'subtle'

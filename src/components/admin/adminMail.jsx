@@ -3,17 +3,20 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import classes from './guide.module.css'
+import { useParams } from 'react-router-dom';
 
 function AdminMail()
 {
     const [items, setItems] = useState([]);
     const [response, setResponse] = useState(null);
 
+    const { gameId } = useParams()
+
     useEffect(() =>
     {
         const loadItems = async () =>
         {
-            const response = await Axios.get('/admin/mail');
+            const response = await Axios.get('/admin/mail?gameId=' + gameId);
             const data = response.data;
             // console.log(data);
             setItems(data);

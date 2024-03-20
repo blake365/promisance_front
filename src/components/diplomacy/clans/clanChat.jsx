@@ -17,9 +17,9 @@ const getMessages = async (body) =>
 
         if (data && data.length > 0) {
             const lastMessage = data[data.length - 1]
-            console.log(lastMessage)
-            console.log(body.reader === lastMessage.empireId)
-            console.log(data)
+            // console.log(lastMessage)
+            // console.log(body.reader === lastMessage.empireId)
+            // console.log(data)
             if (body.reader !== lastMessage.empireId) {
                 await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
             }
@@ -81,7 +81,7 @@ export default function ClanChat({ empire })
     {
         setLoading(true)
         try {
-            const res = await Axios.post(`/messages/clan/new`, values)
+            const res = await Axios.post(`/messages/clan/new?gameId=${empire.game_id}`, values)
             const data = res.data
             // console.log(data)
             getMessages(body).then((data) =>

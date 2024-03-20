@@ -5,22 +5,18 @@ import { IconSettings, IconTrash } from '@tabler/icons-react'
 import classes from './guide.module.css'
 import { useParams } from 'react-router-dom';
 
-const marketArray = [
-    'trpArm', 'trpLnd', 'trpFly', 'trpSea', 'food', 'runes'
-]
-
-function AdminMarket()
+function AdminClanMail()
 {
     const [items, setItems] = useState([]);
     const [response, setResponse] = useState(null);
 
-    const { gameId } = useParams();
+    const { gameId } = useParams()
 
     useEffect(() =>
     {
         const loadItems = async () =>
         {
-            const response = await Axios.get('/admin/markets?gameId=' + gameId);
+            const response = await Axios.get('/admin/clanMail?gameId=' + gameId);
             const data = response.data;
             console.log(data);
             setItems(data);
@@ -33,12 +29,20 @@ function AdminMarket()
     const deleteItem = async (uuid) =>
     {
         console.log('deleting item')
-        const response = await Axios.delete('/admin/deletemarket/' + uuid);
+        const response = await Axios.delete('/admin/deleteClanMail/' + uuid);
         const data = response.data;
         console.log(data);
         setResponse(data);
     }
 
+    // const toggleReport = async (uuid) =>
+    // {
+    //     console.log('toggling report')
+    //     const response = await Axios.get('/messages/togglereport/' + uuid);
+    //     const data = response.data;
+    //     console.log(data);
+    //     setResponse(data);
+    // }
 
     const rows = items.map((item) =>
     (
@@ -51,6 +55,7 @@ function AdminMarket()
                     <Menu.Dropdown>
                         <Menu.Item icon={<IconSettings size={14} />}>Edit</Menu.Item>
                         <Menu.Item color="red" icon={<IconTrash size={14} />} onClick={() => deleteItem(item.uuid)}>Delete</Menu.Item>
+                        <Menu.Item icon={<IconSettings size={14} />} onClick={() => toggleReport(item.uuid)}>Report</Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
             </td>
@@ -58,32 +63,26 @@ function AdminMarket()
                 {item.createdAt}
             </td>
             <td>
-                {item.empire_id}
+                {item.clanMessageFlags}
             </td>
             <td>
-                {marketArray[item.type]}
+                {item.clanId}
             </td>
             <td>
-                {item.amount.toLocaleString()}
+                {item.empireName}
             </td>
             <td>
-                {item.price.toLocaleString()}
+                {item.clanMessageBody}
             </td>
             <td>
-                {Math.round((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60)} hours
-            </td>
-            <td>
-                {item.conversationId}
-            </td>
-            <td>
-                {item.secret.toString()}
+                {item.seenBy.map((item, index) => (item + ' '))}
             </td>
         </tr>
     ))
 
     return (
         <Stack>
-            <Title>Market</Title>
+            <Title>Clan Mail</Title>
             <Text color='red'>{response?.message}</Text>
             {items.length > 0 &&
                 <div className={classes.guideTable}>
@@ -93,12 +92,11 @@ function AdminMarket()
                             <tr>
                                 <th></th>
                                 <th>Created At</th>
-                                <th>Empire ID</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Price</th>
-                                <th>Time on Market</th>
-                                <th>Secret</th>
+                                <th>Reported</th>
+                                <th>Clan Id</th>
+                                <th>Empire Name</th>
+                                <th>Message Body</th>
+                                <th>Seen By</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -111,4 +109,4 @@ function AdminMarket()
     );
 }
 
-export default AdminMarket;
+export default AdminClanMail;
