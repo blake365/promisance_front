@@ -6,8 +6,8 @@ export const fetchGames = createAsyncThunk(
 	'games/fetch',
 	async (_, thunkAPI) => {
 		try {
-			const { data } = await Axios.get(`/games/games`)
-			console.log(data)
+			const { data } = await Axios.get('/games/games')
+			// console.log(data)
 			return data
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.data)
@@ -19,7 +19,7 @@ export const createGame = createAsyncThunk(
 	'games/create',
 	async (payload, thunkAPI) => {
 		try {
-			const { data: game } = await Axios.post(`/games`, payload)
+			const { data: game } = await Axios.post('/games', payload)
 			return { game }
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.data)

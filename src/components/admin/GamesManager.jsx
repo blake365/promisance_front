@@ -21,7 +21,7 @@ const GamesManager = () =>
 
   useEffect(() =>
   {
-    if (games.length < 1) {
+    if (status === 'idle') {
       dispatch(fetchGames())
     }
 
@@ -39,7 +39,7 @@ const GamesManager = () =>
 
     loadStats();
 
-  }, [games.length, dispatch, kickOut])
+  }, [status])
 
   const handleCreateGame = () =>
   {
@@ -64,7 +64,7 @@ const GamesManager = () =>
           <Text>Market Items: {stats.markets}</Text>
           <Text>News Events: {stats.news}</Text>
         </Card>
-        {games.length > 0 && games.map((game, index) => (
+        {games ? games.map((game, index) => (
           <Card key={game.id} onClick={() => handleGameSelect(game)} shadow='sm' padding='sm' withBorder sx={(theme) => ({
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
             '&:hover': {
@@ -99,7 +99,7 @@ const GamesManager = () =>
               </Group>
             </Stack>
           </Card>
-        ))}
+        )) : <Text>No games found</Text>}
         <Button>Create a New Game</Button>
       </Stack>
     </Container>
