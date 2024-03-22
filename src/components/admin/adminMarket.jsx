@@ -22,7 +22,7 @@ function AdminMarket()
         {
             const response = await Axios.get('/admin/markets?gameId=' + gameId);
             const data = response.data;
-            console.log(data);
+            // console.log(data);
             setItems(data);
         }
 
@@ -44,7 +44,7 @@ function AdminMarket()
     (
         <tr key={item.uuid}>
             <td>
-                <Menu shadow="md" width={100} mt='xs'>
+                <Menu shadow="md" width={100} mt='xs' position='top'>
                     <Menu.Target>
                         <Button size='xs' compact><IconSettings size={14} /></Button>
                     </Menu.Target>

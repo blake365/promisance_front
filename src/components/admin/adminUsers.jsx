@@ -42,7 +42,7 @@ function AdminUsers()
     (
         <tr key={user.uuid}>
             <td>
-                <Menu shadow="md" width={100} mt='xs'>
+                <Menu shadow="md" width={100} mt='xs' position='top'>
                     <Menu.Target>
                         <Button size='xs' compact><IconSettings size={14} /></Button>
                     </Menu.Target>

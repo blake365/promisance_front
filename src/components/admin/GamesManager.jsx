@@ -12,7 +12,7 @@ const GamesManager = () =>
 {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { games } = useSelector((state) => state.games)
+  const { games, status } = useSelector((state) => state.games)
   const [newGame, setNewGame] = useState({ name: '', roundDescription: '' })
   const [stats, setStats] = useState({});
 
@@ -28,7 +28,7 @@ const GamesManager = () =>
     const loadStats = async () =>
     {
       try {
-        const response = await Axios.get('/admin/countall');
+        const response = await Axios.get('/admin/counteverything');
         const data = response.data;
         setStats(data);
       } catch (err) {
@@ -39,7 +39,7 @@ const GamesManager = () =>
 
     loadStats();
 
-  }, [])
+  }, [games.length, dispatch, kickOut])
 
   const handleCreateGame = () =>
   {
@@ -65,7 +65,7 @@ const GamesManager = () =>
           <Text>News Events: {stats.news}</Text>
         </Card>
         {games.length > 0 && games.map((game, index) => (
-          <Card key={index} onClick={() => handleGameSelect(game)} shadow='sm' padding='sm' withBorder sx={(theme) => ({
+          <Card key={game.id} onClick={() => handleGameSelect(game)} shadow='sm' padding='sm' withBorder sx={(theme) => ({
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
             '&:hover': {
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],

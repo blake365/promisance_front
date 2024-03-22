@@ -11,9 +11,9 @@ const icons = [
     'atom', 'baby', 'barbell', 'battery-full', 'battery-low', 'bicycle', 'boat', 'bone', 'brain', 'bug', 'butterfly', 'cake', 'cat', 'champagne', 'coffee', 'coins', 'detective', 'diamond', 'dna', 'dog', 'dress', 'eye', 'film-slate', 'flame', 'gift', 'graduation-cap', 'grains', 'guitar', 'hammer', 'hamburger', 'headphones', 'heart', 'high-heel', 'infinity', 'leaf', 'lightning', 'lock-laminated', 'magic-wand', 'martini', 'medal-military', 'moon-stars', 'mountains', 'orange-slice', 'paint-brush', 'piggy-bank', 'pill', 'robot', 'rocket', 'scales', 'scroll', 'shield-chevron', 'shield-slash', 'shooting-star', 'shrimp', 'smiley-sad', 'smiley-wink', 'smiley', 'sneaker', 'snowflake', 'soccer-ball', 'sunglasses', 'syringe', 'tent', 'tipi', 'trash', 'trophy', 'vinyl-record', 'virus', 'wall', 'waves', 'wind', 'wine', 'wrench', 'yin-yang'
 ]
 
-let iconObjects = icons.map((icon) =>
+const iconObjects = icons.map((icon) =>
 {
-    let object = {
+    const object = {
         icon: `/icons/${icon}.svg`,
         label: icon.replace('-', ' '),
         value: icon

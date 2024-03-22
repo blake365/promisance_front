@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "1.6.1",
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.0.10"
   }

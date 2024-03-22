@@ -29,7 +29,6 @@ const AdminSidebar = () =>
         <Fragment>
             <Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '1rem' }}>
                 {activeGame && <Title order={4}>{activeGame.name}</Title>}
-                <Title order={4}>Manage Game</Title>
                 <Button
                     component={Link}
                     compact
@@ -38,6 +37,7 @@ const AdminSidebar = () =>
                 >
                     Go to Game
                 </Button>
+                <Title order={4}>Manage Game</Title>
                 {infoLinks.map((link, index) =>
                 {
                     let variant = 'subtle'
@@ -63,7 +63,7 @@ const AdminSidebar = () =>
                             <Button
                                 component={Link}
                                 compact
-                                to={`/admin/${activeGame.game_id}/${link}`}
+                                to={`/admin/${activeGame?.game_id}/${link}`}
                                 variant={variant}
                                 key={index}
                             >

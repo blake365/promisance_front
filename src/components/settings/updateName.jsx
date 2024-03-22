@@ -41,7 +41,7 @@ export default function UpdateName({ status, empire })
         }
     }
 
-    let alreadyChanged = empire.changeName > 0 ? true : false
+    const alreadyChanged = empire.changeName > 0 ? true : false
 
     return (
         <form onSubmit={form.onSubmit((values) =>

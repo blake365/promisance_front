@@ -1,7 +1,8 @@
-import { Table, Text, Button, Title, TextInput } from '@mantine/core';
+import { Text, Button, Title, TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useForm } from '@mantine/form'
+import { useSelector } from 'react-redux';
 
 
 function AdminSummary()
@@ -9,11 +10,13 @@ function AdminSummary()
     const [stats, setStats] = useState({});
     const [result, setResult] = useState();
 
+    const { game_id } = useSelector((state) => state.games.activeGame)
+
     useEffect(() =>
     {
         const loadStats = async () =>
         {
-            const response = await Axios.get('/admin/countall');
+            const response = await Axios.get(`/admin/countall?gameId=${game_id}`);
             const data = response.data;
             // console.log(data);
             setStats(data);
@@ -21,7 +24,7 @@ function AdminSummary()
 
         loadStats()
 
-    }, []);
+    }, [game_id]);
 
     const form = useForm({
         initialValues: {
@@ -32,8 +35,8 @@ function AdminSummary()
     const submitReset = async (values) =>
     {
         try {
-            const res = await Axios.post(`/admin/resetgame`, values)
-            console.log(res.data)
+            const res = await Axios.post(`/admin/resetgame?gameId=${game_id}`, values)
+            // console.log(res.data)
             setResult(res.data)
         } catch (error) {
             console.log(error)
