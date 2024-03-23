@@ -60,8 +60,8 @@ export default function ModeCard({ game, empireFound, user })
     const now = new Date().getTime()
 
     let roundStatus = false
-    let upcoming = new Date(game.roundStart).getTime() - now
-    let remaining = new Date(game.roundEnd).getTime() - now
+    const upcoming = new Date(game.roundStart).getTime() - now
+    const remaining = new Date(game.roundEnd).getTime() - now
 
     if (upcoming > 0) {
         roundStatus = true
@@ -93,16 +93,23 @@ export default function ModeCard({ game, empireFound, user })
                         <b>Round End:</b> {new Date(game.roundEnd).toLocaleDateString()}</Text>
                 </Group>
                 <Group spacing='xs'>
-                    <Text align='left'>
-                        <b>Players:</b> {game.numEmpires.toLocaleString()}</Text>
-                    <Text align='left'>
-                        <b>Average Land:</b> {game.avgLand.toLocaleString()}</Text>
-                    <Text align='left'>
-                        <b>Average Net Worth:</b> ${game.avgNetWorth.toLocaleString()}</Text>
+                    {game.numEmpires && <Text align='left'>
+                        <b>Players:</b> {game.numEmpires.toLocaleString()}</Text>}
+                    {game.avgLand && (
+                        <Text align="left">
+                            <b>Average Land:</b> {game.avgLand.toLocaleString()}
+                        </Text>
+                    )}
+                    {game.avgNetWorth && (
+                        <Text align="left">
+                            <b>Average Net Worth:</b> $
+                            {game.avgNetWorth.toLocaleString()}
+                        </Text>
+                    )}
                 </Group>
                 {!user ? <>
                     <Button size="md" w={210} variant="outline" disabled={roundStatus} onClick={() => demoRegister(game)}>Create Demo Empire</Button>
-                    <Text color='red' align="left" size='sm'>{error && error.error}</Text>
+                    <Text color='red' align="left" size='sm'>{error?.error}</Text>
                 </> : empireFound ? (
                     <Button size="md" w={210} color='blue' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Play</Button>
                 ) : (

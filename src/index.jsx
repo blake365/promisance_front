@@ -66,6 +66,8 @@ const AdminMail = lazy(() => import('./components/admin/adminMail'));
 const AdminMarket = lazy(() => import('./components/admin/adminMarket'));
 const AdminNews = lazy(() => import('./components/admin/adminNews'));
 const AdminClanMail = lazy(() => import('./components/admin/adminClanMail'));
+const CreateGame = lazy(() => import('./components/admin/createGame'));
+const EditGame = lazy(() => import('./components/admin/editGame'));
 
 import Axios from 'axios'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -174,7 +176,9 @@ ReactDOM.render(
 							<Route path='/admin/' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><Admin /></Suspense>} >
 								<Route path='*' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><NothingFoundBackground /></Suspense>} />
 								<Route path='' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><GamesManager /></Suspense>} />
+								<Route path='create' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><CreateGame /></Suspense>} />
 								<Route path='/admin/:gameId/Summary' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminSummary /></Suspense>} />
+								<Route path='/admin/:gameId/Settings' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><EditGame /></Suspense>} />
 								<Route path='/admin/:gameId/Users' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminUsers /></Suspense>} />
 								<Route path='/admin/:gameId/Empires' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminEmpires /></Suspense>} />
 								<Route path='/admin/:gameId/Mail' element={<Suspense fallback={<Center><Loader size='xl' /></Center>}><AdminMail /></Suspense>} />

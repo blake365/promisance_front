@@ -1,25 +1,17 @@
 import { Container, Title, Text, Stack, Button } from "@mantine/core"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 // import { UseForm } from "@mantine/form/lib/types"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchGames, setActiveGame } from "../../store/gamesSlice"
+import { fetchGames } from "../../store/gamesSlice"
 import Axios from 'axios'
-import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
-function CreateGame()
+function EditGame()
 {
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const games = useSelector(state => state.games.games)
+    const { gameId } = useParams();
     const activeGame = useSelector(state => state.games.activeGame)
-
-    useEffect(() =>
-    {
-        if (activeGame === null) {
-            dispatch(setActiveGame(games[0]))
-        }
-    }, [])
 
     // use keys from activeGame to create form fields
     // duplicate the object and remove certain fields first
@@ -52,16 +44,15 @@ function CreateGame()
     {
         e.preventDefault()
         // console.log(details)
-        const res = await Axios.post('/admin/createGame', details)
+        const res = await Axios.post(`/admin/edit?gameId=${gameId}`, details)
         const data = res.data
         console.log(data)
         dispatch(fetchGames())
-        navigate('/admin/')
     }
 
     return (
         <Container>
-            <Title>Create A Game</Title>
+            <Title>Edit Game Settings</Title>
             <form onSubmit={handleSubmit}>
                 <Stack spacing='xs'>
                     {fields.map((field, index) =>
@@ -77,11 +68,11 @@ function CreateGame()
                             </label>
                         )
                     })}
-                    <Button type="submit">Create Game</Button>
+                    <Button type="submit">Edit Game</Button>
                 </Stack>
             </form>
         </Container>
     )
 }
 
-export default CreateGame
+export default EditGame

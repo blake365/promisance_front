@@ -4,7 +4,7 @@ import Axios from 'axios'
 import { createGame, fetchGames } from '../../store/gamesSlice'
 import { Card, Container, Title, Stack, Group, Text, Button } from '@mantine/core'
 import { CheckCircle } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useKickOut } from '../../hooks/useKickOut'
 import { setActiveGame } from '../../store/gamesSlice'
 
@@ -89,18 +89,26 @@ const GamesManager = () =>
                 <Text align='left'>
                   <b>Round End:</b> {new Date(game.roundEnd).toLocaleDateString()}</Text>
               </Group>
+
               <Group spacing='xs'>
-                <Text align='left'>
-                  <b>Players:</b> {game.numEmpires.toLocaleString()}</Text>
-                <Text align='left'>
-                  <b>Average Land:</b> {game.avgLand.toLocaleString()}</Text>
-                <Text align='left'>
-                  <b>Average Net Worth:</b> ${game.avgNetWorth.toLocaleString()}</Text>
+                {game.numEmpires && <Text align='left'>
+                  <b>Players:</b> {game.numEmpires.toLocaleString()}</Text>}
+                {game.avgLand && (
+                  <Text align="left">
+                    <b>Average Land:</b> {game.avgLand.toLocaleString()}
+                  </Text>
+                )}
+                {game.avgNetWorth && (
+                  <Text align="left">
+                    <b>Average Net Worth:</b> $
+                    {game.avgNetWorth.toLocaleString()}
+                  </Text>
+                )}
               </Group>
             </Stack>
           </Card>
         )) : <Text>No games found</Text>}
-        <Button>Create a New Game</Button>
+        <Button component={Link} to='/admin/create'>Create a New Game</Button>
       </Stack>
     </Container>
   )

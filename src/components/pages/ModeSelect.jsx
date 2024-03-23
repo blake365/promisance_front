@@ -56,6 +56,7 @@ export default function ModeSelect()
                 <Group mt='md' position="center" key='owjojd'>
                     {status === 'succeeded' && games.length > 0 ? games.map((game) =>
                     {
+                        if (game.isActive === false) return null
                         let empireFound = false
                         if (user?.empires?.length > 0) {
                             const empire = user.empires.find(empire =>
