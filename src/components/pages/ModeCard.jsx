@@ -32,7 +32,7 @@ export default function ModeCard({ game, empireFound, user })
             const empire = user.empires.find(empire =>
                 empire.game_id === game.game_id
             )
-            console.log(empire)
+            // console.log(empire)
             // if user has no empire for this game, send them to create empire
             if (!empire) {
                 navigate('/create')

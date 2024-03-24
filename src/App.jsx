@@ -107,10 +107,13 @@ function App()
 		}
 
 		if (isLoggedIn && user.empires.length > 0 && (empireStatus === 'idle' || empireStatus === 'loading')) {
+			const { uuid } = user.empires.find(empire =>
+				empire.game_id === activeGame.game_id
+			)
 			// console.log('logged in but no empire')
 			dispatch(fetchEmpire(
 				{
-					uuid: user.empires[0].uuid,
+					uuid: uuid,
 				}
 			)).then((data) =>
 			{

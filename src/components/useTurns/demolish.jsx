@@ -12,6 +12,7 @@ import { useState, useRef } from 'react'
 import { FavoriteButton } from '../utilities/maxbutton'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { setRepeat } from '../../store/repeatSlice'
 
 export default function Demolish()
 {

@@ -13,8 +13,8 @@ const attackResult = (result, era) =>
 	if (result.result === 'success') {
 		// console.log(result.message)
 		if (result.attackType === 'pillage') {
-			let youLost = []
-			let youKilled = []
+			const youLost = []
+			const youKilled = []
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
@@ -33,92 +33,84 @@ const attackResult = (result, era) =>
 				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
+					return (`${item}, `)
 				}
 				)}</Text>
 				<Text align='center'>You killed: {youKilled.map((item, index) =>
 				{
 					if (index === youKilled.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
+					return (`${item}, `)
 				}
 				)}</Text>
 			</>)
 		}
-		else if (result.attackType !== 'all out' && result.attackType !== 'surprise') {
+
+		if (result.attackType !== 'all out' && result.attackType !== 'surprise') {
 			return (<>
 				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
 				<Text align='center' >You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
 				<Text align='center' >You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
 			</>)
-		} else {
-			// console.log(result)
-			let youLost = []
-			let youKilled = []
-			let buildingsCaptured = []
-
-			for (const key in result.troopLoss) {
-				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
-					youLost.push(`${eraArray[era][key]}: ${result.troopLoss[key].toLocaleString()}`);
-				}
-			}
-
-			for (const key in result.troopKilled) {
-				if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
-					youKilled.push(`${eraArray[era][key]}: ${result.troopKilled[key].toLocaleString()}`);
-				}
-			}
-
-			for (const key in result.buildingGain) {
-				if (Object.prototype.hasOwnProperty.call(result.buildingGain, key)) {
-					let newKey = key.toLowerCase()
-					let string = `${eraArray[era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
-					if (newKey === 'bldtroop') {
-						string = `${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}`
-					} else if (newKey === 'freeland') {
-						string = `Free Land: ${result.buildingGain[key].toLocaleString()}`
-					}
-					buildingsCaptured.push(string);
-				}
-			}
-
-			return (<>
-				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
-				<Text align='center'>You lost: {youLost.map((item, index) =>
-				{
-					if (index === youLost.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
-				}
-				)}</Text>
-				<Text align='center'>You killed: {youKilled.map((item, index) =>
-				{
-					if (index === youKilled.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
-				}
-				)}</Text>
-				{result.attackType !== 'surprise' && <Text align='center'>
-					You captured: {buildingsCaptured.map((item, index) =>
-					{
-						if (index === buildingsCaptured.length - 1) { return (item) }
-						else {
-							return (item + ', ')
-						}
-					}
-					)}
-				</Text>}
-			</>)
 		}
-	} else if (result.result === 'fail') {
+
+		// console.log(result)
+		const youLost = []
+		const youKilled = []
+		const buildingsCaptured = []
+
+		for (const key in result.troopLoss) {
+			if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
+				youLost.push(`${eraArray[era][key]}: ${result.troopLoss[key].toLocaleString()}`);
+			}
+		}
+
+		for (const key in result.troopKilled) {
+			if (Object.prototype.hasOwnProperty.call(result.troopKilled, key)) {
+				youKilled.push(`${eraArray[era][key]}: ${result.troopKilled[key].toLocaleString()}`);
+			}
+		}
+
+		for (const key in result.buildingGain) {
+			if (Object.prototype.hasOwnProperty.call(result.buildingGain, key)) {
+				const newKey = key.toLowerCase()
+				let string = `${eraArray[era][newKey]}: ${result.buildingGain[key].toLocaleString()}`
+				if (newKey === 'bldtroop') {
+					string = `${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}`
+				} else if (newKey === 'freeland') {
+					string = `Free Land: ${result.buildingGain[key].toLocaleString()}`
+				}
+				buildingsCaptured.push(string);
+			}
+		}
+
+		return (<>
+			<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
+			<Text align='center'>You lost: {youLost.map((item, index) =>
+			{
+				if (index === youLost.length - 1) { return (item) }
+				return (`${item}, `)
+			}
+			)}</Text>
+			<Text align='center'>You killed: {youKilled.map((item, index) =>
+			{
+				if (index === youKilled.length - 1) { return (item) }
+				return (`${item}, `)
+			}
+			)}</Text>
+			{result.attackType !== 'surprise' && <Text align='center'>
+				You captured: {buildingsCaptured.map((item, index) =>
+				{
+					if (index === buildingsCaptured.length - 1) { return (item) }
+					return (`${item}, `)
+				}
+				)}
+			</Text>}
+		</>)
+
+	} if (result.result === 'fail') {
 		if (result.attackType === 'pillage' || result.attackType === 'surprise' || result.attackType === 'all out') {
-			let youLost = []
-			let youKilled = []
+			const youLost = []
+			const youKilled = []
 
 			for (const key in result.troopLoss) {
 				if (Object.prototype.hasOwnProperty.call(result.troopLoss, key)) {
@@ -138,30 +130,26 @@ const attackResult = (result, era) =>
 				<Text align='center'>You lost: {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
+					return (`${item}, `)
 				}
 				)}</Text>
 				<Text align='center'>You killed: {youKilled.map((item, index) =>
 				{
 					if (index === youKilled.length - 1) { return (item) }
-					else {
-						return (item + ', ')
-					}
+					return (`${item}, `)
 				}
 				)}</Text>
 			</>)
 
-		} else {
-			return (<>
-				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
-				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
-				<Text align='center'>You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
-				<Text align='center'>You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
-			</>)
 		}
-	} else if (result.result === 'desertion') {
+		return (<>
+			<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
+			<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
+			<Text align='center'>You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
+			<Text align='center'>You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
+		</>)
+
+	} if (result.result === 'desertion') {
 		return (<>
 			<Text align='center' weight='bold' color='red'>{result.message}</Text>
 		</>)
@@ -176,13 +164,14 @@ const spellResult = (result) =>
 			return (<>
 				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> {result.food.toLocaleString()}</span> {result.descriptor}.</Text>
 			</>)
-		} else if (result.cash) {
+		}
+		if (result.cash) {
 			return (<>
 				<Text align='center' weight='bold'>{result.message}<span style={{ color: 'green' }}> ${result.cash.toLocaleString()}</span>.</Text>
 			</>)
 		}
-		else if (result.fight) {
-			let lines = result.message.split('/n')
+		if (result.fight) {
+			const lines = result.message.split('/n')
 			return lines.map((line, index) =>
 			{
 				let weight = 'normal'
@@ -191,32 +180,32 @@ const spellResult = (result) =>
 			})
 
 		}
-		else {
-			// covers time era changes
-			let lines = result.message.split('/n')
-			return lines.map((line, index) =>
-			{
-				let weight = 'normal'
-				if (index === 0) weight = 'bold'
-				return <Text key={index} weight={weight} align='center'>{line}</Text>
-			})
-		}
-	} else if (result.result === 'fail') {
+		// covers time era changes
+		const lines = result.message.split('/n')
+		return lines.map((line, index) =>
+		{
+			let weight = 'normal'
+			if (index === 0) weight = 'bold'
+			return <Text key={line} weight={weight} align='center'>{line}</Text>
+		})
+
+	}
+	if (result.result === 'fail') {
 		//untested
 		if (result.fight) {
-			let lines = result.message.split('/n')
+			const lines = result.message.split('/n')
 			return lines.map((line, index) =>
 			{
 				let weight = 'normal'
 				if (index === 0) weight = 'bold'
 				return <Text align='center' weight='bold' color={result.message.includes('ashamed') ? 'orange' : 'red'}>{line}</Text>
 			})
-		} else {
-			return (<>
-				<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
-			</>)
 		}
-	} else if (result.result === 'desertion') {
+		return (<>
+			<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
+		</>)
+
+	} if (result.result === 'desertion') {
 		return (<>
 			<Text align='center' weight='bold' color='red'>{result.message}</Text>
 		</>)
@@ -247,7 +236,7 @@ export default function TurnResultCard({ data, era })
 						{data?.messages?.desertion && <Text align='center' color='red' weight='bold'>{data.messages.desertion}</Text>}
 						{data.attack && attackResult(data.attack, era)}
 						{data.cast && spellResult(data.cast)}
-						{data.aid && data.aid.includes('successfully') ? (<Text align='center' weight='bold' color='green'>{data.aid}</Text>) : (<Text align='center' weight='bold' color='red'>{data.aid}</Text>)}
+						{data?.aid?.includes('successfully') ? (<Text align='center' weight='bold' color='green'>{data.aid}</Text>) : (<Text align='center' weight='bold' color='red'>{data.aid}</Text>)}
 						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
 						<SimpleGrid
 							cols={3}
