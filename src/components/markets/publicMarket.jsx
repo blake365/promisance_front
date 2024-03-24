@@ -18,11 +18,11 @@ export default function PublicMarket()
     useEffect(() =>
     {
         if (empire) {
-            let marketValues = { empireId: empire.id, gameId: empire.game_id }
+            const marketValues = { empireId: empire.id, gameId: empire.game_id }
             dispatch(fetchOtherItems(marketValues))
             dispatch(fetchMyItems(marketValues))
         }
-    }, [])
+    }, [empire])
 
     const [activeTab, setActiveTab] = useState('Buy');
 

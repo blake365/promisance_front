@@ -51,7 +51,7 @@ function App()
 {
 	const [opened, setOpened] = useState(false)
 	const dispatch = useDispatch()
-	let location = useLocation()
+	const location = useLocation()
 	const empireStatus = useSelector(state => state.empire.status)
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	const { empire } = useSelector((state) => state.empire)
@@ -76,27 +76,6 @@ function App()
 	// console.log(empire)
 	// const achievements = empire?.achievements
 	// console.log(achievements)
-	let achievements = {}// Extract achievements from empire
-	if (empire) {
-		achievements = empire.achievements
-		// console.log(achievements)
-	}
-
-	useEffect(() =>
-	{
-		Object.keys(achievements).forEach((key) =>
-		{
-			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 1000 > Date.now()) {
-				// console.log(key)
-				const { message, icon } = processAchievement(key)
-				showNotification({
-					title: 'Achievement Awarded',
-					message: message,
-					icon: icon,
-				})
-			}
-		})
-	}, [achievements])
 
 	const navigate = useNavigate()
 
@@ -104,23 +83,12 @@ function App()
 
 	useEffect(() =>
 	{
-		if (meta === 'new player tour') {
-			if (currentStep === 3 || currentStep === 0) {
-				setOpened(true)
-			} else {
-				setOpened(false)
-			}
-			if (currentStep === 1 && pageName !== 'Explore') {
-				navigate('/app/Explore')
-			}
-			if (currentStep === 4 && pageName !== 'Build') {
-				navigate('/app/Build')
-			}
+		if (!activeGame) {
+			navigate("/select");
+		} else {
+			dispatch(getTime(activeGame.game_id));
 		}
-	}, [currentStep, setIsOpen, meta])
 
-	useEffect(() =>
-	{
 		async function loadUser()
 		{
 			// console.log('loading user')
@@ -172,8 +140,6 @@ function App()
 			}
 		}
 
-		dispatch(getTime(activeGame.game_id))
-
 		dispatch(setPage(pageState))
 
 		if (empireStatus === 'succeeded') {
@@ -182,6 +148,45 @@ function App()
 			}
 		}
 	})
+
+	let achievements = {}// Extract achievements from empire
+	if (empire) {
+		achievements = empire.achievements
+		// console.log(achievements)
+	}
+
+	useEffect(() =>
+	{
+		Object.keys(achievements).forEach((key) =>
+		{
+			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 1000 > Date.now()) {
+				// console.log(key)
+				const { message, icon } = processAchievement(key)
+				showNotification({
+					title: 'Achievement Awarded',
+					message: message,
+					icon: icon,
+				})
+			}
+		})
+	}, [achievements])
+
+	useEffect(() =>
+	{
+		if (meta === 'new player tour') {
+			if (currentStep === 3 || currentStep === 0) {
+				setOpened(true)
+			} else {
+				setOpened(false)
+			}
+			if (currentStep === 1 && pageName !== 'Explore') {
+				navigate('/app/Explore')
+			}
+			if (currentStep === 4 && pageName !== 'Build') {
+				navigate('/app/Build')
+			}
+		}
+	}, [currentStep, setIsOpen, meta])
 
 	useInterval(async () =>
 	{
@@ -197,10 +202,10 @@ function App()
 		}
 	}, 120000)
 
-	let locationArr = location.pathname.split('/')
-	let last = locationArr.length - 1
-	let pageState = locationArr[last]
-	let pageName = pageState.replace('%20', ' ')
+	const locationArr = location.pathname.split('/')
+	const last = locationArr.length - 1
+	const pageState = locationArr[last]
+	const pageName = pageState.replace('%20', ' ')
 	// console.log(pageState)
 	// console.log(clanMail)
 	// useEffect(() =>
@@ -315,7 +320,7 @@ function App()
 									</Grid.Col>
 									<Grid.Col span={3}>
 										<Group spacing='xs' position='center'>
-											<GuideModalButton pageName={pageName} empire={empire} protection={activeGame.turnsProtection} />
+											<GuideModalButton pageName={pageName} empire={empire} protection={activeGame?.turnsProtection} />
 											<RefreshButton empire={empire} />
 										</Group>
 									</Grid.Col>

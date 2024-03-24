@@ -2,21 +2,31 @@ import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, B
 import { useSelector } from 'react-redux'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTour } from '@reactour/tour';
 import { steps } from '../tour/steps'
 import { Compass, Question } from '@phosphor-icons/react'
 import { setBgImage } from '../functions/setBgImage'
 import NewPlayerModal from './layout/newPlayerModal'
+import { useEffect } from 'react'
+
 
 export default function Summary()
 {
 	const { empire } = useSelector((state) => state.empire)
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { time } = useSelector((state) => state.time)
-	const { turnsCount, turnsFreq, turnsMax, turnsProtection, turnsStored } = useSelector((state) => state.games.activeGame)
+	const game = useSelector((state) => state.games.activeGame)
 
+	const navigate = useNavigate()
 	const bgimage = setBgImage(empire)
+
+	useEffect(() =>
+	{
+		if (!game) {
+			navigate("/select");
+		}
+	}, [])
 
 	let roundStatus = 'Round has not started'
 	let upcoming = time.start - time.time
@@ -54,7 +64,7 @@ export default function Summary()
 								Tips
 							</Button>
 						</Group>
-						{empire.turnsUsed < turnsProtection && (<Center my='sm'>
+						{empire.turnsUsed < game.turnsProtection && (<Center my='sm'>
 							<Button compact variant='outline' align='center' onClick={() =>
 							{
 								setMeta('new player tour')
@@ -86,11 +96,11 @@ export default function Summary()
 									<tbody>
 										<tr>
 											<td style={{ width: '50%' }}>Turns</td>
-											<td align='right'>{empire?.turns} (max {turnsMax})</td>
+											<td align='right'>{empire?.turns} (max {game.turnsMax})</td>
 										</tr>
 										<tr>
 											<td>Stored Turns</td>
-											<td align='right'>{empire?.storedturns} (max {turnsStored})</td>
+											<td align='right'>{empire?.storedturns} (max {game.turnsStored})</td>
 										</tr>
 										<tr>
 											<td>Rank</td>
@@ -174,11 +184,11 @@ export default function Summary()
 							</Grid.Col>
 						</Grid>
 						<Stack align='center' spacing={0} mt='xs'>
-							{empire.turnsUsed < turnsProtection ? (<>
-								<Text align='center' mb='sm' color='green'>You are under new player protection for {turnsProtection - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {turnsProtection} turns.</Text>
+							{empire.turnsUsed < game.turnsProtection ? (<>
+								<Text align='center' mb='sm' color='green'>You are under new player protection for {game.turnsProtection - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {game.turnsProtection} turns.</Text>
 
 							</>) : ('')}
-							<Text align='center'>You get {turnsCount} turn{turnsCount > 1 ? ('s') : ('')} every {turnsFreq} minutes.</Text>
+							<Text align='center'>You get {game.turnsCount} turn{game.turnsCount > 1 ? ('s') : ('')} every {game.turnsFreq} minutes.</Text>
 							<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
 							<Text align='center'>{roundStatus}</Text>
 						</Stack>

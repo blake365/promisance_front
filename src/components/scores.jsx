@@ -12,7 +12,7 @@ export default function Scores()
     const { empire } = useSelector((state) => state.empire)
     const { turnsFreq, name } = useSelector((state) => state.games.activeGame)
 
-    let myEmpire = empire
+    const myEmpire = empire
 
     const { scores } = useSelector((state) => state.scores)
     // console.log(scores)
@@ -22,7 +22,7 @@ export default function Scores()
         setLoading(true)
         dispatch(loadScores(empire.game_id))
         setLoading(false)
-    }, [empire])
+    }, [empire, dispatch])
 
     // console.log(scores.length)
 

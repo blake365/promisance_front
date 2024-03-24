@@ -119,9 +119,10 @@ export default function WorldBank()
             {
                 if (item.action === 'deposit' || item.action === 'withdraw') {
                     return bankRef.current.focus()
-                } else {
-                    return loanRef.current.focus()
                 }
+
+                return loanRef.current.focus()
+
             })
             savingsForm.reset()
             loadEmpire()
@@ -188,7 +189,7 @@ export default function WorldBank()
                                 <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
-                                        label={`Deposit Money`}
+                                        label={'Deposit Money'}
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
@@ -204,7 +205,7 @@ export default function WorldBank()
                                         formatter={(value) =>
                                         {
                                             // console.log(typeof value)
-                                            return !Number.isNaN(parseFloat(value))
+                                            return !Number.isNaN(Number.parseFloat(value))
                                                 ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                 : ''
                                         }
@@ -212,7 +213,7 @@ export default function WorldBank()
                                     />
                                     <NumberInput
                                         hideControls
-                                        label={`Withdraw Money`}
+                                        label={'Withdraw Money'}
                                         min={0}
                                         defaultValue={empire.bank}
                                         stepHoldDelay={500}
@@ -226,7 +227,7 @@ export default function WorldBank()
                                         formatter={(value) =>
                                         {
                                             // console.log(typeof value)
-                                            return !Number.isNaN(parseFloat(value))
+                                            return !Number.isNaN(Number.parseFloat(value))
                                                 ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                 : ''
                                         }
@@ -277,7 +278,7 @@ export default function WorldBank()
                                         formatter={(value) =>
                                         {
                                             // console.log(typeof value)
-                                            return !Number.isNaN(parseFloat(value))
+                                            return !Number.isNaN(Number.parseFloat(value))
                                                 ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                 : ''
                                         }
@@ -299,11 +300,12 @@ export default function WorldBank()
                                         formatter={(value) =>
                                         {
                                             // console.log(typeof value)
-                                            return !Number.isNaN(parseFloat(value))
+                                            return !Number.isNaN(Number.parseFloat(value))
                                                 ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                 : ''
                                         }
                                         }
+                                        disabled={roundStatus}
                                     />
                                     <Button type='submit' disabled={roundStatus} ref={loanRef}>Submit</Button>
                                 </Stack>

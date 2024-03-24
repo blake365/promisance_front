@@ -24,13 +24,15 @@ export default function ModeCard({ game, empireFound, user })
     // button action to set active game and navigate to app or create empire
     const handleGameSelect = (game) =>
     {
+        // console.log(game.game_id)
         dispatch(setActiveGame(game))
         // compare user empires and find the one with the same game_id as the game object
         if (user.empires.length > 0) {
+            // console.log(game.game_id)
             const empire = user.empires.find(empire =>
                 empire.game_id === game.game_id
             )
-            // console.log(empire)
+            console.log(empire)
             // if user has no empire for this game, send them to create empire
             if (!empire) {
                 navigate('/create')

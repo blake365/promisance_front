@@ -28,7 +28,7 @@ function MyClan()
     {
         // console.log('checking for clan mail')
         try {
-            const res = await Axios.post(`messages/clan/unread`, { empireId: empire.id, clanId: empire.clanId })
+            const res = await Axios.post('messages/clan/unread', { empireId: empire.id, clanId: empire.clanId })
             // console.log(res.data)
             return res.data
         } catch (error) {
@@ -61,13 +61,13 @@ function MyClan()
 
     // console.log(clan)
 
-    let intelMembers = members && members.map((member) => member.id)
+    const intelMembers = members?.map((member) => member.id)
     // console.log(intelMembers)
 
     const disbandClan = async () =>
     {
         try {
-            const res = await Axios.post('/clans/disband', { clanId: clan.id, empireId: empire.id })
+            const res = await Axios.post(`/clans/disband?gameId=${empire.game_id}`, { clanId: clan.id, empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
             loadEmpire()
@@ -80,7 +80,7 @@ function MyClan()
     const leaveClan = async () =>
     {
         try {
-            const res = await Axios.post('/clans/leave', { empireId: empire.id })
+            const res = await Axios.post(`/clans/leave?gameId=${empire.game_id}`, { empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
             loadEmpire()

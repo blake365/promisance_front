@@ -36,11 +36,11 @@ export default function JoinClan({ disabled })
         const loadClans = async () =>
         {
             try {
-                const res = await Axios.get(`/clans/getClans`)
+                const res = await Axios.get(`/clans/getClans?gameId=${empire.game_id}`)
                 // console.log(res.data)
                 if (res.data.length > 0) {
-                    let clans = res.data.map(({ clanName, id }) => ({ clanName, id }))
-                    let dataFormat = clans.map((clan) =>
+                    const clans = res.data.map(({ clanName, id }) => ({ clanName, id }))
+                    const dataFormat = clans.map((clan) =>
                     ({
                         name: clan.clanName,
                         value: clan.clanName,
@@ -71,7 +71,7 @@ export default function JoinClan({ disabled })
     const joinClan = async (values) =>
     {
         try {
-            const res = await Axios.post('/clans/join', values)
+            const res = await Axios.post(`/clans/join?gameId=${empire.game_id}`, values)
             // console.log(res)
             showNotification({
                 title: 'Clan Joined',

@@ -23,9 +23,9 @@ const RefreshButton = ({ empire }) =>
                 setRefreshLoading(true)
                 const res = await Axios.get(`/empire/${empire.uuid}`)
                 dispatch(empireLoaded(res.data))
-                dispatch(fetchMyItems({ empireId: empire.id }))
-                dispatch(fetchOtherItems({ empireId: empire.id }))
-                dispatch(loadScores())
+                dispatch(fetchMyItems({ empireId: empire.id, gameId: empire.game_id }))
+                dispatch(fetchOtherItems({ empireId: empire.id, gameId: empire.game_id }))
+                dispatch(loadScores(empire.game_id))
                 setRefreshLoading(false)
             } catch (error) {
                 console.log(error)

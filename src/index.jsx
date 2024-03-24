@@ -14,7 +14,8 @@ import
 const App = lazy(() => import('./App'))
 // import App from './App'
 
-import Summary from './components/summary'
+const Summary = lazy(() => import('./components/summary'))
+// import Summary from './components/summary'
 import Explore from './components/useTurns/explore'
 import Build from './components/useTurns/build'
 const Overview = lazy(() => import('./components/overview'));

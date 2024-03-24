@@ -12,11 +12,12 @@ export function FavoriteButton(props)
 
     const checkFavorite = (empire, item) =>
     {
-        if (empire.favorites && empire.favorites.includes(item)) {
+        if (empire?.favorites.includes(item)) {
             return true
-        } else {
-            return false
         }
+
+        return false
+
     }
 
     const setFavorite = async (empire, item) =>
@@ -76,9 +77,11 @@ export function HalfAndAll(props)
 
 export function OneTurn(props)
 {
+    // console.log(props.currentValue)
+    const currentValue = props.currentValue ? props.currentValue : 0
     return (
         <ActionIcon size='sm' color='blue' variant="transparent" onClick={() =>
         {
-            props.formName.setFieldValue(props.fieldName, props.value)
+            props.formName.setFieldValue(props.fieldName, props.value + currentValue)
         }}>1</ActionIcon>)
 }

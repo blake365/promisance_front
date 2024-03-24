@@ -50,7 +50,7 @@ export default function ClanRole({ member, role, clan })
     const remove = async () =>  
     {
         try {
-            const res = await Axios.post('/clans/kick', { empireId: member.id })
+            const res = await Axios.post(`/clans/kick?gameId=${empire.game_id}`, { empireId: member.id })
             // console.log(res)
             loadEmpire()
         } catch (error) {

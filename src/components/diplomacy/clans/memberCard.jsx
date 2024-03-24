@@ -25,7 +25,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     {
         try {
             const res = await Axios.get(`/session/${empire.id}`)
-            console.log(res.data)
+            // console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)

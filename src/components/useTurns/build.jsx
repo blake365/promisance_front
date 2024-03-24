@@ -23,7 +23,7 @@ export default function Build({ size })
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	let buildNumberArray = []
 	let totalBuild = 0
-	let errors = {
+	const errors = {
 		error: '',
 	}
 	const { empire } = useSelector((state) => state.empire)
@@ -129,6 +129,8 @@ export default function Build({ size })
 		errors.error = error
 	}
 
+	const buildings = ['bldPop', 'bldCash', 'bldCost', 'bldFood', 'bldTroop', 'bldWiz', 'bldDef']
+
 	const doBuild = async (values) =>
 	{
 		setLoading(true)
@@ -210,248 +212,83 @@ export default function Build({ size })
 									</tr>
 								</thead>
 								<tbody>
-									<tr className='bld-second-step'>
-										<td><Group spacing={2}><FavoriteButton size={16} empire={empire} title='bldPop' />{eraArray[empire.era].bldpop}</Group></td>
-										<td>
-											{empire.bldPop} (
-											{Math.round((empire.bldPop / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={canBuild}
-												{...form.getInputProps('bldPop')}
-												rightSection={<div style={{ display: 'flex', backgroundColor: 'transparent' }}>
-													<OneTurn fieldName='bldPop' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldPop' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldPop' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-									</tr>
-									<tr className='bld-step-twopointfive'>
-										<td><Group spacing={2}><FavoriteButton title='bldCash' size={16} empire={empire} />{eraArray[empire.era].bldcash}</Group></td>
-										<td>
-											{empire.bldCash} (
-											{Math.round((empire.bldCash / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldCash')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldCash' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldCash' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldCash' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-									</tr>
-									<tr className='bld-third-step'>
-										<td><Group spacing={2}><FavoriteButton title='bldTrp' size={16} empire={empire} />{eraArray[empire.era].bldtrp}</Group></td>
-										<td>
-											{empire.bldTroop} (
-											{Math.round((empire.bldTroop / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldTroop')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldTroop' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldTroop' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldTroop' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
+									{buildings.map((building, index) =>
+									{
+										let buildingName = building.toLowerCase()
+										if (building === 'bldTroop') {
+											buildingName = 'bldtrp'
+										}
 
-									</tr>
-									<tr className='bld-fourth-step'>
-										<td><Group spacing={2}><FavoriteButton title='bldCost' size={16} empire={empire} />{eraArray[empire.era].bldcost}</Group></td>
-										<td>
-											{empire.bldCost} (
-											{Math.round((empire.bldCost / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldCost')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldCost' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldCost' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldCost' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
+										return <tr className={index + 1} key={building}>
+											<td>
+												<Group spacing={2}>
+													<FavoriteButton
+														size={16}
+														empire={empire}
+														title={building}
+													/>
+													{eraArray[empire.era][buildingName]}
+												</Group>
+											</td>
+											<td>
+												{empire[building]} (
+												{Math.round((empire[building] / empire.land) * 100)}%)
+											</td>
+											{/* <td>{canBuild.toLocaleString()}</td> */}
+											<td>
+												<NumberInput
+													hideControls
+													min={0}
+													defaultValue={0}
+													max={canBuild}
+													{...form.getInputProps(building)}
+													rightSection={
+														<div
+															style={{
+																display: "flex",
+																backgroundColor: "transparent",
+															}}
+														>
+															<OneTurn
+																fieldName={building}
+																value={buildRate}
+																formName={form}
+																currentValue={form.values[building]}
+															/>
+															<HalfButton
+																fieldName={building}
+																maxValue={canBuild}
+																formName={form}
+															/>
+															<MaxButton
+																fieldName={building}
+																maxValue={canBuild}
+																formName={form}
+															/>
+														</div>
+													}
+													rightSectionWidth={70}
+													parser={(value) =>
+														value
+															.split(" ")
+															.join("")
+															.replace(/\$\s?|(,*)|\s/g, "")
+													}
+													formatter={(value) =>
+													{
+														// console.log(typeof value)
+														return !Number.isNaN(Number.parseFloat(value))
+															? `${value}`.replace(
+																/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+																",",
+															)
+															: "";
+													}}
+												/>
+											</td>
+										</tr>
+									})}
 
-									</tr>
-									<tr className='bld-fifth-step'>
-										<td><Group spacing={2}><FavoriteButton title='bldWiz' size={16} empire={empire} />{eraArray[empire.era].bldwiz}</Group></td>
-										<td>
-											{empire.bldWiz} (
-											{Math.round((empire.bldWiz / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldWiz')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldWiz' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldWiz' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldWiz' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
-									<tr className='bld-sixth-step'>
-										<td><Group spacing={2}><FavoriteButton title='bldFood' size={16} empire={empire} />{eraArray[empire.era].bldfood}</Group></td>
-										<td>
-											{empire.bldFood} (
-											{Math.round((empire.bldFood / empire.land) * 100)}%)
-										</td>
-										{/* <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldFood')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldFood' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldFood' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldFood' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-									</tr>
-									<tr className='bld-seventh-step'>
-										<td><Group spacing={2}><FavoriteButton title='bldDef' size={16} empire={empire} />{eraArray[empire.era].blddef}</Group></td>
-										<td>
-											{empire.bldDef} (
-											{Math.round((empire.bldDef / empire.land) * 100)}%)
-										</td>
-										{/* // <td>{canBuild.toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={empire.freeLand}
-												{...form.getInputProps('bldDef')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='bldDef' value={buildRate} formName={form} />
-													<HalfButton fieldName='bldDef' maxValue={canBuild} formName={form} />
-													<MaxButton fieldName='bldDef' maxValue={canBuild} formName={form} />
-												</div>}
-												rightSectionWidth={70}
-												parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
 									<tr>
 										<td>Unused Land</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>
