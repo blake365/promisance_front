@@ -90,7 +90,7 @@ export default function Demolish()
 		},
 
 		validationRules: {
-			// totalBuild: (value) => value < canBuild,
+			// totalBuild: (value) => value < canDemolish,
 			demoPop: (value) => value < min(empire.bldPop, canDemolish),
 			demoCash: (value) => value < min(empire.bldCash, canDemolish),
 			demoCost: (value) => value < min(empire.bldCost, canDemolish),
@@ -189,6 +189,8 @@ export default function Demolish()
 
 	const roundStatus = checkRoundStatus()
 
+	const buildings = ['demoPop', 'demoCash', 'demoCost', 'demoFood', 'demoTroop', 'demoWiz', 'demoDef']
+
 	return (
 		<main>
 			<Center mb={10}>
@@ -232,244 +234,77 @@ export default function Demolish()
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>{eraArray[empire.era].bldpop}</td>
-										<td>
-											{empire.bldPop} (
-											{Math.round((empire.bldPop / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldPop).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldPop)}
-												{...form.getInputProps('demoPop')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoPop' value={Math.min(demolishRate, empire.bldPop)} formName={form} />
-													<HalfButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
-													<MaxButton fieldName='demoPop' maxValue={Math.min(canDemolish, empire.bldPop)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
+									{buildings.map((building, index) =>
+									{
+										const empireBuilding = building.replace('demo', 'bld')
+										let buildingName = empireBuilding.toLowerCase()
+										if (building === 'demoTroop') {
+											buildingName = 'bldtrp'
+										}
 
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].bldcash}</td>
-										<td>
-											{empire.bldCash} (
-											{Math.round((empire.bldCash / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldCash).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldCash)}
-												{...form.getInputProps('demoCash')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoCash' value={Math.min(demolishRate, empire.bldCash)} formName={form} />
-													<HalfButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
-													<MaxButton fieldName='demoCash' maxValue={Math.min(canDemolish, empire.bldCash)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
+										return <tr className={index + 1} key={building}>
+											<td>
+												{eraArray[empire.era][buildingName]}
+											</td>
+											<td>
+												{empire[empireBuilding]} (
+												{Math.round((empire[empireBuilding] / empire.land) * 100)}%)
+											</td>
+											{/* <td>{canBuild.toLocaleString()}</td> */}
+											<td>
+												<NumberInput
+													hideControls
+													min={0}
+													defaultValue={0}
+													max={canDemolish}
+													{...form.getInputProps(building)}
+													rightSection={
+														<div
+															style={{
+																display: "flex",
+																backgroundColor: "transparent",
+															}}
+														>
+															<OneTurn
+																fieldName={building}
+																value={Math.min(demolishRate, empire[empireBuilding])}
+																formName={form}
+																currentValue={form.values[building]}
+															/>
 
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].bldtrp}</td>
-										<td>
-											{empire.bldTroop} (
-											{Math.round((empire.bldTroop / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldTroop).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldTroop)}
-												{...form.getInputProps('demoTroop')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoTroop' value={Math.min(demolishRate, empire.bldTroop)} formName={form} />
-													<HalfButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
-													<MaxButton fieldName='demoTroop' maxValue={Math.min(canDemolish, empire.bldTroop)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].bldcost}</td>
-										<td>
-											{empire.bldCost} (
-											{Math.round((empire.bldCost / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldCost).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldCost)}
-												{...form.getInputProps('demoCost')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoCost' value={Math.min(demolishRate, empire.bldCost)} formName={form} />
-													<HalfButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
-													<MaxButton fieldName='demoCost' maxValue={Math.min(canDemolish, empire.bldCost)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].bldwiz}</td>
-										<td>
-											{empire.bldWiz} (
-											{Math.round((empire.bldWiz / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldWiz).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldWiz)}
-												{...form.getInputProps('demoWiz')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoWiz' value={Math.min(demolishRate, empire.bldWiz)} formName={form} />
-													<HalfButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
-													<MaxButton fieldName='demoWiz' maxValue={Math.min(canDemolish, empire.bldWiz)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].bldfood}</td>
-										<td>
-											{empire.bldFood} (
-											{Math.round((empire.bldFood / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldFood).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldFood)}
-												{...form.getInputProps('demoFood')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoFood' value={Math.min(demolishRate, empire.bldFood)} formName={form} />
-													<HalfButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
-													<MaxButton fieldName='demoFood' maxValue={Math.min(canDemolish, empire.bldFood)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
-									<tr>
-										<td>{eraArray[empire.era].blddef}</td>
-										<td>
-											{empire.bldDef} (
-											{Math.round((empire.bldDef / empire.land) * 100)}%)
-										</td>
-										{/* <td>{Math.min(canDemolish, empire.bldDef).toLocaleString()}</td> */}
-										<td>
-											<NumberInput
-												hideControls
-												min={0}
-												defaultValue={0}
-												max={Math.min(canDemolish, empire.bldDef)}
-												{...form.getInputProps('demoDef')}
-												rightSection={<div style={{ display: 'flex' }}>
-													<OneTurn fieldName='demoDef' value={Math.min(demolishRate, empire.bldDef)} formName={form} />
-													<HalfButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
-													<MaxButton fieldName='demoDef' maxValue={Math.min(canDemolish, empire.bldDef)} formName={form} />
-												</div>}
-												rightSectionWidth={70} parser={(value) =>
-													value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
-												}
-												formatter={(value) =>
-												{
-													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
-														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-														: ''
-												}
-												}
-											/>
-										</td>
-
-									</tr>
+															<HalfButton
+																fieldName={building}
+																maxValue={Math.min(canDemolish, empire[empireBuilding])}
+																formName={form}
+															/>
+															<MaxButton
+																fieldName={building}
+																maxValue={Math.min(canDemolish, empire[empireBuilding])}
+																formName={form}
+															/>
+														</div>
+													}
+													rightSectionWidth={70}
+													parser={(value) =>
+														value
+															.split(" ")
+															.join("")
+															.replace(/\$\s?|(,*)|\s/g, "")
+													}
+													formatter={(value) =>
+													{
+														// console.log(typeof value)
+														return !Number.isNaN(Number.parseFloat(value))
+															? `${value}`.replace(
+																/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+																",",
+															)
+															: "";
+													}}
+												/>
+											</td>
+										</tr>
+									})}
 									<tr>
 										<td>Unused Land</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()} (
@@ -497,7 +332,7 @@ export default function Demolish()
 							<Table>
 								<thead>
 									<tr>
-										<th></th>
+										<th> </th>
 										<th>Owned</th>
 										<th>Can Drop</th>
 										<th>Drop</th>
@@ -522,7 +357,7 @@ export default function Demolish()
 												formatter={(value) =>
 												{
 													// console.log(typeof value)
-													return !Number.isNaN(parseFloat(value))
+													return !Number.isNaN(Number.parseFloat(value))
 														? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 														: ''
 												}

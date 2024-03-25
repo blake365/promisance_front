@@ -138,6 +138,8 @@ export default function WorldBank()
     }
 
     const roundStatus = checkRoundStatus()
+    const loanStatus = checkRoundStatus(true)
+    console.log(loanStatus)
 
     return (
         <main>
@@ -189,7 +191,7 @@ export default function WorldBank()
                                 <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
-                                        label={'Deposit Money'}
+                                        label='Deposit Money'
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
@@ -213,7 +215,7 @@ export default function WorldBank()
                                     />
                                     <NumberInput
                                         hideControls
-                                        label={'Withdraw Money'}
+                                        label='Withdraw Money'
                                         min={0}
                                         defaultValue={empire.bank}
                                         stepHoldDelay={500}
@@ -264,7 +266,7 @@ export default function WorldBank()
                                 <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
-                                        label={`Repay Loan Balance`}
+                                        label='Repay Loan Balance'
                                         min={0}
                                         defaultValue={empire.loan}
                                         stepHoldDelay={500}
@@ -286,14 +288,14 @@ export default function WorldBank()
                                     />
                                     <NumberInput
                                         hideControls
-                                        label={`Take Out a Loan`}
+                                        label='Take Out a Loan'
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
                                         stepHoldInterval={100}
                                         max={canLoan}
                                         {...loanForm.getInputProps('loanAmt')}
-                                        rightSection={<MaxButton formName={loanForm} fieldName='loanAmt' maxValue={canLoan} />}
+                                        rightSection={!loanStatus && <MaxButton formName={loanForm} fieldName='loanAmt' maxValue={canLoan} />}
                                         parser={(value) =>
                                             value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
                                         }
@@ -305,7 +307,7 @@ export default function WorldBank()
                                                 : ''
                                         }
                                         }
-                                        disabled={roundStatus}
+                                        disabled={loanStatus}
                                     />
                                     <Button type='submit' disabled={roundStatus} ref={loanRef}>Submit</Button>
                                 </Stack>

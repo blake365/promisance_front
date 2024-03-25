@@ -14,7 +14,6 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setResult } from '../../store/turnResultsSlice'
 import { MaxButton } from '../utilities/maxbutton'
-
 import { eraArray } from '../../config/eras'
 import { Scales } from "@phosphor-icons/react"
 import classes from './aid.module.css'
@@ -129,7 +128,7 @@ export default function ForeignAid()
                         Send resources and troops to other players.
                     </Text>
                     <Text align='center'>
-                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay / 60 / 60} hours, up to a maximum of {aidMaxCredits} credits.
+                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay} hours, up to a maximum of {aidMaxCredits} credits.
                     </Text>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}

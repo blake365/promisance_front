@@ -1,4 +1,4 @@
-import { Title, Text, Collapse, Group, Button, Stack, Center, Loader, Card } from "@mantine/core";
+import { Title, Text, Collapse, Group, Button, Stack, Center, Loader, Card, Box } from "@mantine/core";
 import { Suspense, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Trophy } from "@phosphor-icons/react";
@@ -74,7 +74,7 @@ export default function ModeCard({ game, empireFound, user })
     }
 
     return (
-        <Card withBorder shadow='lg' key={game.id} w={'100%'} onClick={toggle} sx={{ cursor: 'pointer' }}>
+        <Card withBorder shadow='lg' key={game.id} w={'100%'} >
             <Stack>
                 <Group position="left"><Trophy size={40} /><Title order={1} align='left'>{game.name}</Title></Group>
                 <Text align='left'>
@@ -118,7 +118,9 @@ export default function ModeCard({ game, empireFound, user })
                     <Button size="md" w={210} color='teal' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Create Empire</Button>
                 )}
             </Stack>
-            {!opened ? <Text size='sm' align='center' color='dimmed'>Click to See Scores and Events</Text> : <Text size='sm' align='center' color='dimmed'>Click to Collapse</Text>}
+            <Box onClick={toggle} sx={{ cursor: 'pointer' }}>
+                {!opened ? <Text size='sm' align='center' color='dimmed'>Click to See Scores and News</Text> : <Text size='sm' align='center' color='dimmed'>Click to Collapse</Text>}
+            </Box>
             <Collapse in={opened}>
                 <Group my='md' position='center' align='flex-start'>
                     <Suspense fallback={<Center><Loader size='xl' /></Center>}>
