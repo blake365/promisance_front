@@ -5,7 +5,6 @@ import Axios from 'axios'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
 import { raceArray } from '../../config/races'
 import { HalfButton, MaxButton, OneTurn } from '../utilities/maxbutton'
-import { BUILD_COST } from '../../config/config'
 import { calcSizeBonus } from '../../functions/functions'
 import { useState, useRef } from 'react'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
@@ -182,7 +181,7 @@ export default function TinyBuild({ building, show })
 					max={canBuild}
 					{...form.getInputProps(building)}
 					rightSection={<div style={{ display: 'flex', backgroundColor: 'transparent' }}>
-						<OneTurn fieldName={building} value={buildRate} formName={form} />
+						<OneTurn fieldName={building} value={buildRate} formName={form} currentValue={form.values[building]} />
 						<HalfButton fieldName={building} maxValue={canBuild} formName={form} />
 						<MaxButton fieldName={building} maxValue={canBuild} formName={form} />
 					</div>}
