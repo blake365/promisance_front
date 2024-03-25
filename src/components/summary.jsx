@@ -1,11 +1,11 @@
-import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center, Box } from '@mantine/core'
+import { Card, Grid, Stack, Table, Title, Group, Text, Avatar, Button, Center } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTour } from '@reactour/tour';
 import { steps } from '../tour/steps'
-import { Compass, Question } from '@phosphor-icons/react'
+import { Compass } from '@phosphor-icons/react'
 import { setBgImage } from '../functions/setBgImage'
 import NewPlayerModal from './layout/newPlayerModal'
 import { useEffect } from 'react'
@@ -29,8 +29,8 @@ export default function Summary()
 	}, [])
 
 	let roundStatus = 'Round has not started'
-	let upcoming = time.start - time.time
-	let remaining = time.end - time.time
+	const upcoming = time.start - time.time
+	const remaining = time.end - time.time
 
 	if (upcoming > 0) {
 		roundStatus = `Round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days, ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((upcoming % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
@@ -50,20 +50,14 @@ export default function Summary()
 				<div>
 					<NewPlayerModal empire={empire} time={time} />
 					<Card>
-						<Group position='apart' maw='80vw' sx={{ overflow: 'hidden' }}>
-							<Box miw='55'>
 
-							</Box>
-							<Group position='center' align='center' spacing={5} >
-								<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-								<Title order={2} align='center'>
-									{empire?.name}
-								</Title>
-							</Group>
-							<Button color="green" size="xs" radius="xl" variant="filled" component={Link} to='/app/New%20Player'>
-								Tips
-							</Button>
+						<Group position='center' align='center' spacing={5} >
+							<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+							<Title order={2} align='center'>
+								{empire?.name}
+							</Title>
 						</Group>
+
 						{empire.turnsUsed < game.turnsProtection && (<Center my='sm'>
 							<Button compact variant='outline' align='center' onClick={() =>
 							{

@@ -154,26 +154,24 @@ export default function NewPlayerTips()
 
     return (
         <Container>
-            <Paper p='lg'>
-                <Title align='center'>Personalized Tips</Title>
-                <Stack mt='sm'>
-                    {empire.turnsUsed <= turnsProtection && (<Text>
-                        You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {turnsProtection} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
-                    </Text>)}
-                    <Text>
-                        If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages. If you want to repeat the Getting Started Tour, you can access it from the Empire Settings page.
-                    </Text>
-                    <Text>
-                        You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
-                    </Text>
-                    <Text>
-                        Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a {eraArray[empire.era].spell_shield} to protect against magic attacks, Advancing Eras to optimize your stats, and opening Time Gates to attack across eras.
-                    </Text>
-                    <div>
-                        {yourTraits(empire)}
-                    </div>
-                </Stack>
-            </Paper>
+            <Title align='center'>Personalized Tips</Title>
+            <Stack mt='sm'>
+                {empire.turnsUsed <= turnsProtection && (<Text>
+                    You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {turnsProtection} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
+                </Text>)}
+                <Text>
+                    If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages. If you want to repeat the Getting Started Tour, you can access it from the Empire Settings page.
+                </Text>
+                <Text>
+                    You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to increase your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
+                </Text>
+                <Text>
+                    Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a {eraArray[empire.era].spell_shield} to protect against magic attacks, Advancing Eras to optimize your stats, and opening Time Gates to attack across eras.
+                </Text>
+                <div>
+                    {yourTraits(empire)}
+                </div>
+            </Stack>
         </Container>
     )
 }

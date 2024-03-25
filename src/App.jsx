@@ -20,6 +20,7 @@ import
 	Button,
 	Image,
 	Center,
+	Container,
 } from '@mantine/core'
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import neoIcon from './icons/neoIcon.svg'
@@ -46,6 +47,7 @@ import MailButton from './components/mail/mailButton';
 import ClanMailButton from './components/diplomacy/clans/clanMessagesButton';
 import RepeatButton from './components/utilities/repeatButton';
 import { fetchGames, setActiveGame } from './store/gamesSlice';
+import * as Sentry from '@sentry/react';
 
 function App()
 {
@@ -71,7 +73,7 @@ function App()
 		})
 		dispatch(resetUser())
 		dispatch(logoutEmpire())
-		navigate('/login')
+		navigate('/select')
 	}
 	// console.log(empire)
 	// const achievements = empire?.achievements
@@ -84,10 +86,15 @@ function App()
 	useEffect(() =>
 	{
 		if (!activeGame) {
+			console.log('no active game')
 			navigate("/select");
 		} else {
 			dispatch(getTime(activeGame.game_id));
 		}
+	}, [activeGame])
+
+	useEffect(() =>
+	{
 
 		async function loadUser()
 		{
@@ -106,7 +113,7 @@ function App()
 			loadUser()
 		}
 
-		if (isLoggedIn && user.empires.length > 0 && (empireStatus === 'idle' || empireStatus === 'loading')) {
+		if (isLoggedIn && user.empires.length > 0 && (empireStatus === 'idle' || empireStatus === 'loading') && activeGame) {
 			const { uuid } = user.empires.find(empire =>
 				empire.game_id === activeGame.game_id
 			)
@@ -131,13 +138,13 @@ function App()
 			}
 		}
 
-		if (!activeGame) {
+		if (!activeGame && empire) {
 			dispatch(fetchGames())
 			if (empire?.game_id) {
 				// match game id to game in games array and set active game
-				console.log('hello')
+				// console.log('hello')
 				const game = games.find(game => game.game_id === empire.game_id)
-				console.log(game)
+				// console.log(game)
 				dispatch(setActiveGame(game))
 				dispatch(getTime(game.game_id))
 			}
@@ -228,124 +235,126 @@ function App()
 
 	function FallbackComponent()
 	{
-		return (<Center>
-			<Title>An error has occurred, please refresh the website</Title>
-		</Center>)
+		return (
+			<Center h='100vh'>
+				<Title>An error has occurred, please refresh the website</Title>
+			</Center>
+		)
 	}
 
 	const myFallback = <FallbackComponent />;
 
 	return (
-		// <Sentry.ErrorBoundary fallback={myFallback}>
-		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-				<NotificationsProvider autoClose={8000}>
-					<AppShell
-						styles={(theme) => ({
-							main: {
-								backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-							}
-						})}
-						navbarOffsetBreakpoint='sm'
-						fixed
-						navbar={
-							<Navbar
-								padding='sm'
-								hiddenBreakpoint='sm'
-								hidden={!opened}
-								width={{ sm: 200, base: 200 }}
-								zIndex={110}
-								sx={{ paddingBottom: 'calc(1em + env(safe-area-inset-bottom))' }}
-							>
-								<Navbar.Section
-									grow
-									component={ScrollArea}
-									ml={10}
-									onClick={() => setOpened(false)}
+		<Sentry.ErrorBoundary fallback={myFallback}>
+			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+				<MantineProvider theme={{ colorScheme }} withGlobalStyles>
+					<NotificationsProvider autoClose={8000}>
+						<AppShell
+							styles={(theme) => ({
+								main: {
+									backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+								}
+							})}
+							navbarOffsetBreakpoint='sm'
+							fixed
+							navbar={
+								<Navbar
+									padding='sm'
+									hiddenBreakpoint='sm'
+									hidden={!opened}
+									width={{ sm: 200, base: 200 }}
+									zIndex={110}
+									sx={{ paddingBottom: 'calc(1em + env(safe-area-inset-bottom))' }}
 								>
-									<Sidebar name={activeGame?.name} />
-								</Navbar.Section>
-								<Navbar.Section>
-									<Button
-										onClick={() =>
-										{
-											persistor.pause();
-											persistor.flush().then(() =>
-											{
-												return persistor.purge();
-											})
-											dispatch(logout())
-											dispatch(logoutEmpire())
-										}}
-										variant='subtle'
-										color='red'
-										fullWidth
+									<Navbar.Section
+										grow
+										component={ScrollArea}
+										ml={10}
+										onClick={() => setOpened(false)}
 									>
-										Logout
-									</Button>
-								</Navbar.Section>
-							</Navbar>
-						}
-						header={
-							<Header height={60} p='sm' zIndex={120}>
-								<Group position='apart' spacing={2}>
-									<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-										<Burger
-											opened={opened}
-											onClick={() => setOpened((o) => !o)}
-											size='sm'
-										/>
-									</MediaQuery>
-									<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
-										<Group align='center' spacing={4}>
-											<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
-												<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-											</MediaQuery>
-											<Title order={1} ml={0}>
-												NeoPromisance
-											</Title>
+										<Sidebar name={activeGame?.name} />
+									</Navbar.Section>
+									<Navbar.Section>
+										<Button
+											onClick={() =>
+											{
+												persistor.pause();
+												persistor.flush().then(() =>
+												{
+													return persistor.purge();
+												})
+												dispatch(logout())
+												dispatch(logoutEmpire())
+											}}
+											variant='subtle'
+											color='red'
+											fullWidth
+										>
+											Logout
+										</Button>
+									</Navbar.Section>
+								</Navbar>
+							}
+							header={
+								<Header height={60} p='sm' zIndex={120}>
+									<Group position='apart' spacing={2}>
+										<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+											<Burger
+												opened={opened}
+												onClick={() => setOpened((o) => !o)}
+												size='sm'
+											/>
+										</MediaQuery>
+										<a style={{ textDecoration: 'none', color: 'inherit' }} href='/'>
+											<Group align='center' spacing={4}>
+												<MediaQuery smallerThan={400} styles={{ display: 'none' }}>
+													<Image src={neoIcon} height={38} width={38} sx={colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
+												</MediaQuery>
+												<Title order={1} ml={0}>
+													NeoPromisance
+												</Title>
+											</Group>
+										</a>
+										<Group>
+											{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
+											<ThemeToggle />
 										</Group>
-									</a>
-									<Group>
-										{user?.role === 'admin' ? (<Button component="a" href="/admin/" compact variant='light'>Admin</Button>) : ('')}
-										<ThemeToggle />
 									</Group>
-								</Group>
-							</Header>
-						}
-					>
-						<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)}>
-							{empireStatus !== 'succeeded' ? (<Loader />) : (<>
-								<InfoBar data={empire} />
-								<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-									<Grid.Col span={2}>
-										<EffectIcons pageState={pageState} empire={empire} />
-									</Grid.Col>
-									<Grid.Col span={3}>
-										<Group spacing='xs' position='center'>
-											<GuideModalButton pageName={pageName} empire={empire} protection={activeGame?.turnsProtection} />
-											<RefreshButton empire={empire} />
-										</Group>
-									</Grid.Col>
-									<Grid.Col span={2}>
-										<Group spacing='xs' mr='sm' position='right'>
-											<BonusTurns />
-											{empire.clanId !== 0 && <ClanMailButton empire={empire} kickOut={kickOut} />}
-											<MailButton empire={empire} kickOut={kickOut} pageState={pageState} />
-											<NewsDrawerButton kickOut={kickOut} empire={empire} pageState={pageState} />
-										</Group>
-									</Grid.Col>
-								</Grid>
-								<TurnResultContainer empire={empire} />
-								<RepeatButton empire={empire} kickOut={kickOut} />
-								<Outlet />
-							</>)}
-						</main>
-					</AppShell>
-				</NotificationsProvider>
-			</MantineProvider>
-		</ColorSchemeProvider>
-		// </Sentry.ErrorBoundary>
+								</Header>
+							}
+						>
+							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)}>
+								{empireStatus !== 'succeeded' ? (<Loader />) : (<>
+									<InfoBar data={empire} />
+									<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
+										<Grid.Col span={2}>
+											<EffectIcons pageState={pageState} empire={empire} />
+										</Grid.Col>
+										<Grid.Col span={3}>
+											<Group spacing='xs' position='center'>
+												<GuideModalButton pageName={pageName} empire={empire} protection={activeGame?.turnsProtection} />
+												<RefreshButton empire={empire} />
+											</Group>
+										</Grid.Col>
+										<Grid.Col span={2}>
+											<Group spacing='xs' mr='sm' position='right'>
+												<BonusTurns />
+												{empire.clanId !== 0 && <ClanMailButton empire={empire} kickOut={kickOut} />}
+												<MailButton empire={empire} kickOut={kickOut} pageState={pageState} />
+												<NewsDrawerButton kickOut={kickOut} empire={empire} pageState={pageState} />
+											</Group>
+										</Grid.Col>
+									</Grid>
+									<TurnResultContainer empire={empire} />
+									<RepeatButton empire={empire} kickOut={kickOut} />
+									<Outlet />
+								</>)}
+							</main>
+						</AppShell>
+					</NotificationsProvider>
+				</MantineProvider>
+			</ColorSchemeProvider>
+		</Sentry.ErrorBoundary>
 	)
 }
 

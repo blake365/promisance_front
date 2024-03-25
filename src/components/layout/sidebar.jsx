@@ -1,6 +1,6 @@
 import { Button, Stack, Title } from '@mantine/core'
-import { Fragment } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
 
@@ -47,9 +47,13 @@ const Sidebar = ({ name }) =>
 		'Empire Settings',
 	]
 
-	let location = useLocation()
+	const location = useLocation()
 	// console.log(location.pathname.split('/app/')[1])
-	let locationString = location.pathname.split('/app/')[1]
+	let locationString = location.pathname.split('/app')[1]
+	// remove the first character if it is a '/'
+	if (locationString[0] === '/') {
+		locationString = locationString.slice(1)
+	}
 	// console.log(locationString.split('%').length > 1)
 
 	return (
@@ -79,6 +83,7 @@ const Sidebar = ({ name }) =>
 						</Button>)
 				})}
 				<Button component='a' compact href='https://discord.gg/bnuVy2pdgM' target='_blank' variant='subtle' rightIcon={<ArrowSquareOut />}>Discord</Button>
+				<Button component={Link} compact to='/app/Tips' variant='subtle'>Game Tips</Button>
 				<Title order={4}>Use Turns</Title>
 				{turnLinks.map((link, index) =>
 				{
