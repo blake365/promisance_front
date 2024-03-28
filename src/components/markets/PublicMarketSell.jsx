@@ -11,6 +11,7 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 import { useRef } from 'react'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 // make it mobile friendly
 
 export default function PublicMarketSell({ empire })
@@ -28,7 +29,7 @@ export default function PublicMarketSell({ empire })
     const getCost = (unit, base) =>
     {
         let cost = base
-        let postedItem = otherItems[unit][0].price
+        const postedItem = otherItems[unit][0].price
 
         // console.log(postedItem)
         if (postedItem > 0) {
@@ -38,7 +39,7 @@ export default function PublicMarketSell({ empire })
         return Math.round(cost)
     }
 
-    let now = new Date()
+    const now = new Date()
 
     const trpArmCost = getCost('arm', pvtmTrpArm)
     const trpLndCost = getCost('lnd', pvtmTrpLnd)
@@ -255,6 +256,8 @@ export default function PublicMarketSell({ empire })
         return <MyItem element={element} empire={empire} key={element.id} />
     });
 
+    const roundStatus = checkRoundStatus(true)
+
     return (
         <main>
             <Center my={10}>
@@ -262,6 +265,7 @@ export default function PublicMarketSell({ empire })
                     <Loader />) : (
                     <Stack spacing='sm' align='center'>
                         <Text weight='bold' align='center'>Items you sell will take {pubMktStart} hours to appear on the market.</Text>
+                        {roundStatus && <Text weight='bold' color='red' align='center'>The market has closed for the remainder of the round.</Text>}
                         <form
                             onSubmit={form.onSubmit((values) =>
                             {
@@ -337,7 +341,7 @@ export default function PublicMarketSell({ empire })
                                                             formatter={(value) =>
                                                             {
                                                                 // console.log(typeof value)
-                                                                return !Number.isNaN(parseFloat(value))
+                                                                return !Number.isNaN(Number.parseFloat(value))
                                                                     ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                                     : ''
                                                             }
@@ -360,7 +364,7 @@ export default function PublicMarketSell({ empire })
                                                             formatter={(value) =>
                                                             {
                                                                 // console.log(typeof value)
-                                                                return !Number.isNaN(parseFloat(value))
+                                                                return !Number.isNaN(Number.parseFloat(value))
                                                                     ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                                                     : ''
                                                             }
@@ -378,7 +382,7 @@ export default function PublicMarketSell({ empire })
                                 </table>
                             </div>
                             <Center mt='md'>
-                                <Button type='submit' ref={buttonRef}>Sell Goods</Button>
+                                <Button type='submit' ref={buttonRef} disabled={roundStatus}>Sell Goods</Button>
                             </Center>
                         </form>
 

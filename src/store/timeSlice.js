@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from 'axios'
+import { PURGE } from 'redux-persist'
 
 export const getTime = createAsyncThunk('time/', async (game_id, thunkAPI) => {
 	try {
@@ -14,12 +15,14 @@ export const getTime = createAsyncThunk('time/', async (game_id, thunkAPI) => {
 	}
 })
 
+const initialState = {
+	status: 'idle',
+	time: null,
+}
+
 export const timeSlice = createSlice({
 	name: 'time',
-	initialState: {
-		status: 'idle',
-		time: null,
-	},
+	initialState: initialState,
 	reducers: {
 		timeLoaded: (state, { payload }) => ({
 			time: payload,
@@ -33,6 +36,10 @@ export const timeSlice = createSlice({
 		[getTime.fulfilled]: (state, action) => {
 			state.status = 'succeeded'
 			state.time = action.payload
+		},
+		[PURGE]: (state, action) => {
+			// console.log(action)
+			state = initialState
 		},
 	},
 })

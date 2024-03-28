@@ -1,40 +1,53 @@
-import { Card, Group, Box, Title, Text, Button, Center, Badge, Container, Flex, Grid, Anchor, Loader } from '@mantine/core'
+import { Card, Box, Title, Text, Button, Badge, Container, Flex, Grid, Anchor } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import FooterSocial from '../layout/footer'
-import { demo } from '../../store/userSlice'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks';
 import BigCarousel from '../layout/embla/Carousel'
 import { onLCP } from 'web-vitals'
 import { fetchGames } from '../../store/gamesSlice'
+import Axios from 'axios';
+import { load } from '../../store/userSlice';
+import { persistor } from '../../store/store';
+import { logoutEmpire } from "../../store/empireSlice";
+import { resetUser } from "../../store/userSlice";
 
 export default function Home()
 {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [error, setError] = useState(null)
     // dispatch(getTime(1))
 
     useEffect(() =>
     {
         dispatch(fetchGames())
-    }, [])
 
-    onLCP(console.log)
+        // console.log('hello?')
+        async function loadUser()
+        {
+            try {
+                const res = await Axios.get('auth/me');
+                // console.log(res)
+            } catch (error) {
+                // console.log(error)
+                // localStorage.removeItem('persist:root');
+                persistor.pause();
+                persistor.flush().then(() =>
+                {
+                    return persistor.purge();
+                });
+                dispatch(resetUser());
+                dispatch(logoutEmpire());
+            }
+        }
+
+        loadUser()
+    })
+
+    // onLCP(console.log)
 
     const smScreen = useMediaQuery('(max-width: 768px)')
     const mdScreen = useMediaQuery('(min-width: 992px)')
-
-    const demoRegister = () =>
-    {
-        dispatch(demo()).unwrap().then(() => navigate('/demo')).catch((err) =>
-        {
-            // console.log(err)
-            setError(err)
-        })
-    }
 
     return (
         <main style={{ backgroundColor: '#F1F3F5' }}>

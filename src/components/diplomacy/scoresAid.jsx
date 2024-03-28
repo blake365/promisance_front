@@ -17,6 +17,7 @@ import { loadScores } from '../../store/scoresSlice'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { eraArray } from '../../config/eras'
 import classes from './aid.module.css'
+import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function ScoresAid({ friend })
 {
@@ -100,6 +101,8 @@ export default function ScoresAid({ friend })
         shipsNeeded = 10000
     }
 
+    const roundStatus = checkRoundStatus(true)
+
     return (
         <section>
             <Center>
@@ -108,6 +111,7 @@ export default function ScoresAid({ friend })
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
+                    {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
                     <Card>
                         <form onSubmit={form.onSubmit((values) =>
                         {
@@ -141,7 +145,7 @@ export default function ScoresAid({ friend })
                                         </tbody>
                                     </table>
                                 </div>
-                                <Button color='green' type='submit' disabled={empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
+                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
                                     Send Aid
                                 </Button>
                                 <Text size='sm'>{empire.aidCredits} credits remaining</Text>

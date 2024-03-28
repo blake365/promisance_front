@@ -30,10 +30,26 @@ const AdminSidebar = () =>
                 <Button
                     component={Link}
                     compact
+                    to={'/'}
+                    variant='filled'
+                >
+                    Home Page
+                </Button>
+                <Button
+                    component={Link}
+                    compact
+                    to={'/select/'}
+                    variant='filled'
+                >
+                    Game Select
+                </Button>
+                <Button
+                    component={Link}
+                    compact
                     to={'/admin/'}
                     variant='filled'
                 >
-                    Games Index
+                    Admin Games Index
                 </Button>
                 {activeGame && <Title order={4} align='center'>{activeGame.name}</Title>}
                 <Button

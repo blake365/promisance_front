@@ -27,13 +27,14 @@ export const createGame = createAsyncThunk(
 	}
 )
 
+const initialState = {
+	games: null,
+	activeGame: null,
+	status: 'idle',
+}
 export const gamesSlice = createSlice({
 	name: 'games',
-	initialState: {
-		games: null,
-		activeGame: null,
-		status: 'idle',
-	},
+	initialState: initialState,
 	reducers: {
 		setActiveGame: (state, action) => {
 			return {
@@ -61,7 +62,7 @@ export const gamesSlice = createSlice({
 		},
 		[PURGE]: (state, action) => {
 			// console.log(action)
-			state = this.initialState
+			state = initialState
 		},
 	},
 })

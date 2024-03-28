@@ -82,6 +82,7 @@ import ForgotUsername from './components/pages/ForgotUsername'
 const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
 import ModeSelect from './components/pages/ModeSelect'
 import GamesManager from './components/admin/GamesManager'
+import AuthWrapper from './components/AuthWrapper'
 
 inject();
 // import Guide from './components/guide/guide'

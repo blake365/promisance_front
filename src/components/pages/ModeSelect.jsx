@@ -21,20 +21,24 @@ export default function ModeSelect()
         dispatch(fetchGames())
         async function loadUser()
         {
-            // console.log('loading user')
-            const res = await Axios.get('auth/me')
-            // console.log('status', res.data)
-            if (res.status !== 200) {
-                console.log('not 200')
-                navigate('/login')
-            } else if (res.data) {
-                dispatch(load())
+            try {
+                const res = await Axios.get('auth/me');
+                // console.log(res)
+
+            } catch (error) {
+                // console.log(error)
+                // localStorage.removeItem('persist:root');
+                persistor.pause();
+                persistor.flush().then(() =>
+                {
+                    return persistor.purge();
+                });
+                dispatch(resetUser());
+                dispatch(logoutEmpire());
             }
         }
 
-        if (!isLoggedIn) {
-            loadUser()
-        }
+        loadUser()
     }, [])
 
     const { status, games } = useSelector((state) => state.games)

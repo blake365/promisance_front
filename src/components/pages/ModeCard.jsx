@@ -62,16 +62,24 @@ export default function ModeCard({ game, empireFound, user })
     const now = new Date().getTime()
 
     let roundStatus = false
+    let isUpcoming = false
+    let hasEnded = false
     const upcoming = new Date(game.roundStart).getTime() - now
+    // console.log(game.name, upcoming)
     const remaining = new Date(game.roundEnd).getTime() - now
+    // console.log(game.name, remaining)
 
     if (upcoming > 0) {
         roundStatus = true
+        isUpcoming = true
     } else if (remaining < 0) {
         roundStatus = true
+        hasEnded = true
     } else {
         roundStatus = false
     }
+
+
 
     return (
         <Card withBorder shadow='lg' key={game.id} w={'100%'} >
@@ -80,6 +88,7 @@ export default function ModeCard({ game, empireFound, user })
                 <Text align='left'>
                     {game.roundDescription}
                 </Text>
+                {hasEnded && <Text align='left' color='red'>The round has ended, the results will be saved to the archives.</Text>}
             </Stack>
             <Stack my='sm'>
                 <Group spacing='xs'>
@@ -113,9 +122,9 @@ export default function ModeCard({ game, empireFound, user })
                     <Button size="md" w={210} variant="outline" disabled={roundStatus} onClick={() => demoRegister(game)}>Create Demo Empire</Button>
                     <Text color='red' align="left" size='sm'>{error?.error}</Text>
                 </> : empireFound ? (
-                    <Button size="md" w={210} color='blue' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Play</Button>
+                    <Button size="md" w={210} color='blue' disabled={roundStatus && !isUpcoming} onClick={() => handleGameSelect(game)}>Play</Button>
                 ) : (
-                    <Button size="md" w={210} color='teal' disabled={roundStatus} onClick={() => handleGameSelect(game)}>Create Empire</Button>
+                    <Button size="md" w={210} color='teal' disabled={roundStatus && !isUpcoming} onClick={() => handleGameSelect(game)}>Create Empire</Button>
                 )}
             </Stack>
             <Box onClick={toggle} sx={{ cursor: 'pointer' }}>

@@ -133,6 +133,7 @@ export default function ForeignAid()
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
+                    {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
                     <form onSubmit={form.onSubmit((values) =>
                     {
                         console.log(values)
