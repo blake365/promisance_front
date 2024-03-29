@@ -3,7 +3,6 @@ import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
-import { ROUND_END, ROUND_START, TURNS_PROTECTION } from '../../config/config'
 import { useSelector } from 'react-redux';
 
 const AnimateNumberChange = ({ number, type }) =>
@@ -32,7 +31,9 @@ const AnimateNumberChange = ({ number, type }) =>
 	{
 		if (number > prevNumber) {
 			return classes.increased;
-		} else if (number < prevNumber) {
+		}
+
+		if (number < prevNumber) {
 			return classes.decreased;
 		}
 		return 'same';
@@ -57,6 +58,7 @@ export default function InfoBar({ data })
 	let roundLength = time.end - time.start
 	let roundProgress = time.time - time.start
 	let roundPercent = roundProgress / roundLength * 100
+	const { turnsProtection } = useSelector((state) => state.games.activeGame)
 
 
 	let roundStatus = ''
@@ -76,7 +78,7 @@ export default function InfoBar({ data })
 	return (
 		<Paper shadow='xs' radius='xs' withBorder pb='xs' sx={(theme) =>
 		{
-			if (empire.turnsUsed <= TURNS_PROTECTION) {
+			if (empire.turnsUsed <= turnsProtection) {
 				return {
 					border: '1px solid #40c057',
 					boxShadow: '0 0 7px 1px #40c057',

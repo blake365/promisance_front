@@ -1,5 +1,4 @@
 import { useState, Suspense } from "react"
-import { TURNS_PROTECTION } from "../../config/config"
 // const Guide = lazy(() => import('./guide'));
 import Guide from "./guide";
 import { Button, Modal, Title, Loader } from '@mantine/core'
