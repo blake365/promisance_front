@@ -1,5 +1,4 @@
 import { Container, Title, Loader, Text, Card } from '@mantine/core'
-import { HeroImageRight } from './homeHero'
 import FooterSocial from '../layout/footer'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'

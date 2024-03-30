@@ -1,7 +1,6 @@
 import { Stack, Loader, Text, } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { useSelector } from 'react-redux'
 import WorldNewsItem from '../../news/worldNewsItem'
 
 export default function ClanNews({ memberIds })

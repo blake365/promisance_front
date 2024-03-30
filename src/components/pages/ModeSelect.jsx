@@ -11,9 +11,8 @@ import ModeCard from "./ModeCard";
 
 export default function ModeSelect()
 {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { isLoggedIn, user } = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.user)
     // console.log(games)
 
     useEffect(() =>

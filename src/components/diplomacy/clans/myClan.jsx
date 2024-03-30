@@ -1,6 +1,5 @@
 // forms to create and join a clan
 import { Title, Text, Stack, Tabs, Paper, Loader, Button } from "@mantine/core"
-
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Axios from "axios"

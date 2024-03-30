@@ -1,7 +1,7 @@
 import { raceArray } from "../../config/races"
 import { eraArray } from "../../config/eras"
 import { Compass } from "@phosphor-icons/react"
-import { Table, Text, Title, Paper, Container, Stack } from "@mantine/core"
+import { Table, Text, Title, Container, Stack } from "@mantine/core"
 import classes from './guide.module.css'
 import { useSelector } from "react-redux"
 

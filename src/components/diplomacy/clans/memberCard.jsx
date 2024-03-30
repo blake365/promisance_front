@@ -11,7 +11,6 @@ import ScoresAid from '../scoresAid'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 import ClanRole from './clanRole'
 import { useSelector } from 'react-redux'
-import { ROUND_END, ROUND_START } from '../../../config/config'
 
 const MemberCard = ({ empire, myId, clan, clanString }) =>
 {
@@ -20,6 +19,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     const [effects, setEffects] = useState(null)
     // console.log(empire)
     const { time } = useSelector((state) => state.time)
+    const { roundStart, roundEnd } = useSelector((state) => state.games.activeGame)
 
     const checkForSession = async () =>
     {
@@ -81,10 +81,10 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
         disabled = true
     }
 
-    let role = clanString.split(' ')[2]
+    const role = clanString.split(' ')[2]
 
-    let upcoming = ROUND_START - time
-    let remaining = ROUND_END - time
+    const upcoming = roundStart - time
+    const remaining = roundEnd - time
 
     if (upcoming > 0) {
         disabled = true
@@ -96,7 +96,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     // let actionDate = new Date()
     // console.log(empire.lastAction)
 
-    let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
+    const actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
     // console.log(clan)
 
@@ -143,8 +143,8 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
                                     // console.log(effectAge)
                                     effectAge = Math.floor(effectAge)
 
-                                    let remaining = effect.empireEffectValue - effectAge
-                                    let percentRemaining = remaining / effect.empireEffectValue * 100
+                                    const remaining = effect.empireEffectValue - effectAge
+                                    const percentRemaining = remaining / effect.empireEffectValue * 100
 
                                     let color = 'green'
                                     let icon = ''

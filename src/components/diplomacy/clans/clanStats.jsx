@@ -1,5 +1,5 @@
 // clan scoreboard
-import { Stack, Title, Loader, Card, Button, Text } from '@mantine/core'
+import { Stack, Title, Loader, Card, Button } from '@mantine/core'
 import { useState, useEffect } from 'react'
 
 import Axios from 'axios'

@@ -1,6 +1,6 @@
 import { Button, Stack, Title } from '@mantine/core'
-import { Fragment, useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Fragment } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
 

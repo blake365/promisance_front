@@ -4,16 +4,16 @@ import CreateClan from "./createClan"
 import JoinClan from "./joinClan"
 import MyClan from "./myClan"
 import { useSelector } from "react-redux"
-import { TURNS_PROTECTION } from "../../../config/config"
 import { checkRoundStatus } from "../../../functions/checkRoundStatus"
 
 // if in a clan, show clan info, clan members, clan chat
 function ClanPage()
 {
     const { empire } = useSelector((state) => state.empire)
+    const { turnsProtection } = useSelector((state) => state.games.activeGame)
 
     let disabled = false
-    if (empire.turnsUsed < TURNS_PROTECTION || empire.mode === 'demo') {
+    if (empire.turnsUsed < turnsProtection || empire.mode === 'demo') {
         disabled = true
     }
 
