@@ -13,6 +13,13 @@ export default function ModeSelect()
 {
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
+
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('token')
+
+    if (token) {
+        dispatch(load(token))
+    }
     // console.log(games)
 
     useEffect(() =>
