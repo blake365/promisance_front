@@ -129,7 +129,7 @@ export function calcProvisions(empire) {
 	let production =
 		10 * empire.freeLand +
 		empire.bldFood *
-			75 *
+			70 *
 			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
 
 	production *=
@@ -154,6 +154,19 @@ export function calcProvisions(empire) {
 	return { foodpro: foodpro, foodcon: foodcon }
 }
 
+export function calcRot(empire, consumption) {
+	let rot = 0
+	let percentFarms = empire.bldFood / empire.land
+	if (percentFarms < 0.01) percentFarms = 0.01
+	if (empire.food > empire.networth * 35 * percentFarms) {
+		const multiples = Math.floor(empire.food / empire.networth) - 1
+		rot = Math.round(
+			(multiples / 2) * empire.food * 0.001 * 0.01 * (1 - percentFarms)
+		)
+	}
+	return rot
+}
+
 // money
 export function calcPCI(empire) {
 	const { bldCash, land, race, era } = empire
@@ -168,7 +181,7 @@ export function calcPCI(empire) {
 export function calcFinances(pci, empire, size) {
 	let income = Math.round(
 		(pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 550) *
+			empire.bldCash * 500) *
 			Math.max(0.8, size)
 	)
 
@@ -199,6 +212,15 @@ export function calcFinances(pci, empire, size) {
 	expenses -= Math.round(expenses * expensesBonus)
 
 	return { income: income, expenses: expenses, loanpayed: loanpayed }
+}
+
+export const calcCorruption = (empire) => {
+	let corruption = 0
+	if (empire.cash > empire.networth * 110) {
+		const multiples = Math.floor(empire.cash / empire.networth) - 1
+		corruption = Math.round(multiples * empire.networth * 0.001 * 0.5)
+	}
+	return corruption
 }
 
 // Magic

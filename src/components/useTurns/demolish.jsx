@@ -189,7 +189,7 @@ export default function Demolish()
 
 	const roundStatus = checkRoundStatus()
 
-	const buildings = ['demoPop', 'demoCash', 'demoCost', 'demoFood', 'demoTroop', 'demoWiz', 'demoDef']
+	const buildings = ['demoPop', 'demoCash', 'demoCost', 'demoTroop', 'demoWiz', 'demoFood', 'demoDef']
 
 	return (
 		<main>

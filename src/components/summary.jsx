@@ -19,7 +19,7 @@ export default function Summary()
 	const game = useSelector((state) => state.games.activeGame)
 
 	const navigate = useNavigate()
-	const bgimage = setBgImage(empire)
+	const bgimage = setBgImage(empire, game.turnsProtection)
 
 	useEffect(() =>
 	{

@@ -10,7 +10,7 @@ import
 import { useSelector } from 'react-redux'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
-import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense } from '../functions/functions'
+import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense, calcCorruption, calcRot } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
 import { setBgImage } from '../functions/setBgImage'
 import TinyAction from './useTurns/tinyAction'
@@ -36,7 +36,7 @@ const RaceBonus = ({ value }) =>
 export default function Overview()
 {
 	const { empire } = useSelector((state) => state.empire)
-	const { baseLuck } = useSelector((state) => state.games.activeGame)
+	const { baseLuck, turnsProtection } = useSelector((state) => state.games.activeGame)
 	// console.log(empire)
 	let size = calcSizeBonus(empire)
 
@@ -46,13 +46,17 @@ export default function Overview()
 
 	const { income, expenses, loanpayed } = calcFinances(cpi, empire, size)
 
-	let corruption = 0
-	if (empire.cash > empire.networth * 110) {
-		let multiples = Math.floor(empire.cash / empire.networth) - 1
-		corruption = Math.round(multiples * empire.networth * 0.001)
-	}
+	// let corruption = 0
+	// if (empire.cash > empire.networth * 110) {
+	// 	let multiples = Math.floor(empire.cash / empire.networth) - 1
+	// 	corruption = Math.round(multiples * empire.networth * 0.001)
+	// }
+
+	const corruption = calcCorruption(empire)
 
 	const { foodpro, foodcon } = calcProvisions(empire)
+
+	const rot = calcRot(empire, foodcon)
 
 	const oPower = offense(empire)
 
@@ -99,7 +103,7 @@ export default function Overview()
 		return role
 	}
 
-	const bgimage = setBgImage(empire)
+	const bgimage = setBgImage(empire, turnsProtection)
 
 	return (
 		<main>
@@ -161,9 +165,11 @@ export default function Overview()
 								<Text align='right'>{foodpro.toLocaleString()}</Text>
 								<Text>Consumption: <RaceBonus value={race.mod_foodcon} /></Text>
 								<Text align='right'>{foodcon.toLocaleString()}</Text>
-								<NetProduced title='Net' value={foodpro - foodcon} />
+								<Text>Rot:</Text>
+								<Text align='right'>{rot.toLocaleString()}</Text>
+								<NetProduced title='Net' value={foodpro - foodcon - rot} />
 								<Text mt='md' weight={800} size='lg'>Other</Text>
-								<Text></Text>
+								<Text> </Text>
 								<Popover withArrow shadow="lg">
 									<Popover.Target>
 										<Anchor align='left'>Explore: <RaceBonus value={era.mod_explore + race.mod_explore} />

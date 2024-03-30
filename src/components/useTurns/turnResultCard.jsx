@@ -287,7 +287,12 @@ export default function TurnResultCard({ data, era })
 									<Text align='right'>{data.foodpro.toLocaleString()}</Text>
 									<Text>Consumed:</Text>
 									<Text align='right'>{data.foodcon.toLocaleString()}</Text>
-
+									{data.rot > 0 ?
+										(<>
+											<Text>Rot:</Text>
+											<Text align='right'>{data.rot.toLocaleString()}</Text>
+										</>)
+										: ('')}
 									<NetProduced title='Net' value={data.food} />
 								</SimpleGrid>
 							</div>

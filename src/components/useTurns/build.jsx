@@ -129,7 +129,7 @@ export default function Build({ size })
 		errors.error = error
 	}
 
-	const buildings = ['bldPop', 'bldCash', 'bldCost', 'bldFood', 'bldTroop', 'bldWiz', 'bldDef']
+	const buildings = ['bldPop', 'bldCash', 'bldCost', 'bldTroop', 'bldWiz', 'bldFood', 'bldDef']
 
 	const doBuild = async (values) =>
 	{

@@ -1,15 +1,14 @@
-import { TURNS_PROTECTION } from '../config/config'
 
-export const setBgImage = (empire) =>
+export const setBgImage = (empire, turnsProtection) =>
 {
     let bgimage = '/images/summaries/default.webp'
 
-    let cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
-    let indy = Math.round(empire.bldTroop / empire.land * 100)
-    let mage = Math.round(empire.bldWiz / empire.land * 100)
-    let farm = Math.round(empire.bldFood / empire.land * 100)
+    const cash = Math.round(empire.bldPop / empire.land * 100) + Math.round(empire.bldCash / empire.land * 100)
+    const indy = Math.round(empire.bldTroop / empire.land * 100)
+    const mage = Math.round(empire.bldWiz / empire.land * 100)
+    const farm = Math.round(empire.bldFood / empire.land * 100)
 
-    if (empire.turnsUsed < TURNS_PROTECTION) {
+    if (empire.turnsUsed < turnsProtection) {
         bgimage = '/images/summaries/default.webp'
     } else if (cash > indy && cash > mage && cash > farm) {
         if (empire.era === 0) {
