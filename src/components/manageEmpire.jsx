@@ -29,7 +29,7 @@ export default function ManageEmpire()
 				<UpdateProfile status={roundStatus} empire={empire} />
 				<UpdateIcon status={roundStatus} empire={empire} />
 				<ChangeRace status={roundStatus} empire={empire} />
-				<UpdateName status={roundStatus} empire={empire} />
+				<UpdateName status={checkRoundStatus(true)} empire={empire} />
 
 				<Center my='sm'>
 					<Button compact variant='outline' align='center' onClick={() =>
@@ -48,7 +48,7 @@ export default function ManageEmpire()
 						className='sixth-step'>Replay First Turns Tour</Button>
 				</Center>
 
-				<DeleteEmpire status={roundStatus} empire={empire} />
+				<DeleteEmpire status={checkRoundStatus(true)} empire={empire} />
 			</Stack>
 		</main>
 	)
