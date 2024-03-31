@@ -30,12 +30,15 @@ export default function Demolish()
 
 	const getDemolishAmounts = (empire) =>
 	{
-		let size = calcSizeBonus(empire)
-		let demolishCost = Math.round(((buildCost + empire.land * 0.2) * (size / 3)) / 5)
+		const size = calcSizeBonus(empire)
+		const demolishCost = Math.round(((buildCost + empire.land * 0.2) * (size / 3)) / 5)
 
-		let demolishRate = Math.round(Math.min(Math.floor(empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100), 200))
+		// let demolishRate = Math.round(Math.min(Math.floor(empire.land * 0.02 + 2) * ((100 + raceArray[empire.race].mod_buildrate) / 100), 200))
 
-		let canDemolish = Math.min(
+		let demolishRate = Math.round(empire.land * 0.007)
+		demolishRate = Math.round(((100 + raceArray[empire.race].mod_buildrate) / 100) * demolishRate)
+
+		const canDemolish = Math.min(
 			demolishRate * empire.turns, empire.land - empire.freeLand)
 
 		return { canDemolish, demolishRate, demolishCost }
@@ -49,7 +52,7 @@ export default function Demolish()
 			dropRate = Math.round(dropRate / empire.attacks)
 		}
 
-		let canDrop = Math.round(Math.min(dropRate * empire.turns, empire.freeLand, Math.max(0, empire.land - 1000)))
+		const canDrop = Math.round(Math.min(dropRate * empire.turns, empire.freeLand, Math.max(0, empire.land - 1000)))
 
 		return { dropRate, canDrop }
 	}
