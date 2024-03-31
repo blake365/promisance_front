@@ -9,7 +9,7 @@
     "@mantine/form": "^5.10.5",
     "@mantine/hooks": "^5.10.5",
     "@mantine/notifications": "^5.10.5",
-    "@phosphor-icons/react": "^2.0.10",
+    "@phosphor-icons/react": "^2.1.4",
     "@reactour/tour": "^3.6.1",
     "@reduxjs/toolkit": "^1.7.1",
     "@sentry/react": "^7.94.1",
