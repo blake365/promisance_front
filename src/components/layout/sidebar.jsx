@@ -63,7 +63,7 @@ const Sidebar = ({ name }) =>
 					color='white' w={'100%'}>{name}</Title>
 				</Button>
 				<Title order={4}>Information</Title>
-				{infoLinks.map((link, index) =>
+				{infoLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -77,7 +77,7 @@ const Sidebar = ({ name }) =>
 							compact
 							to={`/app/${link}`}
 							variant={variant}
-							key={index}
+							key={link}
 						>
 							{link}
 						</Button>)
@@ -85,7 +85,7 @@ const Sidebar = ({ name }) =>
 				<Button component='a' compact href='https://discord.gg/bnuVy2pdgM' target='_blank' variant='subtle' rightIcon={<ArrowSquareOut />}>Discord</Button>
 				<Button component={Link} compact to='/app/Tips' variant='subtle'>Game Tips</Button>
 				<Title order={4}>Use Turns</Title>
-				{turnLinks.map((link, index) =>
+				{turnLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -100,7 +100,7 @@ const Sidebar = ({ name }) =>
 							to={`/app/${link}`}
 							variant={variant}
 							fullWidth
-							key={index}
+							key={link}
 							className={link === 'Explore' ? 'first-step' : link === 'Build' ? 'third-step' : ''}
 							onClick={() =>
 							{
@@ -116,7 +116,7 @@ const Sidebar = ({ name }) =>
 					)
 				})}
 				<Title order={4}>Finance</Title>
-				{financeLinks.map((link, index) =>
+				{financeLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -131,14 +131,14 @@ const Sidebar = ({ name }) =>
 							to={`/app/${link}`}
 							variant={variant}
 							fullWidth
-							key={index}
+							key={link}
 						>
 							{link}
 						</Button>
 					)
 				})}
 				<Title order={4}>Diplomacy</Title>
-				{foreignLinks.map((link, index) =>
+				{foreignLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -153,14 +153,14 @@ const Sidebar = ({ name }) =>
 							to={`/app/${link}`}
 							variant={variant}
 							fullWidth
-							key={index}
+							key={link}
 						>
 							{link}
 						</Button>
 					)
 				})}
 				<Title order={4}>Additional Stats</Title>
-				{statsLinks.map((link, index) =>
+				{statsLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -175,14 +175,14 @@ const Sidebar = ({ name }) =>
 							to={`/app/${link}`}
 							variant={variant}
 							fullWidth
-							key={index}
+							key={link}
 						>
 							{link}
 						</Button>
 					)
 				})}
 				<Title order={4}>Settings</Title>
-				{managementLinks.map((link, index) =>
+				{managementLinks.map((link) =>
 				{
 					let variant = 'subtle'
 					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
@@ -197,7 +197,7 @@ const Sidebar = ({ name }) =>
 							to={`/app/${link}`}
 							variant={variant}
 							fullWidth
-							key={index}
+							key={link}
 						>
 							{link}
 						</Button>
@@ -206,7 +206,7 @@ const Sidebar = ({ name }) =>
 				<Button
 					component={'a'}
 					compact
-					href={`https://www.buymeacoffee.com/blakemorgan`}
+					href='https://www.buymeacoffee.com/blakemorgan'
 					fullWidth
 					variant='subtle'
 					target='_blank'

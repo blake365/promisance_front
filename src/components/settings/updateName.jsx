@@ -16,7 +16,7 @@ export default function UpdateName({ status, empire })
             name: empire.name
         },
         validate: {
-            name: hasLength({ min: 3, max: 255 }, 'Name must have between 3 and 255'),
+            name: hasLength({ min: 3, max: 50 }, 'Name must have between 3 and 50 characters'),
         },
     })
 
@@ -24,7 +24,7 @@ export default function UpdateName({ status, empire })
     const updateName = async (values) =>
     {
         try {
-            const res = await Axios.post(`/empire/${empire.uuid}/nameChange`, values)
+            const res = await Axios.post(`/empire/${empire.uuid}/nameChange?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
@@ -35,7 +35,7 @@ export default function UpdateName({ status, empire })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Name Change Failed',
+                title: error.response.data.error,
                 color: 'orange',
             })
         }

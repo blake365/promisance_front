@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, Link } from 'react-router-dom'
 import Axios from 'axios'
 import { useLocalStorage } from '@mantine/hooks';
 import useInterval from './hooks/useInterval'
@@ -20,7 +20,6 @@ import
 	Button,
 	Image,
 	Center,
-	Container,
 } from '@mantine/core'
 import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import neoIcon from './icons/neoIcon.svg'
@@ -275,6 +274,15 @@ function App()
 										<Sidebar name={activeGame?.name} />
 									</Navbar.Section>
 									<Navbar.Section>
+										<Button
+											mt='xs'
+											component={Link}
+											to='/select'
+											variant='subtle'
+											fullWidth
+										>
+											Mode Select
+										</Button>
 										<Button
 											onClick={() =>
 											{

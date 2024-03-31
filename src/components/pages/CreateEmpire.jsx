@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, TextInput, Title, Select, Container, createStyles, Table, Text, Group, Image } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { create } from '../../store/empireSlice'
-import { useEffect, forwardRef } from 'react'
+import { useEffect, forwardRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { raceArray } from '../../config/races'
@@ -57,7 +57,7 @@ export default function CreateEmpire()
 	// console.log(games)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-
+	const [error, setError] = useState(null)
 	const { game_id } = useSelector((state) => state.games.activeGame)
 	// console.log(game_id)
 
@@ -122,7 +122,7 @@ export default function CreateEmpire()
 										if (error.error === 'User already has an empire in this game') {
 											navigate('/app/')
 										}
-										// setError(error)
+										setError(error)
 									})
 							})}
 						>
@@ -143,6 +143,7 @@ export default function CreateEmpire()
 									{...form.getInputProps('race')}
 								/>
 								<Button type='submit'>Create Empire</Button>
+								{error && <Text color='red'>{error.error}</Text>}
 							</Stack>
 						</form>
 
