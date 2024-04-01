@@ -82,6 +82,13 @@ export function OneTurn(props)
     return (
         <ActionIcon size='sm' color='blue' variant="transparent" onClick={() =>
         {
-            props.formName.setFieldValue(props.fieldName, props.value + currentValue)
+            if (props.value + currentValue > props.max) {
+                props.formName.setFieldValue(props.fieldName, props.max)
+            } else {
+                props.formName.setFieldValue(
+                    props.fieldName,
+                    props.value + currentValue,
+                );
+            }
         }}>1</ActionIcon>)
 }

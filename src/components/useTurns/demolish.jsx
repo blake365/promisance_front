@@ -259,7 +259,7 @@ export default function Demolish()
 													hideControls
 													min={0}
 													defaultValue={0}
-													max={canDemolish}
+													max={Math.min(canDemolish, empire[empireBuilding])}
 													{...form.getInputProps(building)}
 													rightSection={
 														<div
@@ -271,6 +271,7 @@ export default function Demolish()
 															<OneTurn
 																fieldName={building}
 																value={Math.min(demolishRate, empire[empireBuilding])}
+																max={Math.min(canDemolish, empire[empireBuilding])}
 																formName={form}
 																currentValue={form.values[building]}
 															/>

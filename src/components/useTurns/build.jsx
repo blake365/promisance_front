@@ -36,16 +36,16 @@ export default function Build({ size })
 
 	const getBuildAmounts = (empire) =>
 	{
-		let size = calcSizeBonus(empire)
+		const size = calcSizeBonus(empire)
 		// console.log(size)
-		let buildCost = Math.round((baseBuildCost + empire.land * 0.2) * (size / 3))
+		const buildCost = Math.round((baseBuildCost + empire.land * 0.2) * (size / 3))
 
 		let buildRate = Math.round(empire.land * 0.015 + 4)
 		buildRate = Math.round(
 			((100 + raceArray[empire.race].mod_buildrate) / 100) * buildRate
 		)
 
-		let canBuild = Math.min(
+		const canBuild = Math.min(
 			Math.floor(empire.cash / buildCost),
 			buildRate * empire.turns,
 			empire.freeLand
@@ -252,6 +252,7 @@ export default function Build({ size })
 															<OneTurn
 																fieldName={building}
 																value={buildRate}
+																max={canBuild}
 																formName={form}
 																currentValue={form.values[building]}
 															/>
