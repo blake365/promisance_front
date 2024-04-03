@@ -3,11 +3,11 @@ import { SlimHero } from "./slimHero";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchGames } from "../../store/gamesSlice";
-import { useNavigate } from "react-router-dom";
 import { load } from "../../store/userSlice";
 import Axios from 'axios'
 import FooterSocial from "../layout/footer";
 import ModeCard from "./ModeCard";
+import { persistor } from "../../store/store";
 
 export default function ModeSelect()
 {

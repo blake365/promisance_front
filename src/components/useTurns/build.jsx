@@ -174,7 +174,7 @@ export default function Build({ size })
 									display: 'inline',
 								}}><Compass size={24} /></ActionIcon>
 						</Title>
-						<div className='bld-first-step'>
+						<div className='build0'>
 							<Text align='center'>
 								Each structure consumes one acre of unused land and costs $
 								{buildCost.toLocaleString()} to build.
@@ -219,7 +219,7 @@ export default function Build({ size })
 											buildingName = 'bldtrp'
 										}
 
-										return <tr className={index + 1} key={building}>
+										return <tr className={`build${index + 1}`} key={building}>
 											<td>
 												<Group spacing={2}>
 													<FavoriteButton
