@@ -64,7 +64,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 
     if (myEmpire && empire.clanReturn?.relation) {
         if (empire.clanReturn.relation.length > 0) {
-            let myRelations = empire.clanReturn.relation.map((relation) =>
+            const myRelations = empire.clanReturn.relation.map((relation) =>
             {
                 if (relation.clanRelationFlags === 'war') {
                     return relation.c_id2

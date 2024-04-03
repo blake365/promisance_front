@@ -4,7 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Trophy, LegoSmiley } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchEmpire } from '../../store/empireSlice';
+import { fetchEmpire, createSession } from '../../store/empireSlice';
 import { getTime } from '../../store/timeSlice';
 import { setActiveGame } from '../../store/gamesSlice';
 import lazy from '../utilities/lazyWrapper'
@@ -43,6 +43,7 @@ export default function ModeCard({ game, empireFound, user })
                     }
                 ))
                 dispatch(getTime(game.game_id)).then(() => navigate('/app/'))
+                dispatch(createSession({ id: empire.id }))
             }
         } else {
             navigate('/create')

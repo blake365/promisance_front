@@ -43,6 +43,21 @@ export const fetchEmpire = createAsyncThunk(
 	}
 )
 
+export const createSession = createAsyncThunk(
+	'empire/session',
+	async ({ id }, thunkAPI) => {
+		try {
+			// console.log(id)
+			const res = await Axios.post(`/session/${id}`)
+			const data = res.data
+			return data
+		} catch (e) {
+			console.log(e)
+			return thunkAPI.rejectWithValue(e.response.data)
+		}
+	}
+)
+
 export const logoutEmpire = createAsyncThunk(
 	'empire/logout',
 	async (thunkAPI) => {
