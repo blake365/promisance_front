@@ -189,7 +189,7 @@ export default function Favorites()
             <Title order={1} align='center'>
                 Favorites
             </Title>
-            <Text size='sm' color='dimmed' align='center' mb='xs'>drag to reorder</Text>
+            <Text size='sm' color='dimmed' align='center' mb='xs'>Drag and drop to rearrange favorites</Text>
             <Center>
                 <Switch
                     label="Compact"

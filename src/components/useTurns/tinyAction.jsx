@@ -57,8 +57,8 @@ export default function TinyAction(props)
 	{
 		setLoading(true)
 		try {
-			const res = await Axios.post('/useturns', values)
-			dispatch(setRepeat({ route: '/useturns', body: values, color: props.color }))
+			const res = await Axios.post(`/useturns?gameId=${props.empire.game_id}`, values)
+			dispatch(setRepeat({ route: `/useturns?gameId=${props.empire.game_id}`, body: values, color: props.color }))
 			dispatch(setResult(res.data))
 			loadEmpire()
 			buttonRef.current.focus()

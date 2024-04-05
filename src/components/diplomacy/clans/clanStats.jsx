@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import ClanCard from './clanCard'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function ClanStats()
 {
@@ -12,6 +13,7 @@ export default function ClanStats()
     const [loading, setLoading] = useState(false)
     const [clans, setClans] = useState(null)
     // console.log(scores)
+    const { game_id } = useSelector(state => state.games.activeGame)
 
     useEffect(() =>
     {
@@ -19,7 +21,7 @@ export default function ClanStats()
 
         async function fetchScores()
         {
-            const clans = await Axios.get('/clans/getClansData')
+            const clans = await Axios.get(`/clans/getClansData?gameId=${game_id}`)
             // console.log(clans.data)
             setClans(clans.data)
         }
