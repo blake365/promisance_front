@@ -85,10 +85,10 @@ export default function Mailbox()
     {
         setLoading(true)
         try {
-            const res = await Axios.post(`/messages/message/new`, values)
+            const res = await Axios.post(`/messages/message/new?gameId=${empire.game_id}`, values)
             const data = res.data
             // console.log(data)
-            let destination = data.conversationId.toString()
+            const destination = data.conversationId.toString()
             getMail(body)
                 .then((data) =>
                 {
@@ -118,12 +118,12 @@ export default function Mailbox()
                     {convos.length > 0 ? (
                         <Tabs value={activeTab} onTabChange={setActiveTab} orientation="vertical" keepMounted={false} variant='pills' key='39i2390'>
                             <Tabs.List h='70vh' sx={{ overflowY: 'scroll' }} key='930i2'>
-                                {convos.map((item, index) =>
+                                {convos.map((item) =>
                                 {
                                     // console.log(item)
-                                    let otherEmpire = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
+                                    const otherEmpire = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
                                     // console.log(item)
-                                    return (<Tabs.Tab key={index} value={item.conversationId.toString()}
+                                    return (<Tabs.Tab key={item.id} value={item.conversationId.toString()}
                                         sx={{
                                             maxWidth: 110,
                                             overflowX: 'scroll',
@@ -135,9 +135,9 @@ export default function Mailbox()
 
                             {convos.map((item) =>
                             {
-                                let otherEmpireName = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
+                                const otherEmpireName = item.empireSourceName === empire.name ? item.empireDestinationName : item.empireSourceName
 
-                                let otherEmpireId = item.empireIdSource === empire.id ? item.empireIdDestination : item.empireIdSource
+                                const otherEmpireId = item.empireIdSource === empire.id ? item.empireIdDestination : item.empireIdSource
 
                                 return (
                                     <Tabs.Panel key={item.uuid} value={item.conversationId.toString()}><Chatbox conversation={item} source={empire.id} sourceName={empire.name} destinationId={otherEmpireId} destinationName={otherEmpireName} /></Tabs.Panel>
