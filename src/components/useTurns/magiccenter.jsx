@@ -27,6 +27,9 @@ export default function MagicCenter({ size })
 {
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(false)
+    const effects = useSelector((state) => state.effects.effects)
+
+    console.log(effects)
 
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
@@ -104,7 +107,19 @@ export default function MagicCenter({ size })
         return { nextEra, canAdvance, prevEra, canRegress }
     }
 
+    const timeGateCheck = (effects) =>
+    {
+        let timeGate = false
+        for (const effect of effects) {
+            if (effect.empireEffectName === 'time gate') {
+                timeGate = true
+            }
+        }
+        return timeGate
+    }
+
     const { nextEra, canAdvance, prevEra, canRegress } = eraCheck(empire)
+    const timeGate = timeGateCheck(effects)
 
     const roundStatus = checkRoundStatus()
 
@@ -141,14 +156,14 @@ export default function MagicCenter({ size })
                                     { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17) },
                                     { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
                                     { value: 5, label: 'Open Time Gate', power: 65, cost: Math.ceil(baseCost(empire) * 20) },
-                                    { value: 6, label: 'Close Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 14.5) },
+                                    { value: 6, label: 'Close Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 14.5), disabled: !timeGate },
                                     { value: 3, label: `Advance to ${nextEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
                                     { value: 4, label: `Regress to ${prevEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
                             <NumberInput
-                                label={`Cast Spell How Many Times?`}
+                                label={'Cast Spell How Many Times?'}
                                 min={1}
                                 defaultValue={1}
                                 stepHoldDelay={500}

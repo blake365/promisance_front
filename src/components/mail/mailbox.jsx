@@ -83,6 +83,8 @@ export default function Mailbox()
 
     const startConversation = async (values) =>
     {
+        // console.log(values)
+        if (values.message === '') return
         setLoading(true)
         try {
             const res = await Axios.post(`/messages/message/new?gameId=${empire.game_id}`, values)

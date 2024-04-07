@@ -10,13 +10,13 @@ export const concatenateIntegers = (a, b) =>
     const strA = a.toString()
     const strB = b.toString()
 
-    return parseInt(strA + strB)
+    return Number.parseInt(strA + strB)
 }
 
 const getMessages = async (body) =>
 {
     try {
-        const res = await Axios.post(`/messages/messages`, body)
+        const res = await Axios.post('/messages/messages', body)
         const data = res.data
         if (data.length < 1) return data
         const lastMessage = data[data.length - 1]
@@ -42,9 +42,9 @@ export default function ScoresChat({ enemy })
     const messageContainerRef = useRef(null)
     const [report, setReport] = useState(false)
 
-    let conversationId = concatenateIntegers(enemy.id, empire.id)
+    const conversationId = concatenateIntegers(enemy.id, empire.id)
 
-    let body = {
+    const body = {
         empireId: empire.id,
         conversationId: conversationId,
         reader: empire.id
@@ -84,6 +84,7 @@ export default function ScoresChat({ enemy })
 
     const sendMessage = async (values) =>
     {
+        if (values.message === '') return
         setLoading(true)
         try {
             const res = await Axios.post(`/messages/message/new?gameId=${empire.game_id}`, values)
@@ -104,7 +105,7 @@ export default function ScoresChat({ enemy })
     const reportMessages = async () =>
     {
         try {
-            const res = await Axios.post(`/messages/report`, { conversationId: body.conversationId })
+            const res = await Axios.post('/messages/report', { conversationId: body.conversationId })
             const data = res.data
             // console.log(data)
             setReport(true)
@@ -125,14 +126,14 @@ export default function ScoresChat({ enemy })
             }}>
                 {messages.length < 1 ? (<Text align='center' color='dimmed'>Start the conversation</Text>) : (
                     <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
-                        {messages.map((message, index) =>
+                        {messages.map((message) =>
                         {
-                            let now = new Date()
-                            let eventTime = new Date(message.createdAt)
-                            let diff = now - eventTime
-                            let minutes = Math.floor(diff / 60000)
-                            let hours = Math.floor(minutes / 60)
-                            let days = Math.floor(hours / 24)
+                            const now = new Date()
+                            const eventTime = new Date(message.createdAt)
+                            const diff = now - eventTime
+                            const minutes = Math.floor(diff / 60000)
+                            const hours = Math.floor(minutes / 60)
+                            const days = Math.floor(hours / 24)
                             let timeSince = ''
 
                             if (days > 0) {
@@ -155,7 +156,7 @@ export default function ScoresChat({ enemy })
                             const messageContainer = messageContainerRef.current
                             if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
                             return (
-                                <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
+                                <Card key={message.id} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                     <Group position='apart'>
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== empire.id ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>

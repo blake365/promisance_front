@@ -8,8 +8,8 @@ export default function EffectIcons({ empire, pageState })
 {
     // console.log(data.empire)
     const dispatch = useDispatch()
-    let effects = useSelector((state) => state.effects.effects)
-    let now = new Date()
+    const effects = useSelector((state) => state.effects.effects)
+    const now = new Date()
 
     useEffect(() =>
         dispatch(fetchEffects({
@@ -29,9 +29,9 @@ export default function EffectIcons({ empire, pageState })
                         effectAge = Math.floor(effectAge)
                         // console.log(effectAge)
 
-                        let remaining = (effect.empireEffectValue - effectAge)
+                        const remaining = (effect.empireEffectValue - effectAge)
                         // console.log(remaining)
-                        let percentRemaining = remaining / effect.empireEffectValue * 100
+                        const percentRemaining = remaining / effect.empireEffectValue * 100
 
                         let color = 'green'
                         let icon = ''

@@ -10,7 +10,7 @@ const getMessages = async (body) =>
     // console.log(body)
 
     try {
-        const res = await Axios.post(`/messages/messages`, body)
+        const res = await Axios.post('/messages/messages', body)
         const data = res.data
         const lastMessage = data[data.length - 1]
         // console.log(lastMessage)
@@ -34,7 +34,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     const [report, setReport] = useState(false)
     const messageContainerRef = useRef(null)
 
-    let body = {
+    const body = {
         conversationId: conversation.conversationId,
         empireId: source,
         reader: empire.id
@@ -61,7 +61,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                 })
         }
 
-    }, [])
+    }, [conversation, empire, source])
 
 
     const form = useForm({
@@ -76,6 +76,8 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
 
     const sendMessage = async (values) =>
     {
+        // console.log(values)
+        if (values.message === '') return
         setLoading(true)
         try {
             const res = await Axios.post(`/messages/message/new?gameId=${empire.game_id}`, values)
@@ -96,7 +98,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
     const reportMessages = async () =>
     {
         try {
-            const res = await Axios.post(`/messages/report`, { conversationId: conversation.conversationId })
+            const res = await Axios.post('/messages/report', { conversationId: conversation.conversationId })
             const data = res.data
             // console.log(data)
             setReport(true)
@@ -117,14 +119,14 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
             <Stack gap='sm' justify='space-between' h='100%'>
                 {loading ? (<Loader />) : (
                     <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
-                        {messages.map((message, index) =>
+                        {messages.map((message) =>
                         {
-                            let now = new Date()
-                            let eventTime = new Date(message.createdAt)
-                            let diff = now - eventTime
-                            let minutes = Math.floor(diff / 60000)
-                            let hours = Math.floor(minutes / 60)
-                            let days = Math.floor(hours / 24)
+                            const now = new Date()
+                            const eventTime = new Date(message.createdAt)
+                            const diff = now - eventTime
+                            const minutes = Math.floor(diff / 60000)
+                            const hours = Math.floor(minutes / 60)
+                            const days = Math.floor(hours / 24)
                             let timeSince = ''
 
                             if (days > 0) {
@@ -147,7 +149,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                             const messageContainer = messageContainerRef.current
                             if (messageContainer) messageContainer.scrollTop = messageContainer.scrollHeight
                             return (
-                                <Card key={index} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
+                                <Card key={message.id} radius='sm' my='xs' p={8} maw='80%' ml={ml} withBorder shadow='sm' bg={color} >
                                     <Group position='apart'>
                                         <Text size='xs' align={align} color={fontColor}>{message.empireIdSource !== source ? (message.empireSourceName) : ('')}</Text>
                                         <Text size='xs' color={fontColor}>{timeSince}</Text>
