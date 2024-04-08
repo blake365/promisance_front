@@ -1,5 +1,6 @@
 import { eraArray } from '../../../config/eras'
 import GuideLink from '../../utilities/guidelink'
+import { useSelector } from 'react-redux'
 
 export default function FarmerGuide({ empire })
 {

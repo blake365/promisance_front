@@ -41,7 +41,7 @@ import AchievementsGuide from "./guidepages/achievements";
 export default function Guide(props)
 {
 
-    let { guidePage } = useSelector((state) => state.guide)
+    const { guidePage } = useSelector((state) => state.guide)
     // console.log(guidePage)
 
     switch (guidePage) {
