@@ -58,7 +58,7 @@ export default function Summary()
 				</Title>
 				<div className='gremlin0'>
 					<NewPlayerModal empire={empire} time={time} />
-					<Button onClick={() => startTutorial(raceArray[empire.race].name)}>{raceArray[empire.race].name} Tutorial</Button>
+					{/* <Button onClick={() => startTutorial(raceArray[empire.race].name)}>{raceArray[empire.race].name} Tutorial</Button> */}
 					<Card>
 
 						<Group position='center' align='center' spacing={5} >

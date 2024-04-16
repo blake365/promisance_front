@@ -72,7 +72,7 @@ export default function Lottery()
         const getTotalTickets = async () =>
         {
             try {
-                const res = await Axios.get(`/lottery/getTotalTickets`)
+                const res = await Axios.get(`/lottery/getTotalTickets?gameId=${empire.game_id}`)
                 // console.log(res.data)
                 return res.data.success
             }

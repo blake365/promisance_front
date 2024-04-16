@@ -82,7 +82,7 @@ const NewPlayerModal = ({ empire, time }) =>
             <Text mt='sm'>
                 As a {raceArray[empire.race].name} your people are strongest in {strength}
             </Text>
-            <Button>{raceArray[empire.race].name} Tutorial</Button>
+            {/* <Button>{raceArray[empire.race].name} Tutorial</Button> */}
         </Modal>
     )
 }

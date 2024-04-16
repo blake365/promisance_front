@@ -17,6 +17,7 @@ const ResumeTutorialButton = ({ empire, kickOut }) =>
 
     if (isOpen) { return null }
     if (currentStep === steps.length - 1) { return null }
+    if (currentStep === 0) { return null }
     return (
         <div style={{ position: 'fixed', right: '20px', bottom: '11%', zIndex: 10 }}>
             <Button color='green.5' radius='xl' variant='filled' onClick={handleClick} loading={loading}>
