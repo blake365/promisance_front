@@ -84,7 +84,7 @@ export default function PublicMarketSell({ empire })
 
     let canSell = [Math.floor(empire.trpArm * (pubMktMaxSell / 100)), Math.floor(empire.trpLnd * (pubMktMaxSell / 100)), Math.floor(empire.trpFly * (pubMktMaxSell / 100)), Math.floor(empire.trpSea * (pubMktMaxSell / 100)), Math.floor(empire.food * (pubMktMaxFood / 100)), Math.floor(empire.runes * (pubMktMaxRunes / 100))]
 
-    let processedItems = processItems(myItems)
+    const processedItems = processItems(myItems)
 
     if (processedItems) {
         // console.log(canSell)
@@ -95,13 +95,13 @@ export default function PublicMarketSell({ empire })
                 {
                     if (element.type === index) {
                         return canSell[index] -= element.amount
-                    } else {
-                        return canSell[index]
                     }
+                    return canSell[index]
+
                 })
-            } else {
-                return canSell[index]
             }
+            return canSell[index]
+
         })
 
         // console.log(canSell)
@@ -110,14 +110,14 @@ export default function PublicMarketSell({ empire })
             if (Array.isArray(item)) {
                 if (item[item.length - 1] < 0) {
                     return 0
-                } else
-                    return item[item.length - 1]
-            } else {
-                if (item < 0) {
-                    return 0
-                } else
-                    return item
+                }
+                return item[item.length - 1]
             }
+            if (item < 0) {
+                return 0
+            }
+            return item
+
         })
     }
 
@@ -304,8 +304,9 @@ export default function PublicMarketSell({ empire })
                                         {
                                             let eraTroop = 'trp' + unit.toLowerCase()
                                             let troop = `trp${unit}`
-                                            let price = `price${unit}`
-                                            let sell = `sell${unit}`
+                                            const price = `price${unit}`
+                                            const sell = `sell${unit}`
+                                            let classN = '' // indy races
                                             let defPrice = getCost(unit.toLowerCase(), form.values[price])
                                             // console.log(otherItems[unit.toLowerCase()][0].price
                                             if (otherItems[unit.toLowerCase()][0].price !== 0 && otherItems[unit.toLowerCase()][0].price !== form.values[price]) {
@@ -314,13 +315,15 @@ export default function PublicMarketSell({ empire })
                                             if (unit === 'Food') {
                                                 troop = 'food'
                                                 eraTroop = 'food'
+                                                classN = 'gremlin9'
                                             } else if (unit === 'Runes') {
                                                 troop = 'runes'
                                                 eraTroop = 'runes'
+                                                classN = ''
                                             }
 
                                             return (
-                                                <tr key={index}>
+                                                <tr key={unit} className={classN}>
                                                     <td align='center'>
                                                         {eraArray[empire.era][eraTroop]}
                                                     </td>
@@ -386,23 +389,25 @@ export default function PublicMarketSell({ empire })
                             </Center>
                         </form>
 
-                        <div className={classes.tablecontainer}>
-                            <table className={classes.widetable}>
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Amount</th>
-                                        <th>Price</th>
-                                        <th>Hours On Market</th>
-                                        <th>Edit Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>{myItemsRows}</tbody>
-                            </table>
+                        <div className='gremlin10'>
+                            <div className={classes.tablecontainer}>
+                                <table className={classes.widetable}>
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Amount</th>
+                                            <th>Price</th>
+                                            <th>Hours On Market</th>
+                                            <th>Edit Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>{myItemsRows}</tbody>
+                                </table>
+                            </div>
+                            <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
+                            <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
+                            <Text weight='bold' align='center'> Items on the market for {pubMktMaxTime} hours will be returned to you, only 75% will be returned. </Text>
                         </div>
-                        <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
-                        <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
-                        <Text weight='bold' align='center'> Items on the market for {pubMktMaxTime} hours will be returned to you, only 75% will be returned. </Text>
                     </Stack>
                 )}
             </Center>

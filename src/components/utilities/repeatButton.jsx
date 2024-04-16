@@ -50,17 +50,15 @@ const RepeatButton = ({ empire, kickOut }) =>
     }, [location])
 
     if (!repeatAction?.route) { return null }
-    else {
-        return (
-            <div style={{ position: 'fixed', right: '20px', bottom: '5%', zIndex: 10 }}>
-                <Tooltip label="Repeat Action" withArrow>
-                    <ActionIcon color={repeatAction.color} size='xl' radius='xl' variant='filled' onClick={handleClick} loading={loading}>
-                        <RepeatOnce size={30} strokeWidth={1.5} />
-                    </ActionIcon>
-                </Tooltip>
-            </div>
-        )
-    }
+    return (
+        <div style={{ position: 'fixed', right: '20px', bottom: '5%', zIndex: 10 }}>
+            <Tooltip label="Repeat Action" withArrow>
+                <ActionIcon color={repeatAction.color} size='xl' radius='xl' variant='filled' onClick={handleClick} loading={loading}>
+                    <RepeatOnce size={30} strokeWidth={1.5} />
+                </ActionIcon>
+            </Tooltip>
+        </div>
+    )
 }
 
 export default RepeatButton

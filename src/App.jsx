@@ -47,6 +47,7 @@ import ClanMailButton from './components/diplomacy/clans/clanMessagesButton';
 import RepeatButton from './components/utilities/repeatButton';
 import { fetchGames, setActiveGame } from './store/gamesSlice';
 import * as Sentry from '@sentry/react';
+import ResumeTutorialButton from './components/utilities/resumeTutorialButton';
 
 function App()
 {
@@ -331,7 +332,7 @@ function App()
 								</Header>
 							}
 						>
-							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)}>
+							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)} className='gremlin14'>
 								{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 									<InfoBar data={empire} />
 									<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>
@@ -354,6 +355,7 @@ function App()
 										</Grid.Col>
 									</Grid>
 									<TurnResultContainer empire={empire} />
+									<ResumeTutorialButton />
 									<RepeatButton empire={empire} kickOut={kickOut} />
 									<Outlet />
 								</>)}

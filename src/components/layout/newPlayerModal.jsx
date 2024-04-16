@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { raceArray } from '../../config/races'
-import { Modal, Text } from '@mantine/core'
+import { Modal, Text, Button } from '@mantine/core'
 import { Compass } from '@phosphor-icons/react'
 
 const NewPlayerModal = ({ empire, time }) =>
@@ -82,6 +82,7 @@ const NewPlayerModal = ({ empire, time }) =>
             <Text mt='sm'>
                 As a {raceArray[empire.race].name} your people are strongest in {strength}
             </Text>
+            <Button>{raceArray[empire.race].name} Tutorial</Button>
         </Modal>
     )
 }

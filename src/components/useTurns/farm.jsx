@@ -17,15 +17,18 @@ export default function Farm({ size })
 			empire={empire}
 		/>)
 	}
-	else {
-		return (<GeneralAction
-			title='Farm'
-			type='farm'
-			flavor='farming'
-			item='food'
-			color='green'
-			empire={empire}
-			imglink='/images/farm.webp'
-		/>)
-	}
+
+	return (
+		<main className='gremlin6'>
+			<GeneralAction
+				title='Farm'
+				type='farm'
+				flavor='farming'
+				item='food'
+				color='green'
+				empire={empire}
+				imglink='/images/farm.webp'
+			/>
+		</main>)
+
 }

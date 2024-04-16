@@ -20,7 +20,7 @@ export default function Build({ size })
 {
 	const buttonRef = useRef()
 
-	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
+	const { setIsOpen, setSteps, setMeta, setCurrentStep, meta } = useTour()
 	let buildNumberArray = []
 	let totalBuild = 0
 	const errors = {
@@ -198,7 +198,7 @@ export default function Build({ size })
 								})
 								: setErrors("Can't build that many buildings")
 						}
-
+						className='gremlin4 gremlin5'
 					>
 						<Stack spacing='sm' align='center' className='fourth-step'>
 							<Table verticalSpacing='xs' striped>

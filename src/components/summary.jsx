@@ -9,6 +9,7 @@ import { Compass } from '@phosphor-icons/react'
 import { setBgImage } from '../functions/setBgImage'
 import NewPlayerModal from './layout/newPlayerModal'
 import { useEffect } from 'react'
+import { gremlin } from '../tour/gremlin'
 
 
 export default function Summary()
@@ -26,7 +27,7 @@ export default function Summary()
 		if (!game) {
 			navigate("/select");
 		}
-	}, [])
+	}, [game, navigate])
 
 	let roundStatus = 'Round has not started'
 	const upcoming = time.start - time.time
@@ -40,15 +41,24 @@ export default function Summary()
 		roundStatus = `Round will end in ${Math.floor(remaining / (1000 * 60 * 60 * 24))} days, ${Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
 	}
 
+	const startTutorial = (race) =>
+	{
+		setMeta(`${race} tutorial`)
+		setSteps(gremlin)
+		setCurrentStep(0)
+		setIsOpen(true)
+	}
+
 	return (
 		<main>
 			<Stack spacing='sm' align='center'>
 				<img src={bgimage} style={{ maxHeight: '100px', maxWidth: '100%', height: 'auto', borderRadius: '10px' }} alt='summary' />
-				<Title order={1} align='center'>
+				<Title order={1} align='center' >
 					Empire Summary
 				</Title>
-				<div>
+				<div className='gremlin0'>
 					<NewPlayerModal empire={empire} time={time} />
+					<Button onClick={() => startTutorial(raceArray[empire.race].name)}>{raceArray[empire.race].name} Tutorial</Button>
 					<Card>
 
 						<Group position='center' align='center' spacing={5} >

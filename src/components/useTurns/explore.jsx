@@ -15,14 +15,14 @@ export default function Explore({ size })
 			item='acres' color='blue' empire={empire}
 		/>)
 	}
-	else {
-		return (
-			<main className='second-step'>
-				<GeneralAction title='Explore' type='explore' flavor='exploring' explore={newLand}
-					item='acres' color='blue' empire={empire}
-					imglink='/images/explore.webp'
-				/>
-			</main>
-		)
-	}
+
+	return (
+		<main className='second-step gremlin2'>
+			<GeneralAction title='Explore' type='explore' flavor='exploring' explore={newLand}
+				item='acres' color='blue' empire={empire}
+				imglink='/images/explore.webp'
+			/>
+		</main>
+	)
+
 }

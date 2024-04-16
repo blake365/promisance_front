@@ -6,7 +6,7 @@ import { useTour } from '@reactour/tour'
 
 const Sidebar = ({ name }) =>
 {
-	const { setCurrentStep } = useTour()
+	const { setCurrentStep, meta } = useTour()
 
 	const infoLinks = [
 		'Summary',
@@ -56,6 +56,23 @@ const Sidebar = ({ name }) =>
 	}
 	// console.log(locationString.split('%').length > 1)
 
+	const setTutorialClassnames = (link) =>
+	{
+		if (link === 'Explore') {
+			return 'first-step gremlin1'
+		}
+		if (link === 'Build') {
+			return 'third-step gremlin3'
+		}
+		if (link === 'Farm') {
+			return 'gremlin5'
+		}
+		if (link === 'Magic Center') {
+			return 'gremlin11'
+		}
+
+	}
+
 	return (
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '0.5rem' }}>
@@ -101,13 +118,26 @@ const Sidebar = ({ name }) =>
 							variant={variant}
 							fullWidth
 							key={link}
-							className={link === 'Explore' ? 'first-step' : link === 'Build' ? 'third-step' : ''}
+							className={setTutorialClassnames(link)}
 							onClick={() =>
 							{
-								if (link === 'Explore') {
+								console.log(meta)
+								if (link === 'Explore' && meta !== 'new player tour') {
+									setCurrentStep(2)
+								} else if (link === 'Explore') {
 									setCurrentStep(1)
+								}
+								if (link === 'Build' && meta === 'new player tour') {
+									setCurrentStep(4)
 								} else if (link === 'Build') {
 									setCurrentStep(4)
+								}
+								if (link === 'Farm' && meta === 'Gremlin tutorial') {
+									console.log('farm tutorial')
+									setCurrentStep(6)
+								}
+								if (link === 'Magic Center' && meta === 'Gremlin tutorial') {
+									setCurrentStep(12)
 								}
 							}}
 						>
@@ -132,6 +162,14 @@ const Sidebar = ({ name }) =>
 							variant={variant}
 							fullWidth
 							key={link}
+							className={link === 'Public Market' && 'gremlin7'}
+							onClick={() =>
+							{
+								console.log(meta)
+								if (link === 'Public Market' && meta === 'Gremlin tutorial') {
+									setCurrentStep(8)
+								}
+							}}
 						>
 							{link}
 						</Button>

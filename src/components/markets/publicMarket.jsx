@@ -1,7 +1,7 @@
 import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
 import PublicMarketBuy from "./PublicMarketBuy"
 import PublicMarketSell from "./PublicMarketSell"
-
+import { useTour } from "@reactour/tour"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
@@ -11,7 +11,7 @@ import { checkRoundStatus } from "../../functions/checkRoundStatus"
 export default function PublicMarket()
 {
     const { empire } = useSelector((state) => state.empire)
-
+    const { setCurrentStep } = useTour()
     const dispatch = useDispatch()
 
     // console.log(marketStatus)
@@ -29,7 +29,7 @@ export default function PublicMarket()
     const roundStatus = checkRoundStatus()
 
     return (
-        <main>
+        <main className="gremlin8">
             <Center mb={10}>
                 <Stack spacing='sm' align='center'>
                     <img src='/images/pm.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='public market' />
@@ -46,7 +46,7 @@ export default function PublicMarket()
                             }} value={activeTab} onTabChange={setActiveTab}>
                                 <Tabs.List grow position="center">
                                     <Tabs.Tab value="Buy">Buy</Tabs.Tab>
-                                    <Tabs.Tab value="Sell">Sell</Tabs.Tab>
+                                    <Tabs.Tab value="Sell" onClick={() => setCurrentStep(9)}>Sell</Tabs.Tab>
                                 </Tabs.List>
                                 <Tabs.Panel value="Buy">
                                     <PublicMarketBuy empire={empire} />

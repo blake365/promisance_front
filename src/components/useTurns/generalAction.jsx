@@ -25,7 +25,7 @@ export default function GeneralAction(props)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
 	const buttonRef = useRef()
-	const { setCurrentStep } = useTour()
+	const { setCurrentStep, meta } = useTour()
 
 	let turns = 0
 
@@ -68,8 +68,13 @@ export default function GeneralAction(props)
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
-			if (values.type === 'explore') {
+			if (values.type === 'explore' && meta !== 'new player tutorial') {
+				setCurrentStep(3)
+			} else if (values.type === 'explore') {
 				setCurrentStep(2)
+			}
+			if (values.type === 'farm' && meta === 'Gremlin tutorial') {
+				setCurrentStep(7)
 			}
 		} catch (error) {
 			console.log(error)
@@ -90,7 +95,7 @@ export default function GeneralAction(props)
 	const roundStatus = checkRoundStatus()
 
 	return (
-		<section >
+		<section>
 			<Center>
 				<Stack spacing='sm' align='center' maw={650}>
 					<img src={props.imglink} height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt={props.title} />

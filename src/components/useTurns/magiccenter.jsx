@@ -20,6 +20,7 @@ import { useState } from 'react'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
+import { useTour } from '@reactour/tour'
 
 // DONE: show rune cost for spells, show current magic power, show required magic power for spells
 
@@ -28,8 +29,8 @@ export default function MagicCenter({ size })
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(false)
     const effects = useSelector((state) => state.effects.effects)
-
-    console.log(effects)
+    const { setCurrentStep, meta } = useTour()
+    // console.log(effects)
 
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
@@ -61,6 +62,9 @@ export default function MagicCenter({ size })
             window.scroll({ top: 0, behavior: 'smooth' })
             loadEmpire()
             setLoading(false)
+            if (meta === 'Gremlin tutorial') {
+                setCurrentStep(13)
+            }
         } catch (error) {
             console.log(error)
             setLoading(false)
@@ -126,7 +130,7 @@ export default function MagicCenter({ size })
     return (
         <section >
             <Center>
-                <Stack spacing='sm' align='center'>
+                <Stack spacing='sm' align='center' className='gremlin12 gremlin13'>
                     {!size && <>
                         <img src='/images/magic.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='magic center' />
                         <Title order={1} align='center'>
