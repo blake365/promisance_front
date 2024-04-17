@@ -121,23 +121,25 @@ const Sidebar = ({ name }) =>
 							className={setTutorialClassnames(link)}
 							onClick={() =>
 							{
-								console.log(meta)
-								if (link === 'Explore' && meta !== 'new player tour') {
-									setCurrentStep(2)
-								} else if (link === 'Explore') {
-									setCurrentStep(1)
-								}
-								if (link === 'Build' && meta === 'new player tour') {
-									setCurrentStep(4)
-								} else if (link === 'Build') {
-									setCurrentStep(4)
-								}
-								if (link === 'Farm' && meta === 'Gremlin tutorial') {
-									console.log('farm tutorial')
-									setCurrentStep(6)
-								}
-								if (link === 'Magic Center' && meta === 'Gremlin tutorial') {
-									setCurrentStep(12)
+								if (meta) {
+									console.log(meta);
+									if (link === "Explore" && meta !== "new player tour") {
+										setCurrentStep(2);
+									} else if (link === "Explore") {
+										setCurrentStep(1);
+									}
+									if (link === "Build" && meta === "new player tour") {
+										setCurrentStep(4);
+									} else if (link === "Build") {
+										setCurrentStep(4);
+									}
+									if (link === "Farm" && meta === "Gremlin tutorial") {
+										console.log("farm tutorial");
+										setCurrentStep(6);
+									}
+									if (link === "Magic Center" && meta === "Gremlin tutorial") {
+										setCurrentStep(12);
+									}
 								}
 							}}
 						>

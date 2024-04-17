@@ -11,7 +11,7 @@ export const gremlin = [
 	},
 	{
 		selector: '.gremlin2',
-		content: 'Explore for around 100 turns to get a good amount of land. ',
+		content: 'Explore for around 100 turns to get a base amount of land. ',
 	},
 	{
 		selector: '.gremlin3',
