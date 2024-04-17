@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { useTour } from '@reactour/tour'
 import { Button } from '@mantine/core'
 
-const ResumeTutorialButton = ({ empire, kickOut }) =>
+const ResumeTutorialButton = () =>
 {
-    const [loading, setLoading] = useState(false)
     const { setMeta, setCurrentStep, setIsOpen, setSteps, currentStep, isOpen, steps } = useTour()
     // console.log(repeatAction)
     const handleClick = async () =>

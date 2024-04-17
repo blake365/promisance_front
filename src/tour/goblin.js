@@ -66,7 +66,7 @@ export const goblin = [
 	{
 		selector: '.goblin13',
 		content:
-			'As a Goblin, you are best suited for the Future Era. You can change eras by using the Advance to Present spell and then the Advance to Future Spell. Be sure you have enough magic power and mana to cast these spell. It may take a while to build up the resources needed to change eras. You must also wait 72 hours after changing eras to change again.',
+			'As a Goblin, you are best suited for the Future Era. You can change eras by using the Advance to Present spell and then the Advance to Future Spell. Be sure you have enough magic power and mana to cast these spells. It may take a while to build up the resources needed to change eras. You must also wait 72 hours after changing eras to change again.',
 	},
 	{
 		selector: '.goblin14',
