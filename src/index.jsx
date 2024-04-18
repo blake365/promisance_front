@@ -79,7 +79,8 @@ import { steps } from './tour/steps'
 import Forgot from './components/pages/Forgot'
 import Reset from './components/pages/Reset'
 import ForgotUsername from './components/pages/ForgotUsername'
-const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
+// const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
+import NewPlayerTips from './components/guide/newPlayer'
 import ModeSelect from './components/pages/ModeSelect'
 import GamesManager from './components/admin/GamesManager'
 import AuthWrapper from './components/AuthWrapper'

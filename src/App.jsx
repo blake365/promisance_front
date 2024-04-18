@@ -332,7 +332,7 @@ function App()
 								</Header>
 							}
 						>
-							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)} className='gremlin14'>
+							<main style={{ paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }} onClick={() => setOpened(false)} className='gremlin14 dwarf14 ghoul14 goblin14 orc14 hobbit14 elf10 drow10 pixie10 gnome14 vampire14 minotaur14'>
 								{empireStatus !== 'succeeded' ? (<Loader />) : (<>
 									<InfoBar data={empire} />
 									<Grid grow justify='center' sx={{ marginTop: '0.5rem', marginBottom: '0.25rem' }}>

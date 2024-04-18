@@ -155,7 +155,7 @@ export default function Build({ size })
 	const roundStatus = checkRoundStatus()
 
 	return (
-		<main>
+		<main className=''>
 			<Center mb={10}>
 				<Stack spacing='sm' align='center' >
 					{!size && <>
@@ -198,7 +198,7 @@ export default function Build({ size })
 								})
 								: setErrors("Can't build that many buildings")
 						}
-						className='gremlin4 gremlin5'
+						className='gremlin4 dwarf4 elf4 gremlin4 drow4 ghoul4 gnome4 pixie4 minotaur4 goblin4 orc4 hobbit4 vampire4 '
 					>
 						<Stack spacing='sm' align='center' className='fourth-step'>
 							<Table verticalSpacing='xs' striped>

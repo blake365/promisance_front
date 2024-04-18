@@ -17,7 +17,7 @@ export default function Explore({ size })
 	}
 
 	return (
-		<main className='second-step gremlin2'>
+		<main className='second-step dwarf2 elf2 gremlin2 drow2 ghoul2 gnome2 pixie2 minotaur2 goblin2 orc2 hobbit2 vampire2'>
 			<GeneralAction title='Explore' type='explore' flavor='exploring' explore={newLand}
 				item='acres' color='blue' empire={empire}
 				imglink='/images/explore.webp'

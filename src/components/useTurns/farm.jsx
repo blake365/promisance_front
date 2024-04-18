@@ -19,7 +19,7 @@ export default function Farm({ size })
 	}
 
 	return (
-		<main className='gremlin6'>
+		<main className='gremlin6 hobbit6'>
 			<GeneralAction
 				title='Farm'
 				type='farm'

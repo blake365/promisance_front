@@ -29,7 +29,7 @@ export default function PublicMarket()
     const roundStatus = checkRoundStatus()
 
     return (
-        <main className="gremlin8">
+        <main className="gremlin8 dwarf8 ghoul8 goblin8 orc8 hobbit8 gnome10 vampire10 minotaur10">
             <Center mb={10}>
                 <Stack spacing='sm' align='center'>
                     <img src='/images/pm.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='public market' />

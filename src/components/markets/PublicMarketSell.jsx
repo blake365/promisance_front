@@ -12,6 +12,7 @@ import { showNotification } from '@mantine/notifications'
 import { fetchMyItems } from '../../store/pubMarketSlice'
 import { useRef } from 'react'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { useTour } from "@reactour/tour"
 // make it mobile friendly
 
 export default function PublicMarketSell({ empire })
@@ -22,7 +23,7 @@ export default function PublicMarketSell({ empire })
     const { myItems } = useSelector((state) => state.market)
     const { otherItems } = useSelector((state) => state.market)
     const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes, pubMktMaxFood, pubMktMaxSell, pubMktMaxRunes, pubMktStart, pubMktMaxTime } = useSelector((state) => state.games.activeGame)
-
+    const { setCurrentStep, meta } = useTour()
     // console.log(otherItems)
     const buttonRef = useRef()
 
@@ -219,7 +220,7 @@ export default function PublicMarketSell({ empire })
             }
 
             if (element.amount > 0) {
-                return <Text>Listed {element.amount.toLocaleString()} {eraArray[empire.era][item]} for ${element.price}</Text>
+                return <Text key={index}>Listed {element.amount.toLocaleString()} {eraArray[empire.era][item]} for ${element.price}</Text>
             }
         })
     }
@@ -239,6 +240,9 @@ export default function PublicMarketSell({ empire })
             buttonRef.current.focus()
             form.reset()
             loadEmpire()
+            if (meta !== 'new player tutorial' && meta) {
+                setCurrentStep(10)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -273,6 +277,7 @@ export default function PublicMarketSell({ empire })
                                 doSell(values)
                             })
                             }
+                            className='dwarf9 ghoul9 goblin9 orc9'
                         >
 
                             <div className={classes.tablecontainer}>
@@ -299,7 +304,7 @@ export default function PublicMarketSell({ empire })
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                         {units.map((unit, index) =>
                                         {
                                             let eraTroop = 'trp' + unit.toLowerCase()
@@ -315,7 +320,7 @@ export default function PublicMarketSell({ empire })
                                             if (unit === 'Food') {
                                                 troop = 'food'
                                                 eraTroop = 'food'
-                                                classN = 'gremlin9'
+                                                classN = 'gremlin9 hobbit9'
                                             } else if (unit === 'Runes') {
                                                 troop = 'runes'
                                                 eraTroop = 'runes'
@@ -389,7 +394,7 @@ export default function PublicMarketSell({ empire })
                             </Center>
                         </form>
 
-                        <div className='gremlin10'>
+                        <div className='gremlin10 dwarf10 ghoul10 goblin10 orc10 hobbit10 '>
                             <div className={classes.tablecontainer}>
                                 <table className={classes.widetable}>
                                     <thead>

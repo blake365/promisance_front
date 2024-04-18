@@ -15,15 +15,15 @@ export default function Industry({ size })
 	if (size) {
 		return (<TinyAction title='Industry' type='industry' flavor='focusing on industry'
 			item='troops' color='red' empire={empire} />)
-	} else {
-		return (
-			<main style={{ paddingBottom: '1rem' }}>
-				<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
-					item='troops' color='red' empire={empire} imglink='/images/industry.webp'
-				/>
-				<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
-				<IndyRates empire={empire} />
-			</main>
-		)
 	}
+	return (
+		<main style={{ paddingBottom: '1rem' }} className='dwarf6 ghoul6 goblin6 orc6'>
+			<GeneralAction title='Industry' type='industry' flavor='focusing on industry'
+				item='troops' color='red' empire={empire} imglink='/images/industry.webp'
+			/>
+			<Divider size='lg' style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+			<IndyRates empire={empire} />
+		</main>
+	)
+
 }

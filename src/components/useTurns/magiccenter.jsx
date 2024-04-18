@@ -62,9 +62,16 @@ export default function MagicCenter({ size })
             window.scroll({ top: 0, behavior: 'smooth' })
             loadEmpire()
             setLoading(false)
-            if (meta === 'Gremlin tutorial') {
-                setCurrentStep(13)
+            if (meta && meta !== 'new player tutorial') {
+                if (
+                    !meta.includes("Elf") &&
+                    !meta.includes("Drow") &&
+                    !meta.includes("Pixie")
+                ) {
+                    setCurrentStep(13);
+                }
             }
+
         } catch (error) {
             console.log(error)
             setLoading(false)
@@ -130,7 +137,7 @@ export default function MagicCenter({ size })
     return (
         <section >
             <Center>
-                <Stack spacing='sm' align='center' className='gremlin12 gremlin13'>
+                <Stack spacing='sm' align='center' className='gremlin12 gremlin13 dwarf12 ghoul12 goblin12 orc12 hobbit12 dwarf13 ghoul13 goblin13 orc13 hobbit13 elf8 drow8 pixie8 elf9 drow9 pixie9 gnome12 vampire12 minotaur12 gnome13 vampire13 minotaur13'>
                     {!size && <>
                         <img src='/images/magic.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='magic center' />
                         <Title order={1} align='center'>

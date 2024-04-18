@@ -1,14 +1,38 @@
 import { raceArray } from "../../config/races"
 import { eraArray } from "../../config/eras"
 import { Compass } from "@phosphor-icons/react"
-import { Table, Text, Title, Container, Stack } from "@mantine/core"
+import { Table, Text, Title, Container, Stack, Button } from "@mantine/core"
 import classes from './guide.module.css'
 import { useSelector } from "react-redux"
+import { useTour } from "@reactour/tour"
+import { raceTutorials } from "../../tour/raceTutorials"
+
 
 export default function NewPlayerTips()
 {
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection } = useSelector((state) => state.games.activeGame)
+    const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
+
+    const startTutorial = (race) =>
+    {
+        function findSteps(array, selector)
+        {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i][0].selector === `.${selector}0`) {
+                    return array[i]
+                }
+            }
+        }
+
+        const steps = findSteps(raceTutorials, race.toLowerCase())
+        setSteps(steps)
+        setMeta(`${race} tutorial`)
+        console.log()
+        // setSteps(findSteps(raceTutorials, race.toLowerCase()))
+        setCurrentStep(0)
+        setIsOpen(true)
+    }
 
     const yourTraits = (empire) =>
     {
@@ -75,9 +99,9 @@ export default function NewPlayerTips()
                 break
         }
 
-        let era = eraArray[preferredEra]
+        const era = eraArray[preferredEra]
 
-        let eraStats = <div className={classes.guideTable}>
+        const eraStats = <div className={classes.guideTable}>
             <Table mt='xs'>
                 <thead>
                     <tr>
@@ -102,7 +126,7 @@ export default function NewPlayerTips()
             </Table>
         </div>
 
-        let raceStats = <div className={classes.guideTable}>
+        const raceStats = <div className={classes.guideTable}>
             <Table mt='xs'>
                 <thead>
                     <tr>
@@ -153,9 +177,17 @@ export default function NewPlayerTips()
     }
 
     return (
-        <Container>
+        <Container className="dwarf0 elf0 gremlin0 drow0 ghoul0 gnome0 pixie0 minotaur0 goblin0 orc0 hobbit0 vampire0">
             <Title align='center'>Personalized Tips</Title>
             <Stack mt='sm'>
+                {empire.race !== 0 ||
+                    empire.race !== 3 ? (
+                    <Button
+                        onClick={() => startTutorial(raceArray[empire.race].name)}
+                    >
+                        {raceArray[empire.race].name} Tutorial
+                    </Button>
+                ) : null}
                 {empire.turnsUsed <= turnsProtection && (<Text>
                     You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {turnsProtection} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
                 </Text>)}

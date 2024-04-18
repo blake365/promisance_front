@@ -59,16 +59,36 @@ const Sidebar = ({ name }) =>
 	const setTutorialClassnames = (link) =>
 	{
 		if (link === 'Explore') {
-			return 'first-step gremlin1'
+			return 'first-step gremlin1 dwarf1 elf1 drow1 ghoul1 gnome1 pixie1 minotaur1 goblin1 orc1 hobbit1 vampire1'
 		}
 		if (link === 'Build') {
-			return 'third-step gremlin3'
+			return 'third-step gremlin3 dwarf3 elf3 drow3 ghoul3 gnome3 pixie3 minotaur3 goblin3 orc3 hobbit3 vampire3'
 		}
 		if (link === 'Farm') {
-			return 'gremlin5'
+			return 'gremlin5 hobbit5'
 		}
 		if (link === 'Magic Center') {
-			return 'gremlin11'
+			return 'gremlin11 dwarf11 elf7 gremlin11 drow7 ghoul11 gnome11 pixie7 minotaur11 goblin11 orc11 hobbit11 vampire11 '
+		}
+		if (link === 'Industry') {
+			return 'dwarf5 orc5 goblin5'
+		}
+		if (link === 'Meditate') {
+			return 'drow5 elf5 pixie5'
+		}
+		if (link === 'Cash') {
+			return 'gnome5 minotaur5 vampire5'
+		}
+		if (link === 'Public Market') {
+			return 'gremlin7 dwarf7 ghoul7 goblin7 orc7 hobbit7 gnome9 vampire9 minotaur9'
+		}
+
+		if (link === 'The Bank') {
+			return 'gnome7 minotaur7 vampire7'
+		}
+
+		if (link === 'Black Market') {
+			return "gnome8 vampire8 minotaur8";
 		}
 
 	}
@@ -128,17 +148,47 @@ const Sidebar = ({ name }) =>
 									} else if (link === "Explore") {
 										setCurrentStep(1);
 									}
-									if (link === "Build" && meta === "new player tour") {
-										setCurrentStep(4);
-									} else if (link === "Build") {
+
+									if (link === "Build") {
 										setCurrentStep(4);
 									}
-									if (link === "Farm" && meta === "Gremlin tutorial") {
-										console.log("farm tutorial");
+
+									if (
+										link === "Farm" &&
+										(meta === "Gremlin tutorial" || meta === "Hobbit tutorial")
+									) {
+										// console.log("farm tutorial");
 										setCurrentStep(6);
 									}
-									if (link === "Magic Center" && meta === "Gremlin tutorial") {
+
+									if (
+										link === "Cash" &&
+										(meta === "Gnome tutorial" ||
+											meta === "Minotaur tutorial" ||
+											meta === "Vampire tutorial")
+									) {
+										setCurrentStep(6);
+									}
+
+									if (link === 'Industry' && (meta === 'Dwarf tutorial' || meta === 'Orc tutorial' || meta === 'Goblin tutorial')) {
+										setCurrentStep(6)
+									}
+
+									if (link === 'Meditate' && (meta === 'Elf tutorial' || meta === 'Drow tutorial' || meta === 'Pixie tutorial')) {
+										setCurrentStep(6)
+									}
+
+									if (link === "Magic Center" && meta.includes("tutorial") && !meta.includes("Elf") && !meta.includes("Drow") && !meta.includes("Pixie")) {
 										setCurrentStep(12);
+									}
+
+									if (
+										link === "Magic Center" &&
+										(meta === "Elf tutorial" ||
+											meta === "Drow tutorial" ||
+											meta === "Pixie tutorial")
+									) {
+										setCurrentStep(8);
 									}
 								}
 							}}
@@ -164,12 +214,24 @@ const Sidebar = ({ name }) =>
 							variant={variant}
 							fullWidth
 							key={link}
-							className={link === 'Public Market' && 'gremlin7'}
+							className={setTutorialClassnames(link)}
 							onClick={() =>
 							{
 								console.log(meta)
-								if (link === 'Public Market' && meta === 'Gremlin tutorial') {
+								if (link === 'Public Market' && meta !== "new player tour") {
 									setCurrentStep(8)
+								}
+
+								if (link === 'Public Market' && (meta.includes('Gnome') || meta.includes('Minotaur') || meta.includes('Vampire'))) {
+									setCurrentStep(10)
+								}
+
+								if (link === 'The Bank' && meta !== "new player tour") {
+									setCurrentStep(8)
+								}
+
+								if (link === 'Black Market' && meta !== "new player tour") {
+									setCurrentStep(9)
 								}
 							}}
 						>

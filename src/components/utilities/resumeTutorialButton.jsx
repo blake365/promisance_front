@@ -3,7 +3,7 @@ import { Button } from '@mantine/core'
 
 const ResumeTutorialButton = () =>
 {
-    const { setMeta, setCurrentStep, setIsOpen, setSteps, currentStep, isOpen, steps } = useTour()
+    const { setMeta, setCurrentStep, setIsOpen, setSteps, currentStep, isOpen, steps, meta } = useTour()
     // console.log(repeatAction)
     const handleClick = async () =>
     {
@@ -11,7 +11,7 @@ const ResumeTutorialButton = () =>
         setIsOpen(true)
     }
 
-    // console.log(currentStep, meta, isOpen)
+    console.log(currentStep, meta, isOpen)
 
     if (isOpen) { return null }
     if (currentStep === steps.length - 1) { return null }
@@ -19,7 +19,7 @@ const ResumeTutorialButton = () =>
     return (
         <div style={{ position: 'fixed', right: '20px', bottom: '11%', zIndex: 10 }}>
             <Button.Group>
-                <Button color='green.6' variant='filled' onClick={handleClick} loading={loading}>
+                <Button color='green.6' variant='filled' onClick={handleClick}>
                     Resume Tutorial
                 </Button>
                 <Button color='gray.7' variant='filled' p='xs' onClick={() =>

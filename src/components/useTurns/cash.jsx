@@ -20,21 +20,21 @@ export default function Cash({ size })
 			color='yellow'
 			empire={empire}
 		/>)
-	} else {
-		return (
-			<main>
-				<GeneralAction
-					title='Cash'
-					type='cash'
-					flavor='focusing on your economy'
-					item='money'
-					color='yellow'
-					empire={empire}
-					imglink='/images/cash.webp'
-				/>
-				<Divider size='lg' style={{ marginTop: '1rem' }} />
-				<TaxRate empire={empire} />
-			</main>
-		)
 	}
+	return (
+		<main className='gnome6 minotaur6 vampire6'>
+			<GeneralAction
+				title='Cash'
+				type='cash'
+				flavor='focusing on your economy'
+				item='money'
+				color='yellow'
+				empire={empire}
+				imglink='/images/cash.webp'
+			/>
+			<Divider size='lg' style={{ marginTop: '1rem' }} />
+			<TaxRate empire={empire} />
+		</main>
+	)
+
 }

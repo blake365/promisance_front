@@ -25,7 +25,7 @@ export default function GeneralAction(props)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
 	const buttonRef = useRef()
-	const { setCurrentStep, meta } = useTour()
+	const { setCurrentStep, meta, currentStep } = useTour()
 
 	let turns = 0
 
@@ -68,14 +68,33 @@ export default function GeneralAction(props)
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
+			console.log(currentStep)
+			console.log(values.type)
 			if (values.type === 'explore' && meta !== 'new player tutorial') {
 				setCurrentStep(3)
 			} else if (values.type === 'explore') {
 				setCurrentStep(2)
 			}
-			if (values.type === 'farm' && meta === 'Gremlin tutorial') {
+			if (
+				values.type === "farm" &&
+				(meta.includes("Gremlin") || meta.includes("Hobbit"))
+			) {
+				setCurrentStep(7);
+			}
+
+			if (values.type === 'cash' && (meta.includes('Gnome') || meta.includes('Minotaur')) || meta.includes('Vampire')) {
 				setCurrentStep(7)
 			}
+
+			if (values.type === 'industry' && (meta.includes('Dwarf') || meta.includes('Orc') || meta.includes('Goblin') || meta.includes('Ghoul'))) {
+				setCurrentStep(7)
+			}
+
+			if (values.type === 'meditate' && (meta.includes('Elf') || meta.includes('Drow') || meta.includes('Pixie'))) {
+				setCurrentStep(7)
+			}
+			console.log(values.type)
+			console.log(currentStep)
 		} catch (error) {
 			console.log(error)
 			setLoading(false)
