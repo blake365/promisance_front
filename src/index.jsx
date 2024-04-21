@@ -19,18 +19,26 @@ const Summary = lazy(() => import('./components/summary'))
 import Explore from './components/useTurns/explore'
 import Build from './components/useTurns/build'
 const Overview = lazy(() => import('./components/overview'));
-const Farm = lazy(() => import('./components/useTurns/farm'));
-const Cash = lazy(() => import('./components/useTurns/cash'));
+// const Farm = lazy(() => import('./components/useTurns/farm'));
+import Farm from './components/useTurns/farm'
+// const Cash = lazy(() => import('./components/useTurns/cash'));
+import Cash from './components/useTurns/cash'
 // const Explore = lazy(() => import('./components/useTurns/explore'));
-const Industry = lazy(() => import('./components/useTurns/industry'));
+// const Industry = lazy(() => import('./components/useTurns/industry'));
+import Industry from './components/useTurns/industry'
 // const Build = lazy(() => import('./components/useTurns/build'));
-const Meditate = lazy(() => import('./components/useTurns/meditate'));
+// const Meditate = lazy(() => import('./components/useTurns/meditate'));
+import Meditate from './components/useTurns/meditate'
 const ManageEmpire = lazy(() => import('./components/manageEmpire'));
 // import ManageEmpire from './components/manageEmpire'
-const PrivateMarket = lazy(() => import('./components/markets/PrivateMarket'));
-const PublicMarket = lazy(() => import('./components/markets/publicMarket'));
-const WorldBank = lazy(() => import('./components/markets/WorldBank'));
-const MagicCenter = lazy(() => import('./components/useTurns/magiccenter'));
+// const PrivateMarket = lazy(() => import('./components/markets/PrivateMarket'));
+import PrivateMarket from './components/markets/PrivateMarket'
+import PublicMarket from './components/markets/publicMarket'
+// const PublicMarket = lazy(() => import('./components/markets/publicMarket'));
+import WorldBank from './components/markets/WorldBank'
+// const WorldBank = lazy(() => import('./components/markets/WorldBank'));
+// const MagicCenter = lazy(() => import('./components/useTurns/magiccenter'));
+import MagicCenter from './components/useTurns/magiccenter'
 const Scores = lazy(() => import('./components/scores'));
 const Demolish = lazy(() => import('./components/useTurns/demolish'));
 const Attack = lazy(() => import('./components/diplomacy/attack'));
@@ -69,6 +77,9 @@ const AdminNews = lazy(() => import('./components/admin/adminNews'));
 const AdminClanMail = lazy(() => import('./components/admin/adminClanMail'));
 const CreateGame = lazy(() => import('./components/admin/createGame'));
 const EditGame = lazy(() => import('./components/admin/editGame'));
+const GamesManager = lazy(() => import('./components/admin/GamesManager'));
+// import GamesManager from './components/admin/GamesManager'
+
 
 import Axios from 'axios'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -79,11 +90,9 @@ import { steps } from './tour/steps'
 import Forgot from './components/pages/Forgot'
 import Reset from './components/pages/Reset'
 import ForgotUsername from './components/pages/ForgotUsername'
-// const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
-import NewPlayerTips from './components/guide/newPlayer'
+const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
+// import NewPlayerTips from './components/guide/newPlayer'
 import ModeSelect from './components/pages/ModeSelect'
-import GamesManager from './components/admin/GamesManager'
-import AuthWrapper from './components/AuthWrapper'
 
 inject();
 // import Guide from './components/guide/guide'
@@ -153,6 +162,12 @@ ReactDOM.render(
 				...base,
 				color: 'black',
 			}),
+			maskWrapper: (() =>
+			{
+				return {
+					display: 'none'
+				}
+			})
 		}}>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>

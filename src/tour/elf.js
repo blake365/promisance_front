@@ -21,7 +21,7 @@ export const elf = [
 	{
 		selector: '.elf4',
 		content:
-			'As a Elf, your goal will be to produce as much money as you can by casting spells. To do this, you will need to have your land divided by around 90% mage towers and 10% farms. Mage towers will bring wizards to your land that can cast spells and generate mana. Wizards like to eat a lot so farms can help offset that.',
+			'As an Elf, your goal will be to produce as much money as you can by casting spells. To do this, you will need to have your land divided by around 90% mage towers and 10% farms. Mage towers will bring wizards to your land that can cast spells and generate mana. Wizards like to eat a lot so farms can help offset that.',
 	},
 	{
 		selector: '.elf5',

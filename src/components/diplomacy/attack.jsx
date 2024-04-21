@@ -7,7 +7,8 @@ import
     Card,
     Table,
     Group,
-    ActionIcon,
+    Button,
+    ActionIcon
 } from '@mantine/core'
 import { useSelector } from 'react-redux'
 import { defense, offense } from '../../functions/functions'
@@ -68,6 +69,7 @@ export default function Attack()
                         </Title>
                     </Group>
                     <div className='attk-first-step attk-sixth-step'>
+
                         <Text align='center'>
                             Attack other players to take their land, kill their citizens, or steal their resources. Attacks take two turns.
                         </Text>
@@ -75,7 +77,16 @@ export default function Attack()
                             Cast spells with your {eraArray[empire.era].trpwiz} to capture land, steal resources, or destroy enemy resources. Spells take two turns.
                         </Text>
                     </div>
+                    {/* <Button fullWidth onClick={() =>
+                    {
+                        setMeta('attacking tour')
+                        setSteps(attackSteps)
+                        setCurrentStep(0)
+                        setIsOpen(true)
+                    }}
+                    >Attacking Tutorial</Button> */}
                     <Group position='center' align='flex-start'>
+
                         <AttackForm empire={empire} roundStatus={roundStatus} />
                         <Card className='attk-step-twopointfive'>
                             <Card.Section withBorder inheritPadding py="xs" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'baseline', height: '49px' }}>
@@ -136,6 +147,7 @@ export default function Attack()
                         </Card>
                         <SpellForm empire={empire} roundStatus={roundStatus} />
                     </Group>
+
                     <Title order={3}>Base Unit Values</Title>
                     <Group position='center' className='attk-second-step'>
                         {eraDisplay.map((era) =>

@@ -139,7 +139,7 @@ export default function WorldBank()
 
     const roundStatus = checkRoundStatus()
     const loanStatus = checkRoundStatus(true)
-    console.log(loanStatus)
+    // console.log(loanStatus)
 
     return (
         <main className='gnome8 vampire8 minotaur8'>

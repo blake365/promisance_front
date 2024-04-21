@@ -80,7 +80,7 @@ const Sidebar = ({ name }) =>
 			return 'gnome5 minotaur5 vampire5'
 		}
 		if (link === 'Public Market') {
-			return 'gremlin7 dwarf7 ghoul7 goblin7 orc7 hobbit7 gnome9 vampire9 minotaur9'
+			return 'gremlin7 dwarf7 ghoul7 goblin7 orc7 hobbit7'
 		}
 
 		if (link === 'The Bank') {
@@ -88,7 +88,7 @@ const Sidebar = ({ name }) =>
 		}
 
 		if (link === 'Black Market') {
-			return "gnome8 vampire8 minotaur8";
+			// return "gnome8 minotaur8"; // vampire8
 		}
 
 	}
@@ -141,7 +141,7 @@ const Sidebar = ({ name }) =>
 							className={setTutorialClassnames(link)}
 							onClick={() =>
 							{
-								if (meta) {
+								if (meta && meta !== 'attacking tour' && meta !== 'build tour') {
 									console.log(meta);
 									if (link === "Explore" && meta !== "new player tour") {
 										setCurrentStep(2);
@@ -218,20 +218,27 @@ const Sidebar = ({ name }) =>
 							onClick={() =>
 							{
 								console.log(meta)
-								if (link === 'Public Market' && meta !== "new player tour") {
-									setCurrentStep(8)
-								}
+								if (meta) {
+									if (link === "Public Market" && meta !== "new player tour") {
+										setCurrentStep(8);
+									}
 
-								if (link === 'Public Market' && (meta.includes('Gnome') || meta.includes('Minotaur') || meta.includes('Vampire'))) {
-									setCurrentStep(10)
-								}
+									if (
+										link === "Public Market" &&
+										(meta.includes("Gnome") ||
+											meta.includes("Minotaur") ||
+											meta.includes("Vampire"))
+									) {
+										setCurrentStep(10);
+									}
 
-								if (link === 'The Bank' && meta !== "new player tour") {
-									setCurrentStep(8)
-								}
+									if (link === "The Bank" && meta !== "new player tour") {
+										setCurrentStep(8);
+									}
 
-								if (link === 'Black Market' && meta !== "new player tour") {
-									setCurrentStep(9)
+									if (link === "Black Market" && meta !== "new player tour") {
+										setCurrentStep(9);
+									}
 								}
 							}}
 						>

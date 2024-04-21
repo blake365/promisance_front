@@ -7,7 +7,6 @@ import { useSelector } from "react-redux"
 import { useTour } from "@reactour/tour"
 import { raceTutorials } from "../../tour/raceTutorials"
 
-
 export default function NewPlayerTips()
 {
     const { empire } = useSelector((state) => state.empire)
@@ -28,8 +27,6 @@ export default function NewPlayerTips()
         const steps = findSteps(raceTutorials, race.toLowerCase())
         setSteps(steps)
         setMeta(`${race} tutorial`)
-        console.log()
-        // setSteps(findSteps(raceTutorials, race.toLowerCase()))
         setCurrentStep(0)
         setIsOpen(true)
     }

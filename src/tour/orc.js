@@ -21,7 +21,7 @@ export const orc = [
 	{
 		selector: '.orc4',
 		content:
-			'As a Orc, your goal will be to produce as many troops as possible and sell the excess on the Public Market. To do this, you will need to have your land divided by around 85% blacksmiths,  10% farms, and 5% mage towers. Mage towers will bring wizards to your land that will provide you with magical defense and the ability to change eras. Build blacksmiths, farms, and mage towers until all of your land is used.',
+			'As an Orc, your goal will be to produce as many troops as possible and sell the excess on the Public Market. To do this, you will need to have your land divided by around 85% blacksmiths,  10% farms, and 5% mage towers. Mage towers will bring wizards to your land that will provide you with magical defense and the ability to change eras. Build blacksmiths, farms, and mage towers until all of your land is used.',
 	},
 	{
 		selector: '.orc5',
@@ -66,7 +66,7 @@ export const orc = [
 	{
 		selector: '.orc13',
 		content:
-			'As a Orc, you are best suited for the Future Era. You can change eras by using the Advance to Present spell and then the Advance to Future Spell. Be sure you have enough magic power and mana to cast these spells. It may take a while to build up the resources needed to change eras. You must also wait 72 hours after changing eras to change again.',
+			'As an Orc, you are best suited for the Future Era. You can change eras by using the Advance to Present spell and then the Advance to Future Spell. Be sure you have enough magic power and mana to cast these spells. It may take a while to build up the resources needed to change eras. You must also wait 72 hours after changing eras to change again.',
 	},
 	{
 		selector: '.orc14',

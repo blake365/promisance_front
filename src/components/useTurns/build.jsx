@@ -186,6 +186,14 @@ export default function Build({ size })
 								With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
 								structures
 							</Text>
+							{/* <Button mt='sm' fullWidth onClick={() =>
+							{
+								setMeta('build tour')
+								setSteps(buildSteps)
+								setCurrentStep(0)
+								setIsOpen(true)
+							}}
+							>Buildings Tutorial</Button> */}
 						</div>
 					</>}
 					<form

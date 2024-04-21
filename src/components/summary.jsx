@@ -9,7 +9,7 @@ import { Compass } from '@phosphor-icons/react'
 import { setBgImage } from '../functions/setBgImage'
 import NewPlayerModal from './layout/newPlayerModal'
 import { useEffect } from 'react'
-import { gremlin } from '../tour/gremlin'
+import { raceTutorials } from "../tour/raceTutorials"
 
 
 export default function Summary()
@@ -43,8 +43,18 @@ export default function Summary()
 
 	const startTutorial = (race) =>
 	{
+		function findSteps(array, selector)
+		{
+			for (let i = 0; i < array.length; i++) {
+				if (array[i][0].selector === `.${selector}0`) {
+					return array[i]
+				}
+			}
+		}
+
+		const steps = findSteps(raceTutorials, race.toLowerCase())
+		setSteps(steps)
 		setMeta(`${race} tutorial`)
-		setSteps(gremlin)
 		setCurrentStep(0)
 		setIsOpen(true)
 	}
@@ -56,9 +66,8 @@ export default function Summary()
 				<Title order={1} align='center' >
 					Empire Summary
 				</Title>
-				<div className='gremlin0'>
+				<div className='dwarf0 elf0 gremlin0 drow0 ghoul0 gnome0 pixie0 minotaur0 goblin0 orc0 hobbit0 vampire0'>
 					<NewPlayerModal empire={empire} time={time} />
-					{/* <Button onClick={() => startTutorial(raceArray[empire.race].name)}>{raceArray[empire.race].name} Tutorial</Button> */}
 					<Card>
 
 						<Group position='center' align='center' spacing={5} >
@@ -195,6 +204,14 @@ export default function Summary()
 							<Text align='center'>You get {game.turnsCount} turn{game.turnsCount > 1 ? ('s') : ('')} every {game.turnsFreq} minutes.</Text>
 							<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
 							<Text align='center'>{roundStatus}</Text>
+							{empire.race !== 0 ||
+								empire.race !== 3 ? (
+								<Button mt='md' fullWidth
+									onClick={() => startTutorial(raceArray[empire.race].name)}
+								>
+									{raceArray[empire.race].name} Tutorial
+								</Button>
+							) : null}
 						</Stack>
 					</Card>
 				</div>

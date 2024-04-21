@@ -1,6 +1,9 @@
 import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
-import PrivateMarketBuy from "./PrivateMarketBuy"
-import PrivateMarketSell from "./PrivateMarketSell"
+import lazy from '../utilities/lazyWrapper'
+const PrivateMarketBuy = lazy(() => import('./PrivateMarketBuy'))
+const PrivateMarketSell = lazy(() => import('./PrivateMarketSell'))
+// import PrivateMarketBuy from "./PrivateMarketBuy"
+// import PrivateMarketSell from "./PrivateMarketSell"
 import { checkRoundStatus } from "../../functions/checkRoundStatus"
 
 export default function PrivateMarket()

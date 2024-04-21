@@ -1,6 +1,9 @@
 import { Tabs, Title, Center, Stack, Text } from "@mantine/core"
-import PublicMarketBuy from "./PublicMarketBuy"
-import PublicMarketSell from "./PublicMarketSell"
+import lazy from '../utilities/lazyWrapper'
+const PublicMarketBuy = lazy(() => import('./PublicMarketBuy'))
+const PublicMarketSell = lazy(() => import('./PublicMarketSell'))
+// import PublicMarketBuy from "./PublicMarketBuy"
+// import PublicMarketSell from "./PublicMarketSell"
 import { useTour } from "@reactour/tour"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
@@ -22,7 +25,7 @@ export default function PublicMarket()
             dispatch(fetchOtherItems(marketValues))
             dispatch(fetchMyItems(marketValues))
         }
-    }, [empire])
+    }, [])
 
     const [activeTab, setActiveTab] = useState('Buy');
 

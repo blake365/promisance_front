@@ -12,7 +12,7 @@ export const attackSteps = [
 	{
 		selector: '.attk-step-twopointfive',
 		content:
-			'You can see the total attack and defense values of your army. These values take into account your race bonuses and health. As you attack, your health will drop, affecting your attack and defense. Use turns building and gaining resources to recover your health. Exploring to heal will grow you empire even faster. Using turns in Heal will double your recovery rate.',
+			'You can see the total attack and defense values of your army. These values take into account your race bonuses and health. As you attack, your health will drop, affecting your attack and defense. Use turns building and gaining resources to recover your health. Exploring to heal will grow your empire even faster. Using turns in Heal will double your recovery rate.',
 	},
 	{
 		selector: '.attk-third-step',

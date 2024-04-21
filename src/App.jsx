@@ -255,6 +255,7 @@ function App()
 									backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
 								}
 							})}
+							className='gnome9 vampire9 minotaur9 gnome8 vampire8 minotaur8'
 							navbarOffsetBreakpoint='sm'
 							fixed
 							navbar={
