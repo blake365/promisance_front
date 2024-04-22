@@ -145,7 +145,9 @@ export default function Build({ size })
 			form.reset()
 			window.scroll({ top: 0, behavior: 'smooth' })
 			setLoading(false)
-			setCurrentStep(5)
+			if (meta && meta !== 'build tour') {
+				setCurrentStep(5)
+			}
 		} catch (error) {
 			console.log(error)
 			setLoading(false)

@@ -14,7 +14,7 @@ import { checkRoundStatus } from "../../functions/checkRoundStatus"
 export default function PublicMarket()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { setCurrentStep } = useTour()
+    const { setCurrentStep, meta } = useTour()
     const dispatch = useDispatch()
 
     // console.log(marketStatus)
@@ -49,7 +49,12 @@ export default function PublicMarket()
                             }} value={activeTab} onTabChange={setActiveTab}>
                                 <Tabs.List grow position="center">
                                     <Tabs.Tab value="Buy">Buy</Tabs.Tab>
-                                    <Tabs.Tab value="Sell" onClick={() => setCurrentStep(9)}>Sell</Tabs.Tab>
+                                    <Tabs.Tab value="Sell" onClick={() =>
+                                    {
+                                        if (meta) {
+                                            setCurrentStep(9)
+                                        }
+                                    }}>Sell</Tabs.Tab>
                                 </Tabs.List>
                                 <Tabs.Panel value="Buy">
                                     <PublicMarketBuy empire={empire} />

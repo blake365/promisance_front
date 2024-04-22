@@ -72,7 +72,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
                 message: result,
             })
             form.reset()
-            dispatch(fetchOtherItems({ empireId: empireId }))
+            dispatch(fetchOtherItems({ empireId: empireId, game_id: game_id }))
             loadEmpire()
         } catch (error) {
             console.log(error)

@@ -8,7 +8,7 @@ export const fetchMyItems = createAsyncThunk(
 			// console.log(values)
 			const res = await Axios.post('/publicmarket/pubSellMine', values)
 			// console.log(res)
-			let data = res.data
+			const data = res.data
 			return data
 		} catch (e) {
 			console.log(e)
@@ -28,7 +28,7 @@ export const fetchOtherItems = createAsyncThunk(
 				`/publicmarket/pubSellOthers?gameId=${gameId}`,
 				body
 			)
-			let data = res.data
+			const data = res.data
 			// console.log(data)
 			return data
 		} catch (e) {

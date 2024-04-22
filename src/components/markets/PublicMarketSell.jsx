@@ -230,7 +230,7 @@ export default function PublicMarketSell({ empire })
         try {
             const res = await Axios.post(`/publicmarket/pubSell?gameId=${empire.game_id}`, values)
             // dispatch(fetchMyItems())
-            // console.log(res.data)
+            console.log(res.data)
             // console.log(values)
             showNotification({
                 title: 'Items Listed On Market',
@@ -245,6 +245,11 @@ export default function PublicMarketSell({ empire })
             }
         } catch (error) {
             console.log(error)
+            showNotification({
+                title: 'Error',
+                message: error.response.data.error,
+                color: 'orange'
+            })
         }
     }
 

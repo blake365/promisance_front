@@ -217,7 +217,7 @@ const Sidebar = ({ name }) =>
 							className={setTutorialClassnames(link)}
 							onClick={() =>
 							{
-								console.log(meta)
+								console.log(meta && meta !== 'attacking tour' && meta !== 'build tour')
 								if (meta) {
 									if (link === "Public Market" && meta !== "new player tour") {
 										setCurrentStep(8);
