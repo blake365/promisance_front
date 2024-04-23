@@ -24,6 +24,7 @@ export const fetchOtherItems = createAsyncThunk(
 			// console.log('fetchOtherItems')
 			// console.log(empireId, gameId)
 			const body = { empireId: empireId }
+			// console.log(body)
 			const res = await Axios.post(
 				`/publicmarket/pubSellOthers?gameId=${gameId}`,
 				body

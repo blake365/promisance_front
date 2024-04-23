@@ -230,13 +230,13 @@ export default function PublicMarketSell({ empire })
         try {
             const res = await Axios.post(`/publicmarket/pubSell?gameId=${empire.game_id}`, values)
             // dispatch(fetchMyItems())
-            console.log(res.data)
+            // console.log(res.data)
             // console.log(values)
             showNotification({
                 title: 'Items Listed On Market',
                 message: interpretResults(res.data),
             })
-            dispatch(fetchMyItems({ empireId: empire.id }))
+            dispatch(fetchMyItems({ empireId: empire.id, gameId: empire.game_id }))
             buttonRef.current.focus()
             form.reset()
             loadEmpire()

@@ -8,7 +8,7 @@ export default function PublicMarketBuy({ empire })
     // const empire = useSelector((state) => state.empire.empire)
     const { pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes } = useSelector((state) => state.games.activeGame)
     const { otherItems } = useSelector((state) => state.market)
-    let marketStatus = useSelector(state => state.market.statusOthers)
+    const marketStatus = useSelector(state => state.market.statusOthers)
     // console.log(otherItems)
     return (
         <main>
