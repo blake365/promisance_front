@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { fetchGames } from "../../store/gamesSlice"
 import Axios from 'axios'
 import { useParams } from "react-router-dom"
+import { showNotification } from "@mantine/notifications"
 
 function EditGame()
 {
@@ -48,6 +49,12 @@ function EditGame()
         const data = res.data
         console.log(data)
         dispatch(fetchGames())
+
+        showNotification({
+            message: data.message,
+            color: 'teal',
+            autoClose: 2000,
+        })
     }
 
     return (
@@ -63,7 +70,7 @@ function EditGame()
                         }
 
                         return (
-                            <label key={index}><Text>{field} - {String(values[index])}</Text>
+                            <label key={field}><Text>{field} - {String(values[index])}</Text>
                                 <input type={type} onChange={handleChange} name={field} checked={details[field]} placeholder={values[index]} />
                             </label>
                         )

@@ -95,7 +95,6 @@ function App()
 
 	useEffect(() =>
 	{
-
 		async function loadUser()
 		{
 			// console.log('loading user')
@@ -151,6 +150,7 @@ function App()
 		}
 
 		dispatch(setPage(pageState))
+		dispatch(getTime(activeGame?.game_id))
 
 		if (empireStatus === 'succeeded') {
 			if (empire.flags === 1 && location.pathname !== '/app/disabled') {
@@ -228,7 +228,7 @@ function App()
 
 	const [colorScheme, setColorScheme] = useLocalStorage({
 		key: 'prom-color-scheme',
-		defaultValue: 'light'
+		defaultValue: 'dark'
 	});
 	const toggleColorScheme = (value) =>
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -248,7 +248,7 @@ function App()
 		<Sentry.ErrorBoundary fallback={myFallback}>
 			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 				<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-					<NotificationsProvider autoClose={8000}>
+					<NotificationsProvider autoClose={4000}>
 						<AppShell
 							styles={(theme) => ({
 								main: {
@@ -277,30 +277,13 @@ function App()
 									</Navbar.Section>
 									<Navbar.Section>
 										<Button
-											mt='xs'
 											component={Link}
 											to='/select'
-											variant='subtle'
-											fullWidth
-										>
-											Mode Select
-										</Button>
-										<Button
-											onClick={() =>
-											{
-												persistor.pause();
-												persistor.flush().then(() =>
-												{
-													return persistor.purge();
-												})
-												dispatch(logout())
-												dispatch(logoutEmpire())
-											}}
 											variant='subtle'
 											color='red'
 											fullWidth
 										>
-											Logout
+											Mode Select
 										</Button>
 									</Navbar.Section>
 								</Navbar>

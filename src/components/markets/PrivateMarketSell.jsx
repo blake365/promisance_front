@@ -43,7 +43,7 @@ export default function PrivateMarketSell()
     const trpLndCost = getCost(empire, pvtmTrpLnd, 0.4)
     const trpFlyCost = getCost(empire, pvtmTrpFly, 0.42)
     const trpSeaCost = getCost(empire, pvtmTrpSea, 0.44)
-    const foodCost = Math.round(pvtmFood * 0.30)
+    const foodCost = Math.round(pvtmFood * 0.38)
     const runesCost = Math.round(pvtmRunes * 0.20)
 
     const priceArray = [trpArmCost, trpLndCost, trpFlyCost, trpSeaCost, foodCost, runesCost]

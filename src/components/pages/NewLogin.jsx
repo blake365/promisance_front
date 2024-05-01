@@ -7,7 +7,8 @@ import
     Button,
     Title,
     Text,
-    Anchor
+    Anchor,
+    NativeSelect
 } from '@mantine/core';
 import { useForm } from '@mantine/form'
 import { login } from '../../store/userSlice'
@@ -47,7 +48,7 @@ const useStyles = createStyles(() => ({
 export default function NewLogin()
 {
     const { isLoggedIn, user } = useSelector((state) => state.user)
-    let { empire } = useSelector((state) => state.empire)
+    const { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -71,13 +72,9 @@ export default function NewLogin()
         initialValues: {
             username: '',
             password: '',
+            stayLoggedIn: '1 hour'
         },
     })
-
-    // const google = async () =>
-    // {
-    //     window.location.href = 'localhost:5001/api/auth/auth/google'
-    // }
 
 
     const { classes } = useStyles();
@@ -88,26 +85,37 @@ export default function NewLogin()
                     Welcome back to NeoPromisance!
                 </Title>
                 <form onSubmit={form.onSubmit((values) =>
+                {
+                    // console.log(values)
                     dispatch(login(values))
                         .unwrap()
                         .then(() =>
                         {
-                            dispatch(fetchGames())
-                            navigate('/select')
+                            dispatch(fetchGames());
+                            navigate("/select");
                         })
                         .catch((error) =>
                         {
-                            console.log(error)
-                            setError(error)
-                        })
+                            console.log(error);
+                            setError(error);
+                        });
+                }
                 )
                 }>
                     <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
                     <Text size='sm' my={0} color='dimmed' align='left'>Username is case sensitive. <Anchor component={Link} to='/forgot-username'>Forgot Username?</Anchor></Text>
-                    <PasswordInput required label="Password" placeholder="Your password" mt="md" size="md" {...form.getInputProps('password')} />
+                    <PasswordInput required label="Password" placeholder="Your password" mt="sm" size="md" {...form.getInputProps('password')} />
                     <Text size='sm' align='left'>
                         <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
                     </Text>
+                    {/* stay logged in for XX time */}
+                    <NativeSelect
+                        mt="sm" size="md"
+                        label="Stay logged in for:"
+                        data={['1 hour', '1 day', '1 week', '1 month', '6 months']}
+                        {...form.getInputProps('stayLoggedIn')}
+                    />
+
                     <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
                         Login
@@ -115,7 +123,6 @@ export default function NewLogin()
                     <Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
                         Login with Google
                     </Button>
-                    <Text size='sm' mt='xs' color='dimmed' align='center'>You will stay logged in for 1 hour</Text>
                 </form>
                 <Text ta="center" mt="md">
                     Need an account? <Anchor component={Link} to='/register'>Register</Anchor>

@@ -29,7 +29,7 @@ export default function PublicMarketSell({ empire })
 
     const getCost = (unit, base) =>
     {
-        let cost = base
+        let cost = base * 0.95
         const postedItem = otherItems[unit][0].price
 
         // console.log(postedItem)

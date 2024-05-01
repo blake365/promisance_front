@@ -1,4 +1,4 @@
-import { Card, Box, Title, Text, Button, Badge, Container, Flex, Grid, Group } from '@mantine/core'
+import { MantineProvider, ColorSchemeProvider, Card, Box, Title, Text, Button, Badge, Container, Flex, Grid, Group } from '@mantine/core'
 import { HeroImageRight } from './homeHero'
 import { useEffect } from 'react'
 import FooterSocial from '../layout/footer'
@@ -12,6 +12,7 @@ import { persistor } from '../../store/store';
 import { logoutEmpire } from "../../store/empireSlice";
 import { resetUser } from "../../store/userSlice";
 import { UsersFour, City, Sword, GitBranch, Alien, HourglassMedium, Envelope, ShoppingCart, Newspaper } from '@phosphor-icons/react'
+import { useLocalStorage } from '@mantine/hooks';
 
 export default function Home()
 {
@@ -129,65 +130,77 @@ export default function Home()
 
     const smScreen = useMediaQuery('(max-width: 768px)')
 
-    return (
-        <main style={{ backgroundColor: '#F1F3F5' }}>
-            <HeroImageRight />
-            <Container size='lg' align='center' mt='lg'>
-                <Grid justify='center' align='center' mb='lg'>
-                    <Grid.Col md={5} sm={12}>
-                        <Box align='left' my='lg'>
-                            <Title order={1}>About the Game</Title>
-                            <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vie for power. </Text>
-                            <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is in active development with new features and balance updates coming all the time. Join us today!</Text>
-                        </Box>
-                    </Grid.Col>
-                    <Grid.Col md={7} sm={12}>
-                        {smScreen ? <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(4).keys())} options={{}} /></section> : <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(5).keys())} options={{}} big /></section>}
-                    </Grid.Col>
-                </Grid>
+    const [colorScheme, setColorScheme] = useLocalStorage({
+        key: 'prom-color-scheme',
+        defaultValue: 'dark'
+    });
+    const toggleColorScheme = (value) =>
+        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-                <Box my='lg'>
-                    <Card p='lg' withBorder>
-                        <Title order={1} align='center' mb='lg'>Features</Title>
-                        <Flex justify='center' wrap='wrap'>
-                            {features.map((feature) => (
-                                <Box key={feature.name} w={!smScreen ? 300 : 410} p='lg'>
-                                    <Group spacing='xs' noWrap>{feature.icon}<Title order={3} align='left'>{feature.name}</Title></Group>
-                                    <Text size='sm' align='left'>{feature.description}</Text>
+    return (
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+            <MantineProvider theme={{ colorScheme }} withGlobalStyles>
+
+                <main>
+                    <HeroImageRight />
+                    <Container size='lg' align='center' mt='lg'>
+                        <Grid justify='center' align='center' mb='lg'>
+                            <Grid.Col md={5} sm={12}>
+                                <Box align='left' my='lg'>
+                                    <Title order={1}>About the Game</Title>
+                                    <Text size='lg'>Promisance is a classic browser based multiplayer game from the early 2000s. In the game players build an empire and compete to become the richest empire in the server. Players use turns to explore for land, gather resources, build different types of buildings, buy and sell goods, cast spells, and raise an army to attack other players. The game unfolds over weeks and months as players vie for power. </Text>
+                                    <Text size='lg' mt='xs'>NeoPromisance is a modern remake of the game with a new interface and some new features. The game is in active development with new features and balance updates coming all the time. Join us today!</Text>
                                 </Box>
+                            </Grid.Col>
+                            <Grid.Col md={7} sm={12}>
+                                {smScreen ? <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(4).keys())} options={{}} /></section> : <section className="sandbox__carousel"><BigCarousel slides={Array.from(Array(5).keys())} options={{}} big /></section>}
+                            </Grid.Col>
+                        </Grid>
+
+                        <Box my='lg'>
+                            <Card p='lg' withBorder>
+                                <Title order={1} align='center' mb='lg'>Features</Title>
+                                <Flex justify='center' wrap='wrap'>
+                                    {features.map((feature) => (
+                                        <Box key={feature.name} w={!smScreen ? 300 : 410} p='lg'>
+                                            <Group spacing='xs' noWrap>{feature.icon}<Title order={3} align='left'>{feature.name}</Title></Group>
+                                            <Text size='sm' align='left'>{feature.description}</Text>
+                                        </Box>
+                                    ))}
+                                </Flex>
+                            </Card>
+                        </Box>
+
+                        <Box mt='xl'>
+                            <Title order={1} ta='left'>Choose Your Strategy</Title>
+                            <Text ta='left' size='lg'>There are many ways to play Promisance. Use your turns to build structures and take actions to produce different resources. As your empire grows, you will need to attack other players to acquire the land needed to grow even larger. It is common to be attacked in this game but there are limits to try and prevent anyone from taking too much damage. Be sure to protect yourself from enemy spells by using a spell shield. Below are the Big Four strategies you can choose from, but feel free to get creative and find a strategy that works for you!</Text>
+                        </Box>
+                        <Flex justify='center' wrap='wrap'>
+                            {strategies.map((strategy) => (
+                                <Card ta='left' withBorder mb='md' shadow='sm' key={strategy.name} w={!smScreen ? 350 : 400} m='lg'>
+                                    <Card.Section h={175}>
+                                        <img src={strategy.image} alt={strategy.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading='lazy' />
+                                    </Card.Section>
+                                    <Title order={2} mt='xs'>{strategy.name}</Title>
+                                    <Text mt='xs' size='sm'>{strategy.description}</Text>
+                                    <Text size='sm' mt='sm' weight='bold'>Suggested Races:</Text>
+                                    {strategy.races.map(race => (<Badge key={race} variant='filled' mr='xs' color={strategy.color}>{race}</Badge>))}
+                                </Card>
                             ))}
                         </Flex>
-                    </Card>
-                </Box>
 
-                <Box mt='xl'>
-                    <Title order={1} ta='left'>Choose Your Strategy</Title>
-                    <Text ta='left' size='lg'>There are many ways to play Promisance. Use your turns to build structures and take actions to produce different resources. As your empire grows, you will need to attack other players to acquire the land needed to grow even larger. It is common to be attacked in this game but there are limits to try and prevent anyone from taking too much damage. Be sure to protect yourself from enemy spells by using a spell shield. Below are the Big Four strategies you can choose from, but feel free to get creative and find a strategy that works for you!</Text>
-                </Box>
-                <Flex justify='center' wrap='wrap'>
-                    {strategies.map((strategy) => (
-                        <Card ta='left' withBorder mb='md' shadow='sm' key={strategy.name} w={!smScreen ? 350 : 400} m='lg'>
-                            <Card.Section h={175}>
-                                <img src={strategy.image} alt={strategy.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading='lazy' />
-                            </Card.Section>
-                            <Title order={2} mt='xs'>{strategy.name}</Title>
-                            <Text mt='xs' size='sm'>{strategy.description}</Text>
-                            <Text size='sm' mt='sm' weight='bold'>Suggested Races:</Text>
-                            {strategy.races.map(race => (<Badge key={race} variant='filled' mr='xs' color={strategy.color}>{race}</Badge>))}
-                        </Card>
-                    ))}
-                </Flex>
-
-                <Box my='lg'>
-                    <Card p='lg' withBorder maw={722}>
-                        <Title order={1} align='center' mb='lg'>Ready to Play?</Title>
-                        <Text >Register a new account to create your empire and start your journey. If you still have questions, there is a built in guide and tips to help you as you play.
-                        </Text>
-                        <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
-                    </Card>
-                </Box>
-            </Container>
-            <FooterSocial />
-        </main>
+                        <Box my='lg'>
+                            <Card p='lg' withBorder maw={722}>
+                                <Title order={1} align='center' mb='lg'>Ready to Play?</Title>
+                                <Text >Register a new account to create your empire and start your journey. If you still have questions, there is a built in guide and tips to help you as you play.
+                                </Text>
+                                <Button size='md' component='a' sx={{ marginTop: 10 }} href='/register'>Register</Button>
+                            </Card>
+                        </Box>
+                    </Container>
+                    <FooterSocial />
+                </main>
+            </MantineProvider>
+        </ColorSchemeProvider>
     )
 }

@@ -182,10 +182,11 @@ export function calcPCI(empire) {
 // takes place of calcFinances function
 export function calcFinances(pci, empire, size) {
 	let income = Math.round(
-		(pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 500) *
-			Math.max(0.8, size)
+		pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
+			empire.bldCash * 500
 	)
+
+	// income *= Math.max(0.8, size)
 
 	// let loan = Math.round(empire.loan / 200)
 
@@ -238,9 +239,12 @@ export const baseCost = (empire) => {
 }
 
 export const getPower_self = (empire) => {
-	return Math.round(
-		(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100)) /
-			Math.max(empire.bldWiz, 1)
+	return Math.max(
+		Math.round(
+			(empire.trpWiz * ((100 + raceArray[empire.race].mod_magic) / 100)) /
+				Math.max(empire.bldWiz, 1)
+		),
+		100 + raceArray[empire.race].mod_magic
 	)
 }
 
