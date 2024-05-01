@@ -35,7 +35,7 @@ function AdminSummary()
     const submitReset = async (values) =>
     {
         try {
-            const res = await Axios.post(`/admin/resetgame?gameId=${game_id}`, values)
+            const res = await Axios.post(`/admin/resetgame?gameId=${game.game_id}`, values)
             // console.log(res.data)
             setResult(res.data)
         } catch (error) {
