@@ -1,4 +1,4 @@
-import { Container, Group, Loader } from "@mantine/core";
+import { Container, Group, Loader, MantineProvider, ColorSchemeProvider } from "@mantine/core";
 import { SlimHero } from "./slimHero";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -9,6 +9,7 @@ import FooterSocial from "../layout/footer";
 import ModeCard from "./ModeCard";
 import { persistor } from "../../store/store";
 import { logoutEmpire } from "../../store/empireSlice";
+import { useLocalStorage } from "@mantine/hooks";
 
 export default function ModeSelect()
 {
@@ -60,31 +61,41 @@ export default function ModeSelect()
     // if they have not joined, clicking button will send them to create an empire for that mode
     // if they have joined, clicking button will send them into the game for that mode
 
-    return (
-        <main style={{ backgroundColor: '#F1F3F5' }}>
-            <SlimHero />
-            <Container size='lg' align='center' py='xl'>
-                <Group mt='md' position="center" key='owjojd'>
-                    {status === 'succeeded' && games.length > 0 ? games.map((game) =>
-                    {
-                        if (game.isActive === false) return null
-                        let empireFound = false
-                        if (user?.empires?.length > 0) {
-                            const empire = user.empires.find(empire =>
-                                empire.game_id === game.game_id
-                            )
-                            if (empire) {
-                                empireFound = true
-                            }
-                        }
+    const [colorScheme, setColorScheme] = useLocalStorage({
+        key: 'prom-color-scheme',
+        defaultValue: 'dark'
+    });
+    const toggleColorScheme = (value) =>
+        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-                        return (
-                            <ModeCard game={game} empireFound={empireFound} user={user} key={game.id} />
-                        )
-                    }) : (<Loader size='xl' />)}
-                </Group>
-            </Container>
-            <FooterSocial />
-        </main>
+    return (
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+            <MantineProvider theme={{ colorScheme }} withGlobalStyles>
+                <SlimHero />
+                <Container size='lg' align='center' py='xl'>
+                    <Group mt='md' position="center" key='owjojd'>
+                        {status === 'succeeded' && games.length > 0 ? games.map((game) =>
+                        {
+                            if (game.isActive === false) return null
+                            let empireFound = false
+                            if (user?.empires?.length > 0) {
+                                const empire = user.empires.find(empire =>
+                                    empire.game_id === game.game_id
+                                )
+                                if (empire) {
+                                    empireFound = true
+                                }
+                            }
+
+                            return (
+                                <ModeCard game={game} empireFound={empireFound} user={user} key={game.id} />
+                            )
+                        }) : (<Loader size='xl' />)}
+                    </Group>
+                </Container>
+                <FooterSocial />
+
+            </MantineProvider>
+        </ColorSchemeProvider>
     )
 }
