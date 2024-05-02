@@ -2,6 +2,11 @@ import { createStyles, Container, Title, Text, Button, Group } from '@mantine/co
 import neoIcon from '../../icons/neoIcon.svg'
 import { Compass, ListBullets, DiscordLogo, Archive } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { persistor } from '../../store/store'
+import { logout } from '../../store/userSlice'
+import { logoutEmpire } from '../../store/empireSlice'
+
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -53,6 +58,8 @@ const useStyles = createStyles((theme) => ({
 
 export function HeroImageRight()
 {
+    const { user } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
     const { classes } = useStyles();
     return (
         <div className={classes.root}>
@@ -74,8 +81,26 @@ export function HeroImageRight()
                     </div>
                 </div>
                 <Group my='lg' spacing='lg'>
-                    <Button component={Link} to='/register' size='lg'>Register</Button>
-                    <Button component={Link} to='/login' size='lg' color='teal'>Login</Button>
+                    {!user ?
+                        (<>
+                            <Button component={Link} to='/register' size='lg'>Register</Button>
+                            <Button component={Link} to='/login' size='lg' color='teal'>Login</Button>
+                        </>) :
+                        (<>
+                            <Button component={Link} to='/select' size='lg'>Mode Select</Button>
+                            <Button onClick={() =>
+                            {
+                                persistor.pause();
+                                persistor.flush().then(() =>
+                                {
+                                    return persistor.purge();
+                                })
+                                dispatch(logout())
+                                dispatch(logoutEmpire())
+                            }} size='lg' color='red'>Logout</Button>
+                            {user.role === 'admin' && <Button component={Link} to='/admin/' size='lg' color='teal'>Admin</Button>}
+                        </>
+                        )}
                 </Group>
                 <Group position='left'>
                     <Button leftIcon={<Compass size={14} />} component='a' href='https://guide.neopromisance.com' target='_blank' color='dark' compact size='md'>
