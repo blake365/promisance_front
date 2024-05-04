@@ -8,7 +8,10 @@ import
     Title,
     Text,
     Anchor,
-    NativeSelect
+    NativeSelect,
+    ColorSchemeProvider,
+    MantineProvider,
+    Stack,
 } from '@mantine/core';
 import { useForm } from '@mantine/form'
 import { login } from '../../store/userSlice'
@@ -19,24 +22,13 @@ import { Link } from 'react-router-dom';
 import { logoutEmpire } from '../../store/empireSlice';
 import { IconBrandGoogle } from '@tabler/icons-react';
 import { fetchGames } from '../../store/gamesSlice';
-let bg = '/images/login.webp'
+import { useLocalStorage } from '@mantine/hooks';
 
 const useStyles = createStyles(() => ({
-    wrapper: {
-        height: '100%',
-        width: '100%',
-        margin: 'auto',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
-        backgroundImage:
-            `url(${bg})`,
-    },
     form: {
         minHeight: '100vh',
         maxWidth: 500,
         padding: 80,
-        background: 'rgba(255,255,255,0.85)',
         '@media (max-width: 400px)': {
             maxWidth: '100%',
             padding: 40,
@@ -78,60 +70,71 @@ export default function NewLogin()
 
 
     const { classes } = useStyles();
+    const [colorScheme, setColorScheme] = useLocalStorage({
+        key: 'prom-color-scheme',
+        defaultValue: 'dark'
+    });
+    const toggleColorScheme = (value) =>
+        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
     return (
-        <div className={classes.wrapper}>
-            <Paper className={classes.form} radius={0} >
-                <Title order={2} ta="center" mt={90} mb={50}>
-                    Welcome back to NeoPromisance!
-                </Title>
-                <form onSubmit={form.onSubmit((values) =>
-                {
-                    // console.log(values)
-                    dispatch(login(values))
-                        .unwrap()
-                        .then(() =>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+            <MantineProvider theme={{ colorScheme }} withGlobalStyles>
+                <Stack align='center'>
+                    <Paper className={classes.form} radius={0} >
+                        <Title order={2} ta="center" mt={90} mb={50}>
+                            Welcome back to NeoPromisance!
+                        </Title>
+                        <form onSubmit={form.onSubmit((values) =>
                         {
-                            dispatch(fetchGames());
-                            navigate("/select");
-                        })
-                        .catch((error) =>
-                        {
-                            console.log(error);
-                            setError(error);
-                        });
-                }
-                )
-                }>
-                    <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
-                    <Text size='sm' my={0} color='dimmed' align='left'>Username is case sensitive. <Anchor component={Link} to='/forgot-username'>Forgot Username?</Anchor></Text>
-                    <PasswordInput required label="Password" placeholder="Your password" mt="sm" size="md" {...form.getInputProps('password')} />
-                    <Text size='sm' align='left'>
-                        <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
-                    </Text>
-                    {/* stay logged in for XX time */}
-                    <NativeSelect
-                        mt="sm" size="md"
-                        label="Stay logged in for:"
-                        data={['1 hour', '1 day', '1 week', '1 month', '6 months']}
-                        {...form.getInputProps('stayLoggedIn')}
-                    />
+                            // console.log(values)
+                            dispatch(login(values))
+                                .unwrap()
+                                .then(() =>
+                                {
+                                    dispatch(fetchGames());
+                                    navigate("/select");
+                                })
+                                .catch((error) =>
+                                {
+                                    console.log(error);
+                                    setError(error);
+                                });
+                        }
+                        )
+                        }>
+                            <TextInput required label="Username" placeholder="username" size="md" {...form.getInputProps('username')} />
+                            <Text size='sm' my={0} color='dimmed' align='left'>Username is case sensitive. <Anchor component={Link} to='/forgot-username'>Forgot Username?</Anchor></Text>
+                            <PasswordInput required label="Password" placeholder="Your password" mt="sm" size="md" {...form.getInputProps('password')} />
+                            <Text size='sm' align='left'>
+                                <Anchor component={Link} to='/forgot'>Forgot Password?</Anchor>
+                            </Text>
+                            {/* stay logged in for XX time */}
+                            <NativeSelect
+                                mt="sm" size="md"
+                                label="Stay logged in for:"
+                                data={['1 hour', '1 day', '1 week', '1 month', '6 months']}
+                                {...form.getInputProps('stayLoggedIn')}
+                            />
 
-                    <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-                    <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
-                        Login
-                    </Button>
-                    <Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
-                        Login with Google
-                    </Button>
-                </form>
-                <Text ta="center" mt="md">
-                    Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
-                </Text>
+                            <Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
+                            <Button fullWidth mt="xl" size="md" type='submit' color='teal'>
+                                Login
+                            </Button>
+                            <Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
+                                Login with Google
+                            </Button>
+                        </form>
+                        <Text ta="center" mt="md">
+                            Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
+                        </Text>
 
-                <Text ta="center" mt="md">
-                    <Anchor component={Link} to='/'>Return home</Anchor>
-                </Text>
-            </Paper>
-        </div >
+                        <Text ta="center" mt="md">
+                            <Anchor component={Link} to='/'>Return Home</Anchor>
+                        </Text>
+                    </Paper>
+                </Stack>
+            </MantineProvider>
+        </ColorSchemeProvider>
     );
 }

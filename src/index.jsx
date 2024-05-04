@@ -57,7 +57,7 @@ const AdvancedStats = lazy(() => import('./components/stats/advanced'))
 
 import Home from './components/pages/Home'
 import NewLogin from './components/pages/NewLogin'
-import Signup from './components/layout/Signup'
+import Signup from './components/pages/Signup'
 import CreateEmpire from './components/pages/CreateEmpire'
 import { NothingFoundBackground } from './components/pages/404'
 import CreateDemoEmpire from './components/pages/CreateDemoEmpire'
