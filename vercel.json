@@ -8,7 +8,7 @@
 	"crons": [
 		{
 			"path": "/api/cron/turns",
-			"schedule": "*/2 * * * *"
+			"schedule": "*/1 * * * *"
 		},
 		{
 			"path": "/api/cron/thirty",
