@@ -15,15 +15,15 @@ export default function Heal({ size })
 			item='health'
 			color='red'
 			empire={empire} />)
-	} else {
-		return (<GeneralAction
-			title='Heal'
-			type='heal'
-			flavor='healing'
-			item='health'
-			color='red'
-			empire={empire}
-			imglink='/images/heal.webp'
-		/>)
 	}
+	return (<GeneralAction
+		title='Heal'
+		type='heal'
+		flavor='healing'
+		item='health'
+		color='red'
+		empire={empire}
+		imglink='/images/heal.webp'
+	/>)
+
 }

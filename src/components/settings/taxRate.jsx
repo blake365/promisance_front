@@ -57,7 +57,7 @@ export default function TaxRate({ empire, tiny })
         }
     }
 
-    const taxButtons = [1, 25, 50, 75, 100]
+    const taxButtons = [5, 25, 50, 75, 95]
 
     return (
         <Center mt={10}>

@@ -28,11 +28,16 @@ export default function GeneralAction(props)
 	const { setCurrentStep, meta, currentStep } = useTour()
 
 	let turns = 0
+	let healthDeduction = 100
 
 	useEffect(() =>
 	{
 		if (props.type === 'heal') {
-			turns = (100 - props.empire.health) / 2;
+			healthDeduction = Math.max((props.empire.tax - 25) / 2, 0)
+			turns = (100 - props.empire.health - healthDeduction) / 2;
+			if (turns < 0) {
+				turns = 0
+			}
 		}
 		form.setValues({ turns: turns })
 	}, [props.type, props.empire.health]);
