@@ -2,7 +2,7 @@ import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, The
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { Mountains, Scales, Hourglass, Sword, Shield } from "@phosphor-icons/react"
+import { Mountains, Scales, Hourglass, Sword, Shield, Ranking } from "@phosphor-icons/react"
 import { useEffect, useState, Suspense } from 'react'
 import lazy from './utilities/lazyWrapper'
 const ScoresAttack = lazy(() => import('./diplomacy/scoresAttack'));
@@ -22,9 +22,12 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
 
     const { time } = useSelector((state) => state.time)
     let turnsProtection = 400
+    let scoreEnabled = false
     if (!home) {
         turnsProtection = useSelector((state) => state.games?.activeGame.turnsProtection)
+        scoreEnabled = useSelector((state) => state.games?.activeGame.scoreEnabled)
     }
+
 
     const checkForSession = async () =>
     {
@@ -122,6 +125,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
             disabled = true
         }
     }
+
     return (
         <Card shadow="sm" radius="sm" sx={{ width: '100%', overflowX: 'hidden' }} key={empire.id} withBorder>
             <Card.Section sx={{ height: '2px' }}>
@@ -145,9 +149,18 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                         </Indicator>
                     </Group>
                     <Group sx={{ gap: '7px' }}>
+                        {scoreEnabled && (
+                            <Group ml="xs" sx={{ width: "90px" }} spacing={3} noWrap >
+                                <Ranking size={22} weight="fill" />
+                                <Text>
+                                    {empire.score}
+                                </Text>
+                            </Group>
+                        )}
                         <Group ml='xs' sx={{ width: '160px' }} spacing={3} noWrap>
                             <Scales size={22} weight='fill' />
                             <Text>${empire.networth.toLocaleString()}</Text></Group>
+
                         <Group ml='xs' spacing={3} noWrap sx={{ width: '100px' }}>
                             <Mountains size={22} weight='fill' />
                             <Text>{empire.land.toLocaleString()}</Text></Group>

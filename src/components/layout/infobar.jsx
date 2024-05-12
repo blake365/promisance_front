@@ -1,6 +1,6 @@
 import { Paper, Grid, Text, Center, Progress } from '@mantine/core'
 import { eraArray } from '../../config/eras'
-import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch } from "@phosphor-icons/react"
+import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch, Ranking } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
 import { useSelector } from 'react-redux';
@@ -55,16 +55,16 @@ export default function InfoBar({ data })
 	const empire = data
 
 	const { time } = useSelector((state) => state.time)
-	let roundLength = time.end - time.start
-	let roundProgress = time.time - time.start
-	let roundPercent = roundProgress / roundLength * 100
-	const { turnsProtection } = useSelector((state) => state.games.activeGame)
+	const roundLength = time.end - time.start
+	const roundProgress = time.time - time.start
+	const roundPercent = roundProgress / roundLength * 100
+	const { turnsProtection, scoreEnabled } = useSelector((state) => state.games.activeGame)
 
 
 	let roundStatus = ''
-	let upcoming = time.start - time.time
+	const upcoming = time.start - time.time
 	// console.log(upcoming)
-	let remaining = time.end - time.time
+	const remaining = time.end - time.time
 	// console.log(remaining)
 
 	if (upcoming > 0) {
@@ -89,7 +89,7 @@ export default function InfoBar({ data })
 			<Text align='center' weight='bold' mb='xs'>
 				{roundStatus}
 			</Text>
-			<Grid justify="space-between" grow columns={19} pl='xs' pr='xs'>
+			<Grid justify="space-between" grow columns={scoreEnabled ? 21 : 19} pl='xs' pr='xs'>
 				<Grid.Col span={2}>
 					<Center>
 						<GitBranch size={20} color={eraArray[empire.era].color} />
@@ -97,8 +97,16 @@ export default function InfoBar({ data })
 							Turns
 						</Text>
 					</Center>
-
 					<AnimateNumberChange type='turns' number={empire.turns} />
+				</Grid.Col>
+				<Grid.Col span={2}>
+					<Center>
+						<Ranking size={20} color={eraArray[empire.era].color} />
+						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
+							Score
+						</Text>
+					</Center>
+					<AnimateNumberChange type='score' number={empire.score} />
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Center>
