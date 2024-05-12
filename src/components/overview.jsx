@@ -146,6 +146,7 @@ export default function Overview()
 								<Text align='right'>{eraArray[empire.era].name}</Text>
 								<Text>Tax Rate:</Text>
 								<Text align='right'>{empire.tax}%</Text>
+								<Text align='left'>Luck: </Text><Text align='right'>{luck}%</Text>
 							</SimpleGrid>
 						</Card>
 
@@ -181,8 +182,7 @@ export default function Overview()
 								</Popover>
 								<Text align='right'>+{newLand} acres</Text>
 								<Text align='left'>Black Market: <RaceBonus value={race.mod_market} /></Text>
-								<Text></Text>
-								<Text align='left'>Luck: <RaceBonus value={luck} /></Text>
+
 							</SimpleGrid>
 						</Card>
 
@@ -238,7 +238,7 @@ export default function Overview()
 									<Text>Unused Land:</Text>
 									<Text>Total Land:</Text>
 								</Col>
-								<Col span={5}>
+								<Col span={5} mt={3}>
 									<Text align='right'>Build Rate: </Text>
 									<Text align='right'>{empire.bldPop.toLocaleString()}</Text>
 									<Text align='right'>{empire.bldCash.toLocaleString()}</Text>
@@ -250,7 +250,7 @@ export default function Overview()
 									<Text align='right'>{empire.freeLand.toLocaleString()}</Text>
 									<Text align='right'>{empire.land.toLocaleString()}</Text>
 								</Col>
-								<Col span={3}>
+								<Col span={3} mt={3}>
 									<Text align='right'><RaceBonus value={race.mod_buildrate} /> </Text>
 									<Text align='right'>{Math.round(empire.bldPop / empire.land * 100)}%</Text>
 									<Text align='right'>{Math.round(empire.bldCash / empire.land * 100)}%</Text>
@@ -287,7 +287,7 @@ export default function Overview()
 										</Popover.Dropdown>
 									</Popover>
 								</Col>
-								<Col span={5} align='right'>
+								<Col span={5} align='right' mt={3}>
 									<Popover withArrow shadow="lg" withinPortal>
 										<Popover.Target>
 											<Anchor >Industry: </Anchor>
@@ -307,7 +307,7 @@ export default function Overview()
 									<Text align='right'>{empire.runes.toLocaleString()}</Text>
 								</Col>
 
-								<Col span={3}>
+								<Col span={3} mt={3}>
 
 									<Text align='right'><RaceBonus value={race.mod_industry + era.mod_industry} /></Text>
 									<Text align='right'>{empire.indArmy}%</Text>
