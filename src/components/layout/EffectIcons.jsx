@@ -1,6 +1,6 @@
 import { Group, ThemeIcon, Tooltip, RingProgress, Center, Stack } from '@mantine/core'
 import { useSelector, useDispatch } from 'react-redux'
-import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
+import { ShieldStar, Sword, CalendarCheck, HourglassMedium, Skull } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { fetchEffects } from '../../store/effectSlice'
 
@@ -43,6 +43,9 @@ export default function EffectIcons({ empire, pageState })
                             icon = <CalendarCheck />
                         } else if (effect.empireEffectName === 'era delay') {
                             icon = <HourglassMedium />
+                            color = 'red'
+                        } else if (effect.empireEffectName === 'defeated') {
+                            icon = <Skull />
                             color = 'red'
                         }
                         if (effect.empireEffectName === 'bonus turns' || effect.empireEffectName === 'join clan' || effect.empireEffectName === 'leave clan') {
