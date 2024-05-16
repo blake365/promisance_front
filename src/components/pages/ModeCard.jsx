@@ -1,7 +1,7 @@
 import { Title, Text, Collapse, Group, Button, Stack, Center, Loader, Card, Box } from "@mantine/core";
 import { Suspense, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { Trophy, LegoSmiley } from "@phosphor-icons/react";
+import { Trophy, LegoSmiley, Ranking, Flask } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchEmpire, createSession } from '../../store/empireSlice';
@@ -80,12 +80,26 @@ export default function ModeCard({ game, empireFound, user })
         roundStatus = false
     }
 
+    const gameIcon = (game) =>
+    {
+        if (game.type === 'casual') {
+            return <LegoSmiley size={40} />
+        }
+        if (game.scoreEnabled) {
+            return <Ranking size={40} />
+        }
+        if (game.experimental) {
+            return <Flask size={40} />
+        }
+
+        return <Trophy size={40} />
+    }
 
 
     return (
         <Card withBorder shadow='lg' key={game.id} w={'100%'} >
             <Stack>
-                <Group position="left">{game.type !== 'casual' ? (<Trophy size={40} />) : (<LegoSmiley size={40} />)}<Title order={1} align='left'>{game.name}</Title></Group>
+                <Group position="left">{gameIcon(game)}<Title order={1} align='left'>{game.name}</Title></Group>
                 <Text align='left'>
                     {game.roundDescription}
                 </Text>

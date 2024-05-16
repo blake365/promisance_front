@@ -28,7 +28,7 @@ import InfoBar from './components/layout/infobar'
 import { useDispatch, useSelector } from 'react-redux'
 import TurnResultContainer from './components/useTurns/TurnResultContainer'
 import { fetchEmpire, empireLoaded, logoutEmpire } from './store/empireSlice'
-import { load, logout } from './store/userSlice'
+import { load } from './store/userSlice'
 import ThemeToggle from './components/utilities/themeToggle'
 import { useLocation } from 'react-router-dom'
 import { setPage } from './store/guideSlice'
@@ -273,7 +273,7 @@ function App()
 										ml={10}
 										onClick={() => setOpened(false)}
 									>
-										<Sidebar name={activeGame?.name} />
+										<Sidebar game={activeGame} />
 									</Navbar.Section>
 									<Navbar.Section>
 										<Button

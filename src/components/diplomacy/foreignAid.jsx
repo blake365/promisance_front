@@ -24,7 +24,7 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 export default function ForeignAid()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { turnsProtection, aidMaxCredits, aidDelay } = useSelector((state) => state.games.activeGame)
+    const { turnsProtection, aidMaxCredits, aidDelay, aidEnable } = useSelector((state) => state.games.activeGame)
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
     const loadOtherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.turnsUsed)
@@ -118,76 +118,79 @@ export default function ForeignAid()
 
     return (
         <section>
-            <Center>
-                <Stack spacing='sm' align='center'>
-                    <img src='/images/aid.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='foreign aid' />
-                    <Title order={1} align='center'>
-                        Foreign Aid
-                    </Title>
-                    <Text align='center'>
-                        Send resources and troops to other players.
-                    </Text>
-                    <Text align='center'>
-                        Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay} hours, up to a maximum of {aidMaxCredits} credits.
-                    </Text>
-                    {error && (<Text color='red' weight='bold'>{error}</Text>)}
-                    {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
-                    {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
-                    {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
-                    <form onSubmit={form.onSubmit((values) =>
-                    {
-                        console.log(values)
-                        sendAid(values)
-                        // dispatch(clearResult)
-                        window.scroll({ top: 0, behavior: 'smooth' })
-                    })}>
-                        <Stack spacing='sm' align='center' >
-                            {loadOtherEmpires && (
-                                <Select
-                                    searchable
-                                    searchValue={selectedEmpire}
-                                    onSearchChange={setSelectedEmpire}
-                                    label="Select an Empire to Aid"
-                                    placeholder="Pick one"
-                                    withAsterisk
-                                    itemComponent={SelectItem}
-                                    data={loadOtherEmpires}
-                                    withinPortal
-                                    {...form.getInputProps('receiverId')}
-                                />
-                            )}
-                            <div className={classes.tablecontainer}>
-                                <table className={classes.widetable}>
-                                    <thead>
-                                        <tr>
-                                            <th align='left'>Unit</th>
-                                            <th align='right'>Owned</th>
-                                            <th align='right'>Can Send</th>
-                                            <th align='center'>Send</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {itemArray.map((item, index) => (<tr key={index}>
-                                            <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
-                                            <td align='right'>{empire[item].toLocaleString()}</td>
-                                            <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
-                                            <td>
-                                                <NumberInput min={0} max={Math.floor(empire[item] * 0.15)} {...form.getInputProps(`${item}`)}
-                                                    rightSection={<MaxButton maxValue={Math.floor(empire[item] * 0.15)} formName={form} fieldName={item} style={{ marginRight: '20px' }} />}
-                                                />
-                                            </td>
-                                        </tr>))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
-                                Send Aid
-                            </Button>
-                            <Text size='sm'>{empire.aidCredits} credits remaining</Text>
-                        </Stack>
-                    </form>
-                </Stack>
-            </Center>
+            {aidEnable ? (
+                <Center>
+                    <Stack spacing='sm' align='center'>
+                        <img src='/images/aid.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='foreign aid' />
+                        <Title order={1} align='center'>
+                            Foreign Aid
+                        </Title>
+                        <Text align='center'>
+                            Send resources and troops to other players.
+                        </Text>
+                        <Text align='center'>
+                            Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay} hours, up to a maximum of {aidMaxCredits} credits.
+                        </Text>
+                        {error && (<Text color='red' weight='bold'>{error}</Text>)}
+                        {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
+                        {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
+                        {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
+                        <form onSubmit={form.onSubmit((values) =>
+                        {
+                            console.log(values)
+                            sendAid(values)
+                            // dispatch(clearResult)
+                            window.scroll({ top: 0, behavior: 'smooth' })
+                        })}>
+                            <Stack spacing='sm' align='center' >
+                                {loadOtherEmpires && (
+                                    <Select
+                                        searchable
+                                        searchValue={selectedEmpire}
+                                        onSearchChange={setSelectedEmpire}
+                                        label="Select an Empire to Aid"
+                                        placeholder="Pick one"
+                                        withAsterisk
+                                        itemComponent={SelectItem}
+                                        data={loadOtherEmpires}
+                                        withinPortal
+                                        {...form.getInputProps('receiverId')}
+                                    />
+                                )}
+                                <div className={classes.tablecontainer}>
+                                    <table className={classes.widetable}>
+                                        <thead>
+                                            <tr>
+                                                <th align='left'>Unit</th>
+                                                <th align='right'>Owned</th>
+                                                <th align='right'>Can Send</th>
+                                                <th align='center'>Send</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {itemArray.map((item, index) => (<tr key={index}>
+                                                <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
+                                                <td align='right'>{empire[item].toLocaleString()}</td>
+                                                <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
+                                                <td>
+                                                    <NumberInput min={0} max={Math.floor(empire[item] * 0.15)} {...form.getInputProps(`${item}`)}
+                                                        rightSection={<MaxButton maxValue={Math.floor(empire[item] * 0.15)} formName={form} fieldName={item} style={{ marginRight: '20px' }} />}
+                                                    />
+                                                </td>
+                                            </tr>))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
+                                    Send Aid
+                                </Button>
+                                <Text size='sm'>{empire.aidCredits} credits remaining</Text>
+                            </Stack>
+                        </form>
+                    </Stack>
+                </Center>
+            ) : (<Text>Foreign Aid is disabled for this game mode</Text>)
+            }
         </section>
     )
 }

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
 
-const Sidebar = ({ name }) =>
+const Sidebar = ({ game }) =>
 {
 	const { setCurrentStep, meta } = useTour()
 
@@ -97,7 +97,7 @@ const Sidebar = ({ name }) =>
 		<Fragment>
 			<Stack spacing='xs' sx={{ marginBottom: '1rem', marginRight: '0.5rem', marginTop: '0.5rem' }}>
 				<Button radius={0} component={Link} to='/select'><Title order={3} align='center'
-					color='white' w={'100%'}>{name}</Title>
+					color='white' w={'100%'}>{game.name}</Title>
 				</Button>
 				<Title order={4}>Information</Title>
 				{infoLinks.map((link) =>
@@ -108,6 +108,11 @@ const Sidebar = ({ name }) =>
 					} else if (locationString === link) {
 						variant = 'filled'
 					}
+
+					if (!game.clanEnable && link === 'Clan Stats') {
+						return null
+					}
+
 					return (
 						<Button
 							component={Link}
@@ -255,6 +260,15 @@ const Sidebar = ({ name }) =>
 					} else if (locationString === link) {
 						variant = 'filled'
 					}
+
+					if (!game.clanEnable && link === 'Clans') {
+						return null
+					}
+
+					if (!game.aidEnable && link === 'Foreign Aid') {
+						return null
+					}
+
 					return (
 						<Button
 							component={Link}

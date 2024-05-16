@@ -23,9 +23,11 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     const { time } = useSelector((state) => state.time)
     let turnsProtection = 400
     let scoreEnabled = false
+    let aidEnable = true
     if (!home) {
         turnsProtection = useSelector((state) => state.games?.activeGame.turnsProtection)
         scoreEnabled = useSelector((state) => state.games?.activeGame.scoreEnabled)
+        aidEnable = useSelector((state) => state.games?.activeGame.aidEnable)
     }
 
 
@@ -202,7 +204,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                                 <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
                                 <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
                                 {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
-                                <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
+                                {aidEnable && <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>}
                                 <Tabs.Tab value="Chat">Chat</Tabs.Tab>
                             </Tabs.List>
 
