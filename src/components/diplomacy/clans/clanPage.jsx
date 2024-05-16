@@ -10,7 +10,7 @@ import { checkRoundStatus } from "../../../functions/checkRoundStatus"
 function ClanPage()
 {
     const { empire } = useSelector((state) => state.empire)
-    const { turnsProtection } = useSelector((state) => state.games.activeGame)
+    const { turnsProtection, clanEnable } = useSelector((state) => state.games.activeGame)
 
     let disabled = false
     if (empire.turnsUsed < turnsProtection || empire.mode === 'demo') {
@@ -18,6 +18,15 @@ function ClanPage()
     }
 
     const roundStatus = checkRoundStatus(true)
+
+    if (!clanEnable) {
+        return (
+            <main>
+                <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
+                <Text align="center">Clans are disabled for this game mode.</Text>
+            </main>
+        )
+    }
 
     return (
         <main>
