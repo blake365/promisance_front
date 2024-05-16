@@ -99,15 +99,22 @@ export default function InfoBar({ data })
 					</Center>
 					<AnimateNumberChange type='turns' number={empire.turns} />
 				</Grid.Col>
-				<Grid.Col span={2}>
-					<Center>
-						<Ranking size={20} color={eraArray[empire.era].color} />
-						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Score
-						</Text>
-					</Center>
-					<AnimateNumberChange type='score' number={empire.score} />
-				</Grid.Col>
+				{scoreEnabled && (
+					<Grid.Col span={2}>
+						<Center>
+							<Ranking size={20} color={eraArray[empire.era].color} />
+							<Text
+								weight="bold"
+								align="center"
+								color={eraArray[empire.era].color}
+								ml={2}
+							>
+								Score
+							</Text>
+						</Center>
+						<AnimateNumberChange type="score" number={empire.score} />
+					</Grid.Col>
+				)}
 				<Grid.Col span={3}>
 					<Center>
 						<Scales size={20} color={eraArray[empire.era].color} />

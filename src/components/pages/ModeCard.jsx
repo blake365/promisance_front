@@ -82,14 +82,14 @@ export default function ModeCard({ game, empireFound, user })
 
     const gameIcon = (game) =>
     {
+        if (game.experimental) {
+            return <Flask size={40} />
+        }
         if (game.type === 'casual') {
             return <LegoSmiley size={40} />
         }
         if (game.scoreEnabled) {
             return <Ranking size={40} />
-        }
-        if (game.experimental) {
-            return <Flask size={40} />
         }
 
         return <Trophy size={40} />
