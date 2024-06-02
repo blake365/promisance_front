@@ -136,12 +136,12 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
                         withinPortal
                         itemComponent={SelectSpell}
                         data={[
-                            { value: 'fight', label: eraArray[empire.era].spell_fight, ratio: '2.2x', cost: Math.ceil(baseCost(empire) * 22.5) },
-                            { value: 'blast', label: eraArray[empire.era].spell_blast, ratio: '1.5x', cost: Math.ceil(baseCost(empire) * 2.75) },
-                            { value: 'steal', label: eraArray[empire.era].spell_steal, ratio: '1.75x', cost: Math.ceil(baseCost(empire) * 25.75) },
-                            { value: 'storm', label: eraArray[empire.era].spell_storm, ratio: '1.21x', cost: Math.ceil(baseCost(empire) * 7.25) },
-                            { value: 'runes', label: eraArray[empire.era].spell_runes, ratio: '1.3x', cost: Math.ceil(baseCost(empire) * 9.5) },
-                            { value: 'struct', label: eraArray[empire.era].spell_struct, ratio: '1.7x', cost: Math.ceil(baseCost(empire) * 18) },
+                            { value: 'fight', label: eraArray[empire.era].spell_fight, ratio: '2.2x', cost: Math.ceil(baseCost(empire) * 27.5) },
+                            { value: 'blast', label: eraArray[empire.era].spell_blast, ratio: '1.5x', cost: Math.ceil(baseCost(empire) * 25) },
+                            { value: 'steal', label: eraArray[empire.era].spell_steal, ratio: '1.75x', cost: Math.ceil(baseCost(empire) * 30.75) },
+                            { value: 'storm', label: eraArray[empire.era].spell_storm, ratio: '1.21x', cost: Math.ceil(baseCost(empire) * 22.25) },
+                            { value: 'runes', label: eraArray[empire.era].spell_runes, ratio: '1.3x', cost: Math.ceil(baseCost(empire) * 24.5) },
+                            { value: 'struct', label: eraArray[empire.era].spell_struct, ratio: '1.7x', cost: Math.ceil(baseCost(empire) * 23) },
                         ]}
                         {...spellForm.getInputProps('spell')}
                     />}
