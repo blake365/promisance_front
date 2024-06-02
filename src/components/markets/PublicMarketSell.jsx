@@ -22,14 +22,15 @@ export default function PublicMarketSell({ empire })
     // console.log(result)
     const { myItems } = useSelector((state) => state.market)
     const { otherItems } = useSelector((state) => state.market)
-    const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes, pubMktMaxFood, pubMktMaxSell, pubMktMaxRunes, pubMktStart, pubMktMaxTime } = useSelector((state) => state.games.activeGame)
+    const { pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes, pubMktMaxFood, pubMktMaxSell, pubMktMaxRunes, pubMktStart, pubMktMaxTime } = useSelector((state) => state.games.activeGame)
     const { setCurrentStep, meta } = useTour()
     // console.log(otherItems)
     const buttonRef = useRef()
+    const now = new Date()
 
     const getCost = (unit, base) =>
     {
-        let cost = base * 0.95
+        let cost = Math.round(base * 0.95)
         const postedItem = otherItems[unit][0].price
 
         // console.log(postedItem)
@@ -37,10 +38,8 @@ export default function PublicMarketSell({ empire })
             cost = postedItem
         }
 
-        return Math.round(cost)
+        return cost
     }
-
-    const now = new Date()
 
     const trpArmCost = getCost('arm', pvtmTrpArm)
     const trpLndCost = getCost('lnd', pvtmTrpLnd)
@@ -69,7 +68,7 @@ export default function PublicMarketSell({ empire })
 
         processedItems = processedItems.reduce((acc, curr) =>
         {
-            let found = acc.find((item) => item.type === curr.type)
+            const found = acc.find((item) => item.type === curr.type)
 
             if (found) {
                 found.amount += curr.amount

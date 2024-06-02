@@ -46,7 +46,7 @@ export default function PublicMarket()
                         <div>
                             <Tabs styles={{
                                 tabLabel: { fontSize: '1.2rem' },
-                            }} value={activeTab} onTabChange={setActiveTab}>
+                            }} value={activeTab} onTabChange={setActiveTab} keepMounted={false}>
                                 <Tabs.List grow position="center">
                                     <Tabs.Tab value="Buy">Buy</Tabs.Tab>
                                     <Tabs.Tab value="Sell" onClick={() =>
