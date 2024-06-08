@@ -2,7 +2,7 @@ import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, The
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { Mountains, Scales, Hourglass, Sword, Shield, Ranking } from "@phosphor-icons/react"
+import { Mountains, Scales, Hourglass, Sword, Shield, Ranking, UsersThree } from "@phosphor-icons/react"
 import { useEffect, useState, Suspense } from 'react'
 import lazy from './utilities/lazyWrapper'
 const ScoresAttack = lazy(() => import('./diplomacy/scoresAttack'));
@@ -14,7 +14,7 @@ const ScoresChat = lazy(() => import('./mail/scoresChat'));
 import Axios from 'axios'
 import { useSelector } from 'react-redux'
 
-const ScoreCard = ({ empire, myEmpire, home, clan }) =>
+const ScoreCard = ({ empire, myEmpire, home, clan, clanTag, role }) =>
 {
     const [active, setActive] = useState(false)
     const [opened, { toggle }] = useDisclosure(false);
@@ -111,7 +111,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
     // let actionDate = new Date()
     // console.log(empire.lastAction)
 
-    let actionDate = new Date(empire.lastAction.replace(' ', 'T'))
+    const actionDate = new Date(empire.lastAction.replace(' ', 'T'))
     // console.log(actionDate)
     // console.log(clan)
     let upcoming = 1000
@@ -142,10 +142,9 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                             <Group spacing='xs' noWrap>
                                 <Avatar size="sm" alt={empire.profileIcon} src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} imageProps={{ loading: 'lazy' }} />
                                 <Title order={4} color={color}>
-                                    {empire.name} {clan && clan} {atWar &&
-                                        <ThemeIcon size="sm" radius="sm" color='red'>
-                                            <Sword />
-                                        </ThemeIcon>}
+                                    {empire.name} {!clanTag
+                                        ? !clan ? (null) : `[${clan.slice(0, 4)}]`
+                                        : `[${clanTag}]`}
                                 </Title>
                             </Group>
                         </Indicator>
@@ -174,7 +173,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>{raceArray[empire.race].name}</Text>
                         </Group>
-                        <Group ml='xs' spacing={3} noWrap>
+                        <Group ml='xs' spacing={3} noWrap sx={{ width: '90px' }}>
                             {/* <img src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} alt={raceArray[empire.race].name} height={22} /> */}
                             <Text>DR: {Math.round(empire.diminishingReturns * 100) / 100}%</Text>
                         </Group>
@@ -196,6 +195,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan }) =>
                         </Group>
                     </Group>
                     <Text>{empire.profile}</Text>
+                    <Text>{clan && `${role} of ${clan}`}</Text>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tabs defaultValue="" keepMounted={false}>
                             <Tabs.List>

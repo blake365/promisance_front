@@ -43,8 +43,9 @@ export default function ClanStats()
                     <Stack spacing='sm'>
                         {clans.sort((a, b) => b.avgNetworth - a.avgNetworth).map((clan, index) =>
                         {
+                            // console.log(clan)
                             return (
-                                <ClanCard clan={clan} index={index} key={index} scores />
+                                <ClanCard clan={clan} index={index} key={clan.clan.id} scores />
                             )
                         })}
                     </Stack> : <Card>

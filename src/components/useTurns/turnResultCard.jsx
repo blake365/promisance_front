@@ -216,7 +216,7 @@ export default function TurnResultCard({ data, era })
 {
 	// console.log(data)
 	return (
-		<>
+		<div>
 			{data.error ? (<Card shadow='sm' padding='sm' withBorder sx={(theme) => ({
 				backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '',
 				'&:hover': {
@@ -317,7 +317,6 @@ export default function TurnResultCard({ data, era })
 						</SimpleGrid>
 					</Card>
 				</div>)}
-
-		</>
+		</div>
 	)
 }

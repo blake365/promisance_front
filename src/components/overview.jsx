@@ -332,7 +332,7 @@ export default function Overview()
 									{/* <Text>Kills:</Text> */}
 								</Col>
 								<Col span={7}>
-									<Text align='right'>{clan ? (clan.clanName) : ('None')}</Text>
+									<Text align='right' truncate={true}>{clan ? (clan.clanName) : ('None')}</Text>
 									<Text align='right'>{clan ? (clanRole(empire.id, clan)) : 'None'}</Text>
 									<Text align='right'>{enemies}</Text>
 									<Text align='right' mt='sm'>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>

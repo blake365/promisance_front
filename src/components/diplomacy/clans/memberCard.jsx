@@ -11,6 +11,7 @@ import ScoresAid from '../scoresAid'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-icons/react'
 import ClanRole from './clanRole'
 import { useSelector } from 'react-redux'
+import ClanMemberOverview from './clanMemberOverview'
 
 const MemberCard = ({ empire, myId, clan, clanString }) =>
 {
@@ -202,7 +203,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
                     </Tabs.List>
 
                     <Tabs.Panel value="Intel" pt="xs">
-                        <Intel empire={empire} />
+                        <ClanMemberOverview empire={empire} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="Role" pt="xs">

@@ -10,6 +10,7 @@ import ClanChat from "./clanChat"
 import ClanRelations from "./clanRelations"
 import { checkRoundStatus } from '../../../functions/checkRoundStatus'
 import { useLoadEmpire } from "../../../hooks/useLoadEmpire"
+import ClanSettings from "./clanSettings"
 
 // show clan info, clan members, clan chat
 function MyClan()
@@ -95,11 +96,10 @@ function MyClan()
         <section>
             {clan && <div>
                 <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>{clan.clanName}</Title>
-
                 {members && <div>
                     <Title order={3} align="left" m={10}>Members</Title>
                     <Stack spacing='xs'>
-                        {members.map((member, index) =>
+                        {members.map((member) =>
                         {
                             // console.log(clan)
                             let role = ''
@@ -112,9 +112,8 @@ function MyClan()
                             } else {
                                 role = 'member'
                             }
-                            let clanString = ` - ${role} of ${clan.clanName}`
+                            const clanString = ` - ${role}`
 
-                            {/* show active effects for each member */ }
                             return <MemberCard empire={member} myId={empire.id} key={member.id} clan={clan} clanString={clanString} />
                         })}
                     </Stack>
@@ -143,6 +142,11 @@ function MyClan()
                             <Tabs.Tab value="Clan Relations">
                                 Clan Relations
                             </Tabs.Tab>
+                            {
+                                empire.id === clan.empireIdLeader && <Tabs.Tab value="Settings">
+                                    Settings
+                                </Tabs.Tab>
+                            }
                         </Tabs.List>
 
                         <Tabs.Panel value='Clan Chat' pt="xs">
@@ -163,6 +167,9 @@ function MyClan()
                             <ClanRelations myClan={clan} empireId={empire.id} gameId={empire.game_id} />
                         </Tabs.Panel>
 
+                        <Tabs.Panel value="Settings" pt='xs'>
+                            <ClanSettings clan={clan} empire={empire} />
+                        </Tabs.Panel>
                     </Tabs>
                 </Paper>
 

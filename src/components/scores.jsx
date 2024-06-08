@@ -25,7 +25,6 @@ export default function Scores()
     }, [empire, dispatch])
 
     // console.log(scores.length)
-
     return (
         <main>
             <Stack spacing='xs' align='center'>
@@ -35,9 +34,10 @@ export default function Scores()
                 <Text size='sm'>Ranks are updated every {turnsFreq} minutes.</Text>
                 {loading ? <Loader /> : (scores.map(empire =>
                 {
-                    // console.log(empire.clanReturn)
+                    console.log(empire.clanReturn)
                     let role = ''
                     let clanString = null
+                    let clanTag = null
                     if (empire.clanReturn) {
                         if (empire.id === empire.clanReturn.empireIdLeader) {
                             role = 'Leader'
@@ -46,12 +46,13 @@ export default function Scores()
                         } else if (empire.id === empire.clanReturn.empireIdAgent1 || empire.id === empire.clanReturn.empireIdAgent2) {
                             role = 'Agent'
                         } else {
-                            role = 'member'
+                            role = 'Member'
                         }
-                        clanString = ` - ${role} of ${empire.clanReturn.clanName}`
+                        clanString = empire.clanReturn.clanName
+                        clanTag = empire.clanReturn.clanTag
                     }
 
-                    return <ScoreCard empire={empire} myEmpire={myEmpire} key={empire.id} home={false} clan={clanString} />
+                    return <ScoreCard empire={empire} myEmpire={myEmpire} key={empire.id} home={false} clan={clanString} clanTag={clanTag} role={role} />
                 }))}
             </Stack>
         </main>

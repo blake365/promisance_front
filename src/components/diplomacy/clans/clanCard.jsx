@@ -20,7 +20,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
     const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 
     // console.log(clan.clan)
-    let body = {
+    const body = {
         clanId: clan.clan.id,
     }
 
@@ -99,7 +99,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
     if (myClan) {
         // console.log(myClan)
         // console.log(clan.clan)
-        let myRelations = myClan.relation.map((relation) =>
+        const myRelations = myClan.relation.map((relation) =>
         {
             if (relation.clanRelationFlags === 'war') {
                 return relation.c_id2
@@ -112,7 +112,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
             atWar = true
         }
 
-        let peaceOffers = myClan.relation.map((relation) =>
+        const peaceOffers = myClan.relation.map((relation) =>
         {
             if (relation.clanRelationFlags === 'peace') {
                 return relation.c_id2
@@ -124,7 +124,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
             peaceOfferedMe = true
         }
 
-        let enemyPeaceOffers = clan.clan.relation.map((relation) =>
+        const enemyPeaceOffers = clan.clan.relation.map((relation) =>
         {
             if (relation.clanRelationFlags === 'peace') {
                 return relation.c_id2
@@ -152,12 +152,14 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                         </Text>
                         <Group spacing='xs' noWrap>
                             <Title order={3} >
-                                {clan.clan.clanName}
+                                {clan.clan.clanName} {clan.clan.clanTag ? `[${clan.clan.clanTag}]` : clan.clan.clanName.slice(0, 4)}
                             </Title>
                         </Group>
-                        <Group ml='sm' noWrap spacing='xs'>
-                            <Crown size={22} weight='fill' />
-                            <Text>{clan.leader.name}</Text></Group>
+
+                    </Group>
+                    <Group ml='sm' noWrap spacing='xs'>
+                        <Crown size={22} weight='fill' />
+                        <Text>{clan.leader.name}</Text>
                     </Group>
                     <Group spacing='lg'>
                         <Group ml='sm' spacing='xs' noWrap >
