@@ -42,6 +42,15 @@ export default function ScoresAid({ friend })
             runes: 0,
             cash: 0,
         },
+
+        validationRules: {
+            sellArm: (value) => value <= Math.floor(empire.trpArm * 0.15),
+            sellLnd: (value) => value <= Math.floor(empire.trpLnd * 0.15),
+            sellFly: (value) => value <= Math.floor(empire.trpFly * 0.15),
+            sellSea: (value) => value <= Math.floor(empire.trpSea * 0.15),
+            sellFood: (value) => value <= Math.floor(empire.food * 0.15),
+            sellRunes: (value) => value <= Math.floor(empire.runes * 0.15),
+        },
     })
 
     if (form.values['trpArm'] === undefined) {
@@ -132,7 +141,7 @@ export default function ScoresAid({ friend })
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {itemArray.map((item, index) => (<tr key={index}>
+                                            {itemArray.map((item) => (<tr key={item}>
                                                 <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
                                                 <td align='right'>{empire[item].toLocaleString()}</td>
                                                 <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>

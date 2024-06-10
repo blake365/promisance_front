@@ -9,7 +9,7 @@ import
     NumberInput,
 } from '@mantine/core'
 import { useState, forwardRef } from 'react'
-import { useForm } from '@mantine/form'
+import { useForm, isNotEmpty } from '@mantine/form'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setResult } from '../../store/turnResultsSlice'
@@ -45,6 +45,16 @@ export default function ForeignAid()
             food: 0,
             runes: 0,
             cash: 0,
+        },
+
+        validationRules: {
+            receiverId: isNotEmpty('Select an empire'),
+            sellArm: (value) => value <= Math.floor(empire.trpArm * 0.15),
+            sellLnd: (value) => value <= Math.floor(empire.trpLnd * 0.15),
+            sellFly: (value) => value <= Math.floor(empire.trpFly * 0.15),
+            sellSea: (value) => value <= Math.floor(empire.trpSea * 0.15),
+            sellFood: (value) => value <= Math.floor(empire.food * 0.15),
+            sellRunes: (value) => value <= Math.floor(empire.runes * 0.15),
         },
     })
 
@@ -88,7 +98,7 @@ export default function ForeignAid()
                 window.scroll({ top: 0, behavior: 'smooth' })
                 dispatch(setResult(res.data))
                 loadEmpire()
-                form.reset()
+                // form.reset()
             }
             setLoading(false)
         } catch (error) {
@@ -150,7 +160,7 @@ export default function ForeignAid()
                                         onSearchChange={setSelectedEmpire}
                                         label="Select an Empire to Aid"
                                         placeholder="Pick one"
-                                        withAsterisk
+                                        required
                                         itemComponent={SelectItem}
                                         data={loadOtherEmpires}
                                         withinPortal
@@ -168,7 +178,7 @@ export default function ForeignAid()
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {itemArray.map((item, index) => (<tr key={index}>
+                                            {itemArray.map((item) => (<tr key={item}>
                                                 <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
                                                 <td align='right'>{empire[item].toLocaleString()}</td>
                                                 <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
