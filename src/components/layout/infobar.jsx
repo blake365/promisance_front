@@ -1,9 +1,10 @@
-import { Paper, Grid, Text, Center, Progress } from '@mantine/core'
+import { Paper, Grid, Text, Center, Progress, Popover } from '@mantine/core'
 import { eraArray } from '../../config/eras'
 import { Mountains, Coins, Scales, ForkKnife, Brain, Heart, GitBranch, Ranking } from "@phosphor-icons/react"
 import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
 import { useSelector } from 'react-redux';
+import CountdownTimer from '../utilities/countdownTimer';
 
 const AnimateNumberChange = ({ number, type }) =>
 {
@@ -58,7 +59,7 @@ export default function InfoBar({ data })
 	const roundLength = time.end - time.start
 	const roundProgress = time.time - time.start
 	const roundPercent = roundProgress / roundLength * 100
-	const { turnsProtection, scoreEnabled } = useSelector((state) => state.games.activeGame)
+	const { turnsProtection, scoreEnabled, turnsFreq } = useSelector((state) => state.games.activeGame)
 
 
 	let roundStatus = ''
@@ -90,14 +91,25 @@ export default function InfoBar({ data })
 				{roundStatus}
 			</Text>
 			<Grid justify="space-between" grow columns={scoreEnabled ? 21 : 19} pl='xs' pr='xs'>
-				<Grid.Col span={2}>
-					<Center>
-						<GitBranch size={20} color={eraArray[empire.era].color} />
-						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={1}>
-							Turns
-						</Text>
-					</Center>
-					<AnimateNumberChange type='turns' number={empire.turns} />
+				<Grid.Col span={2} sx={{ cursor: 'pointer' }}>
+					<Popover withArrow shadow='sm'>
+						<Popover.Target>
+							<div>
+								<Center>
+									<GitBranch size={20} color={eraArray[empire.era].color} />
+									<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={1}>
+										Turns
+									</Text>
+								</Center>
+								<AnimateNumberChange type='turns' number={empire.turns} />
+							</div>
+						</Popover.Target>
+						<Popover.Dropdown>
+							<Text align='center' color={eraArray[empire.era].color}>
+								<CountdownTimer intervalMinutes={turnsFreq} approximately />
+							</Text>
+						</Popover.Dropdown>
+					</Popover>
 				</Grid.Col>
 				{scoreEnabled && (
 					<Grid.Col span={2}>
@@ -131,7 +143,6 @@ export default function InfoBar({ data })
 							Land
 						</Text>
 					</Center>
-
 					<AnimateNumberChange type='land' number={empire.land} />
 				</Grid.Col>
 				<Grid.Col span={3}>
@@ -141,7 +152,6 @@ export default function InfoBar({ data })
 							Money
 						</Text>
 					</Center>
-
 					<AnimateNumberChange type='cash' number={empire.cash} />
 				</Grid.Col>
 				<Grid.Col span={3}>

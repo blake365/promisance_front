@@ -114,7 +114,7 @@ export function defense(empire) {
  */
 export function explore(empire) {
 	const newLand = Math.ceil(
-		(1 / (empire.land * 0.000035 + 1)) *
+		(1 / (empire.land * 0.00008 + 1)) *
 			100 *
 			((100 +
 				eraArray[empire.era].mod_explore +
@@ -125,12 +125,13 @@ export function explore(empire) {
 	return newLand
 }
 // food
-export function calcProvisions(empire) {
+export function calcProvisions(empire, size) {
 	let production =
 		10 * empire.freeLand +
 		empire.bldFood *
 			70 *
-			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1))
+			Math.sqrt(1 - (0.75 * empire.bldFood) / Math.max(empire.land, 1)) *
+			Math.max(0.8, size * 1.25)
 
 	production *=
 		(100 +
@@ -183,7 +184,7 @@ export function calcPCI(empire) {
 export function calcFinances(pci, empire, size) {
 	let income = Math.round(
 		pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 500
+			empire.bldCash * 500 * Math.max(0.8, size * 1.25)
 	)
 
 	// income *= Math.max(0.8, size)

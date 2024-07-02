@@ -10,6 +10,7 @@ import { setBgImage } from '../functions/setBgImage'
 import NewPlayerModal from './layout/newPlayerModal'
 import { useEffect } from 'react'
 import { raceTutorials } from "../tour/raceTutorials"
+import CountdownTimer from './utilities/countdownTimer'
 
 
 export default function Summary()
@@ -202,6 +203,7 @@ export default function Summary()
 
 							</>) : ('')}
 							<Text align='center'>You get {game.turnsCount} turn{game.turnsCount > 1 ? ('s') : ('')} every {game.turnsFreq} minutes.</Text>
+							<Text>Next turns in approximately: <CountdownTimer intervalMinutes={game.turnsFreq} /></Text>
 							<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
 							<Text align='center'>{roundStatus}</Text>
 							{empire.race !== 0 ||

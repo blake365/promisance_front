@@ -54,7 +54,7 @@ export default function Overview()
 
 	const corruption = calcCorruption(empire)
 
-	const { foodpro, foodcon } = calcProvisions(empire)
+	const { foodpro, foodcon } = calcProvisions(empire, size)
 
 	const rot = calcRot(empire, foodcon)
 
