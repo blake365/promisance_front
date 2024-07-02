@@ -82,6 +82,10 @@ export default function ScoresAid({ friend })
     const sendAid = async (values) =>
     {
         // console.log('sending aid')
+        if (values.trpArm === 0 && values.trpLnd === 0 && values.trpFly === 0 && values.trpSea === 0 && values.cash === 0 && values.food === 0 && values.runes === 0) {
+            setError('You must send at least one resource')
+            return
+        }
         setLoading(true)
         setError('')
         try {
@@ -116,7 +120,6 @@ export default function ScoresAid({ friend })
         <section>
             <Center>
                 <Stack spacing='sm' align='center'>
-
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
                     {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
                     {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}

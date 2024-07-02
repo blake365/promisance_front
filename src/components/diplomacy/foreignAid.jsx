@@ -87,6 +87,11 @@ export default function ForeignAid()
     const sendAid = async (values) =>
     {
         // console.log('sending aid')
+        // if all values are 0, return
+        if (values.trpArm === 0 && values.trpLnd === 0 && values.trpFly === 0 && values.trpSea === 0 && values.cash === 0 && values.food === 0 && values.runes === 0) {
+            setError('You must send at least one resource')
+            return
+        }
         setLoading(true)
         setError('')
         try {
