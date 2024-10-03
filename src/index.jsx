@@ -66,7 +66,7 @@ const RoundArchive = lazy(() => import('./components/pages/RoundArchive'));
 import PrivacyPolicy from './components/pages/PrivacyPolicy'
 import Disabled from './components/pages/disabled'
 import GameRules from './components/pages/Rules'
-
+import LinkLogin from './components/pages/LinkLogin'
 const Admin = lazy(() => import('./components/pages/admin'));
 const AdminSummary = lazy(() => import('./components/admin/adminSummary'));
 const AdminUsers = lazy(() => import('./components/admin/adminUsers'));
@@ -176,6 +176,7 @@ ReactDOM.render(
 							<Route path='/' element={<Home />} />
 							<Route path='*' element={<NothingFoundBackground />} />
 							<Route path='/login' element={<NewLogin />} />
+							<Route path='/link-login/:auth' element={<LinkLogin />} />
 							<Route path='/register' element={<Signup />} />
 							<Route path='/select' element={<ModeSelect />} />
 							<Route path='/forgot' element={<Forgot />} />
