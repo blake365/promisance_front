@@ -1,0 +1,53 @@
+{
+	"layout": {
+		"sidebar": {
+			"headings": {
+				"information": "Information",
+				"discord": "Discord",
+				"gameTips": "Game Tips",
+				"useTurns": "Use Turns",
+				"finance": "Finance",
+				"diplomacy": "Diplomacy",
+				"additionalStats": "Additional Stats",
+				"settings": "Settings",
+				"donate": "Donate"
+			},
+			"summary": "Summary",
+			"overview": "Overview",
+			"scores": "Scores",
+			"clanStats": "Clan Stats",
+			"mailbox": "Mailbox",
+			"worldNews": "World News",
+			"favorites": "Favorites",
+			"explore": "Explore",
+			"build": "Build",
+			"farm": "Farm",
+			"cash": "Cash",
+			"industry": "Industry",
+			"meditate": "Meditate",
+			"magicCenter": "Magic Center",
+			"heal": "Heal",
+			"blackMarket": "Black Market",
+			"publicMarket": "Public Market",
+			"theBank": "The Bank",
+			"lottery": "Lottery",
+			"clans": "Clans",
+			"warCouncil": "War Council",
+			"intelCenter": "Intel Center",
+			"foreignAid": "Foreign Aid",
+			"achievements": "Achievements",
+			"charts": "Charts",
+			"empireSettings": "Empire Settings"
+		},
+		"infobar": {
+			"turns": "Turns",
+			"score": "Score",
+			"networth": "Net Worth",
+			"land": "Land",
+			"money": "Money",
+			"food": "Food",
+			"runes": "Runes",
+			"health": "Health"
+		}
+	}
+}

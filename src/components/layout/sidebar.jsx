@@ -3,48 +3,56 @@ import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowSquareOut } from '@phosphor-icons/react'
 import { useTour } from '@reactour/tour'
+import { useTranslation } from 'react-i18next'
 
 const Sidebar = ({ game }) =>
 {
+	const { t, i18n } = useTranslation(['layout'])
 	const { setCurrentStep, meta } = useTour()
 
+	// i18n.changeLanguage('es')
+	console.log(i18n.language)
+	console.log('Available namespaces:', i18n.options.ns)
+	console.log('Translation test:', t('layout.sidebar.summary'))
+
 	const infoLinks = [
-		'Summary',
-		'Overview',
-		'Scores',
-		'Clan Stats',
-		'Mailbox',
-		'World News',
+		{ key: 'summary', i18nKey: 'layout.sidebar.summary' },
+		{ key: 'overview', i18nKey: 'layout.sidebar.overview' },
+		{ key: 'scores', i18nKey: 'layout.sidebar.scores' },
+		{ key: 'clanStats', i18nKey: 'layout.sidebar.clanStats' },
+		{ key: 'mailbox', i18nKey: 'layout.sidebar.mailbox' },
+		{ key: 'worldNews', i18nKey: 'layout.sidebar.worldNews' },
 	]
+
 	const turnLinks = [
-		'Favorites',
-		'Explore',
-		'Build',
-		'Farm',
-		'Cash',
-		'Industry',
-		'Meditate',
-		'Magic Center',
-		'Heal',
+		{ key: 'favorites', i18nKey: 'layout.sidebar.favorites' },
+		{ key: 'explore', i18nKey: 'layout.sidebar.explore' },
+		{ key: 'build', i18nKey: 'layout.sidebar.build' },
+		{ key: 'farm', i18nKey: 'layout.sidebar.farm' },
+		{ key: 'cash', i18nKey: 'layout.sidebar.cash' },
+		{ key: 'industry', i18nKey: 'layout.sidebar.industry' },
+		{ key: 'meditate', i18nKey: 'layout.sidebar.meditate' },
+		{ key: 'magicCenter', i18nKey: 'layout.sidebar.magicCenter' },
+		{ key: 'heal', i18nKey: 'layout.sidebar.heal' },
 	]
 	const financeLinks = [
-		'Black Market',
-		'Public Market',
-		'The Bank',
-		'Lottery',
+		{ key: 'blackMarket', i18nKey: 'layout.sidebar.blackMarket' },
+		{ key: 'publicMarket', i18nKey: 'layout.sidebar.publicMarket' },
+		{ key: 'theBank', i18nKey: 'layout.sidebar.theBank' },
+		{ key: 'lottery', i18nKey: 'layout.sidebar.lottery' },
 	]
 	const foreignLinks = [
-		'Clans',
-		'War Council',
-		'Intel Center',
-		'Foreign Aid',
+		{ key: 'clans', i18nKey: 'layout.sidebar.clans' },
+		{ key: 'warCouncil', i18nKey: 'layout.sidebar.warCouncil' },
+		{ key: 'intelCenter', i18nKey: 'layout.sidebar.intelCenter' },
+		{ key: 'foreignAid', i18nKey: 'layout.sidebar.foreignAid' },
 	]
 	const statsLinks = [
-		'Achievements',
-		'Charts',
+		{ key: 'achievements', i18nKey: 'layout.sidebar.achievements' },
+		{ key: 'charts', i18nKey: 'layout.sidebar.charts' },
 	]
 	const managementLinks = [
-		'Empire Settings',
+		{ key: 'empireSettings', i18nKey: 'layout.sidebar.empireSettings' },
 	]
 
 	const location = useLocation()
@@ -99,17 +107,17 @@ const Sidebar = ({ game }) =>
 				<Button radius={0} component={Link} to='/select'><Title order={3} align='center'
 					color='white' w={'100%'}>{game.name}</Title>
 				</Button>
-				<Title order={4}>Information</Title>
-				{infoLinks.map((link) =>
+				<Title order={4}>{t('layout.sidebar.headings.information')}</Title>
+				{infoLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 
-					if (!game.clanEnable && link === 'Clan Stats') {
+					if (!game.clanEnable && key === 'clanStats') {
 						return null
 					}
 
@@ -117,49 +125,49 @@ const Sidebar = ({ game }) =>
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
-							key={link}
+							key={key}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>)
 				})}
-				<Button component='a' compact href='https://discord.gg/bnuVy2pdgM' target='_blank' variant='subtle' rightIcon={<ArrowSquareOut />}>Discord</Button>
-				<Button component={Link} compact to='/app/Tips' variant='subtle'>Game Tips</Button>
-				<Title order={4}>Use Turns</Title>
-				{turnLinks.map((link) =>
+				<Button component='a' compact href='https://discord.gg/bnuVy2pdgM' target='_blank' variant='subtle' rightIcon={<ArrowSquareOut />}>{t('layout.sidebar.headings.discord')}</Button>
+				<Button component={Link} compact to='/app/Tips' variant='subtle'>{t('layout.sidebar.headings.gameTips')}</Button>
+				<Title order={4}>{t('layout.sidebar.headings.useTurns')}</Title>
+				{turnLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 					return (
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
 							fullWidth
-							key={link}
-							className={setTutorialClassnames(link)}
+							key={key}
+							className={setTutorialClassnames(key)}
 							onClick={() =>
 							{
 								if (meta && meta !== 'attacking tour' && meta !== 'build tour') {
 									console.log(meta);
-									if (link === "Explore" && meta !== "new player tour") {
+									if (key === "Explore" && meta !== "new player tour") {
 										setCurrentStep(2);
-									} else if (link === "Explore") {
+									} else if (key === "Explore") {
 										setCurrentStep(1);
 									}
 
-									if (link === "Build") {
+									if (key === "Build") {
 										setCurrentStep(4);
 									}
 
 									if (
-										link === "Farm" &&
+										key === "Farm" &&
 										(meta === "Gremlin tutorial" || meta === "Hobbit tutorial")
 									) {
 										// console.log("farm tutorial");
@@ -167,7 +175,7 @@ const Sidebar = ({ game }) =>
 									}
 
 									if (
-										link === "Cash" &&
+										key === "Cash" &&
 										(meta === "Gnome tutorial" ||
 											meta === "Minotaur tutorial" ||
 											meta === "Vampire tutorial")
@@ -175,20 +183,20 @@ const Sidebar = ({ game }) =>
 										setCurrentStep(6);
 									}
 
-									if (link === 'Industry' && (meta === 'Dwarf tutorial' || meta === 'Orc tutorial' || meta === 'Goblin tutorial')) {
+									if (key === 'Industry' && (meta === 'Dwarf tutorial' || meta === 'Orc tutorial' || meta === 'Goblin tutorial')) {
 										setCurrentStep(6)
 									}
 
-									if (link === 'Meditate' && (meta === 'Elf tutorial' || meta === 'Drow tutorial' || meta === 'Pixie tutorial')) {
+									if (key === 'Meditate' && (meta === 'Elf tutorial' || meta === 'Drow tutorial' || meta === 'Pixie tutorial')) {
 										setCurrentStep(6)
 									}
 
-									if (link === "Magic Center" && meta.includes("tutorial") && !meta.includes("Elf") && !meta.includes("Drow") && !meta.includes("Pixie")) {
+									if (key === "Magic Center" && meta.includes("tutorial") && !meta.includes("Elf") && !meta.includes("Drow") && !meta.includes("Pixie")) {
 										setCurrentStep(12);
 									}
 
 									if (
-										link === "Magic Center" &&
+										key === "Magic Center" &&
 										(meta === "Elf tutorial" ||
 											meta === "Drow tutorial" ||
 											meta === "Pixie tutorial")
@@ -198,38 +206,38 @@ const Sidebar = ({ game }) =>
 								}
 							}}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>
 					)
 				})}
-				<Title order={4}>Finance</Title>
-				{financeLinks.map((link) =>
+				<Title order={4}>{t('layout.sidebar.headings.finance')}</Title>
+				{financeLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 					return (
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
 							fullWidth
-							key={link}
-							className={setTutorialClassnames(link)}
+							key={key}
+							className={setTutorialClassnames(key)}
 							onClick={() =>
 							{
 								console.log(meta && meta !== 'attacking tour' && meta !== 'build tour')
 								if (meta) {
-									if (link === "Public Market" && meta !== "new player tour") {
+									if (key === "Public Market" && meta !== "new player tour") {
 										setCurrentStep(8);
 									}
 
 									if (
-										link === "Public Market" &&
+										key === "Public Market" &&
 										(meta.includes("Gnome") ||
 											meta.includes("Minotaur") ||
 											meta.includes("Vampire"))
@@ -237,35 +245,35 @@ const Sidebar = ({ game }) =>
 										setCurrentStep(10);
 									}
 
-									if (link === "The Bank" && meta !== "new player tour") {
+									if (key === "The Bank" && meta !== "new player tour") {
 										setCurrentStep(8);
 									}
 
-									if (link === "Black Market" && meta !== "new player tour") {
+									if (key === "Black Market" && meta !== "new player tour") {
 										setCurrentStep(9);
 									}
 								}
 							}}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>
 					)
 				})}
-				<Title order={4}>Diplomacy</Title>
-				{foreignLinks.map((link) =>
+				<Title order={4}>{t('layout.sidebar.headings.diplomacy')}</Title>
+				{foreignLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 
-					if (!game.clanEnable && link === 'Clans') {
+					if (!game.clanEnable && key === 'clans') {
 						return null
 					}
 
-					if (!game.aidEnable && link === 'Foreign Aid') {
+					if (!game.aidEnable && key === 'foreignAid') {
 						return null
 					}
 
@@ -273,56 +281,56 @@ const Sidebar = ({ game }) =>
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
 							fullWidth
-							key={link}
+							key={key}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>
 					)
 				})}
-				<Title order={4}>Additional Stats</Title>
-				{statsLinks.map((link) =>
+				<Title order={4}>{t('layout.sidebar.headings.additionalStats')}</Title>
+				{statsLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 					return (
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
 							fullWidth
-							key={link}
+							key={key}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>
 					)
 				})}
-				<Title order={4}>Settings</Title>
-				{managementLinks.map((link) =>
+				<Title order={4}>{t('layout.sidebar.headings.settings')}</Title>
+				{managementLinks.map(({ key, i18nKey }) =>
 				{
 					let variant = 'subtle'
-					if (locationString.split('%').length > 1 && locationString.split('%')[0] === link.split(' ')[0]) {
+					if (locationString.split('%').length > 1 && locationString.split('%')[0] === key.split(' ')[0]) {
 						variant = 'filled'
-					} else if (locationString === link) {
+					} else if (locationString === key) {
 						variant = 'filled'
 					}
 					return (
 						<Button
 							component={Link}
 							compact
-							to={`/app/${link}`}
+							to={`/app/${key}`}
 							variant={variant}
 							fullWidth
-							key={link}
+							key={key}
 						>
-							{link}
+							{t(i18nKey)}
 						</Button>
 					)
 				})}
@@ -334,7 +342,7 @@ const Sidebar = ({ game }) =>
 					variant='subtle'
 					target='_blank'
 					rightIcon={<ArrowSquareOut />}
-				>Donate</Button>
+				>{t('layout.sidebar.headings.donate')}</Button>
 			</Stack>
 		</Fragment>
 	)

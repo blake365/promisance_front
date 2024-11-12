@@ -1,0 +1,53 @@
+{
+	"layout": {
+		"sidebar": {
+			"headings": {
+				"information": "Información",
+				"discord": "Discord",
+				"gameTips": "Consejos de Juego",
+				"useTurns": "Turnos Usados",
+				"finance": "Finanzas",
+				"diplomacy": "Diplomacia",
+				"additionalStats": "Estadísticas Adicionales",
+				"settings": "Configuración",
+				"donate": "Donar"
+			},
+			"summary": "Resumen",
+			"overview": "Visión General",
+			"scores": "Puntuaciones",
+			"clanStats": "Estadísticas de Clan",
+			"mailbox": "Buzón",
+			"worldNews": "Noticias del Mundo",
+			"favorites": "Favoritos",
+			"explore": "Explorar",
+			"build": "Construir",
+			"farm": "Granja",
+			"cash": "Dinero",
+			"industry": "Industria",
+			"meditate": "Meditar",
+			"magicCenter": "Centro Mágico",
+			"heal": "Curar",
+			"blackMarket": "Mercado Negro",
+			"publicMarket": "Mercado Público",
+			"theBank": "El Banco",
+			"lottery": "Lotería",
+			"clans": "Clanes",
+			"warCouncil": "Consejo de Guerra",
+			"intelCenter": "Centro de Inteligencia",
+			"foreignAid": "Ayuda Extranjera",
+			"achievements": "Logros",
+			"charts": "Gráficos",
+			"empireSettings": "Configuración"
+		},
+		"infobar": {
+			"turns": "Turnos",
+			"score": "Puntuación",
+			"networth": "Valor Neto",
+			"land": "Tierra",
+			"money": "Dinero",
+			"food": "Comida",
+			"runes": "Runas",
+			"health": "Salud"
+		}
+	}
+}

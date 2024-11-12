@@ -25,7 +25,7 @@ const GuideModalButton = ({ pageName, empire, protection }) =>
                     }
                 }
                 }
-                className='sixth-step'>{pageName} Guide</Button>
+                className='sixth-step'>{`${pageName.charAt(0).toUpperCase()}${pageName.slice(1)} Guide`}</Button>
             <Modal
                 opened={modalOpened}
                 onClose={() => setModalOpened(false)}

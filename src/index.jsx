@@ -1,5 +1,7 @@
+
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
+import './i18n'
 import './index.css'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store/store'
@@ -93,6 +95,7 @@ import ForgotUsername from './components/pages/ForgotUsername'
 const NewPlayerTips = lazy(() => import('./components/guide/newPlayer'));
 // import NewPlayerTips from './components/guide/newPlayer'
 import ModeSelect from './components/pages/ModeSelect'
+
 
 inject();
 // import Guide from './components/guide/guide'

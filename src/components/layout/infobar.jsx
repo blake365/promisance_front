@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react'
 import classes from './numberChange.module.css';
 import { useSelector } from 'react-redux';
 import CountdownTimer from '../utilities/countdownTimer';
+import { useTranslation } from 'react-i18next';
 
 const AnimateNumberChange = ({ number, type }) =>
 {
@@ -54,6 +55,9 @@ export default function InfoBar({ data })
 {
 	// console.log(data.empire)
 	const empire = data
+	const { t, i18n } = useTranslation(['layout', 'eras'])
+	// i18n.changeLanguage('es')
+	// console.log(i18n.language)
 
 	const { time } = useSelector((state) => state.time)
 	const roundLength = time.end - time.start
@@ -68,6 +72,7 @@ export default function InfoBar({ data })
 	const remaining = time.end - time.time
 	// console.log(remaining)
 
+	// TODO: Translate round status
 	if (upcoming > 0) {
 		roundStatus = `The round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days and ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours`
 	} else if (remaining < 0) {
@@ -98,7 +103,7 @@ export default function InfoBar({ data })
 								<Center>
 									<GitBranch size={20} color={eraArray[empire.era].color} />
 									<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={1}>
-										Turns
+										{t('layout.infobar.turns')}
 									</Text>
 								</Center>
 								<AnimateNumberChange type='turns' number={empire.turns} />
@@ -121,7 +126,7 @@ export default function InfoBar({ data })
 								color={eraArray[empire.era].color}
 								ml={2}
 							>
-								Score
+								{t('layout.infobar.score')}
 							</Text>
 						</Center>
 						<AnimateNumberChange type="score" number={empire.score} />
@@ -131,7 +136,7 @@ export default function InfoBar({ data })
 					<Center>
 						<Scales size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Net Worth
+							{t('layout.infobar.networth')}
 						</Text>
 					</Center>
 					<AnimateNumberChange type='networth' number={empire.networth} />
@@ -140,7 +145,7 @@ export default function InfoBar({ data })
 					<Center>
 						<Mountains size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Land
+							{t('layout.infobar.land')}
 						</Text>
 					</Center>
 					<AnimateNumberChange type='land' number={empire.land} />
@@ -149,7 +154,7 @@ export default function InfoBar({ data })
 					<Center>
 						<Coins size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Money
+							{t('layout.infobar.money')}
 						</Text>
 					</Center>
 					<AnimateNumberChange type='cash' number={empire.cash} />
@@ -158,7 +163,7 @@ export default function InfoBar({ data })
 					<Center>
 						<ForkKnife size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							{eraArray[empire.era].food}
+							{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.food`)}
 						</Text>
 					</Center>
 
@@ -168,17 +173,16 @@ export default function InfoBar({ data })
 					<Center>
 						<Brain size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							{eraArray[empire.era].runes}
+							{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.runes`)}
 						</Text>
 					</Center>
-
 					<AnimateNumberChange type='runes' number={empire.runes} />
 				</Grid.Col>
 				<Grid.Col span={2}>
 					<Center>
 						<Heart size={20} color={eraArray[empire.era].color} />
 						<Text weight='bold' align='center' color={eraArray[empire.era].color} ml={2}>
-							Health
+							{t('layout.infobar.health')}
 						</Text>
 					</Center>
 					<AnimateNumberChange type='health' number={empire.health} />

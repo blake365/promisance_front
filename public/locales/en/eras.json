@@ -1,0 +1,16 @@
+{
+	"eras": {
+		"past": {
+			"food": "Grains",
+			"runes": "Mana"
+		},
+		"present": {
+			"food": "Nutrients",
+			"runes": "Energy"
+		},
+		"future": {
+			"food": "Power Cells",
+			"runes": "Bandwidth"
+		}
+	}
+}

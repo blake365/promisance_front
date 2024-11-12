@@ -1,0 +1,16 @@
+{
+	"eras": {
+		"past": {
+			"food": "Grano",
+			"runes": "Maná"
+		},
+		"present": {
+			"food": "Comida",
+			"runes": "Poder"
+		},
+		"future": {
+			"food": "Energía",
+			"runes": "Datos"
+		}
+	}
+}
