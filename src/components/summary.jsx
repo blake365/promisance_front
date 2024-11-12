@@ -11,10 +11,20 @@ import NewPlayerModal from './layout/newPlayerModal'
 import { useEffect } from 'react'
 import { raceTutorials } from "../tour/raceTutorials"
 import CountdownTimer from './utilities/countdownTimer'
+import { useTranslation } from 'react-i18next'
 
+const formatTimeParts = (milliseconds) =>
+{
+	const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24))
+	const hours = Math.floor((milliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+	const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60))
+
+	return { days, hours, minutes }
+}
 
 export default function Summary()
 {
+	const { t } = useTranslation(['eras', 'summary', 'time'])
 	const { empire } = useSelector((state) => state.empire)
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { time } = useSelector((state) => state.time)
@@ -30,16 +40,26 @@ export default function Summary()
 		}
 	}, [game, navigate])
 
-	let roundStatus = 'Round has not started'
+	let roundStatus = t('time:round.notStarted')
 	const upcoming = time.start - time.time
 	const remaining = time.end - time.time
 
 	if (upcoming > 0) {
-		roundStatus = `Round will start in ${Math.floor(upcoming / (1000 * 60 * 60 * 24))} days, ${Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((upcoming % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
+		const time = formatTimeParts(upcoming)
+		roundStatus = t('time:round.willStart', {
+			days: time.days,
+			hours: time.hours,
+			minutes: time.minutes
+		})
 	} else if (remaining < 0) {
-		roundStatus = 'The round has ended, thanks for playing! A new round will start soon.'
+		roundStatus = t('time:round.ended')
 	} else {
-		roundStatus = `Round will end in ${Math.floor(remaining / (1000 * 60 * 60 * 24))} days, ${Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, and ${Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))} minutes.`
+		const time = formatTimeParts(remaining)
+		roundStatus = t('time:round.willEnd', {
+			days: time.days,
+			hours: time.hours,
+			minutes: time.minutes
+		})
 	}
 
 	const startTutorial = (race) =>
@@ -65,19 +85,17 @@ export default function Summary()
 			<Stack spacing='sm' align='center'>
 				<img src={bgimage} style={{ maxHeight: '100px', maxWidth: '100%', height: 'auto', borderRadius: '10px' }} alt='summary' />
 				<Title order={1} align='center' >
-					Empire Summary
+					{t('summary:summary.title')}
 				</Title>
 				<div className='dwarf0 elf0 gremlin0 drow0 ghoul0 gnome0 pixie0 minotaur0 goblin0 orc0 hobbit0 vampire0'>
 					<NewPlayerModal empire={empire} time={time} />
 					<Card>
-
 						<Group position='center' align='center' spacing={5} >
 							<Avatar size="sm" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
 							<Title order={2} align='center'>
 								{empire?.name}
 							</Title>
 						</Group>
-
 						{empire.turnsUsed < game.turnsProtection && (<Center my='sm'>
 							<Button compact variant='outline' align='center' onClick={() =>
 							{
@@ -92,10 +110,10 @@ export default function Summary()
 									boxShadow: '0 0 2px 1px #40c057',
 									color: '#40c057',
 								}}
-								className='sixth-step'>Getting Started Tour</Button>
+								className='sixth-step'>{t('summary.tour')}</Button>
 						</Center>)}
 
-						<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>set your public profile</Link>}</Text>
+						<Text align='center' mb='sm'>{empire.profile ? empire.profile : <Link to='/app/Empire Settings' style={{ color: '#2882cb' }}>{t('summary:summary.profile')}</Link>}</Text>
 
 						<Grid justify='space-between' grow>
 							<Grid.Col sm={6} md={6}>
@@ -109,39 +127,39 @@ export default function Summary()
 								>
 									<tbody>
 										<tr>
-											<td style={{ width: '50%' }}>Turns</td>
-											<td align='right'>{empire?.turns} (max {game.turnsMax})</td>
+											<td style={{ width: '50%' }}>{t('summary:summary.turns')}</td>
+											<td align='right'>{empire?.turns} ({t('summary:summary.max')} {game.turnsMax})</td>
 										</tr>
 										<tr>
-											<td>Stored Turns</td>
-											<td align='right'>{empire?.storedturns} (max {game.turnsStored})</td>
+											<td>{t('summary:summary.storedturns')}</td>
+											<td align='right'>{empire?.storedturns} ({t('summary:summary.max')} {game.turnsStored})</td>
 										</tr>
 										<tr>
-											<td>Rank</td>
+											<td>{t('summary:summary.rank')}</td>
 											<td align='right'>{empire?.rank}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].peasants}</td>
+											<td>{t(`eras:${eraArray[empire.era].peasants}`)}</td>
 											<td align='right'>{empire?.peasants?.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>Land Acres</td>
+											<td>{t('summary:summary.land')}</td>
 											<td align='right'>{empire?.land?.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>Money</td>
+											<td>{t('summary:summary.cash')}</td>
 											<td align='right'>${empire?.cash?.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].food}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.food`)}</td>
 											<td align='right'>{empire?.food?.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].runes}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.runes`)}</td>
 											<td align='right'>{empire?.runes?.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>Net Worth</td>
+											<td>{t('summary:summary.networth')}</td>
 											<td align='right'>${empire?.networth?.toLocaleString()}</td>
 										</tr>
 									</tbody>
@@ -158,39 +176,39 @@ export default function Summary()
 								>
 									<tbody>
 										<tr>
-											<td style={{ width: '50%' }}>Era</td>
-											<td align='right'>{eraArray[empire.era].name}</td>
+											<td style={{ width: '50%' }}>{t('summary:summary.era')}</td>
+											<td align='right'>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.name`)}</td>
 										</tr>
 										<tr>
-											<td>Race</td>
+											<td>{t('summary:summary.race')}</td>
 											<td align='right'>{raceArray[empire.race].name}</td>
 										</tr>
 										<tr>
-											<td>Health</td>
+											<td>{t('summary:summary.health')}</td>
 											<td align='right'>{empire?.health}%</td>
 										</tr>
 										<tr>
-											<td>Tax Rate</td>
+											<td>{t('summary:summary.tax')}</td>
 											<td align='right'>{empire?.tax}%</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].trparm}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.trparm`)}</td>
 											<td align='right'>{empire?.trpArm.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].trplnd}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.trplnd`)}</td>
 											<td align='right'>{empire?.trpLnd.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].trpfly}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.trpfly`)}</td>
 											<td align='right'>{empire?.trpFly.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].trpsea}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.trpsea`)}</td>
 											<td align='right'>{empire?.trpSea.toLocaleString()}</td>
 										</tr>
 										<tr>
-											<td>{eraArray[empire.era].trpwiz}</td>
+											<td>{t(`eras:eras.${eraArray[empire.era].name.toLowerCase()}.trpwiz`)}</td>
 											<td align='right'>{empire?.trpWiz.toLocaleString()}</td>
 										</tr>
 									</tbody>
@@ -200,11 +218,10 @@ export default function Summary()
 						<Stack align='center' spacing={0} mt='xs'>
 							{empire.turnsUsed < game.turnsProtection ? (<>
 								<Text align='center' mb='sm' color='green'>You are under new player protection for {game.turnsProtection - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {game.turnsProtection} turns.</Text>
-
 							</>) : ('')}
-							<Text align='center'>You get {game.turnsCount} turn{game.turnsCount > 1 ? ('s') : ('')} every {game.turnsFreq} minutes.</Text>
-							<Text>Next turns in approximately: <CountdownTimer intervalMinutes={game.turnsFreq} /></Text>
-							<Text align='center'>Server time: {new Date(time.time).toUTCString()}</Text>
+							<Text align='center'>{t('summary:summary.turnsInfo', { count: game.turnsCount, freq: game.turnsFreq })}</Text>
+							<Text>{t('summary:summary.nextTurns')}: <CountdownTimer intervalMinutes={game.turnsFreq} /></Text>
+							<Text align='center'>{t('summary:summary.serverTime', { time: new Date(time.time).toUTCString() })}</Text>
 							<Text align='center'>{roundStatus}</Text>
 							{empire.race !== 0 ||
 								empire.race !== 3 ? (

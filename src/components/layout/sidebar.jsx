@@ -11,9 +11,9 @@ const Sidebar = ({ game }) =>
 	const { setCurrentStep, meta } = useTour()
 
 	// i18n.changeLanguage('es')
-	console.log(i18n.language)
-	console.log('Available namespaces:', i18n.options.ns)
-	console.log('Translation test:', t('layout.sidebar.summary'))
+	// console.log(i18n.language)
+	// console.log('Available namespaces:', i18n.options.ns)
+	// console.log('Translation test:', t('layout.sidebar.summary'))
 
 	const infoLinks = [
 		{ key: 'summary', i18nKey: 'layout.sidebar.summary' },

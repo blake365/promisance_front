@@ -15,6 +15,7 @@ import NetProduced from './utilities/NetProduced'
 import { setBgImage } from '../functions/setBgImage'
 import TinyAction from './useTurns/tinyAction'
 import TinyBuild from './useTurns/tinyBuild'
+import { useTranslation } from 'react-i18next'
 
 const RaceBonus = ({ value }) =>
 {
@@ -35,6 +36,7 @@ const RaceBonus = ({ value }) =>
 
 export default function Overview()
 {
+	const { t } = useTranslation(['summary', 'eras'])
 	const { empire } = useSelector((state) => state.empire)
 	const { baseLuck, turnsProtection } = useSelector((state) => state.games.activeGame)
 	// console.log(empire)
@@ -102,6 +104,7 @@ export default function Overview()
 
 		return role
 	}
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
 	const bgimage = setBgImage(empire, turnsProtection)
 
@@ -110,9 +113,8 @@ export default function Overview()
 			<Stack spacing='sm' align='center'>
 				<img src={bgimage} style={{ maxHeight: '100px', maxWidth: '100%', height: 'auto', borderRadius: '10px' }} alt='summary' />
 				<Title order={1} align='center'>
-					Overview
+					{t('summary:summary.overview')}
 				</Title>
-
 				<div>
 					<Group spacing='sm' align='center' position='center' mb='sm'>
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
@@ -123,123 +125,125 @@ export default function Overview()
 								</Text>
 							</Group>
 							<SimpleGrid cols={2} spacing={1}>
-								<Text>Turns:</Text>
+								<Text>{t('summary:summary.turns')}:</Text>
 								<Text align='right'>{empire.turns.toLocaleString()}{' '}({empire.storedturns} stored)</Text>
-								<Text>Turns Used:</Text>
+								<Text>{t('summary:summary.turnsUsed')}:</Text>
 								<Text align='right'>{empire.turnsUsed.toLocaleString()}</Text>
 								<Popover withArrow shadow="lg">
 									<Popover.Target>
-										<Anchor>Health:</Anchor>
+										<Anchor>{t('summary:summary.health')}:</Anchor>
 									</Popover.Target>
 									<Popover.Dropdown>
 										<TinyAction title='Heal' type='heal' color='red' empire={empire} />
 									</Popover.Dropdown>
 								</Popover>
 								<Text align='right'>{empire.health}%</Text>
-								<Text>Networth:</Text>
+								<Text>{t('summary:summary.networth')}:</Text>
 								<Text align='right'>${empire.networth.toLocaleString()}</Text>
-								<Text>Population:</Text>
+								<Text>{t('summary:summary.population')}:</Text>
 								<Text align='right'>{empire.peasants.toLocaleString()}</Text>
-								<Text>Race:</Text>
+								<Text>{t('summary:summary.race')}:</Text>
 								<Text align='right'>{raceArray[empire.race].name}</Text>
-								<Text>Era:</Text>
+								<Text>{t('summary:summary.era')}:</Text>
 								<Text align='right'>{eraArray[empire.era].name}</Text>
-								<Text>Tax Rate:</Text>
+								<Text>{t('summary:summary.tax')}:</Text>
 								<Text align='right'>{empire.tax}%</Text>
-								<Text align='left'>Luck: </Text><Text align='right'>{luck}%</Text>
+								<Text align='left'>{t('summary:summary.luck')}: </Text><Text align='right'>{luck}%</Text>
 							</SimpleGrid>
 						</Card>
 
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Text weight={800} size='lg'>Agriculture</Text>
 							<SimpleGrid cols={2} spacing={1}>
-								<Text>Food:</Text>
+								<Text>{t('summary:summary.food')}:</Text>
 								<Text align='right'>{empire.food.toLocaleString()}</Text>
 								<Popover withArrow shadow="lg">
 									<Popover.Target>
-										<Anchor>Production: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Anchor>
+										<Anchor>{t('summary:summary.production')}: <RaceBonus value={race.mod_foodpro + era.mod_foodpro} /></Anchor>
 									</Popover.Target>
 									<Popover.Dropdown>
 										<TinyAction title='Farm' type='farm' color='green' empire={empire} />
 									</Popover.Dropdown>
 								</Popover>
 								<Text align='right'>{foodpro.toLocaleString()}</Text>
-								<Text>Consumption: <RaceBonus value={race.mod_foodcon} /></Text>
+								<Text>{t('summary:summary.consumption')}: <RaceBonus value={race.mod_foodcon} /></Text>
 								<Text align='right'>{foodcon.toLocaleString()}</Text>
-								<Text>Rot:</Text>
+								<Text>{t('summary:summary.rot')}:</Text>
 								<Text align='right'>{rot.toLocaleString()}</Text>
 								<NetProduced title='Net' value={foodpro - foodcon - rot} />
-								<Text mt='md' weight={800} size='lg'>Other</Text>
+								<Text mt='md' weight={800} size='lg'>{t('summary:summary.other')}</Text>
 								<Text> </Text>
 								<Popover withArrow shadow="lg">
 									<Popover.Target>
-										<Anchor align='left'>Explore: <RaceBonus value={era.mod_explore + race.mod_explore} />
+										<Anchor align='left'>{t('summary:summary.explore')}: <RaceBonus value={era.mod_explore + race.mod_explore} />
 										</Anchor>
 									</Popover.Target>
 									<Popover.Dropdown>
 										<TinyAction title='Explore' type='explore' color='blue' empire={empire} />
 									</Popover.Dropdown>
 								</Popover>
-								<Text align='right'>+{newLand} acres</Text>
-								<Text align='left'>Black Market: <RaceBonus value={race.mod_market} /></Text>
-
+								<Text align='right'>+{newLand} {t('summary:summary.acres')}</Text>
+								<Text align='left'>{t('summary:summary.blackmarket')}: <RaceBonus value={race.mod_market} /></Text>
 							</SimpleGrid>
 						</Card>
 
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
-							<Text weight={800} size='lg'>Economy</Text>
+							<Text weight={800} size='lg'>{t('summary:summary.economy')}</Text>
 							<SimpleGrid cols={2} spacing={1}>
-								<Text>Money:</Text>
+								<Text>{t('summary:summary.cash')}:</Text>
 								<Text align='right'>${empire.cash.toLocaleString()}</Text>
-								<Text>Per Capita Income:</Text>
+								<Text>{t('summary:summary.percapitaincome')}:</Text>
 								<Text align='right'>${cpi.toLocaleString()}</Text>
 								<Popover withArrow shadow="lg" withinPortal>
 									<Popover.Target>
-										<Anchor>Income: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Anchor>
+										<Anchor>{t('summary:summary.income')}: <RaceBonus value={race.mod_income + era.mod_cashpro} /></Anchor>
 									</Popover.Target>
 									<Popover.Dropdown>
 										<TinyAction title='Cash' type='cash' color='yellow' empire={empire} />
 									</Popover.Dropdown>
 								</Popover>
 								<Text align='right'>${income.toLocaleString()}</Text>
-								<Text>Expenses: <RaceBonus value={race.mod_expenses} /></Text>
+								<Text>{t('summary:summary.expenses')}: <RaceBonus value={race.mod_expenses} /></Text>
 								<Text align='right'>${expenses.toLocaleString()}</Text>
-								<Text>Corruption: </Text>
+								<Text>{t('summary:summary.corruption')}: </Text>
 								<Text align='right'>${corruption.toLocaleString()}</Text>
-								<Text>Loan Payment:</Text>
+								<Text>{t('summary:summary.loanpayment')}:</Text>
 								<Text align='right'>${Math.abs(loanpayed).toLocaleString()}</Text>
 								<NetProduced title='Net' value={income - expenses - Math.abs(loanpayed) - corruption} money />
-								<Text>Savings Balance:</Text>
+								<Text>{t('summary:summary.savings')}:</Text>
 								<Text align='right'>${empire.bank.toLocaleString()}</Text>
-								<Text>Loan Balance:</Text>
+								<Text>{t('summary:summary.loan')}:</Text>
 								<Text align='right'>${empire.loan.toLocaleString()}</Text>
 							</SimpleGrid>
 						</Card>
 
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
-
 							<Grid columns={16}>
 								<Col span={8}>
 									<Text weight={800} size='lg'>
-										Land Division
+										{t('summary:summary.landdivision')}
 									</Text>
-									{buildings.map((building, index) => (
-										<div key={index}>
-											<Popover withArrow shadow="lg">
-												<Popover.Target>
-													<Anchor>{eraArray[empire.era][building.toLowerCase()]}:</Anchor>
-												</Popover.Target>
-												<Popover.Dropdown>
-													<TinyBuild building={building} empire={empire} />
-												</Popover.Dropdown>
-											</Popover>
-										</div>
-									))}
-									<Text>Unused Land:</Text>
-									<Text>Total Land:</Text>
+									{buildings.map((building, index) =>
+									{
+										const buildingKey = building.toLowerCase()
+										return (
+											<div key={index}>
+												<Popover withArrow shadow="lg">
+													<Popover.Target>
+														<Anchor>{t(`eras:eras.${eraName}.${buildingKey}`)}:</Anchor>
+													</Popover.Target>
+													<Popover.Dropdown>
+														<TinyBuild building={building} empire={empire} />
+													</Popover.Dropdown>
+												</Popover>
+											</div>
+										)
+									})}
+									<Text>{t('summary:summary.unused')}:</Text>
+									<Text>{t('summary:summary.total')}:</Text>
 								</Col>
 								<Col span={5} mt={3}>
-									<Text align='right'>Build Rate: </Text>
+									<Text align='right'>{t('summary:summary.buildrate')}: </Text>
 									<Text align='right'>{empire.bldPop.toLocaleString()}</Text>
 									<Text align='right'>{empire.bldCash.toLocaleString()}</Text>
 									<Text align='right'>{empire.bldTroop.toLocaleString()}</Text>
@@ -268,19 +272,19 @@ export default function Overview()
 							<Grid columns={16}>
 								<Col span={8}>
 									<Text weight={800} size='lg'>
-										Military
+										{t('summary:summary.military')}
 									</Text>
-									<Text>{eraArray[empire.era].trparm}:</Text>
-									<Text>{eraArray[empire.era].trplnd}:</Text>
-									<Text>{eraArray[empire.era].trpfly}:</Text>
-									<Text>{eraArray[empire.era].trpsea}:</Text>
+									<Text>{t(`eras:eras.${eraName}.trparm`)}:</Text>
+									<Text>{t(`eras:eras.${eraName}.trplnd`)}:</Text>
+									<Text>{t(`eras:eras.${eraName}.trpfly`)}:</Text>
+									<Text>{t(`eras:eras.${eraName}.trpsea`)}:</Text>
 									<Text> </Text>
-									<Text mt='sm'>Off Power: <RaceBonus value={race.mod_offense} /></Text>
-									<Text>Def Power: <RaceBonus value={race.mod_defense} /></Text>
-									<Text mt='sm'>{eraArray[empire.era].trpwiz}: <RaceBonus value={race.mod_magic} /></Text>
+									<Text mt='sm'>{t('summary:summary.offpower')}: <RaceBonus value={race.mod_offense} /></Text>
+									<Text>{t('summary:summary.defpower')}: <RaceBonus value={race.mod_defense} /></Text>
+									<Text mt='sm'>{t(`eras:eras.${eraName}.trpwiz`)}: <RaceBonus value={race.mod_magic} /></Text>
 									<Popover withArrow shadow="lg">
 										<Popover.Target>
-											<Anchor>{eraArray[empire.era].runes}: <RaceBonus value={race.mod_runepro + era.mod_runepro} /></Anchor>
+											<Anchor>{t(`eras:eras.${eraName}.runes`)}: <RaceBonus value={race.mod_runepro + era.mod_runepro} /></Anchor>
 										</Popover.Target>
 										<Popover.Dropdown>
 											<TinyAction title='Meditate' type='meditate' color='grape' empire={empire} />
@@ -290,7 +294,7 @@ export default function Overview()
 								<Col span={5} align='right' mt={3}>
 									<Popover withArrow shadow="lg" withinPortal>
 										<Popover.Target>
-											<Anchor >Industry: </Anchor>
+											<Anchor>{t('summary:summary.industry')}: </Anchor>
 										</Popover.Target>
 										<Popover.Dropdown>
 											<TinyAction title='Industry' type='industry' color='red' empire={empire} />
@@ -320,16 +324,15 @@ export default function Overview()
 						</Card>
 						<Card sx={{ width: '380px', minHeight: '295px' }}>
 							<Text weight={800} size='lg'>
-								Relations
+								{t('summary:summary.relations')}
 							</Text>
 							<Grid columns={14}>
 								<Col span={7}>
-									<Text>Member of Clan:</Text>
-									<Text>Role:</Text>
-									<Text>Enemies:</Text>
-									<Text mt='sm'>Offensive Actions:</Text>
-									<Text>Defenses:</Text>
-									{/* <Text>Kills:</Text> */}
+									<Text>{t('summary:summary.members')}:</Text>
+									<Text>{t('summary:summary.role')}:</Text>
+									<Text>{t('summary:summary.enemies')}:</Text>
+									<Text mt='sm'>{t('summary:summary.offense')}:</Text>
+									<Text>{t('summary:summary.defenses')}:</Text>
 								</Col>
 								<Col span={7}>
 									<Text align='right' truncate={true}>{clan ? (clan.clanName) : ('None')}</Text>
@@ -337,15 +340,12 @@ export default function Overview()
 									<Text align='right'>{enemies}</Text>
 									<Text align='right' mt='sm'>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>
 									<Text align='right'>{empire.defTotal} ({empire.defSucc ? Math.round(empire.defSucc / empire.defTotal * 100) : ('0')}%)</Text>
-									{/* <Text align='right'>{empire.kills}</Text> */}
 								</Col>
 							</Grid>
 						</Card>
 					</Group>
-
 				</div>
 			</Stack>
-
-		</main >
+		</main>
 	)
 }

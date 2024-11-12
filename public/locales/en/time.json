@@ -1,0 +1,8 @@
+{
+	"round": {
+		"notStarted": "Round has not started",
+		"willStart": "Round will start in {{days}} days, {{hours}} hours, and {{minutes}} minutes",
+		"willEnd": "Round will end in {{days}} days, {{hours}} hours, and {{minutes}} minutes",
+		"ended": "The round has ended, thanks for playing! A new round will start soon"
+	}
+}

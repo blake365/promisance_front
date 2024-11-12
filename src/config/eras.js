@@ -84,7 +84,7 @@ const ERA_PRESENT = {
 	spell_regress: 'Regress to Past',
 	effectname_shield: 'Psionic Barrier',
 	effectdesc_shield:
-		'Your telepaths are projecting a barrier around your empire, reducing the effectiveness of magical attacks against you',
+		'Your telepaths are projecting a barrier around your empire reducing the effectiveness of magical attacks against you',
 	effectname_gate: 'Time Gate',
 	mod_explore: 20,
 	mod_industry: 5,

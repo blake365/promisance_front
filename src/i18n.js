@@ -11,7 +11,7 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
-    ns: ['eras','layout'],
+    ns: ['eras','layout', 'summary', 'time'],
     interpolation: {
       escapeValue: false
     }
