@@ -15,10 +15,13 @@ import { buildSteps } from '../../tour/buildSteps'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
+import { useTranslation } from 'react-i18next'
 
 export default function Build({ size })
 {
 	const buttonRef = useRef()
+
+	const { t } = useTranslation(['turns', 'eras'])
 
 	const { setIsOpen, setSteps, setMeta, setCurrentStep, meta } = useTour()
 	let buildNumberArray = []
@@ -83,13 +86,13 @@ export default function Build({ size })
 		},
 
 		errorMessages: {
-			bldPop: 'Invalid number of buildings',
-			bldCash: 'Invalid number of buildings',
-			bldCost: 'Invalid number of buildings',
-			bldFood: 'Invalid number of buildings',
-			bldTroop: 'Invalid number of buildings',
-			bldWiz: 'Invalid number of buildings',
-			bldDef: 'Invalid number of buildings',
+			bldPop: t('build.error'),
+			bldCash: t('build.error'),
+			bldCost: t('build.error'),
+			bldFood: t('build.error'),
+			bldTroop: t('build.error'),
+			bldWiz: t('build.error'),
+			bldDef: t('build.error'),
 		},
 	})
 
@@ -154,6 +157,7 @@ export default function Build({ size })
 		}
 	}
 
+	const eraName = eraArray[empire.era].name.toLowerCase()
 	const roundStatus = checkRoundStatus()
 
 	return (
@@ -163,7 +167,7 @@ export default function Build({ size })
 					{!size && <>
 						<img src='/images/build2.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='build' />
 						<Title order={1} align='center'>
-							Build <FavoriteButton empire={empire} title='Build' />
+							{t('build.title')} <FavoriteButton empire={empire} title='Build' />
 							<ActionIcon size='md' onClick={() =>
 							{
 								setMeta('build tour')
@@ -178,15 +182,13 @@ export default function Build({ size })
 						</Title>
 						<div className='build0'>
 							<Text align='center'>
-								Each structure consumes one acre of unused land and costs $
-								{buildCost.toLocaleString()} to build.
+								{t('build.description', { cost: buildCost.toLocaleString() })}
 							</Text>
 							<Text align='center'>
-								You can build <span style={{ fontWeight: 600 }}>{buildRate.toLocaleString()}</span> structures per turn
+								{t('build.rate', { rate: buildRate.toLocaleString() })}
 							</Text>
 							<Text align='center'>
-								With your resources and unused land you can build <span style={{ fontWeight: 600 }}>{canBuild.toLocaleString()}{' '}</span>
-								structures
+								{t('build.canBuild', { canBuild: canBuild.toLocaleString() })}
 							</Text>
 						</div>
 					</>}
@@ -198,7 +200,7 @@ export default function Build({ size })
 									dispatch(clearResult)
 									doBuild(values)
 								})
-								: setErrors("Can't build that many buildings")
+								: setErrors(t('build.error'))
 						}
 						className='gremlin4 dwarf4 elf4 gremlin4 drow4 ghoul4 gnome4 pixie4 minotaur4 goblin4 orc4 hobbit4 vampire4 '
 					>
@@ -206,10 +208,10 @@ export default function Build({ size })
 							<Table verticalSpacing='xs' striped>
 								<thead>
 									<tr>
-										<th>Structure</th>
-										<th>Owned</th>
+										<th>{t('turns:build.structure')}</th>
+										<th>{t('turns:build.owned')}</th>
 										{/* <th>Can Build</th> */}
-										<th>Build</th>
+										<th>{t('turns:build.build')}</th>
 										{/* <th></th> */}
 									</tr>
 								</thead>
@@ -229,7 +231,7 @@ export default function Build({ size })
 														empire={empire}
 														title={building}
 													/>
-													{eraArray[empire.era][buildingName]}
+													{t(`eras:eras.${eraName}.${buildingName}`)}
 												</Group>
 											</td>
 											<td>
@@ -293,7 +295,7 @@ export default function Build({ size })
 									})}
 
 									<tr>
-										<td>Unused Land</td>
+										<td>{t('turns:build.empty')}</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()}</td>
 									</tr>
 								</tbody>
@@ -301,12 +303,14 @@ export default function Build({ size })
 							<div style={{ color: 'red' }}>{errors.error}</div>
 
 							<Button type='submit' disabled={errors.error || roundStatus} loading={loading} ref={buttonRef}>
-								Begin Construction
+								{t('turns:build.submit')}
 							</Button>
 
 						</Stack>
 					</form>
-					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{ marginTop: '1rem' }}>Demolish Buildings</Button>
+					<Button component={Link} to='/app/demolish' compact variant='outline' color='orange' sx={{ marginTop: '1rem' }}>
+						{t('turns:build.demolish')}
+					</Button>
 				</Stack>
 			</Center>
 		</main>

@@ -21,11 +21,11 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
 import { useTour } from '@reactour/tour'
-
-// DONE: show rune cost for spells, show current magic power, show required magic power for spells
+import { useTranslation } from 'react-i18next'
 
 export default function MagicCenter({ size })
 {
+    const { t } = useTranslation(['turns', 'eras'])
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(false)
     const effects = useSelector((state) => state.effects.effects)
@@ -78,6 +78,7 @@ export default function MagicCenter({ size })
         }
     }
 
+    const eraName = eraArray[empire.era].name.toLowerCase()
     const magicPower = getPower_self(empire)
 
     const SelectItem = forwardRef(
@@ -85,8 +86,8 @@ export default function MagicCenter({ size })
             <div ref={ref} {...others}>
                 <div>
                     <Text size='md'>{label}</Text>
-                    <Text size='xs'>Power: {power}</Text>
-                    <Text size='xs'>Cost: {cost.toLocaleString()} {eraArray[empire.era].runes}</Text>
+                    <Text size='xs'>{t('turns:magicCenter.powerReq')}: {power}</Text>
+                    <Text size='xs'>{t('turns:magicCenter.cost')}: {cost.toLocaleString()} {t(`eras:eras.${eraName}.runes`)}</Text>
                 </div>
             </div>
         )
@@ -141,14 +142,14 @@ export default function MagicCenter({ size })
                     {!size && <>
                         <img src='/images/magic.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='magic center' />
                         <Title order={1} align='center'>
-                            Magic Center <FavoriteButton empire={empire} title='MagicCenter' />
+                            {t('turns:magicCenter.title')} <FavoriteButton empire={empire} title='MagicCenter' />
                         </Title>
                         <Text align='center'>
-                            Cast spells to create a shield, generate food or money, or change eras. Spells take two turns to cast.
+                            {t('turns:magicCenter.description')}
                         </Text>
                     </>}
                     <Text align='center'>
-                        Your current magic power is {magicPower}.
+                        {t('turns:magicCenter.power', { power: magicPower })}
                     </Text>
                     <form onSubmit={form.onSubmit((values) =>
                     {
@@ -158,23 +159,23 @@ export default function MagicCenter({ size })
                     })}>
                         <Stack spacing='sm' align='center'>
                             <Select
-                                label="Select Spell to Cast"
-                                placeholder="Pick one"
+                                label={t('turns:magicCenter.select')}
+                                placeholder={t('turns:magicCenter.pick')}
                                 required
                                 itemComponent={SelectItem}
                                 data={[
-                                    { value: 0, label: `${eraArray[empire.era].spell_shield}`, power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
-                                    { value: 1, label: 'Cornucopia', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
-                                    { value: 2, label: 'Tree of Gold', power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
-                                    { value: 5, label: 'Open Time Gate', power: 65, cost: Math.ceil(baseCost(empire) * 20) },
-                                    { value: 6, label: 'Close Time Gate', power: 75, cost: Math.ceil(baseCost(empire) * 14.5), disabled: !timeGate },
-                                    { value: 3, label: `Advance to ${nextEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
-                                    { value: 4, label: `Regress to ${prevEra}`, power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
+                                    { value: 0, label: t(`eras:eras.${eraName}.spell_shield`), power: 15, cost: Math.ceil(baseCost(empire) * 4.9) },
+                                    { value: 1, label: t(`eras:eras.${eraName}.spell_food`), power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
+                                    { value: 2, label: t(`eras:eras.${eraName}.spell_cash`), power: 30, cost: Math.ceil(baseCost(empire) * 17.5) },
+                                    { value: 5, label: t(`eras:eras.${eraName}.spell_gate`), power: 65, cost: Math.ceil(baseCost(empire) * 20) },
+                                    { value: 6, label: t(`eras:eras.${eraName}.spell_ungate`), power: 75, cost: Math.ceil(baseCost(empire) * 14.5), disabled: !timeGate },
+                                    { value: 3, label: t(`eras:eras.${eraName}.spell_advance`), power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canAdvance },
+                                    { value: 4, label: t(`eras:eras.${eraName}.spell_regress`), power: 80, cost: Math.ceil(baseCost(empire) * 47.5), disabled: !canRegress },
                                 ]}
                                 {...form.getInputProps('spell')}
                             />
                             <NumberInput
-                                label={'Cast Spell How Many Times?'}
+                                label={t('turns:magicCenter.number')}
                                 min={1}
                                 defaultValue={1}
                                 stepHoldDelay={500}
@@ -184,7 +185,7 @@ export default function MagicCenter({ size })
                             />
 
                             <Button color='grape' type='submit' disabled={roundStatus} loading={loading}>
-                                Cast Spell
+                                {t('turns:magicCenter.submit')}
                             </Button>
                         </Stack>
                     </form>

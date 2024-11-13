@@ -55,5 +55,42 @@
 	"meditate": {
 		"title": "Meditar",
 		"flavor": "meditando"
+	},
+	"build": {
+		"title": "Construir",
+		"error": "Número de edificios inválido",
+		"description": "Cada estructura consume un acre de tierra vacía y cuesta {{cost}} para construir.",
+		"rate": "Puedes construir {{rate}} estructuras por turno.",
+		"canBuild": "Con tus recursos y tierra vacía puedes construir {{canBuild}} estructuras.",
+		"buildError": "No se pueden construir tantos edificios",
+		"structure": "Estructura",
+		"owned": "Posees",
+		"build": "Construir",
+		"empty": "Tierra Vacía",
+		"submit": "Construir",
+		"demolish": "Demoler Edificios",
+		"demoTitle": "Demoler",
+		"demoDescription": "Cada estructura demolida libera un acre de tierra y se recuperarán ${{cost}}.",
+		"demoRate": "Puedes demoler {{rate}} estructuras por turno.",
+		"demoCan": "Con tus recursos y tierra puedes demoler {{can}} estructuras.",
+		"demoError": "No se pueden demoler tantos edificios",
+		"submitDemo": "Demoler",
+		"buildButton": "Construir Edificios",
+		"dropLand": "Puedes abandonar hasta {{canDrop}} acres de tierra vacía, a razón de {{dropRate}} acres por turno.",
+		"canDrop": "Puede Abandonar",
+		"drop": "Abandonar",
+		"dropButton": "Abandonar Tierra"
+	},
+	"magicCenter": {
+		"title": "Centro Mágico",
+		"description": "Lanza hechizos para crear un escudo, generar comida o dinero, o cambiar eras. Los hechizos consumen dos turnos al lanzarlos.",
+		"power": "Tu poder mágico actual es de {{power}}.",
+		"select": "Selecciona el hechizo a lanzar",
+		"pick": "Escoger uno",
+		"number": "Lanza el hechizo cuántas veces?",
+		"submit": "Lanzar Hechizo",
+		"castError": "No puedes lanzar tantos hechizos",
+		"powerReq": "Poder",
+		"cost": "Costo"
 	}
 }

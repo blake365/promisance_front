@@ -54,5 +54,42 @@
 	"meditate": {
 		"title": "Meditate",
 		"flavor": "meditating"
+	},
+	"build": {
+		"title": "Build",
+		"error": "Invalid number of buildings",
+		"description": "Each structure consumes one acre of empty land and costs {{cost}} to build.",
+		"rate": "You can build {{rate}} structures per turn.",
+		"canBuild": "With your resources and empty land you can build {{canBuild}} structures.",
+		"buildError": "Can't build that many buildings",
+		"structure": "Structure",
+		"owned": "Owned",
+		"build": "Build",
+		"empty": "Empty Land",
+		"submit": "Construct",
+		"demolish": "Demolish Buildings",
+		"demoTitle": "Demolish",
+		"demoDescription": "Each structure demolished frees up one acre of land and {{cost}} will be salvaged.",
+		"demoRate": "You can demolish {{rate}} structures per turn.",
+		"demoCan": "With your resources and land you can demolish {{can}} structures.",
+		"demoError": "Can't demolish that many buildings",
+		"submitDemo": "Demolish",
+		"buildButton": "Construct Buildings",
+		"dropLand": "You can drop up to {{canDrop}} empty acres of land, at {{dropRate}} acres per turn.",
+		"canDrop": "Can Drop",
+		"drop": "Drop",
+		"dropButton": "Drop Land"
+	},
+	"magicCenter": {
+		"title": "Magic Center",
+		"description": "Cast spells to create a shield, generate food or money, or change eras. Spells consume two turns when cast.",
+		"power": "Your current magic power is {{power}}.",
+		"select": "Select Spell to Cast",
+		"pick": "Pick one",
+		"number": "Cast Spell How Many Times?",
+		"submit": "Cast Spell",
+		"castError": "Can't cast that many spells",
+		"powerReq": "Power",
+		"cost": "Cost"
 	}
 }

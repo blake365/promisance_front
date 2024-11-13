@@ -13,6 +13,7 @@ import { FavoriteButton } from '../utilities/maxbutton'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
+import { useTranslation } from 'react-i18next'
 
 export default function Demolish()
 {
@@ -23,7 +24,7 @@ export default function Demolish()
 	}
 	const { empire } = useSelector((state) => state.empire)
 	const { buildCost } = useSelector((state) => state.games.activeGame)
-
+	const { t } = useTranslation(['turns', 'eras'])
 	const [loading, setLoading] = useState(false)
 	const loadEmpire = useLoadEmpire(empire.uuid)
 	const dispatch = useDispatch()
@@ -104,13 +105,13 @@ export default function Demolish()
 		},
 
 		errorMessages: {
-			demoPop: 'Invalid number of buildings',
-			demoCash: 'Invalid number of buildings',
-			demoCost: 'Invalid number of buildings',
-			demoFood: 'Invalid number of buildings',
-			demoTroop: 'Invalid number of buildings',
-			demoWiz: 'Invalid number of buildings',
-			demoDef: 'Invalid number of buildings',
+			demoPop: t('turns:build.error'),
+			demoCash: t('turns:build.error'),
+			demoCost: t('turns:build.error'),
+			demoFood: t('turns:build.error'),
+			demoTroop: t('turns:build.error'),
+			demoWiz: t('turns:build.error'),
+			demoDef: t('turns:build.error'),
 		},
 	})
 
@@ -191,6 +192,7 @@ export default function Demolish()
 	}
 
 	const roundStatus = checkRoundStatus()
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
 	const buildings = ['demoPop', 'demoCash', 'demoCost', 'demoTroop', 'demoWiz', 'demoFood', 'demoDef']
 
@@ -199,18 +201,16 @@ export default function Demolish()
 			<Center mb={10}>
 				<Stack spacing='sm' align='center'>
 					<Title order={1} align='center'>
-						Demolish <FavoriteButton empire={empire} title='Demolish' />
+						{t('turns:build.demoTitle')} <FavoriteButton empire={empire} title='Demolish' />
 					</Title>
 					<Text align='center'>
-						Each structure demolished frees up one acre of land and
-						${demolishCost.toLocaleString()} will be salvaged.
+						{t('turns:build.demoDescription', { cost: demolishCost.toLocaleString() })}
 					</Text>
 					<Text align='center'>
-						You can demolish {demolishRate.toLocaleString()} structures per turn.
+						{t('turns:build.demoRate', { rate: demolishRate.toLocaleString() })}
 					</Text>
 					<Text align='center'>
-						With your resources, you can demolish {canDemolish.toLocaleString()}{' '}
-						structures.
+						{t('turns:build.demoCan', { can: canDemolish.toLocaleString() })}
 					</Text>
 
 					<form
@@ -222,18 +222,17 @@ export default function Demolish()
 									dispatch(clearResult)
 									doDemolish(values)
 								})
-								: setErrors("Can't demolish that many buildings")
+								: setErrors(t('turns:build.demoError'))
 						}
 					>
 						<Stack spacing='sm' align='center'>
 							<Table verticalSpacing='xs' striped>
 								<thead>
 									<tr>
-										<th>Structure</th>
-										<th>Owned</th>
+										<th>{t('turns:build.structure')}</th>
+										<th>{t('turns:build.owned')}</th>
 										{/* <th>Can Demolish</th> */}
-										<th>Demolish</th>
-
+										<th>{t('turns:build.demoTitle')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -247,7 +246,7 @@ export default function Demolish()
 
 										return <tr className={index + 1} key={building}>
 											<td>
-												{eraArray[empire.era][buildingName]}
+												{t(`eras:eras.${eraName}.${buildingName}`)}
 											</td>
 											<td>
 												{empire[empireBuilding]} (
@@ -310,7 +309,7 @@ export default function Demolish()
 										</tr>
 									})}
 									<tr>
-										<td>Unused Land</td>
+										<td>{t('turns:build.empty')}</td>
 										<td colSpan={3}>{empire.freeLand.toLocaleString()} (
 											{Math.round((empire.freeLand / empire.land) * 100)}%)</td>
 									</tr>
@@ -318,11 +317,13 @@ export default function Demolish()
 							</Table>
 
 							<Button type='submit' color='orange' disabled={errors?.error || roundStatus} loading={loading} ref={buttonRef}>
-								Begin Demolition
+								{t('turns:build.submitDemo')}
 							</Button>
 						</Stack>
 					</form>
-					<Button component={Link} to='/app/build' compact variant='outline' color='blue' sx={{ marginTop: '1rem' }}>Build Buildings</Button>
+					<Button component={Link} to='/app/build' compact variant='outline' color='blue' sx={{ marginTop: '1rem' }}>
+						{t('turns:build.buildButton')}
+					</Button>
 					<form onSubmit={
 						dropForm.onSubmit((values) =>
 						{
@@ -332,19 +333,19 @@ export default function Demolish()
 						})
 					}>
 						<Stack spacing='sm' align='center' sx={{ marginTop: '2rem' }}>
-							<Text align='center'>You can drop up to {canDrop} unused acres of land, at {dropRate} acres per turn.</Text>
+							<Text align='center'>{t('turns:build.dropLand', { canDrop: canDrop.toLocaleString(), dropRate: dropRate.toLocaleString() })}</Text>
 							<Table>
 								<thead>
 									<tr>
 										<th> </th>
-										<th>Owned</th>
-										<th>Can Drop</th>
-										<th>Drop</th>
+										<th>{t('turns:build.owned')}</th>
+										<th>{t('turns:build.canDrop')}</th>
+										<th>{t('turns:build.drop')}</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>Unused Land</td>
+										<td>{t('turns:build.empty')}</td>
 										<td>{empire.freeLand.toLocaleString()}</td>
 										<td>{canDrop.toLocaleString()}</td>
 										<td>
@@ -372,7 +373,7 @@ export default function Demolish()
 								</tbody>
 							</Table>
 							<Button type='submit' color='red' disabled={roundStatus} loading={loading} ref={buttonRef2}>
-								Drop Land
+								{t('turns:build.dropButton')}
 							</Button>
 						</Stack>
 					</form>
