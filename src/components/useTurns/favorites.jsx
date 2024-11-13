@@ -17,6 +17,7 @@ import Axios from 'axios'
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { useMediaQuery } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
 
 const MapComponents = ({ title, empire, size, index }) =>
 {
@@ -109,6 +110,7 @@ const reorderCol = (list, startIndex, endIndex) =>
 
 export default function Favorites()
 {
+    const { t } = useTranslation('turns')
     const { empire } = useSelector((state) => state.empire)
     const [checked, setChecked] = useState(empire.favSize)
     const [state, setState] = useState({ favorites: empire.favorites })
@@ -187,17 +189,17 @@ export default function Favorites()
     return (
         <main>
             <Title order={1} align='center'>
-                Favorites
+                {t('turns:favorites.title')}
             </Title>
-            <Text size='sm' color='dimmed' align='center' mb='xs'>Drag and drop to rearrange favorites</Text>
+            <Text size='sm' color='dimmed' align='center' mb='xs'>{t('turns:favorites.drag')}</Text>
             <Center>
                 <Switch
-                    label="Compact"
+                    label={t('turns:favorites.compact')}
                     checked={checked}
                     onChange={(event) => handleSizeChange(checked)}
                 />
             </Center>
-            {empire.favorites.length === 0 && <Text align='center' mt='lg'>Add favorites by clicking the star icon from the actions in the <b>Use Turns</b> category</Text>}
+            {empire.favorites.length === 0 && <Text align='center' mt='lg'>{t('turns:favorites.empty')}</Text>}
 
             {!smScreen ? (
                 <Flex align='start' justify='center' wrap='wrap'>

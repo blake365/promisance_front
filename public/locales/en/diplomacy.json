@@ -1,0 +1,33 @@
+{
+	"forms": {
+		"search": "Search",
+		"send": "Send",
+		"pickOne": "Pick one",
+		"empire": "Empire",
+		"all": "All",
+		"attack": "Attack",
+		"market": "Market",
+		"magic": "Magic",
+		"aid": "Aid",
+		"lottery": "Lottery"
+	},
+	"clans": {
+		"clanStats": "Clan Stats",
+		"noClans": "No Clans Created Yet",
+		"createClan": "Create a Clan"
+	},
+	"mail": {
+		"mailbox": "Mailbox",
+		"noConversations": "No Conversations",
+		"startConversation": "Start a conversation below",
+		"encrypted": "Messages are not encrypted and can be read by anyone with access to the database.",
+		"sendMessage": "Send a message to",
+		"message": "Message"
+	},
+	"worldNews": {
+		"worldNews": "World News",
+		"event": "Event Type",
+		"number": "Number of Results",
+		"none": "No news to display"
+	}
+}

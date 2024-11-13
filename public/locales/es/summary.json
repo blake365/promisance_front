@@ -54,6 +54,8 @@
 		"none": "Ninguno",
 		"turnsInfo": "Obtienes {{count}} turno{{count, plural, one {''} other {s}}} cada {{freq}} minutos",
 		"nextTurns": "Próximo turno en aproximadamente",
-		"serverTime": "Hora del servidor: {{time}}"
+		"serverTime": "Hora del servidor: {{time}}",
+		"scores": "Puntos",
+		"ranks": "Los rangos se actualizan cada {{turnsFreq}} minutos"
 	}
 }

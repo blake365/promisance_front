@@ -2,10 +2,8 @@ import
 {
     Button,
     Center,
-    Divider,
     Group,
     NumberInput,
-    SimpleGrid,
     Stack,
     Text,
     Title,
@@ -16,7 +14,7 @@ import { useDispatch, } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { eraArray } from '../../config/eras'
 import { showNotification } from '@mantine/notifications'
-
+import { useTranslation } from 'react-i18next'
 
 export default function IndyRates({ tiny, empire })
 {
@@ -25,7 +23,7 @@ export default function IndyRates({ tiny, empire })
     let errors = {
         error: '',
     }
-
+    const { t } = useTranslation(['turns', 'eras'])
     const dispatch = useDispatch()
 
     const form = useForm({
@@ -45,10 +43,10 @@ export default function IndyRates({ tiny, empire })
         },
 
         errorMessages: {
-            indArmy: 'Invalid percent production',
-            indLnd: 'Invalid percent production',
-            indFly: 'Invalid percent production',
-            indSea: 'Invalid percent production',
+            indArmy: t('turns:industry.error'),
+            indLnd: t('turns:industry.error'),
+            indFly: t('turns:industry.error'),
+            indSea: t('turns:industry.error'),
         },
     })
 
@@ -84,29 +82,30 @@ export default function IndyRates({ tiny, empire })
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Industry Settings Updated',
+                title: t('turns:industry.responseSuccess'),
                 color: 'red',
                 autoClose: 2000,
             })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error Updating Industry Settings',
+                title: t('turns:industry.responseFail'),
                 color: 'orange',
                 autoClose: 2000,
             })
         }
     }
 
+    const eraName = eraArray[empire.era].name.toLowerCase()
 
     return (
         <Center mt={5}>
             <Stack spacing='sm' align='center'>
                 {!tiny &&
                     <>
-                        <Title order={3}>Industry Settings</Title>
+                        <Title order={3}>{t('turns:industry.indySettings')}</Title>
                         <Text size='sm'>
-                            Input the percentage of production to dedicate to each type of unit.{' '}
+                            {t('turns:industry.update')}
                         </Text>
                     </>}
                 <form onSubmit={
@@ -116,13 +115,13 @@ export default function IndyRates({ tiny, empire })
                             console.log(values)
                             updateIndustry(values)
                         })
-                        : setErrors("Values must add up to 100")
+                        : setErrors(t('turns:industry.total'))
                 }>
                     <Stack align='center' spacing='xs'>
                         <Group position='center' spacing='sm'>
                             <NumberInput
-                                w={100}
-                                label={eraArray[empire.era].trparm}
+                                // w={100}
+                                label={t(`eras:eras.${eraName}.trparm`)}
                                 min={0}
                                 max={100}
                                 defaultValue={empire.indArmy}
@@ -131,8 +130,8 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indArmy')}
                             />
                             <NumberInput
-                                w={100}
-                                label={eraArray[empire.era].trplnd}
+                                // w={100}
+                                label={t(`eras:eras.${eraName}.trplnd`)}
                                 min={0}
                                 max={100}
                                 defaultValue={empire.indLnd}
@@ -141,8 +140,8 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indLnd')}
                             />
                             <NumberInput
-                                w={100}
-                                label={eraArray[empire.era].trpfly}
+                                // w={100}
+                                label={t(`eras:eras.${eraName}.trpfly`)}
                                 min={0}
                                 max={100}
                                 defaultValue={empire.indFly}
@@ -151,8 +150,8 @@ export default function IndyRates({ tiny, empire })
                                 {...form.getInputProps('indFly')}
                             />
                             <NumberInput
-                                w={100}
-                                label={eraArray[empire.era].trpsea}
+                                // w={100}
+                                label={t(`eras:eras.${eraName}.trpsea`)}
                                 min={0}
                                 max={100}
                                 defaultValue={empire.indSea}
@@ -163,7 +162,7 @@ export default function IndyRates({ tiny, empire })
                         </Group>
                         <div style={{ color: 'red' }}>{errors.error}</div>
                         <Button color='red' type='submit' disabled={errors.error}>
-                            Update
+                            {t('turns:industry.updateButton')}
                         </Button>
                     </Stack>
                 </form>

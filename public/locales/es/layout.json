@@ -14,7 +14,7 @@
 			},
 			"summary": "Resumen",
 			"overview": "Visión General",
-			"scores": "Puntuaciones",
+			"scores": "Puntos",
 			"clanStats": "Estadísticas de Clan",
 			"mailbox": "Buzón",
 			"worldNews": "Noticias del Mundo",
@@ -41,7 +41,7 @@
 		},
 		"infobar": {
 			"turns": "Turnos",
-			"score": "Puntuación",
+			"score": "Puntos",
 			"networth": "Valor Neto",
 			"land": "Tierra",
 			"money": "Dinero",

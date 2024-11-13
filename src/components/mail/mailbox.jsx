@@ -4,7 +4,7 @@ import Axios from 'axios'
 import { useSelector } from 'react-redux'
 import { useForm } from '@mantine/form'
 import Chatbox from './chatbox'
-
+import { useTranslation } from 'react-i18next'
 const getMail = async (body) =>
 {
     try {
@@ -27,7 +27,7 @@ export default function Mailbox()
     const [selectedEmpire1, setEmpire1] = useState()
     const [activeTab, setActiveTab] = useState()
     const { empire } = useSelector((state) => state.empire)
-
+    const { t } = useTranslation('diplomacy')
     // let myId = empire.id
 
     let body = {
@@ -113,9 +113,8 @@ export default function Mailbox()
         <main>
             <Stack spacing='sm' align='center'>
                 <Title order={1} align='center'>
-                    Mailbox
+                    {t('diplomacy:mail.mailbox')}
                 </Title>
-
                 <Stack spacing='sm'>
                     {convos.length > 0 ? (
                         <Tabs value={activeTab} onTabChange={setActiveTab} orientation="vertical" keepMounted={false} variant='pills' key='39i2390'>
@@ -146,11 +145,11 @@ export default function Mailbox()
                                 )
                             })}
                         </Tabs>
-                    ) : (<Text align='center'>Start a conversation below</Text>)}
+                    ) : (<Text align='center'>{t('diplomacy:mail.noConversations')}</Text>)}
                     <Card>
                         <Card.Section pt='sm'>
-                            <Text align='center'>Start a new conversation</Text>
-                            <Text size='xs' color='dimmed' align='center'>Messages are not encrypted and can be read by anyone with access to the database.</Text>
+                            <Text align='center'>{t('diplomacy:mail.startConversation')}</Text>
+                            <Text size='xs' color='dimmed' align='center'>{t('diplomacy:mail.encrypted')}</Text>
                         </Card.Section>
                         <Card.Section>
                             <form onSubmit={form.onSubmit((values) =>
@@ -166,8 +165,8 @@ export default function Mailbox()
                                                 clearable
                                                 searchValue={selectedEmpire1}
                                                 onSearchChange={setEmpire1}
-                                                label="Send a message to:"
-                                                placeholder="Pick one"
+                                                label={t('diplomacy:mail.sendMessage')}
+                                                placeholder={t('diplomacy:forms.pickOne')}
                                                 data={empires}
                                                 withinPortal
                                                 {...form.getInputProps('destinationId')}
@@ -175,13 +174,13 @@ export default function Mailbox()
                                             />
                                         </>
                                     )}
-                                    <Textarea label='Message'
+                                    <Textarea label={t('diplomacy:mail.message')}
                                         {...form.getInputProps('message')}
                                         size='xs'
                                         row={2}
                                         w='100%'
                                     />
-                                    <Button type='submit' size='xs'>Send</Button>
+                                    <Button type='submit' size='xs'>{t('diplomacy:forms.send')}</Button>
                                 </Group>
                             </form>
                         </Card.Section>

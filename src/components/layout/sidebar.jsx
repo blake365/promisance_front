@@ -16,43 +16,43 @@ const Sidebar = ({ game }) =>
 	// console.log('Translation test:', t('layout.sidebar.summary'))
 
 	const infoLinks = [
-		{ key: 'summary', i18nKey: 'layout.sidebar.summary' },
-		{ key: 'overview', i18nKey: 'layout.sidebar.overview' },
-		{ key: 'scores', i18nKey: 'layout.sidebar.scores' },
-		{ key: 'clanStats', i18nKey: 'layout.sidebar.clanStats' },
-		{ key: 'mailbox', i18nKey: 'layout.sidebar.mailbox' },
-		{ key: 'worldNews', i18nKey: 'layout.sidebar.worldNews' },
+		{ key: 'Summary', i18nKey: 'layout.sidebar.summary' },
+		{ key: 'Overview', i18nKey: 'layout.sidebar.overview' },
+		{ key: 'Scores', i18nKey: 'layout.sidebar.scores' },
+		{ key: 'Clan Stats', i18nKey: 'layout.sidebar.clanStats' },
+		{ key: 'Mailbox', i18nKey: 'layout.sidebar.mailbox' },
+		{ key: 'World News', i18nKey: 'layout.sidebar.worldNews' },
 	]
 
 	const turnLinks = [
-		{ key: 'favorites', i18nKey: 'layout.sidebar.favorites' },
-		{ key: 'explore', i18nKey: 'layout.sidebar.explore' },
-		{ key: 'build', i18nKey: 'layout.sidebar.build' },
-		{ key: 'farm', i18nKey: 'layout.sidebar.farm' },
-		{ key: 'cash', i18nKey: 'layout.sidebar.cash' },
-		{ key: 'industry', i18nKey: 'layout.sidebar.industry' },
-		{ key: 'meditate', i18nKey: 'layout.sidebar.meditate' },
-		{ key: 'magicCenter', i18nKey: 'layout.sidebar.magicCenter' },
-		{ key: 'heal', i18nKey: 'layout.sidebar.heal' },
+		{ key: 'Favorites', i18nKey: 'layout.sidebar.favorites' },
+		{ key: 'Explore', i18nKey: 'layout.sidebar.explore' },
+		{ key: 'Build', i18nKey: 'layout.sidebar.build' },
+		{ key: 'Farm', i18nKey: 'layout.sidebar.farm' },
+		{ key: 'Cash', i18nKey: 'layout.sidebar.cash' },
+		{ key: 'Industry', i18nKey: 'layout.sidebar.industry' },
+		{ key: 'Meditate', i18nKey: 'layout.sidebar.meditate' },
+		{ key: 'Magic Center', i18nKey: 'layout.sidebar.magicCenter' },
+		{ key: 'Heal', i18nKey: 'layout.sidebar.heal' },
 	]
 	const financeLinks = [
-		{ key: 'blackMarket', i18nKey: 'layout.sidebar.blackMarket' },
-		{ key: 'publicMarket', i18nKey: 'layout.sidebar.publicMarket' },
-		{ key: 'theBank', i18nKey: 'layout.sidebar.theBank' },
-		{ key: 'lottery', i18nKey: 'layout.sidebar.lottery' },
+		{ key: 'Black Market', i18nKey: 'layout.sidebar.blackMarket' },
+		{ key: 'Public Market', i18nKey: 'layout.sidebar.publicMarket' },
+		{ key: 'The Bank', i18nKey: 'layout.sidebar.theBank' },
+		{ key: 'Lottery', i18nKey: 'layout.sidebar.lottery' },
 	]
 	const foreignLinks = [
-		{ key: 'clans', i18nKey: 'layout.sidebar.clans' },
-		{ key: 'warCouncil', i18nKey: 'layout.sidebar.warCouncil' },
-		{ key: 'intelCenter', i18nKey: 'layout.sidebar.intelCenter' },
-		{ key: 'foreignAid', i18nKey: 'layout.sidebar.foreignAid' },
+		{ key: 'Clans', i18nKey: 'layout.sidebar.clans' },
+		{ key: 'War Council', i18nKey: 'layout.sidebar.warCouncil' },
+		{ key: 'Intel Center', i18nKey: 'layout.sidebar.intelCenter' },
+		{ key: 'Foreign Aid', i18nKey: 'layout.sidebar.foreignAid' },
 	]
 	const statsLinks = [
-		{ key: 'achievements', i18nKey: 'layout.sidebar.achievements' },
-		{ key: 'charts', i18nKey: 'layout.sidebar.charts' },
+		{ key: 'Achievements', i18nKey: 'layout.sidebar.achievements' },
+		{ key: 'Charts', i18nKey: 'layout.sidebar.charts' },
 	]
 	const managementLinks = [
-		{ key: 'empireSettings', i18nKey: 'layout.sidebar.empireSettings' },
+		{ key: 'Empire Settings', i18nKey: 'layout.sidebar.empireSettings' },
 	]
 
 	const location = useLocation()
@@ -90,11 +90,9 @@ const Sidebar = ({ game }) =>
 		if (link === 'Public Market') {
 			return 'gremlin7 dwarf7 ghoul7 goblin7 orc7 hobbit7'
 		}
-
 		if (link === 'The Bank') {
 			return 'gnome7 minotaur7 vampire7'
 		}
-
 		if (link === 'Black Market') {
 			// return "gnome8 minotaur8"; // vampire8
 		}

@@ -1,0 +1,58 @@
+{
+	"favorites": {
+		"title": "Favorites",
+		"drag": "Drag and drop to rearrange favorites",
+		"empty": "Add favorites by clicking the star icon from the actions in the Use Turns category",
+		"compact": "Compact"
+	},
+	"general": {
+		"flavorText": "For each turn you spend {flavor}, your empire produces 25% more {item}.",
+		"spend": "Spend how many turns {flavor}?",
+		"condensed": "Condensed"
+	},
+	"explore": {
+		"title": "Explore",
+		"flavor": "exploring",
+		"item": "acres",
+		"flavorText": "For each turn you spend {flavor}, your empire will grow by {explore} {item}."
+	},
+	"heal": {
+		"title": "Heal",
+		"flavor": "using turns",
+		"flavorText": "Using turns in any way will heal your empire but for each turn you spend {flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 66% of its baseline value."
+	},
+	"farm": {
+		"title": "Farm",
+		"flavor": "farming",
+		"item": "food"
+	},
+	"cash": {
+		"title": "Cash",
+		"flavor": "focusing on your economy",
+		"item": "money",
+		"tax": "Tax Settings",
+		"update": "Update your empire's tax rate:",
+		"custom": "Custom",
+		"updateButton": "Update",
+		"warning": "A high tax rate will lower your max health.",
+		"error": "Invalid tax rate",
+		"responseSuccess": "Tax Rate Updated",
+		"responseFail": "Error Updating Tax Rate"
+	},
+	"industry": {
+		"title": "Industry",
+		"flavor": "focusing on industry",
+		"item": "troops",
+		"error": "Invalid percent production",
+		"responseFail": "Error Updating Industry Settings",
+		"responseSuccess": "Industry Settings Updated",
+		"indySettings": "Industry Settings",
+		"update": "Input the percentage of production to dedicate to each type of unit.",
+		"total": "Values must add up to 100",
+		"updateButton": "Update"
+	},
+	"meditate": {
+		"title": "Meditate",
+		"flavor": "meditating"
+	}
+}

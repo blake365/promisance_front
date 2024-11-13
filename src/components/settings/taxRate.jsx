@@ -13,12 +13,12 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
-
+import { useTranslation } from 'react-i18next'
 
 export default function TaxRate({ empire, tiny })
 {
     const dispatch = useDispatch()
-
+    const { t } = useTranslation('turns')
     let initialTax = empire.tax
 
     const form = useForm({
@@ -32,7 +32,7 @@ export default function TaxRate({ empire, tiny })
         },
 
         errorMessages: {
-            tax: 'Invalid tax rate',
+            tax: t('turns:cash.error'),
         },
     })
 
@@ -43,14 +43,14 @@ export default function TaxRate({ empire, tiny })
             const res = await Axios.post(`/empire/${empire.uuid}/tax`, values)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Tax Rate Updated',
+                title: t('turns:cash.responseSuccess'),
                 color: 'yellow',
                 autoClose: 2000,
             })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error Updating Tax Rate',
+                title: t('turns:cash.responseFail'),
                 color: 'orange',
                 autoClose: 2000,
             })
@@ -64,8 +64,8 @@ export default function TaxRate({ empire, tiny })
             <Stack spacing='sm' align='center'>
                 {!tiny &&
                     <>
-                        <Title order={3}>Tax Settings</Title>
-                        <Text size='sm'>Update your empire's tax rate:</Text>
+                        <Title order={3}>{t('turns:cash.tax')}</Title>
+                        <Text size='sm'>{t('turns:cash.update')}</Text>
                     </>
                 }
                 <form onSubmit={form.onSubmit((values) => updateTax(values))}>
@@ -87,8 +87,8 @@ export default function TaxRate({ empire, tiny })
                         </Group>
                         <Group spacing='xs' align='end'>
                             <NumberInput
-                                w={80}
-                                label='Custom'
+                                w={100}
+                                label={t('turns:cash.custom')}
                                 min={0}
                                 max={100}
                                 defaultValue={40}
@@ -96,10 +96,10 @@ export default function TaxRate({ empire, tiny })
                                 stepHoldInterval={100}
                                 {...form.getInputProps('tax')}
                             />
-                            <Button type='submit' color='yellow'>Update</Button>
+                            <Button type='submit' color='yellow'>{t('turns:cash.updateButton')}</Button>
                         </Group>
                         {!tiny &&
-                            <Text size='sm'>A high tax rate will lower your max health. </Text>}
+                            <Text size='sm'>{t('turns:cash.warning')}</Text>}
                     </Stack>
                 </form>
             </Stack>

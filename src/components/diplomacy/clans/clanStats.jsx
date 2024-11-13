@@ -1,7 +1,7 @@
 // clan scoreboard
 import { Stack, Title, Loader, Card, Button } from '@mantine/core'
 import { useState, useEffect } from 'react'
-
+import { useTranslation } from 'react-i18next'
 import Axios from 'axios'
 import ClanCard from './clanCard'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 export default function ClanStats()
 {
-
+    const { t } = useTranslation('diplomacy')
     const [loading, setLoading] = useState(false)
     const [clans, setClans] = useState(null)
     // console.log(scores)
@@ -36,7 +36,7 @@ export default function ClanStats()
         <main>
             <Stack spacing='sm' align='center'>
                 <Title order={1} align='center'>
-                    Clans Stats
+                    {t('diplomacy:clans.clanStats')}
                 </Title>
                 {loading && <Loader />}
                 {clans ?
@@ -50,8 +50,8 @@ export default function ClanStats()
                         })}
                     </Stack> : <Card>
                         <Stack align='center'>
-                            <Title order={4}>No Clans Created Yet</Title>
-                            <Link to='/app/Clans'><Button>Create a Clan</Button></Link>
+                            <Title order={4}>{t('diplomacy:clans.noClans')}</Title>
+                            <Link to='/app/Clans'><Button>{t('diplomacy:clans.createClan')}</Button></Link>
                         </Stack>
                     </Card>
                 }

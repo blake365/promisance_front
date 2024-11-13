@@ -54,6 +54,7 @@
 		"none": "None",
 		"turnsInfo": "You get {{count}} turn{{count, plural, one {''} other {s}}} every {{freq}} minutes",
 		"nextTurns": "Next turn in approximately",
-		"serverTime": "Server time: {{time}}"
+		"serverTime": "Server time: {{time}}",
+		"ranks": "Ranks are updated every {{turnsFreq}} minutes"
 	}
 }

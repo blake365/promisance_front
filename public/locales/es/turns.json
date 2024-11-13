@@ -1,0 +1,59 @@
+{
+	"favorites": {
+		"title": "Favoritos",
+		"drag": "Arrastra y suelta para reordenar favoritos",
+		"empty": "Añade favoritos haciendo clic en el icono de estrella de las acciones en la categoría Turnos Usados",
+		"compact": "Compacto"
+	},
+	"general": {
+		"flavorText": "Para cada turno que gastes {{flavor}}, tu imperio produce un 25% más de {{item}}.",
+		"spend": "Gasta cuántos turnos {{flavor}}?",
+		"condensed": "Compacto",
+		"error": "Número de turnos inválido"
+	},
+	"explore": {
+		"title": "Explorar",
+		"flavor": "explorando",
+		"item": "acres",
+		"flavorText": "Para cada turno que gastes {{flavor}}, tu imperio crecerá en {{explore}} {{item}}."
+	},
+	"heal": {
+		"title": "Curar",
+		"flavor": "usando turnos",
+		"flavorText": "Usar turnos de cualquier manera curará tu imperio, pero para cada turno que gastes {{flavor}}, tu imperio curará un punto adicional. Tu producción de recursos se reducirá al 66% de su valor base."
+	},
+	"farm": {
+		"title": "Granja",
+		"flavor": "criando",
+		"item": "comida"
+	},
+	"cash": {
+		"title": "Dinero",
+		"flavor": "enfocando en tu economía",
+		"item": "dinero",
+		"tax": "Configuración de impuestos",
+		"update": "Actualiza la tasa de impuestos de tu imperio:",
+		"custom": "Personalizado",
+		"updateButton": "Actualizar",
+		"warning": "Una tasa de impuestos alta reducirá tu máxima salud.",
+		"error": "Tasa de impuestos inválida",
+		"responseSuccess": "Tasa de impuestos actualizada",
+		"responseFail": "Error al actualizar la tasa de impuestos"
+	},
+	"industry": {
+		"title": "Industria",
+		"flavor": "enfocando en la industria",
+		"item": "tropas",
+		"error": "Porcentaje de producción inválido",
+		"responseFail": "Error al actualizar la configuración de la industria",
+		"responseSuccess": "Configuración de la industria actualizada",
+		"indySettings": "Configuración de la industria",
+		"update": "Introduce el porcentaje de producción dedicado a cada tipo de unidad.",
+		"total": "Los valores deben sumar 100",
+		"updateButton": "Actualizar"
+	},
+	"meditate": {
+		"title": "Meditar",
+		"flavor": "meditando"
+	}
+}

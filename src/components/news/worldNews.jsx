@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { useSelector } from 'react-redux'
 import WorldNewsItem from './worldNewsItem'
 import { useForm } from '@mantine/form'
+import { useTranslation } from 'react-i18next'
 
 export default function WorldNews()
 {
@@ -18,6 +19,7 @@ export default function WorldNews()
     // types: attack, market, clan, etc
     // search by empire ids, time, type, etc
 
+    const { t } = useTranslation('diplomacy')
     const [loading, setLoading] = useState(true)
     const [news, setNews] = useState([])
     const [loaded, setLoaded] = useState(body.take)
@@ -85,23 +87,23 @@ export default function WorldNews()
         },
     })
 
-    const loadMore = async () =>
-    {
-        body.skip = loaded;
-        setLoading(true);
-        try {
+    // const loadMore = async () =>
+    // {
+    //     body.skip = loaded;
+    //     setLoading(true);
+    //     try {
 
-            const res = await Axios.post(`/news?gameId=${empire.game_id}`, body);
-            const data = res.data;
-            setNews([...news, ...data]);
-            setLoaded(loaded + body.take)
-            setLoading(false);
-        } catch (error) {
-            // Handle error if the API request fails
-            console.error('Error fetching news:', error);
-            return [];
-        }
-    }
+    //         const res = await Axios.post(`/news?gameId=${empire.game_id}`, body);
+    //         const data = res.data;
+    //         setNews([...news, ...data]);
+    //         setLoaded(loaded + body.take)
+    //         setLoading(false);
+    //     } catch (error) {
+    //         // Handle error if the API request fails
+    //         console.error('Error fetching news:', error);
+    //         return [];
+    //     }
+    // }
 
     const searchNews = async (values) =>
     {
@@ -135,7 +137,7 @@ export default function WorldNews()
         <main>
             <Stack spacing='sm' align='center'>
                 <Title order={1} align='center'>
-                    World News
+                    {t('diplomacy:worldNews.worldNews')}
                 </Title>
                 <form onSubmit={form.onSubmit((values) =>
                 {
@@ -150,8 +152,8 @@ export default function WorldNews()
                                     clearable
                                     searchValue={selectedEmpire1}
                                     onSearchChange={setEmpire1}
-                                    label="Empire"
-                                    placeholder="Pick one"
+                                    label={t('diplomacy:forms.empire')}
+                                    placeholder={t('diplomacy:forms.pickOne')}
                                     data={empires}
                                     withinPortal
                                     {...form.getInputProps('empire')}
@@ -171,24 +173,24 @@ export default function WorldNews()
                             </>
                         )}
                         <Select
-                            label="Event Type"
-                            placeholder="Select event type"
+                            label={t('diplomacy:worldNews.event')}
+                            placeholder={t('diplomacy:forms.pickOne')}
                             data={[
-                                { value: null, label: 'All' },
-                                { value: 'attack', label: 'Attack' },
-                                { value: 'market', label: 'Market' },
-                                { value: 'spell', label: 'Magic' },
-                                { value: 'aid', label: 'Aid' },
-                                { value: 'lottery', label: 'Lottery' },
+                                { value: null, label: t('diplomacy:forms.all') },
+                                { value: 'attack', label: t('diplomacy:forms.attack') },
+                                { value: 'market', label: t('diplomacy:forms.market') },
+                                { value: 'spell', label: t('diplomacy:forms.magic') },
+                                { value: 'aid', label: t('diplomacy:forms.aid') },
+                                { value: 'lottery', label: t('diplomacy:forms.lottery') },
                             ]}
                             {...form.getInputProps('type')}
                             size='xs'
                         />
-                        <NumberInput label='Number of Results' min={1} hideControls defaultValue={20}
+                        <NumberInput label={t('diplomacy:worldNews.number')} min={1} hideControls defaultValue={20}
                             {...form.getInputProps('number')}
                             size='xs'
                         />
-                        <Button type='submit' size='xs'>Search</Button>
+                        <Button type='submit' size='xs'>{t('diplomacy:forms.search')}</Button>
                     </Group>
                 </form>
                 <Stack spacing='xs'>
@@ -197,9 +199,8 @@ export default function WorldNews()
                         {
                             return <WorldNewsItem item={item} key={item.id} now={new Date()} />
                         }))}
-                    {news.length === 0 && <Text m='sm' p='xs' align='center'>No news to display</Text>}
+                    {news.length === 0 && <Text m='sm' p='xs' align='center'>{t('diplomacy:worldNews.none')}</Text>}
                 </Stack>
-                <Button onClick={() => loadMore()}>Load More</Button>
             </Stack>
         </main>
     )
