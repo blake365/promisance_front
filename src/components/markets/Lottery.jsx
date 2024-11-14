@@ -6,9 +6,11 @@ import { generalLog } from '../../functions/functions'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 export default function Lottery()
 {
+    const { t } = useTranslation(['finance'])
     const [loading, setLoading] = useState(false)
     const [jackpot, setJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
@@ -29,7 +31,7 @@ export default function Lottery()
             const res = await Axios.post(`/lottery/buyTicket?gameId=${empire.game_id}`, values)
             // console.log(res.data)
             showNotification({
-                title: 'Lottery Ticket Purchased',
+                title: t('finance:lottery.responseSuccess'),
                 color: 'blue',
                 autoClose: 2000,
             })
@@ -37,7 +39,7 @@ export default function Lottery()
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error purchasing lottery ticket.',
+                title: t('finance:lottery.responseError'),
                 color: 'orange',
                 autoClose: 2000,
             })
@@ -97,26 +99,26 @@ export default function Lottery()
                 <Stack spacing='sm' align='center' maw={650}>
                     <img src='/images/lottery.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='world bank' />
                     <Title order={1} align='center'>
-                        Lottery
+                        {t('finance:lottery.title')}
                     </Title>
-                    {empire.mode === 'demo' && <Text align='center' color='red'>The lottery is not accessible to demo accounts.</Text>}
-                    {empire.turnsUsed <= turnsProtection && <Text align='center' color='red'>The lottery is only accessible once you have left protection.</Text>}
+                    {empire.mode === 'demo' && <Text align='center' color='red'>{t('finance:lottery.demoWarning')}</Text>}
+                    {empire.turnsUsed <= turnsProtection && <Text align='center' color='red'>{t('finance:lottery.turnsWarning')}</Text>}
                     <Text align='center'>
-                        The lottery can be a good way to get extra cash for your empire. There is a lottery drawing every 24 hours and you can buy up to {lotteryMaxTickets} lottery tickets each day. Drawings are random and there is no guarantee of a winner. If no winner is found, the jackpot will continue to increase until there is a winner. Lottery results are posted in the World News.
+                        {t('finance:lottery.description', { lotteryMaxTickets })}
                     </Text>
                     <Text align='center'>
-                        You currently have <strong>{tickets}/{lotteryMaxTickets}</strong> lottery tickets.
+                        {t('finance:lottery.tickets', { tickets, lotteryMaxTickets })}
                     </Text>
                     <Text>
-                        Total tickets purchased: <strong>{totalTickets}</strong>.
+                        {t('finance:lottery.totalTickets', { totalTickets })}
                     </Text>
                     <Text align='center'>
-                        The current jackpot is <strong>${jackpot.toLocaleString()}</strong>.
+                        {t('finance:lottery.jackpot', { jackpot: jackpot.toLocaleString() })}
                     </Text>
                     <Text align='center'>
-                        A ticket costs <strong>${ticketCost.toLocaleString()}</strong>.
+                        {t('finance:lottery.ticketCost', { ticketCost: ticketCost.toLocaleString() })}
                     </Text>
-                    <Button onClick={buyTicket} disabled={roundStatus || tickets >= lotteryMaxTickets || empire.turnsUsed <= turnsProtection || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>Buy Ticket</Button>
+                    <Button onClick={buyTicket} disabled={roundStatus || tickets >= lotteryMaxTickets || empire.turnsUsed <= turnsProtection || empire.cash < ticketCost || empire.mode === 'demo'} loading={loading}>{t('finance:lottery.submit')}</Button>
                 </Stack>
             </Center>
         </main>

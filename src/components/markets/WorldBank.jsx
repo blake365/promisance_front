@@ -8,9 +8,7 @@ import { calcSizeBonus } from '../../functions/functions'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { showNotification } from '@mantine/notifications'
-// DONE: change display: max, current, interest rate, interest rate gain or loss per turn (X * interest rate / 52)
-// DONE: form validation
-// DONE: added max buttons
+import { useTranslation } from 'react-i18next'
 
 export default function WorldBank()
 {
@@ -26,15 +24,17 @@ export default function WorldBank()
     const savingRate = (Math.round((bankSaveRate - size) * 100) / 100 / 100).toFixed(2)
     const maxLoan = empire.networth * 50
 
-    let bankCapacity = empire.networth * 100
-    let remainingBankCapacity = bankCapacity - empire.bank
+    const { t } = useTranslation('finance')
+
+    const bankCapacity = empire.networth * 100
+    const remainingBankCapacity = bankCapacity - empire.bank
 
     let canSave = remainingBankCapacity
     if (remainingBankCapacity > empire.cash) {
         canSave = empire.cash
     }
 
-    let remainingLoanCapacity = maxLoan - empire.loan
+    const remainingLoanCapacity = maxLoan - empire.loan
     let canLoan = remainingLoanCapacity
     if (maxLoan - empire.loan < 0) { canLoan = 0 }
 
@@ -52,8 +52,8 @@ export default function WorldBank()
         },
 
         errorMessages: {
-            withdrawAmt: "Can't withdraw that much money",
-            depositAmt: "Can't deposit that much money"
+            withdrawAmt: t('bank.withdrawError'),
+            depositAmt: t('bank.depositError')
         },
     })
 
@@ -78,8 +78,8 @@ export default function WorldBank()
         },
 
         errorMessages: {
-            loanAmt: "Can't take out a loan for that amount",
-            repayAmt: "Can't repay that amount"
+            loanAmt: t('bank.loanError'),
+            repayAmt: t('bank.repayError')
         },
     })
 
@@ -101,16 +101,16 @@ export default function WorldBank()
                 message: result.map((item, index) =>
                 {
                     if (item.action === 'deposit') {
-                        return <div key={index}>You deposited ${item.amount.toLocaleString()} into the bank.</div>
+                        return <div key={index}>{t('bank.depositSuccess', { amount: item.amount })}</div>
                     }
                     if (item.action === 'withdraw') {
-                        return <div key={index}>You withdrew ${item.amount.toLocaleString()} from the bank.</div>
+                        return <div key={index}>{t('bank.withdrawSuccess', { amount: item.amount })}</div>
                     }
                     if (item.action === 'loan') {
-                        return <div key={index}>You took out a loan for ${item.amount.toLocaleString()}.</div>
+                        return <div key={index}>{t('bank.loanSuccess', { amount: item.amount })}</div>
                     }
                     if (item.action === 'repay') {
-                        return <div key={index}>You repaid ${item.amount.toLocaleString()} toward your loan.</div>
+                        return <div key={index}>{t('bank.repaySuccess', { amount: item.amount })}</div>
                     }
                 }),
                 autoClose: 2000
@@ -129,8 +129,7 @@ export default function WorldBank()
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Banking Error',
-                message: 'Something went wrong.',
+                title: t('bank.bankError'),
                 autoClose: 2000,
                 color: 'orange'
             })
@@ -147,13 +146,13 @@ export default function WorldBank()
                 <Stack spacing='sm' align='center'>
                     <img src='/images/bank.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='world bank' />
                     <Title order={1} align='center'>
-                        The Bank
+                        {t('bank.title')}
                     </Title>
                     <Text align='center'>
-                        Access your savings and loan accounts.
+                        {t('bank.description')}
                     </Text>
                     <Text align='center'>
-                        Interest is calculated per turn, 52 turns is one APR year.
+                        {t('bank.interest')}
                     </Text>
                     <SimpleGrid
                         cols={2}
@@ -163,21 +162,21 @@ export default function WorldBank()
                         ]}
                     >
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
-                            <Title order={2} align='center'>Savings</Title>
+                            <Title order={2} align='center'>{t('bank.savings')}</Title>
                             <Group direction='row' spacing='xs' noWrap grow>
-                                <Text>Max Balance: </Text>
+                                <Text>{t('bank.maxBalance')}: </Text>
                                 <Text align='right'>${bankCapacity.toLocaleString()}</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
-                                <Text>Current Balance:</Text>
+                                <Text>{t('bank.currentBalance')}:</Text>
                                 <Text align='right'>${empire.bank.toLocaleString()}</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
-                                <Text>Interest Rate:</Text>
+                                <Text>{t('bank.interestRateSave')}:</Text>
                                 <Text align='right'>{savingRate * 100}%</Text>
                             </Group>
                             <Group direction='row' spacing='xs' noWrap grow>
-                                <Text>Est. Interest Gain:</Text>
+                                <Text>{t('bank.interestGain')}:</Text>
                                 <Text align='right'>${Math.round(empire.bank * savingRate / 52).toLocaleString()}</Text>
                             </Group>
                             <form
@@ -191,7 +190,7 @@ export default function WorldBank()
                                 <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
-                                        label='Deposit Money'
+                                        label={t('bank.deposit')}
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
@@ -215,7 +214,7 @@ export default function WorldBank()
                                     />
                                     <NumberInput
                                         hideControls
-                                        label='Withdraw Money'
+                                        label={t('bank.withdraw')}
                                         min={0}
                                         defaultValue={empire.bank}
                                         stepHoldDelay={500}
@@ -235,27 +234,27 @@ export default function WorldBank()
                                         }
                                         }
                                     />
-                                    <Button type='submit' disabled={roundStatus} ref={bankRef}>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus} ref={bankRef}>{t('bank.submit')}</Button>
                                 </Stack>
                             </form>
                         </Card>
                         <Card shadow='sm' padding='sm' withBorder sx={{ minWidth: '350px' }}>
-                            <Title order={2} align='center'>Loans</Title>
+                            <Title order={2} align='center'>{t('bank.loans')}</Title>
                             <Group spacing='xs' noWrap grow>
-                                <Text>Max Loan:</Text>
+                                <Text>{t('bank.maxLoan')}:</Text>
                                 <Text align='right'>${maxLoan.toLocaleString()}</Text>
                             </Group>
                             <Group spacing='xs' noWrap grow>
-                                <Text>Loan Balance:</Text>
+                                <Text>{t('bank.loanBalance')}:</Text>
                                 <Text align='right'>${empire.loan.toLocaleString()}</Text>
                             </Group>
 
                             <Group spacing='xs' noWrap grow>
-                                <Text>Interest Rate: </Text>
+                                <Text>{t('bank.interestRateLoan')}: </Text>
                                 <Text align='right'>{loanRate * 100}%</Text>
                             </Group>
                             <Group spacing='xs' noWrap grow>
-                                <Text>Est. Interest Cost:</Text>
+                                <Text>{t('bank.interestCost')}:</Text>
                                 <Text align='right'>${Math.floor(empire.loan * loanRate / 52).toLocaleString()}</Text>
                             </Group>
                             <form
@@ -266,7 +265,7 @@ export default function WorldBank()
                                 <Stack align='center' spacing='sm'>
                                     <NumberInput
                                         hideControls
-                                        label='Repay Loan Balance'
+                                        label={t('bank.repayLoan')}
                                         min={0}
                                         defaultValue={empire.loan}
                                         stepHoldDelay={500}
@@ -288,7 +287,7 @@ export default function WorldBank()
                                     />
                                     <NumberInput
                                         hideControls
-                                        label='Take Out a Loan'
+                                        label={t('bank.takeLoan')}
                                         min={0}
                                         defaultValue={0}
                                         stepHoldDelay={500}
@@ -309,7 +308,7 @@ export default function WorldBank()
                                         }
                                         disabled={loanStatus}
                                     />
-                                    <Button type='submit' disabled={roundStatus} ref={loanRef}>Submit</Button>
+                                    <Button type='submit' disabled={roundStatus} ref={loanRef}>{t('bank.submit')}</Button>
                                 </Stack>
                             </form>
                         </Card>

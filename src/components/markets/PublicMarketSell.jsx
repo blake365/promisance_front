@@ -13,10 +13,11 @@ import { fetchMyItems } from '../../store/pubMarketSlice'
 import { useRef } from 'react'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useTour } from "@reactour/tour"
-// make it mobile friendly
+import { useTranslation } from 'react-i18next'
 
 export default function PublicMarketSell({ empire })
 {
+    const { t } = useTranslation(['finance', 'eras'])
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
     // console.log(result)
@@ -41,6 +42,8 @@ export default function PublicMarketSell({ empire })
         return cost
     }
 
+    const eraName = eraArray[empire.era].name.toLowerCase()
+
     const trpArmCost = getCost('arm', pvtmTrpArm)
     const trpLndCost = getCost('lnd', pvtmTrpLnd)
     const trpFlyCost = getCost('fly', pvtmTrpFly)
@@ -52,8 +55,7 @@ export default function PublicMarketSell({ empire })
     {
         // console.log(items)
         let processedItems = []
-        items.forEach((item) =>
-        {
+        for (const item of items) {
             let age = Math.floor((now - new Date(item.createdAt)) / 1000 / 60 / 60)
             // console.log(age)
             if (age < 12) {
@@ -61,10 +63,9 @@ export default function PublicMarketSell({ empire })
                     type: item.type,
                     amount: parseInt(item.amount),
                 }
-
                 processedItems.push(newItem)
             }
-        })
+        }
 
         processedItems = processedItems.reduce((acc, curr) =>
         {
@@ -97,11 +98,9 @@ export default function PublicMarketSell({ empire })
                         return canSell[index] -= element.amount
                     }
                     return canSell[index]
-
                 })
             }
             return canSell[index]
-
         })
 
         // console.log(canSell)
@@ -117,7 +116,6 @@ export default function PublicMarketSell({ empire })
                 return 0
             }
             return item
-
         })
     }
 
@@ -152,12 +150,12 @@ export default function PublicMarketSell({ empire })
         },
 
         errorMessages: {
-            sellArm: `You can't sell that many ${eraArray[empire.era].trparm}`,
-            sellLnd: `You can't sell that many ${eraArray[empire.era].trplnd}`,
-            sellFly: `You can't sell that many ${eraArray[empire.era].trpfly}`,
-            sellSea: `You can't sell that many ${eraArray[empire.era].trpsea}`,
-            sellFood: `You can't sell that many ${eraArray[empire.era].food}`,
-            sellRunes: `You can't sell that many ${eraArray[empire.era].runes}`
+            sellArm: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.trparm`) }),
+            sellLnd: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.trplnd`) }),
+            sellFly: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.trpfly`) }),
+            sellSea: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.trpsea`) }),
+            sellFood: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.food`) }),
+            sellRunes: t('finance:blackMarket.sellError', { item: t(`eras:era.${eraName}.runes`) })
         },
     })
 
@@ -219,7 +217,7 @@ export default function PublicMarketSell({ empire })
             }
 
             if (element.amount > 0) {
-                return <Text key={index}>Listed {element.amount.toLocaleString()} {eraArray[empire.era][item]} for ${element.price}</Text>
+                return <Text key={index}>{t('finance:publicMarket.sellResult', { amount: element.amount.toLocaleString(), item: t(`eras:era.${eraName}.${item}`), price: element.price })}</Text>
             }
         })
     }
@@ -232,7 +230,7 @@ export default function PublicMarketSell({ empire })
             // console.log(res.data)
             // console.log(values)
             showNotification({
-                title: 'Items Listed On Market',
+                title: t('finance:publicMarket.responseSellSuccess'),
                 message: interpretResults(res.data),
             })
             dispatch(fetchMyItems({ empireId: empire.id, gameId: empire.game_id }))
@@ -245,7 +243,7 @@ export default function PublicMarketSell({ empire })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error',
+                title: t('finance:publicMarket.responseSellError'),
                 message: error.response.data.error,
                 color: 'orange'
             })
@@ -272,8 +270,8 @@ export default function PublicMarketSell({ empire })
                 {!myItems ? (
                     <Loader />) : (
                     <Stack spacing='sm' align='center'>
-                        <Text weight='bold' align='center'>Items you sell will take {pubMktStart} hours to appear on the market.</Text>
-                        {roundStatus && <Text weight='bold' color='red' align='center'>The market has closed for the remainder of the round.</Text>}
+                        <Text weight='bold' align='center'>{t('finance:publicMarket.sellDescription', { time: pubMktStart })}</Text>
+                        {roundStatus && <Text weight='bold' color='red' align='center'>{t('finance:publicMarket.marketClosed')}</Text>}
                         <form
                             onSubmit={form.onSubmit((values) =>
                             {
@@ -289,22 +287,22 @@ export default function PublicMarketSell({ empire })
                                     <thead>
                                         <tr>
                                             <th weight='bold' align='center'>
-                                                Item:
+                                                {t('finance:blackMarket.unit')}
                                             </th>
                                             <th weight='bold' align='center'>
-                                                Owned:
+                                                {t('finance:blackMarket.owned')}
                                             </th>
                                             <th weight='bold' align='center'>
-                                                Price:
+                                                {t('finance:blackMarket.price')}
                                             </th>
                                             <th weight='bold' align='center'>
-                                                Can Sell:
+                                                {t('finance:blackMarket.canSell')}
                                             </th>
                                             <th weight='bold' align='center'>
-                                                Sell:
+                                                {t('finance:blackMarket.sell')}
                                             </th>
                                             <th weight='bold' align='center'>
-                                                Revenue:
+                                                {t('finance:blackMarket.revenue')}
                                             </th>
                                         </tr>
                                     </thead>
@@ -334,7 +332,7 @@ export default function PublicMarketSell({ empire })
                                             return (
                                                 <tr key={unit} className={classN}>
                                                     <td align='center'>
-                                                        {eraArray[empire.era][eraTroop]}
+                                                        {t(`eras:eras.${eraName}.${eraTroop}`)}
                                                     </td>
                                                     <td align='center'>
                                                         {empire[troop].toLocaleString()}
@@ -394,7 +392,7 @@ export default function PublicMarketSell({ empire })
                                 </table>
                             </div>
                             <Center mt='md'>
-                                <Button type='submit' ref={buttonRef} disabled={roundStatus}>Sell Goods</Button>
+                                <Button type='submit' ref={buttonRef} disabled={roundStatus}>{t('finance:blackMarket.sellSubmit')}</Button>
                             </Center>
                         </form>
 
@@ -403,19 +401,19 @@ export default function PublicMarketSell({ empire })
                                 <table className={classes.widetable}>
                                     <thead>
                                         <tr>
-                                            <th>Item</th>
-                                            <th>Amount</th>
-                                            <th>Price</th>
-                                            <th>Hours On Market</th>
-                                            <th>Edit Price</th>
+                                            <th>{t('finance:blackMarket.unit')}</th>
+                                            <th>{t('finance:publicMarket.amount')}</th>
+                                            <th>{t('finance:blackMarket.price')}</th>
+                                            <th>{t('finance:publicMarket.hours')}</th>
+                                            <th>{t('finance:publicMarket.edit')}</th>
                                         </tr>
                                     </thead>
                                     <tbody>{myItemsRows}</tbody>
                                 </table>
                             </div>
-                            <Text weight='bold' align='center'>If you change the price of an item, 10% will be deducted from the amount.</Text>
-                            <Text weight='bold' align='center'> If you recall items, only 75% will be returned to you. </Text>
-                            <Text weight='bold' align='center'> Items on the market for {pubMktMaxTime} hours will be returned to you, only 75% will be returned. </Text>
+                            <Text weight='bold' align='center'>{t('finance:publicMarket.priceChange')}</Text>
+                            <Text weight='bold' align='center'>{t('finance:publicMarket.recall')}</Text>
+                            <Text weight='bold' align='center'>{t('finance:publicMarket.maxTime', { maxTime: pubMktMaxTime })}</Text>
                         </div>
                     </Stack>
                 )}

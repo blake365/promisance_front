@@ -35,7 +35,7 @@ export function FavoriteButton(props)
     return (
         <ActionIcon size={props.size ? 'xs' : 'md'} color='blue' sx={{ display: 'inline' }} onClick={() =>
         {
-            console.log('new favorite')
+            // console.log('new favorite')
             setFavorite(props.empire, props.title)
         }}>{checkFavorite(props.empire, props.title) ? (<IconStarFilled size={props.size} />) : (<IconStar size={props.size} />)}</ActionIcon>)
 

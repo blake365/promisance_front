@@ -8,7 +8,11 @@
 	"general": {
 		"flavorText": "For each turn you spend {flavor}, your empire produces 25% more {item}.",
 		"spend": "Spend how many turns {flavor}?",
-		"condensed": "Condensed"
+		"condensed": "Condensed",
+		"error": "Invalid number of turns",
+		"refresh": "Refresh Data",
+		"repeat": "Repeat Action",
+		"resume": "Resume Tutorial"
 	},
 	"explore": {
 		"title": "Explore",

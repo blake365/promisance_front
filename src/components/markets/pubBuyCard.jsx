@@ -7,6 +7,7 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
 import { fetchOtherItems } from '../../store/pubMarketSlice'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function PubBuyCard({ eraItem, type, owned, base, item, cash, empireId, empireUUID, status, game_id })
 {
@@ -16,6 +17,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
     const loadEmpire = useLoadEmpire(empireUUID)
     const [loading, setLoading] = useState(false)
     // console.log(item[0])
+    const { t } = useTranslation(['finance', 'eras'])
 
     let formType = null
     if (type === 'arm') {
@@ -48,7 +50,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
         },
 
         errorMessages: {
-            buy: 'Not Enough Money',
+            buy: t('finance:blackMarket.buyError'),
         },
     })
 
@@ -68,7 +70,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
             // console.log(res.data)
             const result = res.data.success
             showNotification({
-                title: 'Purchase Successful',
+                title: t('finance:publicMarket.responseBuySuccess'),
                 message: result,
             })
             form.reset()
@@ -77,7 +79,7 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Purchase Failed',
+                title: t('finance:publicMarket.responseBuyError'),
                 message: '',
                 color: 'orange',
             })
@@ -96,30 +98,31 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
                 </Text>
             </Card.Section>
             {status !== 'succeeded' ? <Loader /> : (
-
                 <Card.Section p='sm'>
                     <SimpleGrid cols={2} spacing={1}>
                         <Text>
-                            Owned:
+                            {t('finance:blackMarket.owned')}
                         </Text>
                         <Text align='right'>{owned.toLocaleString()}</Text>
                         <Text>
-                            Available:
+                            {t('finance:blackMarket.available')}
                         </Text>
-                        <Text align='right'>{parseInt(item[0].amount).toLocaleString()}</Text>
+                        <Text align='right'>{Number.parseInt(item[0].amount).toLocaleString()}</Text>
                         <Text>
-                            Base Price:
+                            {t('finance:publicMarket.basePrice')}
                         </Text>
                         <Text align='right'>${base.toLocaleString()}</Text>
                         <Text>
-                            Sale Price:
+                            {t('finance:publicMarket.salePrice')}
                         </Text>
                         <Text align='right'>${item[0].price.toLocaleString()}</Text>
                         <Text>
-                            Can Afford:
+                            {t('finance:blackMarket.canAfford')}
                         </Text>
-                        {cash === 0 ? <Text align='right'>0</Text> : (<Text align='right'>{cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}</Text>)}
-                        <Text italic>Spend:</Text>
+                        {cash === 0 ? <Text align='right'>0</Text> : (<Text align='right'>{cash / item[0].price > Number.parseInt(item[0].amount) ? Number.parseInt(item[0].amount).toLocaleString() : Math.floor(cash / item[0].price).toLocaleString()}</Text>)}
+                        <Text italic>
+                            {t('finance:publicMarket.spend')}
+                        </Text>
                         <Text align='right' italic>
                             ${(form.values.buy * item[0].price).toLocaleString()}
                         </Text>
@@ -140,22 +143,22 @@ export default function PubBuyCard({ eraItem, type, owned, base, item, cash, emp
                             align='center'
                             w='50%'
                             min={0}
-                            max={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)}
+                            max={cash / item[0].price > Number.parseInt(item[0].amount) ? Number.parseInt(item[0].amount) : Math.floor(cash / item[0].price)}
                             parser={(value) =>
                                 value.split(' ').join('').replace(/\$\s?|(,*)|\s/g, '')
                             }
                             formatter={(value) =>
                             {
                                 // console.log(typeof value)
-                                return !Number.isNaN(parseFloat(value))
+                                return !Number.isNaN(Number.parseFloat(value))
                                     ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                                     : ''
                             }
                             }
-                            {...form.getInputProps(`buy`)}
-                            rightSection={<MaxButton formName={form} fieldName='buy' maxValue={cash / item[0].price > parseInt(item[0].amount) ? parseInt(item[0].amount) : Math.floor(cash / item[0].price)} />}
+                            {...form.getInputProps('buy')}
+                            rightSection={<MaxButton formName={form} fieldName='buy' maxValue={cash / item[0].price > Number.parseInt(item[0].amount) ? Number.parseInt(item[0].amount) : Math.floor(cash / item[0].price)} />}
                         />
-                        <Button type='submit' ml='sm' disabled={item[0].amount === 0} loading={loading}>Buy</Button>
+                        <Button type='submit' ml='sm' disabled={item[0].amount === 0} loading={loading}>{t('finance:blackMarket.buySubmit')}</Button>
                     </Center>
                 </form>
             </Card.Section>

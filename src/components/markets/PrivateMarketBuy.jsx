@@ -9,7 +9,7 @@ import { useRef } from 'react'
 import classes from './markets.module.css'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
-
+import { useTranslation } from 'react-i18next'
 
 // DONE: build sell side of market
 // make it mobile friendly
@@ -18,7 +18,7 @@ import { showNotification } from '@mantine/notifications'
 
 export default function PrivateMarketBuy()
 {
-
+    const { t } = useTranslation(['finance', 'eras'])
     const buttonRef = useRef()
     const { empire } = useSelector((state) => state.empire)
     const { pvtmShopBonus, pvtmTrpArm, pvtmTrpLnd, pvtmTrpFly, pvtmTrpSea, pvtmFood, pvtmRunes } = useSelector((state) => state.games.activeGame)
@@ -61,9 +61,10 @@ export default function PrivateMarketBuy()
     {
         if (item < Math.floor(empire.cash / priceArray[index])) {
             return item
-        } else {
-            return Math.floor(empire.cash / priceArray[index])
         }
+
+        return Math.floor(empire.cash / priceArray[index])
+
     })
 
     const form = useForm({
@@ -88,12 +89,12 @@ export default function PrivateMarketBuy()
         },
 
         errorMessages: {
-            buyArm: 'Not Enough Money',
-            buyLnd: 'Not Enough Money',
-            buyFly: 'Not Enough Money',
-            buySea: 'Not Enough Money',
-            buyFood: 'Not Enough Money',
-            buyRunes: 'Not Enough Money',
+            buyArm: t('finance:blackMarket.buyError'),
+            buyLnd: t('finance:blackMarket.buyError'),
+            buyFly: t('finance:blackMarket.buyError'),
+            buySea: t('finance:blackMarket.buyError'),
+            buyFood: t('finance:blackMarket.buyError'),
+            buyRunes: t('finance:blackMarket.buyError'),
         },
     })
 
@@ -136,26 +137,28 @@ export default function PrivateMarketBuy()
         errors.error = error
     }
 
+    const eraName = eraArray[empire.era].name.toLowerCase()
+
     const interpretResult = (result) =>
     {
         let returnArray = []
         if (result?.resultBuyArm.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuyArm.amount.toLocaleString()} ${eraArray[empire.era].trparm} for $${result.resultBuyArm.price.toLocaleString()}`)
+            returnArray.push(t('finance:blackMarket.buyResultArray', { amount: result.resultBuyArm.amount.toLocaleString(), item: t('eras:eras.${eraName}.trparm'), price: result.resultBuyArm.price.toLocaleString() }))
         }
         if (result?.resultBuyLnd.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuyLnd.amount.toLocaleString()} ${eraArray[empire.era].trplnd} for $${result.resultBuyLnd.price.toLocaleString()}`)
+            returnArray.push(t('finance.blackMarket.buyResultArray', { amount: result.resultBuyLnd.amount.toLocaleString(), item: t('eras.eras.${eraName}.trplnd'), price: result.resultBuyLnd.price.toLocaleString() }))
         }
         if (result?.resultBuyFly.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuyFly.amount.toLocaleString()} ${eraArray[empire.era].trpfly} for $${result.resultBuyFly.price.toLocaleString()}`)
+            returnArray.push(t('finance.blackMarket.buyResultArray', { amount: result.resultBuyFly.amount.toLocaleString(), item: t('eras:eras.${eraName}.trpfly'), price: result.resultBuyFly.price.toLocaleString() }))
         }
         if (result?.resultBuySea.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuySea.amount.toLocaleString()} ${eraArray[empire.era].trpsea} for $${result.resultBuySea.price.toLocaleString()}`)
+            returnArray.push(t('finance.blackMarket.buyResultArray', { amount: result.resultBuySea.amount.toLocaleString(), item: t("eras:eras.${eraName}.trpsea"), price: result.resultBuySea.price.toLocaleString() }))
         }
         if (result?.resultBuyFood.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuyFood.amount.toLocaleString()} ${eraArray[empire.era].food} for $${result.resultBuyFood.price.toLocaleString()}`)
+            returnArray.push(t('finance.blackMarket.buyResultArray', { amount: result.resultBuyFood.amount.toLocaleString(), item: t("eras:eras.${eraName}.food"), price: result.resultBuyFood.price.toLocaleString() }))
         }
         if (result?.resultBuyRunes.amount > 0) {
-            returnArray.push(`You purchased ${result.resultBuyRunes.amount.toLocaleString()} ${eraArray[empire.era].runes} for $${result.resultBuyRunes.price.toLocaleString()}`)
+            returnArray.push(t('finance.blackMarket.buyResultArray', { amount: result.resultBuyRunes.amount.toLocaleString(), item: t("eras:eras.${eraName}.runes"), price: result.resultBuyRunes.price.toLocaleString() }))
         }
         return returnArray
     }
@@ -167,7 +170,7 @@ export default function PrivateMarketBuy()
             const result = res.data
             const resultArray = interpretResult(result)
             showNotification({
-                title: 'Purchase Successful',
+                title: t('finance:blackMarket.responseBuySuccess'),
                 message: resultArray.map((item, index) => <Text key={index}>{item}</Text>),
                 color: 'blue',
             })
@@ -177,7 +180,7 @@ export default function PrivateMarketBuy()
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error Purchasing Goods',
+                title: t('finance:blackMarket.responseBuyFail'),
                 color: 'orange',
             })
         }
@@ -195,7 +198,7 @@ export default function PrivateMarketBuy()
                                     // console.log(values)
                                     doBuy(values)
                                 })
-                                : setErrors("Not Enough Money")
+                                : setErrors(t('finance:blackMarket.buyError'))
                         }
                     >
                         <div className={classes.tablecontainer}>
@@ -203,25 +206,25 @@ export default function PrivateMarketBuy()
                                 <thead>
                                     <tr>
                                         <th weight='bold' align='center'>
-                                            Unit:
+                                            {t('finance:blackMarket.unit')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Owned:
+                                            {t('finance:blackMarket.owned')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Available:
+                                            {t('finance:blackMarket.available')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Price:
+                                            {t('finance:blackMarket.price')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Can Afford:
+                                            {t('finance:blackMarket.canAfford')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Buy:
+                                            {t('finance:blackMarket.headerBuy')}
                                         </th>
                                         <th weight='bold' align='center'>
-                                            Spend:
+                                            {t('finance:blackMarket.spend')}
                                         </th>
                                     </tr>
                                 </thead>
@@ -246,7 +249,7 @@ export default function PrivateMarketBuy()
                                         return (
                                             <tr key={index}>
                                                 <td align='center'>
-                                                    {eraArray[empire.era][eraTroop]}
+                                                    {t(`eras:eras.${eraName}.${eraTroop}`)}
                                                 </td>
                                                 <td align='center'>
                                                     {empire[troop].toLocaleString()}
@@ -293,7 +296,7 @@ export default function PrivateMarketBuy()
                         <Stack align='center'>
                             <Text style={{ color: 'red' }}>{errors.error}</Text>
                             <Button type='submit' disabled={errors.error} ref={buttonRef}>
-                                Buy Goods
+                                {t('finance:blackMarket.buySubmit')}
                             </Button>
                         </Stack>
                     </form>

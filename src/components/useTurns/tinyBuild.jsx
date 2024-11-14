@@ -11,13 +11,14 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
 import { eraArray } from '../../config/eras'
+import { useTranslation } from 'react-i18next'
 
 export default function TinyBuild({ building, show })
 {
 	// console.log(building)
 	const { empire } = useSelector((state) => state.empire)
 	const { buildCost: baseBuildCost } = useSelector((state) => state.games.activeGame)
-
+	const { t } = useTranslation(['turns', 'eras'])
 	const buttonRef = useRef()
 	if (building === 'bldTrp') {
 		building = 'bldTroop'
@@ -83,13 +84,13 @@ export default function TinyBuild({ building, show })
 		},
 
 		errorMessages: {
-			bldPop: 'Invalid number of buildings',
-			bldCash: 'Invalid number of buildings',
-			bldCost: 'Invalid number of buildings',
-			bldFood: 'Invalid number of buildings',
-			bldTroop: 'Invalid number of buildings',
-			bldWiz: 'Invalid number of buildings',
-			bldDef: 'Invalid number of buildings',
+			bldPop: t('turns:build.error'),
+			bldCash: t('turns:build.error'),
+			bldCost: t('turns:build.error'),
+			bldFood: t('turns:build.error'),
+			bldTroop: t('turns:build.error'),
+			bldWiz: t('turns:build.error'),
+			bldDef: t('turns:build.error'),
 		},
 	})
 
@@ -157,7 +158,9 @@ export default function TinyBuild({ building, show })
 	if (bldAbbrev === 'bldtroop') {
 		bldAbbrev = 'bldtrp'
 	}
-	const bldName = eraArray[empire.era][bldAbbrev]
+
+	const eraName = eraArray[empire.era].name.toLowerCase()
+	const bldName = t(`eras:eras.${eraName}.${bldAbbrev}`)
 
 	return (
 		<form
@@ -168,7 +171,7 @@ export default function TinyBuild({ building, show })
 						dispatch(clearResult)
 						doBuild(values)
 					})
-					: setErrors("Can't build that many buildings")
+					: setErrors(t('turns:build.buildError'))
 			}
 		>
 			<Group spacing='sm' position='right'>
@@ -192,14 +195,14 @@ export default function TinyBuild({ building, show })
 					formatter={(value) =>
 					{
 						// console.log(typeof value)
-						return !Number.isNaN(parseFloat(value))
+						return !Number.isNaN(Number.parseFloat(value))
 							? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
 							: ''
 					}
 					}
 				/>
 				<Button type='submit' disabled={errors.error || roundStatus} loading={loading} ref={buttonRef}>
-					Build
+					{t('turns:build.submit')}
 				</Button>
 			</Group>
 		</form>

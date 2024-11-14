@@ -9,7 +9,10 @@
 		"flavorText": "Para cada turno que gastes {{flavor}}, tu imperio produce un 25% más de {{item}}.",
 		"spend": "Gasta cuántos turnos {{flavor}}?",
 		"condensed": "Compacto",
-		"error": "Número de turnos inválido"
+		"error": "Número de turnos inválido",
+		"refresh": "Actualizar Datos",
+		"repeat": "Repetir Acción",
+		"resume": "Resumir Tutorial"
 	},
 	"explore": {
 		"title": "Explorar",

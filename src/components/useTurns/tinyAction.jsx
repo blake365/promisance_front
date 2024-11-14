@@ -12,12 +12,13 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { setRepeat } from '../../store/repeatSlice'
 import { clearResult, setResult } from '../../store/turnResultsSlice'
-import { FavoriteButton } from '../utilities/maxbutton'
 import TaxRate from '../settings/taxRate'
 import IndyRates from '../settings/indyRates'
+import { useTranslation } from 'react-i18next'
 
 export default function TinyAction(props)
 {
+	const { t } = useTranslation(['turns'])
 	// const empire = useSelector((state) => state.empire)
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
@@ -47,7 +48,7 @@ export default function TinyAction(props)
 		},
 
 		errorMessages: {
-			turns: 'Invalid number of turns',
+			turns: t('turns:general.error'),
 		},
 	})
 

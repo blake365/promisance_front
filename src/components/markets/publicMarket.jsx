@@ -9,14 +9,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 import { checkRoundStatus } from "../../functions/checkRoundStatus"
-//FIXED: bug with data loading/rendering??
+import { useTranslation } from "react-i18next"
 
 export default function PublicMarket()
 {
     const { empire } = useSelector((state) => state.empire)
     const { setCurrentStep, meta } = useTour()
     const dispatch = useDispatch()
-
+    const { t } = useTranslation(['finance'])
     // console.log(marketStatus)
     useEffect(() =>
     {
@@ -37,24 +37,24 @@ export default function PublicMarket()
                 <Stack spacing='sm' align='center'>
                     <img src='/images/pm.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='public market' />
                     <Title order={1} align='center'>
-                        Public Market
+                        {t('finance:publicMarket.title')}
                     </Title>
                     <Text align="center">
-                        Purchase or sell goods between other players on the Public Market
+                        {t('finance:publicMarket.description')}
                     </Text>
-                    {roundStatus ? <Text align='center' color='red'>The Public Market is currently closed.</Text> :
+                    {roundStatus ? <Text align='center' color='red'>{t('finance:publicMarket.closed')}</Text> :
                         <div>
                             <Tabs styles={{
                                 tabLabel: { fontSize: '1.2rem' },
                             }} value={activeTab} onTabChange={setActiveTab} keepMounted={false}>
                                 <Tabs.List grow position="center">
-                                    <Tabs.Tab value="Buy">Buy</Tabs.Tab>
+                                    <Tabs.Tab value="Buy">{t('finance:blackMarket.buy')}</Tabs.Tab>
                                     <Tabs.Tab value="Sell" onClick={() =>
                                     {
                                         if (meta) {
                                             setCurrentStep(9)
                                         }
-                                    }}>Sell</Tabs.Tab>
+                                    }}>{t('finance:blackMarket.sell')}</Tabs.Tab>
                                 </Tabs.List>
                                 <Tabs.Panel value="Buy">
                                     <PublicMarketBuy empire={empire} />

@@ -9,13 +9,13 @@ import { persistor } from '../../store/store'
 import { empireLoaded } from '../../store/empireSlice'
 import { fetchMyItems, fetchOtherItems } from '../../store/pubMarketSlice'
 import Axios from 'axios'
-
+import { useTranslation } from 'react-i18next'
 const RefreshButton = ({ empire }) =>
 {
     const [refreshLoading, setRefreshLoading] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const { t } = useTranslation(['turns'])
     const handleClick = async () =>
     {
         if (empire) {
@@ -42,7 +42,7 @@ const RefreshButton = ({ empire }) =>
     }
 
     return (
-        <Tooltip label="Refresh Data" withArrow>
+        <Tooltip label={t('turns:general.refresh')} withArrow>
             <Button compact color="blue" size='sm' variant="outline" loading={refreshLoading} loaderPosition='center' onClick={handleClick}>
                 <IconRefresh size={16} strokeWidth={2.5} />
             </Button>

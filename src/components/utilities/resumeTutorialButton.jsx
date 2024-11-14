@@ -1,8 +1,9 @@
 import { useTour } from '@reactour/tour'
 import { Button } from '@mantine/core'
-
+import { useTranslation } from 'react-i18next'
 const ResumeTutorialButton = () =>
 {
+    const { t } = useTranslation(['turns'])
     const { setMeta, setCurrentStep, setIsOpen, setSteps, currentStep, isOpen, steps, meta } = useTour()
     // console.log(repeatAction)
     const handleClick = async () =>
@@ -20,7 +21,7 @@ const ResumeTutorialButton = () =>
         <div style={{ position: 'fixed', right: '20px', bottom: '11%', zIndex: 10 }}>
             <Button.Group>
                 <Button color='green.6' variant='filled' onClick={handleClick}>
-                    Resume Tutorial
+                    {t('turns:general.resume')}
                 </Button>
                 <Button color='gray.7' variant='filled' p='xs' onClick={() =>
                 {
