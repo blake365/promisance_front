@@ -5,10 +5,12 @@ import JoinClan from "./joinClan"
 import MyClan from "./myClan"
 import { useSelector } from "react-redux"
 import { checkRoundStatus } from "../../../functions/checkRoundStatus"
+import { useTranslation } from "react-i18next"
 
 // if in a clan, show clan info, clan members, clan chat
 function ClanPage()
 {
+    const { t } = useTranslation('diplomacy')
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection, clanEnable } = useSelector((state) => state.games.activeGame)
 
@@ -22,8 +24,8 @@ function ClanPage()
     if (!clanEnable) {
         return (
             <main>
-                <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
-                <Text align="center">Clans are disabled for this game mode.</Text>
+                <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>{t('diplomacy:clans.clans')}</Title>
+                <Text align="center">{t('diplomacy:clans.clanDisabled')}</Text>
             </main>
         )
     }
@@ -32,10 +34,10 @@ function ClanPage()
         <main>
             {empire.clanId === 0 ? (
                 <div>
-                    <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>Clans</Title>
-                    <Text align="center">Create or join a clan to team up with other players.</Text>
-                    <Text align="center">Clan mates can view stats for each member, a shared news feed, shared intel, and receive a defense bonus. </Text>
-                    {empire.mode === 'demo' && <Text align="center" color='red'>Clans are disabled for demo accounts.</Text>}
+                    <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>{t('diplomacy:clans.clans')}</Title>
+                    <Text align="center">{t('diplomacy:clans.createDescription')}</Text>
+                    <Text align="center">{t('diplomacy:clans.clanBenefits')}</Text>
+                    {empire.mode === 'demo' && <Text align="center" color='red'>{t('diplomacy:clans.demoDisabled')}</Text>}
                     <Group position="center" mt={10}>
                         <CreateClan disabled={disabled || roundStatus} />
                         <JoinClan disabled={disabled || roundStatus} />

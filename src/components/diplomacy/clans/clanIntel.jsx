@@ -6,7 +6,7 @@ import
 } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
-
+import { useTranslation } from 'react-i18next'
 import Intel from '../intel'
 
 export default function ClanIntel({ members })
@@ -14,7 +14,7 @@ export default function ClanIntel({ members })
     // console.log(members)
 
     const [intel, setIntel] = useState()
-
+    const { t } = useTranslation('diplomacy')
     const body = { ownerId: members }
 
     // console.log(body)
@@ -24,7 +24,7 @@ export default function ClanIntel({ members })
         const loadIntel = async (body) =>
         {
             try {
-                const res = await Axios.post(`/intel/clan`, body)
+                const res = await Axios.post('/intel/clan', body)
                 // console.log(res.data)
                 return res.data
             } catch (error) {
@@ -64,7 +64,7 @@ export default function ClanIntel({ members })
                                 </Accordion.Item>)
                             })}
                         </Accordion>
-                    ) : (<div>None Available</div>)}
+                    ) : (<div>{t('diplomacy:intel.noneAvailable')}</div>)}
                 </Stack>
             </Center>
         </section>

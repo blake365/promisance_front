@@ -52,10 +52,23 @@
 		"offense": "Acciones Ofensivas",
 		"defenses": "Defensas",
 		"none": "Ninguno",
-		"turnsInfo": "Obtienes {{count}} turno{{count, plural, one {''} other {s}}} cada {{freq}} minutos",
+		"turnsInfo": "Obtienes {{count}} turnos cada {{freq}} minutos",
 		"nextTurns": "Próximo turno en aproximadamente",
 		"serverTime": "Hora del servidor: {{time}}",
 		"scores": "Puntos",
-		"ranks": "Los rangos se actualizan cada {{turnsFreq}} minutos"
+		"ranks": "Los rangos se actualizan cada {{turnsFreq}} minutos",
+		"protection": "Estás bajo protección de jugador nuevo durante {{protectionRemaining}} turnos.",
+		"protection2": "No puedes atacar ni ser atacado hasta que hayas usado un total de {{turnsProtection}} turnos."
+	},
+	"card": {
+		"lastAction": "Última Acción: {{time}}",
+		"recentNews": "Noticias Recientes",
+		"stats": "Estadísticas",
+		"intel": "Inteligencia",
+		"sendAid": "Enviar Ayuda",
+		"role": "Rol",
+		"attack": "Ataque",
+		"castSpell": "Lanzar Hechizo",
+		"chat": "Chat"
 	}
 }

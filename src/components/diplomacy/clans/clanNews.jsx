@@ -2,9 +2,11 @@ import { Stack, Loader, Text, } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import WorldNewsItem from '../../news/worldNewsItem'
+import { useTranslation } from 'react-i18next'
 
 export default function ClanNews({ memberIds })
 {
+    const { t } = useTranslation('diplomacy')
     let body = {
         empireIdDestination: memberIds,
     }
@@ -56,7 +58,7 @@ export default function ClanNews({ memberIds })
                         {
                             return <WorldNewsItem item={item} key={item.id} now={new Date()} />
                         }))}
-                    {news.length === 0 && <Text m='sm' p='xs' align='center'>No news to display</Text>}
+                    {news.length === 0 && <Text m='sm' p='xs' align='center'>{t('diplomacy:worldNews.none')}</Text>}
                 </Stack>
             </Stack>
         </main>

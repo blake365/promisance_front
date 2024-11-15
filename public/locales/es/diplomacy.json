@@ -9,12 +9,56 @@
 		"market": "Mercado",
 		"magic": "Magia",
 		"aid": "Ayuda",
-		"lottery": "Lotería"
+		"lottery": "Lotería",
+		"submit": "Enviar"
 	},
 	"clans": {
+		"clans": "Clanes",
+		"clanDisabled": "Los clanes están desactivados para este modo de juego.",
+		"createDescription": "Crea o únete a un clan para formar equipo con otros jugadores.",
+		"clanBenefits": "Los miembros del clan pueden ver las estadísticas de cada miembro, un feed de noticias compartido, inteligencia compartida y recibir un bonus de defensa.",
+		"demoDisabled": "Los clanes están desactivados para cuentas de demostración.",
+		"protectionDisabled": "No puedes crear un clan mientras estés en protección de jugador nuevo",
+		"clanName": "Nombre del Clan",
+		"namePlaceholder": "nombre",
+		"clanPassword": "Contraseña del Clan",
+		"passwordPlaceholder": "contraseña",
+		"create": "Crear Clan",
+		"responseCreate": "Clan Creado",
+		"responseError": "Error al Crear el Clan",
+		"responseJoin": "Clan unido",
+		"responseJoinError": "Error al unirse al clan",
+		"joinHeader": "Unirse a un clan",
+		"joinDisabled": "No puedes unirte a un clan mientras estés en protección de jugador nuevo",
+		"joinSelect": "Selecciona un clan para unirte",
+		"joinSubmit": "Unirse al clan",
 		"clanStats": "Estadísticas de Clan",
 		"noClans": "No Clans Creados Aún",
-		"createClan": "Crear un Clan"
+		"createClan": "Crear un Clan",
+		"members": "Miembros",
+		"clanChat": "Chat de Clan",
+		"sharedNews": "Noticias Compartidas",
+		"sharedIntel": "Intel Compartido",
+		"clanRelations": "Relaciones de Clan",
+		"settings": "Configuración",
+		"settingsHeader": "Configuración de Clan",
+		"clanTag": "Tag de Clan",
+		"clanTagDescription": "Un tag corto para tu clan",
+		"tagPlaceholder": "Escribe un tag",
+		"tagValidation": "El tag de clan es de 8 caracteres máximo",
+		"tagSuccess": "Tag de Clan Actualizado",
+		"tagError": "Error al actualizar el tag de clan",
+		"disbandClan": "Desmantelar Clan",
+		"disbandClanDescription": "Si desmantelas tu clan no podrás unirte a uno nuevo por 3 días.",
+		"leaveClan": "Salir de Clan",
+		"leaveClanDescription": "Si sales de un clan no podrás unirte a uno nuevo por 3 días.",
+		"leader": "Líder",
+		"assistant": "Asistente",
+		"member": "Miembro",
+		"promote": "Promover a Asistente",
+		"demote": "Degradar a Miembro",
+		"remove": "Eliminar del Clan",
+		"currentRole": "Rol Actual"
 	},
 	"mail": {
 		"mailbox": "Buzón de Correo",
@@ -22,12 +66,19 @@
 		"startConversation": "Iniciar una conversación debajo",
 		"encrypted": "Los mensajes no están encriptados y pueden ser leídos por cualquier persona con acceso a la base de datos.",
 		"sendMessage": "Enviar un mensaje a",
-		"message": "Mensaje"
+		"message": "Mensaje",
+		"just now": "Justo ahora",
+		"minutesAgo": "minutos atrás",
+		"hoursAgo": "horas atrás",
+		"daysAgo": "días atrás"
 	},
 	"worldNews": {
 		"worldNews": "Noticias del Mundo",
 		"event": "Tipo de Evento",
 		"number": "Número de Resultados",
 		"none": "No hay noticias para mostrar"
+	},
+	"intel": {
+		"noneAvailable": "Ninguno Disponible"
 	}
 }

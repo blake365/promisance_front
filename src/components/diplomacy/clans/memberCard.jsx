@@ -4,7 +4,6 @@ import { raceArray } from '../../../config/races'
 import { eraArray } from '../../../config/eras'
 import { Mountains, Scales, Hourglass } from "@phosphor-icons/react"
 import ScoresNews from '../../news/scoresNews'
-import Intel from '../intel'
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
 import ScoresAid from '../scoresAid'
@@ -12,6 +11,7 @@ import { ShieldStar, Sword, CalendarCheck, HourglassMedium } from '@phosphor-ico
 import ClanRole from './clanRole'
 import { useSelector } from 'react-redux'
 import ClanMemberOverview from './clanMemberOverview'
+import { useTranslation } from 'react-i18next'
 
 const MemberCard = ({ empire, myId, clan, clanString }) =>
 {
@@ -21,6 +21,7 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
     // console.log(empire)
     const { time } = useSelector((state) => state.time)
     const { roundStart, roundEnd } = useSelector((state) => state.games.activeGame)
+    const { t } = useTranslation(['summary'])
 
     const checkForSession = async () =>
     {
@@ -190,16 +191,15 @@ const MemberCard = ({ empire, myId, clan, clanString }) =>
                 </Group>
             </Card.Section>
 
-
             <Collapse in={opened}>
-                <Text size='sm'>Last Action: {actionDate.toLocaleString()}</Text>
+                <Text size='sm'>{t('summary:card.lastAction', { time: actionDate.toLocaleString() })}</Text>
                 <Text>{empire.profile}</Text>
                 <Tabs defaultValue="" keepMounted={false}>
                     <Tabs.List>
-                        <Tabs.Tab value="Recent News" >Recent News</Tabs.Tab>
-                        <Tabs.Tab value="Intel" >Stats</Tabs.Tab>
-                        <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>
-                        <Tabs.Tab value="Role">Role</Tabs.Tab>
+                        <Tabs.Tab value="Recent News">{t('summary:card.recentNews')}</Tabs.Tab>
+                        <Tabs.Tab value="Intel">{t('summary:card.stats')}</Tabs.Tab>
+                        <Tabs.Tab value="Send Aid" disabled={disabled}>{t('summary:card.sendAid')}</Tabs.Tab>
+                        <Tabs.Tab value="Role">{t('summary:card.role')}</Tabs.Tab>
                     </Tabs.List>
 
                     <Tabs.Panel value="Intel" pt="xs">

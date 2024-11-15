@@ -9,12 +9,56 @@
 		"market": "Market",
 		"magic": "Magic",
 		"aid": "Aid",
-		"lottery": "Lottery"
+		"lottery": "Lottery",
+		"submit": "Submit"
 	},
 	"clans": {
+		"clans": "Clans",
+		"clanDisabled": "Clans are disabled for this game mode.",
+		"createDescription": "Create or join a clan to team up with other players.",
+		"clanBenefits": "Clan mates can view stats for each member, a shared news feed, shared intel, and receive a defense bonus.",
+		"demoDisabled": "Clans are disabled for demo accounts.",
+		"protectionDisabled": "You cannot create a clan while in new player protection",
+		"clanName": "Clan Name",
+		"namePlaceholder": "name",
+		"clanPassword": "Clan Password",
+		"passwordPlaceholder": "password",
+		"create": "Create Clan",
+		"responseCreate": "Clan Created",
+		"responseError": "Error Creating Clan",
+		"responseJoin": "Clan Joined",
+		"responseJoinError": "Error Joining Clan",
+		"joinHeader": "Join a Clan",
+		"joinDisabled": "You cannot join a clan while in new player protection",
+		"joinSelect": "Select a Clan to Join",
+		"joinSubmit": "Join Clan",
 		"clanStats": "Clan Stats",
 		"noClans": "No Clans Created Yet",
-		"createClan": "Create a Clan"
+		"createClan": "Create a Clan",
+		"members": "Members",
+		"clanChat": "Clan Chat",
+		"sharedNews": "Shared News",
+		"sharedIntel": "Shared Intel",
+		"clanRelations": "Clan Relations",
+		"settings": "Settings",
+		"settingsHeader": "Clan Settings",
+		"clanTag": "Clan Tag",
+		"clanTagDescription": "A short tag for your clan",
+		"tagPlaceholder": "Enter a tag",
+		"tagValidation": "Clan Tag is 8 characters max",
+		"tagSuccess": "Clan Tag Updated",
+		"tagError": "Error setting tag",
+		"disbandClan": "Disband Clan",
+		"disbandClanDescription": "If you disband your clan you cannot join a new one for 3 days.",
+		"leaveClan": "Leave Clan",
+		"leaveClanDescription": "If you leave a clan you cannot join a new one for 3 days.",
+		"leader": "Leader",
+		"assistant": "Assistant",
+		"member": "Member",
+		"promote": "Promote to Assistant",
+		"demote": "Demote to Member",
+		"remove": "Remove from Clan",
+		"currentRole": "Current Role"
 	},
 	"mail": {
 		"mailbox": "Mailbox",
@@ -22,12 +66,19 @@
 		"startConversation": "Start a conversation below",
 		"encrypted": "Messages are not encrypted and can be read by anyone with access to the database.",
 		"sendMessage": "Send a message to",
-		"message": "Message"
+		"message": "Message",
+		"just now": "Just now",
+		"minutesAgo": "minutes ago",
+		"hoursAgo": "hours ago",
+		"daysAgo": "days ago"
 	},
 	"worldNews": {
 		"worldNews": "World News",
 		"event": "Event Type",
 		"number": "Number of Results",
 		"none": "No news to display"
+	},
+	"intel": {
+		"noneAvailable": "None Available"
 	}
 }

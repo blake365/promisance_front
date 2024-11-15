@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import { useForm } from '@mantine/form'
 import { PaperPlaneRight } from '@phosphor-icons/react'
-
+import { useTranslation } from 'react-i18next'
 // rewrite for clan chat
 
 const getMessages = async (body) =>
@@ -36,6 +36,7 @@ export default function ClanChat({ empire })
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
     const messageContainerRef = useRef(null)
+    const { t } = useTranslation('diplomacy')
 
     let body = {
         clanId: empire.clanId,
@@ -109,7 +110,7 @@ export default function ClanChat({ empire })
                 <Stack gap='sm' justify='space-between' h='100%'>
                     {loading ? (<Loader />) : (
                         <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
-                            {messages.length < 1 && <Text align='center'>Start the conversation</Text>}
+                            {messages.length < 1 && <Text align='center'>{t('diplomacy:mail.startConversation')}</Text>}
                             {messages.map((message, index) =>
                             {
                                 let now = new Date()
@@ -121,13 +122,13 @@ export default function ClanChat({ empire })
                                 let timeSince = ''
 
                                 if (days > 0) {
-                                    timeSince = `${days} days ago`
+                                    timeSince = `${days} ${t('diplomacy:mail.daysAgo')}`
                                 } else if (hours > 0) {
-                                    timeSince = `${hours} hours ago`
+                                    timeSince = `${hours} ${t('diplomacy:mail.hoursAgo')}`
                                 } else if (minutes > 0) {
-                                    timeSince = `${minutes} minutes ago`
+                                    timeSince = `${minutes} ${t('diplomacy:mail.minutesAgo')}`
                                 } else {
-                                    timeSince = 'just now'
+                                    timeSince = t('diplomacy:mail.just now')
                                 }
                                 let ml = 0
                                 if (message.empireId === empire.id) ml = 'auto'

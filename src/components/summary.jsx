@@ -217,7 +217,7 @@ export default function Summary()
 						</Grid>
 						<Stack align='center' spacing={0} mt='xs'>
 							{empire.turnsUsed < game.turnsProtection ? (<>
-								<Text align='center' mb='sm' color='green'>You are under new player protection for {game.turnsProtection - empire.turnsUsed} turns. <br />You cannot attack or be attacked until you've used {game.turnsProtection} turns.</Text>
+								<Text align='center' mb='sm' color='green'>{t('summary:summary.protection', { protectionRemaining: game.turnsProtection - empire.turnsUsed })}<br />{t('summary:summary.protection2', { turnsProtection: game.turnsProtection })}</Text>
 							</>) : ('')}
 							<Text align='center'>{t('summary:summary.turnsInfo', { count: game.turnsCount, freq: game.turnsFreq })}</Text>
 							<Text>{t('summary:summary.nextTurns')}: <CountdownTimer intervalMinutes={game.turnsFreq} /></Text>

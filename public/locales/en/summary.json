@@ -52,9 +52,22 @@
 		"offense": "Offensive Actions",
 		"defenses": "Defenses",
 		"none": "None",
-		"turnsInfo": "You get {{count}} turn{{count, plural, one {''} other {s}}} every {{freq}} minutes",
+		"turnsInfo": "You get {{count}} turns every {{freq}} minutes",
 		"nextTurns": "Next turn in approximately",
 		"serverTime": "Server time: {{time}}",
-		"ranks": "Ranks are updated every {{turnsFreq}} minutes"
+		"ranks": "Ranks are updated every {{turnsFreq}} minutes",
+		"protection": "You are under new player protection for {{protectionRemaining}} turns.",
+		"protection2": "You cannot attack or be attacked until you've used a total of {{turnsProtection}} turns."
+	},
+	"card": {
+		"lastAction": "Last Action: {{time}}",
+		"recentNews": "Recent News",
+		"stats": "Stats",
+		"intel": "Intel",
+		"sendAid": "Send Aid",
+		"role": "Role",
+		"attack": "Attack",
+		"castSpell": "Cast Spell",
+		"chat": "Chat"
 	}
 }

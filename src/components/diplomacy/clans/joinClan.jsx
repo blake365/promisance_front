@@ -15,6 +15,7 @@ import { useState, forwardRef, useEffect } from 'react';
 import Axios from 'axios';
 import { useLoadEmpire } from '../../../hooks/useLoadEmpire';
 import { showNotification } from '@mantine/notifications';
+import { useTranslation } from 'react-i18next';
 
 export default function JoinClan({ disabled })
 {
@@ -22,6 +23,7 @@ export default function JoinClan({ disabled })
     const loadEmpire = useLoadEmpire(empire.uuid)
     const [clans, setClans] = useState([])
     const [selectedClan, setSelectedClan] = useState('')
+    const { t } = useTranslation(['diplomacy'])
 
     const form = useForm({
         initialValues: {
@@ -74,7 +76,7 @@ export default function JoinClan({ disabled })
             const res = await Axios.post(`/clans/join?gameId=${empire.game_id}`, values)
             // console.log(res)
             showNotification({
-                title: 'Clan Joined',
+                title: t('diplomacy:clans.responseJoin'),
                 autoClose: 2000,
             })
             loadEmpire()
@@ -82,7 +84,7 @@ export default function JoinClan({ disabled })
             // setError(err.response.data),
             console.log(err)
             showNotification({
-                title: 'Error Joining Clan',
+                title: t('diplomacy:clans.responseJoinError'),
                 message: Object.values(err.response.data)[0],
                 color: 'orange',
                 autoClose: 5000,
@@ -93,7 +95,7 @@ export default function JoinClan({ disabled })
     return (
         <Paper maw={400} p={20}>
             <Title order={2} ta="center" >
-                Join a Clan
+                {t('diplomacy:clans.joinHeader')}
             </Title>
 
             {clans.length > 0 ? (<form onSubmit={form.onSubmit((values) =>
@@ -101,13 +103,13 @@ export default function JoinClan({ disabled })
                 joinClan(values)
             )}>
                 <Card>
-                    {disabled && <Text align='center' color='red'>You cannot join a clan while in new player protection</Text>}
+                    {disabled && <Text align='center' color='red'>{t('diplomacy:clans.joinDisabled')}</Text>}
                     <Select
                         searchable
                         searchValue={selectedClan}
                         onSearchChange={setSelectedClan}
-                        label="Select a Clan to join"
-                        placeholder="Pick one"
+                        label={t('diplomacy:clans.joinSelect')}
+                        placeholder={t('diplomacy:forms.pickOne')}
                         withAsterisk
                         itemComponent={SelectItem}
                         data={clans}
@@ -115,12 +117,12 @@ export default function JoinClan({ disabled })
                         sx={{ width: '100%' }}
                         {...form.getInputProps('clanName')}
                     />
-                    <TextInput required label="Clan Password" placeholder="password" mt="md" size="md" {...form.getInputProps('clanPassword')} />
+                    <TextInput required label={t('diplomacy:clans.clanPassword')} placeholder={t('diplomacy:clans.passwordPlaceholder')} mt="md" size="md" {...form.getInputProps('clanPassword')} />
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
-                        Join Clan
+                        {t('diplomacy:clans.joinSubmit')}
                     </Button>
                 </Card>
-            </form>) : (<Text align='center'>No clans have been created yet.</Text>)}
+            </form>) : (<Text align='center'>{t('diplomacy:clans.noClans')}</Text>)}
         </Paper>
     );
 }

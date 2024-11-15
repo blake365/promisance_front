@@ -11,11 +11,11 @@ import ClanRelations from "./clanRelations"
 import { checkRoundStatus } from '../../../functions/checkRoundStatus'
 import { useLoadEmpire } from "../../../hooks/useLoadEmpire"
 import ClanSettings from "./clanSettings"
-
+import { useTranslation } from "react-i18next"
 // show clan info, clan members, clan chat
 function MyClan()
 {
-
+    const { t } = useTranslation('diplomacy')
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
     const [clan, setClan] = useState(null)
@@ -97,20 +97,20 @@ function MyClan()
             {clan && <div>
                 <Title order={1} align='center' sx={{ marginBottom: '1rem' }}>{clan.clanName}</Title>
                 {members && <div>
-                    <Title order={3} align="left" m={10}>Members</Title>
+                    <Title order={3} align="left" m={10}>{t('diplomacy:clans.members')}</Title>
                     <Stack spacing='xs'>
                         {members.map((member) =>
                         {
                             // console.log(clan)
                             let role = ''
                             if (member.id === clan.empireIdLeader) {
-                                role = 'Leader'
+                                role = t('diplomacy:clans.leader')
                             } else if (member.id === clan.empireIdAssistant) {
-                                role = 'Assistant'
+                                role = t('diplomacy:clans.assistant')
                             } else if (member.id === clan.empireIdAgent1 || member.id === clan.empireIdAgent2) {
-                                role = 'Agent'
+                                role = t('diplomacy:clans.agent')
                             } else {
-                                role = 'member'
+                                role = t('diplomacy:clans.member')
                             }
                             const clanString = ` - ${role}`
 
@@ -131,20 +131,20 @@ function MyClan()
                     <Tabs p='md' keepMounted={false} defaultValue="Clan Chat">
                         <Tabs.List>
                             <Tabs.Tab value="Clan Chat">
-                                Clan Chat {clanMail > 0 && <span>({clanMail})</span>}
+                                {t('diplomacy:clans.clanChat')} {clanMail > 0 && <span>({clanMail})</span>}
                             </Tabs.Tab>
                             <Tabs.Tab value="Clan News">
-                                Shared News
+                                {t('diplomacy:clans.sharedNews')}
                             </Tabs.Tab>
                             <Tabs.Tab value="Clan Intel">
-                                Shared Intel
+                                {t('diplomacy:clans.sharedIntel')}
                             </Tabs.Tab>
                             <Tabs.Tab value="Clan Relations">
-                                Clan Relations
+                                {t('diplomacy:clans.clanRelations')}
                             </Tabs.Tab>
                             {
                                 empire.id === clan.empireIdLeader && <Tabs.Tab value="Settings">
-                                    Settings
+                                    {t('diplomacy:clans.settings')}
                                 </Tabs.Tab>
                             }
                         </Tabs.List>
@@ -174,8 +174,8 @@ function MyClan()
                 </Paper>
 
                 <Paper mt='lg' p='md'>
-                    {empire.id === clan.empireIdLeader ? (<Text mb='sm'>If you disband your clan you cannot join a new one for 3 days.</Text>) : <Text mb='sm'>If you leave a clan you cannot join a new one for 3 days.</Text>}
-                    {empire.id === clan.empireIdLeader ? (<Button color='red' onClick={disbandClan}>Disband Clan</Button>) : <Button color='red' onClick={leaveClan} disabled={roundStatus}>Leave Clan</Button>}
+                    {empire.id === clan.empireIdLeader ? (<Text mb='sm'>{t('diplomacy:clans.disbandClanDescription')}</Text>) : <Text mb='sm'>{t('diplomacy:clans.leaveClanDescription')}</Text>}
+                    {empire.id === clan.empireIdLeader ? (<Button color='red' onClick={disbandClan}>{t('diplomacy:clans.disbandClan')}</Button>) : <Button color='red' onClick={leaveClan} disabled={roundStatus}>{t('diplomacy:clans.leaveClan')}</Button>}
                     <Text mt='sm' color='red'>{response}</Text>
                 </Paper>
             </div>

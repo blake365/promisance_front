@@ -1,8 +1,8 @@
-import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image, ThemeIcon } from '@mantine/core'
+import { Title, Card, Avatar, Tabs, Text, Group, Indicator, Collapse, Image } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { raceArray } from '../config/races'
 import { eraArray } from '../config/eras'
-import { Mountains, Scales, Hourglass, Sword, Shield, Ranking, UsersThree } from "@phosphor-icons/react"
+import { Mountains, Scales, Hourglass, Sword, Shield, Ranking } from "@phosphor-icons/react"
 import { useEffect, useState, Suspense } from 'react'
 import lazy from './utilities/lazyWrapper'
 const ScoresAttack = lazy(() => import('./diplomacy/scoresAttack'));
@@ -13,12 +13,14 @@ const ScoresAid = lazy(() => import('./diplomacy/scoresAid'));
 const ScoresChat = lazy(() => import('./mail/scoresChat'));
 import Axios from 'axios'
 import { useSelector } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 const ScoreCard = ({ empire, myEmpire, home, clan, clanTag, role }) =>
 {
     const [active, setActive] = useState(false)
     const [opened, { toggle }] = useDisclosure(false);
     // console.log(empire)
+
+    const { t } = useTranslation(['summary'])
 
     const { time } = useSelector((state) => state.time)
     let turnsProtection = 400
@@ -184,7 +186,7 @@ const ScoreCard = ({ empire, myEmpire, home, clan, clanTag, role }) =>
             {!home &&
                 <Collapse in={opened}>
                     <Group>
-                        <Text size='sm'>Last Action: {actionDate.toLocaleString()} </Text>
+                        <Text size='sm'>{t('summary:card.lastAction', { time: actionDate.toLocaleString() })} </Text>
                         <Group ml='xs' spacing='xs' noWrap>
                             <Sword size={22} weight='regular' />
                             <Text>{empire.offTotal} ({empire.offSucc ? Math.round(empire.offSucc / empire.offTotal * 100) : ('0')}%)</Text>
@@ -199,13 +201,13 @@ const ScoreCard = ({ empire, myEmpire, home, clan, clanTag, role }) =>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tabs defaultValue="" keepMounted={false}>
                             <Tabs.List>
-                                <Tabs.Tab value="Recent News" disabled={disabled}>Recent News</Tabs.Tab>
-                                <Tabs.Tab value="Intel" disabled={disabled}>Intel</Tabs.Tab>
-                                <Tabs.Tab value="Attack" disabled={disabled}>Attack</Tabs.Tab>
-                                <Tabs.Tab value="Cast Spell" disabled={disabled}>Cast Spell</Tabs.Tab>
+                                <Tabs.Tab value="Recent News" disabled={disabled}>{t('summary:card.recentNews')}</Tabs.Tab>
+                                <Tabs.Tab value="Intel" disabled={disabled}>{t('summary:card.intel')}</Tabs.Tab>
+                                <Tabs.Tab value="Attack" disabled={disabled}>{t('summary:card.attack')}</Tabs.Tab>
+                                <Tabs.Tab value="Cast Spell" disabled={disabled}>{t('summary:card.castSpell')}</Tabs.Tab>
                                 {/* <Tabs.Tab value="Trade" disabled={disabled}>Trade</Tabs.Tab> */}
-                                {aidEnable && <Tabs.Tab value="Send Aid" disabled={disabled}>Send Aid</Tabs.Tab>}
-                                <Tabs.Tab value="Chat">Chat</Tabs.Tab>
+                                {aidEnable && <Tabs.Tab value="Send Aid" disabled={disabled}>{t('summary:card.sendAid')}</Tabs.Tab>}
+                                <Tabs.Tab value="Chat">{t('summary:card.chat')}</Tabs.Tab>
                             </Tabs.List>
 
                             <Tabs.Panel value="Chat" pt="xs">
