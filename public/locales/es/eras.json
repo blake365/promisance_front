@@ -33,7 +33,14 @@
 			"spell_regress": "Retroceder",
 			"effectname_shield": "Escudo Mágico",
 			"effectdesc_shield": "Tus magos han formado una barrera mágica alrededor de tu imperio reduciendo la efectividad de los ataques mágicos contra ti",
-			"effectname_gate": "Portal del Tiempo"
+			"effectname_gate": "Portal del Tiempo",
+			"guerrillaStrike": "Ataque Guerrillero",
+			"laySiege": "Asediar",
+			"airStrike": "Ataque Aéreo",
+			"coastalAssault": "Asalto Costero",
+			"allOutAttack": "Ataque Total",
+			"surpriseAttack": "Ataque Sorpresa",
+			"pillage": "Saquear"
 		},
 		"present": {
 			"name": "Presente",
@@ -68,7 +75,14 @@
 			"spell_regress": "Retroceder al Pasado",
 			"effectname_shield": "Barrera Psiónica",
 			"effectdesc_shield": "Tus telépatas están proyectando una barrera alrededor de tu imperio reduciendo la efectividad de los ataques mágicos contra ti",
-			"effectname_gate": "Portal del Tiempo"
+			"effectname_gate": "Portal del Tiempo",
+			"guerrillaStrike": "Ataque Guerrillero",
+			"laySiege": "Asediar",
+			"airStrike": "Ataque Aéreo",
+			"coastalAssault": "Asalto Costero",
+			"allOutAttack": "Ataque Total",
+			"surpriseAttack": "Ataque Sorpresa",
+			"pillage": "Saquear"
 		},
 		"future": {
 			"name": "Futuro",
@@ -103,7 +117,14 @@
 			"spell_regress": "Retroceder al Presente",
 			"effectname_shield": "Escudo de Plasma",
 			"effectdesc_shield": "Una fina capa de partículas ionizadas rodea tu imperio, reduciendo la efectividad de los ataques mágicos contra ti",
-			"effectname_gate": "Portal del Tiempo"
+			"effectname_gate": "Portal del Tiempo",
+			"guerrillaStrike": "Ataque Guerrillero",
+			"laySiege": "Asediar",
+			"airStrike": "Ataque Aéreo",
+			"coastalAssault": "Asalto Costero",
+			"allOutAttack": "Ataque Total",
+			"surpriseAttack": "Ataque Sorpresa",
+			"pillage": "Saquear"
 		}
 	}
 }

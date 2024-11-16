@@ -27,24 +27,24 @@ const MapComponents = ({ title, empire, size, index }) =>
         child = <Build size={size} favorite />
     } else if (title === 'Demolish') {
         child = <Demolish size={size} />
-    } else if (title === 'Cash') {
+    } else if (title === 'cash') {
         child = <Cash size={size} />
-    } else if (title === 'Explore') {
+    } else if (title === 'explore') {
         child = <Explore size={size} />
     }
-    else if (title === 'Farm') {
+    else if (title === 'farm') {
         child = <Farm size={size} />
     }
-    else if (title === 'Industry') {
+    else if (title === 'industry') {
         child = <Industry size={size} />
     }
-    else if (title === 'Meditate') {
+    else if (title === 'meditate') {
         child = <Meditate size={size} />
     }
     else if (title === 'MagicCenter') {
         child = <MagicCenter size={size} />
     }
-    else if (title === 'Heal') {
+    else if (title === 'heal') {
         child = <Heal size={size} />
     } else if (title === 'Attack') {
         child = <AttackMini size={size} />

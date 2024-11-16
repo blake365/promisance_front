@@ -11,7 +11,7 @@ import Axios from 'axios'
 import { useSelector } from 'react-redux'
 import { eraArray } from '../../config/eras'
 import Intel from './intel'
-
+import { useTranslation } from 'react-i18next'
 import { baseCost } from '../../functions/functions'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import SpellForm from './spellForm'
@@ -19,9 +19,11 @@ import SpellForm from './spellForm'
 export default function IntelCenter()
 {
     const { empire } = useSelector((state) => state.empire)
-
+    const { t } = useTranslation(['diplomacy', 'eras'])
     const [intel, setIntel] = useState()
     const [accordionDefault, setAccordionDefault] = useState('')
+
+    const eraName = eraArray[empire.era].name.toLowerCase()
     // load intel
     useEffect(() =>
     {
@@ -40,9 +42,9 @@ export default function IntelCenter()
 
     useEffect(() =>
     {
-        console.log(intel)
+        // console.log(intel)
         if (intel && intel.length > 0) {
-            console.log(intel[0].uuid)
+            // console.log(intel[0].uuid)
             setAccordionDefault(intel[0].uuid)
         }
     }, [intel])
@@ -55,20 +57,20 @@ export default function IntelCenter()
                 <Stack spacing='sm' align='center'>
                     <img src='/images/intel.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='intel center' />
                     <Title order={1} align='center'>
-                        Intel Center
+                        {t('diplomacy:intel.title')}
                     </Title>
                     <Text align='center'>
-                        Cast a spell to view another empire's stats. This will take two turns.
+                        {t('diplomacy:intel.description')}
                     </Text>
-                    {empire.mode === 'demo' && <Text align='center' color='red'>Intel is disabled for demo accounts.</Text>}
+                    {empire.mode === 'demo' && <Text align='center' color='red'>{t('diplomacy:intel.demoDisabled')}</Text>}
                     <Card sx={{ width: '350px' }}>
                         <Card.Section withBorder inheritPadding py="xs">
                             <Group position='apart'>
-                                <Text weight={500}>Cast Spell:</Text>
+                                <Text weight={500}>{t('diplomacy:warCouncil.castSpell')}:</Text>
                             </Group>
                         </Card.Section>
                         <Text align='left' py='xs'>
-                            Ratio Needed: 1x, Cost: {Math.ceil(baseCost(empire)).toLocaleString()} {eraArray[empire.era].runes}
+                            {t('diplomacy:intel.ratio')}: 1x, {t('diplomacy:intel.cost')}: {Math.ceil(baseCost(empire)).toLocaleString()} {t(`eras:eras.${eraName}.runes`)}
                         </Text>
                         <SpellForm empire={empire} roundStatus={roundStatus} spy />
                     </Card>
@@ -95,7 +97,7 @@ export default function IntelCenter()
                                 </Accordion.Item>)
                             })}
                         </Accordion>
-                    ) : (<div>No Intel Gathered</div>)}
+                    ) : (<div>{t('diplomacy:intel.noIntel')}</div>)}
                 </Stack>
             </Center>
         </section>

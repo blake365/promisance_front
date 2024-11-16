@@ -11,13 +11,17 @@ import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
 import { loadScores } from '../../store/scoresSlice'
 import { setRepeat } from "../../store/repeatSlice"
-
+import { useTranslation } from 'react-i18next'
 const AttackForm = ({ empire, roundStatus, defenderId }) =>
 {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [selectedAttack, setSelectedAttack] = useState('')
+
+    const { t } = useTranslation(['diplomacy', 'eras'])
+
+    const eraName = eraArray[empire.era].name.toLowerCase()
 
     const { maxAttacks } = useSelector((state) => state.games.activeGame)
 
@@ -42,7 +46,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
         },
 
         errorMessages: {
-            number: "Can't attack that many times",
+            number: t('diplomacy:attackError'),
         },
     })
 
@@ -86,7 +90,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
             <div ref={ref} {...others}>
                 <div>
                     <Text size='sm' weight='bold'>{name}</Text>
-                    <Text size='sm'><Mountains /> {land} acres / DR {dr}%</Text>
+                    <Text size='sm'><Mountains /> {land} {t('diplomacy:warCouncil.landDR')} {dr}%</Text>
                     <Text size='sm'><Scales /> ${networth}</Text>
                     <Text size='sm'><Hourglass /> {era}</Text>
                     <Text size='sm'><Alien /> {race}</Text>
@@ -99,7 +103,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
         <Card sx={{ width: '300px' }}>
             <Card.Section withBorder inheritPadding py="xs">
                 <Group position='apart'>
-                    <Text weight={500}>Attack:</Text><FavoriteButton title='Attack' empire={empire} />
+                    <Text weight={500}>{t('diplomacy:warCouncil.attack')}:</Text><FavoriteButton title='Attack' empire={empire} />
                 </Group>
             </Card.Section>
             <form onSubmit={form.onSubmit((values) =>
@@ -116,8 +120,8 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
                             searchable
                             searchValue={selectedEmpire}
                             onSearchChange={setSelectedEmpire}
-                            label="Select an Empire to Attack"
-                            placeholder="Pick one"
+                            label={t('diplomacy:warCouncil.selectAttack')}
+                            placeholder={t('diplomacy:warCouncil.pickOne')}
                             withAsterisk
                             itemComponent={SelectItem}
                             data={otherEmpires}
@@ -130,27 +134,27 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
                         className='attk-fourth-step'
                         value={selectedAttack}
                         onChange={setSelectedAttack}
-                        label="Select an Attack Type"
-                        placeholder="Pick one"
+                        label={t('diplomacy:warCouncil.attackType')}
+                        placeholder={t('diplomacy:warCouncil.pickOne')}
                         withAsterisk
                         withinPortal
                         itemComponent={SelectAttack}
                         data={[
-                            { value: 'trparm', label: 'Guerrilla Strike', sub: `attack with ${eraArray[empire.era].trparm}` },
-                            { value: 'trplnd', label: 'Lay Siege', sub: `attack with ${eraArray[empire.era].trplnd}` },
-                            { value: 'trpfly', label: 'Air Strike', sub: `attack with ${eraArray[empire.era].trpfly}` },
-                            { value: 'trpsea', label: 'Coastal Assault', sub: `attack with ${eraArray[empire.era].trpsea}` },
-                            { value: 'standard', label: 'All Out Attack', sub: 'attack with all units' },
-                            { value: 'surprise', label: 'Surprise Attack', sub: 'attack with all units' },
-                            { value: 'pillage', label: 'Pillage', sub: 'attack with all units' }
+                            { value: 'trparm', label: t(`eras:eras.${eraName}.guerrillaStrike`), sub: t('diplomacy:warCouncil.attackDescription', { trp: t(`eras:eras.${eraName}.trparm`) }) },
+                            { value: 'trplnd', label: t(`eras:eras.${eraName}.laySiege`), sub: t('diplomacy:warCouncil.attackDescription', { trp: t(`eras:eras.${eraName}.trplnd`) }) },
+                            { value: 'trpfly', label: t(`eras:eras.${eraName}.airStrike`), sub: t('diplomacy:warCouncil.attackDescription', { trp: t(`eras:eras.${eraName}.trpfly`) }) },
+                            { value: 'trpsea', label: t(`eras:eras.${eraName}.coastalAssault`), sub: t('diplomacy:warCouncil.attackDescription', { trp: t(`eras:eras.${eraName}.trpsea`) }) },
+                            { value: 'standard', label: t(`eras:eras.${eraName}.allOutAttack`), sub: t('diplomacy:warCouncil.allUnitsDescription') },
+                            { value: 'surprise', label: t(`eras:eras.${eraName}.surpriseAttack`), sub: t('diplomacy:warCouncil.allUnitsDescription') },
+                            { value: 'pillage', label: t(`eras:eras.${eraName}.pillage`), sub: t('diplomacy:warCouncil.pillageDescription') }
                         ]}
                         {...form.getInputProps('attackType')}
                     />
 
                     <Button color='red' type='submit' disabled={roundStatus} loading={loading}>
-                        Attack
+                        {t('diplomacy:warCouncil.attack')}
                     </Button>
-                    <Text size='sm'>{maxAttacks - empire.attacks} attacks remaining</Text>
+                    <Text size='sm'>{maxAttacks - empire.attacks} {t('diplomacy:warCouncil.remaining')}</Text>
                     {error && (<Text color='red' weight='bold' align="center">{error}</Text>)}
                 </Stack>
             </form>

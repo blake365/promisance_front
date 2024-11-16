@@ -12,6 +12,7 @@ import Axios from "axios";
 import { setResult } from '../../store/turnResultsSlice'
 import { loadScores } from '../../store/scoresSlice'
 import { setRepeat } from "../../store/repeatSlice";
+import { useTranslation } from 'react-i18next'
 
 const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
 {
@@ -20,7 +21,11 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
     const [spellSelectedEmpire, spellSetSelectedEmpire] = useState('')
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
 
+    const { t } = useTranslation(['diplomacy', 'eras'])
+
     const { maxSpells } = useSelector((state) => state.games.activeGame)
+
+    const eraName = eraArray[empire.era].name.toLowerCase()
 
     const loadEmpire = useLoadEmpire(empire.uuid)
     const dispatch = useDispatch()
@@ -42,7 +47,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
         },
 
         errorMessages: {
-            number: "Can't attack that many times",
+            number: t('diplomacy:warCouncil.attackError'),
         },
     })
 
@@ -76,8 +81,8 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
         ({ label, ratio, cost, ...others }, ref) => (
             <div ref={ref} {...others}>
                 <Text size='md'>{label}</Text>
-                <Text size='xs'>Ratio: {ratio}</Text>
-                <Text size='xs'>Cost: {cost.toLocaleString()} {eraArray[empire.era].runes}</Text>
+                <Text size='xs'>{t('diplomacy:warCouncil.spellRatio')}: {ratio}</Text>
+                <Text size='xs'>{t('diplomacy:warCouncil.spellCost')}: {cost.toLocaleString()} {t(`eras:eras.${eraName}.runes`)}</Text>
             </div>
         )
     );
@@ -87,7 +92,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
             <div ref={ref} {...others}>
                 <div>
                     <Text size='sm' weight='bold'>{name}</Text>
-                    <Text size='sm'><Mountains /> {land} acres / DR {dr}%</Text>
+                    <Text size='sm'><Mountains /> {land} {t('diplomacy:warCouncil.landDR')} {dr}%</Text>
                     <Text size='sm'><Scales /> ${networth}</Text>
                     <Text size='sm'><Hourglass /> {era}</Text>
                     <Text size='sm'><Alien /> {race}</Text>
@@ -100,7 +105,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
         <Card sx={{ width: '300px' }} className='attk-fifth-step'>
             {!spy && <Card.Section withBorder inheritPadding py="xs">
                 <Group position='apart'>
-                    <Text weight={500}>Cast Spell:</Text>
+                    <Text weight={500}>{t('diplomacy:warCouncil.castSpell')}:</Text>
                     <FavoriteButton title='Spell' empire={empire} />
                 </Group>
             </Card.Section>}
@@ -117,8 +122,8 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
                             searchable
                             searchValue={spellSelectedEmpire}
                             onSearchChange={spellSetSelectedEmpire}
-                            label={`Select an Empire to ${spy ? 'Get Stats' : 'Attack'}`}
-                            placeholder="Pick one"
+                            label={`${t('diplomacy:warCouncil.select')} ${spy ? t('diplomacy:warCouncil.getStats') : t('diplomacy:warCouncil.attack')}`}
+                            placeholder={t('diplomacy:warCouncil.pickOne')}
                             withAsterisk
                             itemComponent={SelectItem}
                             data={otherEmpires}
@@ -130,25 +135,25 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
                     {!spy && <Select
                         value={spellSelectedAttack}
                         onChange={spellSetSelectedAttack}
-                        label="Select a Spell"
-                        placeholder="Pick one"
+                        label={t('diplomacy:warCouncil.spellSelect')}
+                        placeholder={t('diplomacy:warCouncil.pickOne')}
                         withAsterisk
                         withinPortal
                         itemComponent={SelectSpell}
                         data={[
-                            { value: 'fight', label: eraArray[empire.era].spell_fight, ratio: '2.2x', cost: Math.ceil(baseCost(empire) * 27.5) },
-                            { value: 'blast', label: eraArray[empire.era].spell_blast, ratio: '1.5x', cost: Math.ceil(baseCost(empire) * 25) },
-                            { value: 'steal', label: eraArray[empire.era].spell_steal, ratio: '1.75x', cost: Math.ceil(baseCost(empire) * 30.75) },
-                            { value: 'storm', label: eraArray[empire.era].spell_storm, ratio: '1.21x', cost: Math.ceil(baseCost(empire) * 22.25) },
-                            { value: 'runes', label: eraArray[empire.era].spell_runes, ratio: '1.3x', cost: Math.ceil(baseCost(empire) * 24.5) },
-                            { value: 'struct', label: eraArray[empire.era].spell_struct, ratio: '1.7x', cost: Math.ceil(baseCost(empire) * 23) },
+                            { value: 'fight', label: t(`eras:eras.${eraName}.spell_fight`), ratio: '2.2x', cost: Math.ceil(baseCost(empire) * 27.5) },
+                            { value: 'blast', label: t(`eras:eras.${eraName}.spell_blast`), ratio: '1.5x', cost: Math.ceil(baseCost(empire) * 25) },
+                            { value: 'steal', label: t(`eras:eras.${eraName}.spell_steal`), ratio: '1.75x', cost: Math.ceil(baseCost(empire) * 30.75) },
+                            { value: 'storm', label: t(`eras:eras.${eraName}.spell_storm`), ratio: '1.21x', cost: Math.ceil(baseCost(empire) * 22.25) },
+                            { value: 'runes', label: t(`eras:eras.${eraName}.spell_runes`), ratio: '1.3x', cost: Math.ceil(baseCost(empire) * 24.5) },
+                            { value: 'struct', label: t(`eras:eras.${eraName}.spell_struct`), ratio: '1.7x', cost: Math.ceil(baseCost(empire) * 23) },
                         ]}
                         {...spellForm.getInputProps('spell')}
                     />}
                     <Button color='indigo' type='submit' disabled={roundStatus || empire.mode === 'demo'} loading={loading}>
-                        Cast Spell
+                        {t('diplomacy:warCouncil.castSpell')}
                     </Button>
-                    <Text size='sm'>{maxSpells - empire.spells} spells remaining</Text>
+                    <Text size='sm'>{maxSpells - empire.spells} {t('diplomacy:warCouncil.spellRemaining')}</Text>
                     {error && (<Text color='red' weight='bold' align="center">{error}</Text>)}
                 </Stack>
             </form>

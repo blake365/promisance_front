@@ -6,7 +6,6 @@ import
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { useSelector } from 'react-redux'
-
 import Intel from './intel'
 import SpellForm from './spellForm'
 
@@ -30,7 +29,7 @@ export default function ScoresIntel({ enemy })
         {
             // console.log(body)
             try {
-                const res = await Axios.post(`/intel/scores`, body)
+                const res = await Axios.post('/intel/scores', body)
                 // console.log(res.data)
                 return res.data
             } catch (error) {
