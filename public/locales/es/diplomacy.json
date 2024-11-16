@@ -124,5 +124,24 @@
 		"spellRemaining": "hechizos restantes",
 		"getStats": "Obtener Estadísticas",
 		"select": "Selecciona un Imperio para"
+	},
+	"aid": {
+		"aid": "Ayuda Extranjera",
+		"aidDescription": "Envía recursos y tropas a otros jugadores.",
+		"aidRequires": "Enviar ayuda requiere dos turnos, un crédito de ayuda y {{shipsNeeded}} {{trpsea}}.",
+		"aidCredits": "Se otorga un crédito de ayuda cada {{aidDelay}} horas, hasta un máximo de {{aidMaxCredits}} créditos.",
+		"demoDisabled": "No puedes enviar ni recibir ayuda con un imperio de demostración.",
+		"turnsProtection": "No puedes enviar ni recibir ayuda hasta que hayas usado {{turnsProtection}} turnos.",
+		"roundProtection": "No puedes enviar ni recibir ayuda durante las últimas 24 horas de una ronda.",
+		"selectEmpire": "Selecciona un Imperio para Ayudar",
+		"pickOne": "Elige uno",
+		"units": "Unidad",
+		"owned": "Posee",
+		"canSend": "Puede Enviar",
+		"send": "Enviar",
+		"submit": "Enviar Ayuda",
+		"creditsRemaining": "créditos restantes",
+		"disabled": "La Ayuda Extranjera está desactivada para este modo de juego",
+		"error": "Debes enviar al menos un recurso"
 	}
 }

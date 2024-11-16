@@ -18,14 +18,16 @@ import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { eraArray } from '../../config/eras'
 import classes from './aid.module.css'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { useTranslation } from 'react-i18next'
 
 export default function ScoresAid({ friend })
 {
+    const { t } = useTranslation(['diplomacy', 'eras'])
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection } = useSelector((state) => state.games.activeGame)
     const loadEmpire = useLoadEmpire(empire.uuid)
     const dispatch = useDispatch()
-
+    const eraName = eraArray[empire.era].name.toLowerCase()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -83,7 +85,7 @@ export default function ScoresAid({ friend })
     {
         // console.log('sending aid')
         if (values.trpArm === 0 && values.trpLnd === 0 && values.trpFly === 0 && values.trpSea === 0 && values.cash === 0 && values.food === 0 && values.runes === 0) {
-            setError('You must send at least one resource')
+            setError(t('diplomacy:aid.error'))
             return
         }
         setLoading(true)
@@ -121,9 +123,9 @@ export default function ScoresAid({ friend })
             <Center>
                 <Stack spacing='sm' align='center'>
                     {error && (<Text color='red' weight='bold'>{error}</Text>)}
-                    {empire.mode === 'demo' && (<Text color='red' weight='bold'>You cannot send or receive aid with a demo empire.</Text>)}
-                    {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
-                    {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
+                    {empire.mode === 'demo' && (<Text color='red' weight='bold'>{t('diplomacy:aid.demoDisabled')}</Text>)}
+                    {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold'>{t('diplomacy:aid.turnsProtection', { turnsProtection })}</Text>)}
+                    {roundStatus && (<Text color='red' weight='bold' align='center'>{t('diplomacy:aid.roundProtection')}</Text>)}
                     <Card>
                         <form onSubmit={form.onSubmit((values) =>
                         {
@@ -137,15 +139,15 @@ export default function ScoresAid({ friend })
                                     <table className={classes.widetable}>
                                         <thead>
                                             <tr>
-                                                <th align='left'>Unit</th>
-                                                <th align='right'>Owned</th>
-                                                <th align='right'>Can Send</th>
-                                                <th align='center'>Send</th>
+                                                <th align='left'>{t('diplomacy:aid.units')}</th>
+                                                <th align='right'>{t('diplomacy:aid.owned')}</th>
+                                                <th align='right'>{t('diplomacy:aid.canSend')}</th>
+                                                <th align='center'>{t('diplomacy:aid.send')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {itemArray.map((item) => (<tr key={item}>
-                                                <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
+                                                <td>{item !== 'cash' ? t(`eras:eras.${eraName}.${item.toLowerCase()}`) : item[0].toUpperCase() + item.slice(1,)}</td>
                                                 <td align='right'>{empire[item].toLocaleString()}</td>
                                                 <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
                                                 <td>
@@ -158,9 +160,9 @@ export default function ScoresAid({ friend })
                                     </table>
                                 </div>
                                 <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
-                                    Send Aid
+                                    {t('diplomacy:aid.submit')}
                                 </Button>
-                                <Text size='sm'>{empire.aidCredits} credits remaining</Text>
+                                <Text size='sm'>{empire.aidCredits} {t('diplomacy:aid.creditsRemaining')}</Text>
                             </Stack>
                         </form>
                     </Card>

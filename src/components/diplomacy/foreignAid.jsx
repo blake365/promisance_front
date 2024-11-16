@@ -20,15 +20,17 @@ import classes from './aid.module.css'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { useLoadOtherEmpires } from '../../hooks/useLoadOtherEmpires'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
+import { useTranslation } from 'react-i18next'
 
 export default function ForeignAid()
 {
+    const { t } = useTranslation(['diplomacy', 'eras'])
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection, aidMaxCredits, aidDelay, aidEnable } = useSelector((state) => state.games.activeGame)
     const dispatch = useDispatch()
     const loadEmpire = useLoadEmpire(empire.uuid)
     const loadOtherEmpires = useLoadOtherEmpires(empire.game_id, empire.id, empire.turnsUsed)
-
+    const eraName = eraArray[empire.era].name.toLowerCase()
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -48,7 +50,7 @@ export default function ForeignAid()
         },
 
         validationRules: {
-            receiverId: isNotEmpty('Select an empire'),
+            receiverId: isNotEmpty(t('diplomacy:aid.selectEmpire')),
             sellArm: (value) => value <= Math.floor(empire.trpArm * 0.15),
             sellLnd: (value) => value <= Math.floor(empire.trpLnd * 0.15),
             sellFly: (value) => value <= Math.floor(empire.trpFly * 0.15),
@@ -89,7 +91,7 @@ export default function ForeignAid()
         // console.log('sending aid')
         // if all values are 0, return
         if (values.trpArm === 0 && values.trpLnd === 0 && values.trpFly === 0 && values.trpSea === 0 && values.cash === 0 && values.food === 0 && values.runes === 0) {
-            setError('You must send at least one resource')
+            setError(t('diplomacy:aid.error'))
             return
         }
         setLoading(true)
@@ -138,18 +140,18 @@ export default function ForeignAid()
                     <Stack spacing='sm' align='center'>
                         <img src='/images/aid.webp' height='200' style={{ maxHeight: '200px', maxWidth: '100%', borderRadius: '10px' }} alt='foreign aid' />
                         <Title order={1} align='center'>
-                            Foreign Aid
+                            {t('diplomacy:aid.aid')}
                         </Title>
                         <Text align='center'>
-                            Send resources and troops to other players.
+                            {t('diplomacy:aid.aidDescription')}
                         </Text>
                         <Text align='center'>
-                            Sending aid requires two turns, one aid credit, and {shipsNeeded.toLocaleString()} {eraArray[empire.era].trpsea}. One aid credit is given every {aidDelay} hours, up to a maximum of {aidMaxCredits} credits.
+                            {t('diplomacy:aid.aidRequires', { shipsNeeded: shipsNeeded.toLocaleString(), trpsea: t(`eras:eras.${eraName}.trpsea`) })}
                         </Text>
                         {error && (<Text color='red' weight='bold'>{error}</Text>)}
-                        {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid with a demo empire.</Text>)}
-                        {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid until you have used {turnsProtection} turns.</Text>)}
-                        {roundStatus && (<Text color='red' weight='bold' align='center'>You cannot send or receive aid during the last 24 hours of a round.</Text>)}
+                        {empire.mode === 'demo' && (<Text color='red' weight='bold' align='center'>{t('diplomacy:aid.demoDisabled')}</Text>)}
+                        {empire.turnsUsed < turnsProtection && (<Text color='red' weight='bold' align='center'>{t('diplomacy:aid.turnsProtection', { turnsProtection })}</Text>)}
+                        {roundStatus && (<Text color='red' weight='bold' align='center'>{t('diplomacy:aid.roundProtection')}</Text>)}
                         <form onSubmit={form.onSubmit((values) =>
                         {
                             console.log(values)
@@ -163,8 +165,8 @@ export default function ForeignAid()
                                         searchable
                                         searchValue={selectedEmpire}
                                         onSearchChange={setSelectedEmpire}
-                                        label="Select an Empire to Aid"
-                                        placeholder="Pick one"
+                                        label={t('diplomacy:aid.selectEmpire')}
+                                        placeholder={t('diplomacy:aid.pickOne')}
                                         required
                                         itemComponent={SelectItem}
                                         data={loadOtherEmpires}
@@ -176,15 +178,15 @@ export default function ForeignAid()
                                     <table className={classes.widetable}>
                                         <thead>
                                             <tr>
-                                                <th align='left'>Unit</th>
-                                                <th align='right'>Owned</th>
-                                                <th align='right'>Can Send</th>
-                                                <th align='center'>Send</th>
+                                                <th align='left'>{t('diplomacy:aid.units')}</th>
+                                                <th align='right'>{t('diplomacy:aid.owned')}</th>
+                                                <th align='right'>{t('diplomacy:aid.canSend')}</th>
+                                                <th align='center'>{t('diplomacy:aid.send')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {itemArray.map((item) => (<tr key={item}>
-                                                <td>{item !== 'cash' ? eraArray[empire.era][item.toLowerCase()] : item[0].toUpperCase() + item.slice(1,)}</td>
+                                                <td>{item !== 'cash' ? t(`eras:eras.${eraName}.${item.toLowerCase()}`) : item[0].toUpperCase() + item.slice(1,)}</td>
                                                 <td align='right'>{empire[item].toLocaleString()}</td>
                                                 <td align='right'>{Math.floor(empire[item] * 0.15).toLocaleString()}</td>
                                                 <td>
@@ -197,14 +199,14 @@ export default function ForeignAid()
                                     </table>
                                 </div>
                                 <Button color='green' type='submit' disabled={roundStatus || empire.turnsUsed < turnsProtection || empire.mode === 'demo' || empire.turns < 2 || empire.aidCredits < 1 || empire.trpSea < shipsNeeded} loading={loading}>
-                                    Send Aid
+                                    {t('diplomacy:aid.submit')}
                                 </Button>
-                                <Text size='sm'>{empire.aidCredits} credits remaining</Text>
+                                <Text size='sm'>{empire.aidCredits} {t('diplomacy:aid.creditsRemaining')}</Text>
                             </Stack>
                         </form>
                     </Stack>
                 </Center>
-            ) : (<Text>Foreign Aid is disabled for this game mode</Text>)
+            ) : (<Text>{t('diplomacy:aid.disabled')}</Text>)
             }
         </section>
     )

@@ -124,5 +124,24 @@
 		"spellRemaining": "spells remaining",
 		"getStats": "Get Stats",
 		"select": "Select an Empire to"
+	},
+	"aid": {
+		"aid": "Foreign Aid",
+		"aidDescription": "Send resources and troops to other players.",
+		"aidRequires": "Sending aid requires two turns, one aid credit, and {{shipsNeeded}} {{trpsea}}.",
+		"aidCredits": "One aid credit is given every {{aidDelay}} hours, up to a maximum of {{aidMaxCredits}} credits.",
+		"demoDisabled": "You cannot send or receive aid with a demo empire.",
+		"turnsProtection": "You cannot send or receive aid until you have used {{turnsProtection}} turns.",
+		"roundProtection": "You cannot send or receive aid during the last 24 hours of a round.",
+		"selectEmpire": "Select an Empire to Aid",
+		"pickOne": "Pick one",
+		"units": "Unit",
+		"owned": "Owned",
+		"canSend": "Can Send",
+		"send": "Send",
+		"submit": "Send Aid",
+		"creditsRemaining": "credits remaining",
+		"disabled": "Foreign Aid is disabled for this game mode",
+		"error": "You must send at least one resource"
 	}
 }
