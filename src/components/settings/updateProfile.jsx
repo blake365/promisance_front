@@ -4,9 +4,11 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 export default function UpdateProfile({ status, empire })
 {
+    const { t } = useTranslation('settings')
     const dispatch = useDispatch()
 
 
@@ -17,7 +19,7 @@ export default function UpdateProfile({ status, empire })
             profile: empire.profile
         },
         validate: {
-            profile: hasLength({ max: 499 }, 'Profile must have 499 or less characters'),
+            profile: hasLength({ max: 499 }, t('settings:settings.profileValidation')),
         },
     })
 
@@ -29,14 +31,14 @@ export default function UpdateProfile({ status, empire })
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Profile updated',
+                title: t('settings:settings.profileResponseSuccess'),
                 color: 'teal',
                 autoClose: 2000
             })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Profile update failed',
+                title: t('settings:settings.profileResponseError'),
                 color: 'orange',
             })
         }
@@ -50,12 +52,12 @@ export default function UpdateProfile({ status, empire })
         })}>
             <Stack spacing='sm' align='center'>
                 <TextInput
-                    label='Edit Your Public Profile'
-                    placeholder={empire.profile ? empire.profile : 'Enter your profile here'}
+                    label={t('settings:settings.updateProfile')}
+                    placeholder={empire.profile ? empire.profile : t('settings:settings.profilePlaceholder')}
                     w='350px'
                     {...form.getInputProps('profile')}
                 />
-                <Button size='sm' compact type='submit' disabled={status}>Submit</Button>
+                <Button size='sm' compact type='submit' disabled={status}>{t('settings:settings.submit')}</Button>
             </Stack>
         </form>
     )

@@ -3,10 +3,11 @@ import { Loader, Title, Button, Group, Text } from "@mantine/core"
 import { useState, useEffect } from "react"
 import Axios from "axios"
 import NewsItem from "./newsItem"
-
+import { useTranslation } from 'react-i18next'
 
 export default function EmpireNews(props)
 {
+    const { t } = useTranslation('diplomacy')
     const { empire } = useSelector((state) => state.empire)
 
     const [news, setNews] = useState([])
@@ -74,8 +75,8 @@ export default function EmpireNews(props)
     return (
         <section>
             <Group position='apart' px='sm' align="center">
-                <Title>Your News</Title>
-                <Button compact size='xs' mt='xs' onClick={handleMarkAsRead}>Mark as Read</Button>
+                <Title>{t('diplomacy:news.title')}</Title>
+                <Button compact size='xs' mt='xs' onClick={handleMarkAsRead}>{t('diplomacy:news.markAsRead')}</Button>
             </Group>
             <div style={{ height: '90vh', overflow: 'scroll' }}>
                 {loading ? <Loader /> : (
@@ -85,7 +86,7 @@ export default function EmpireNews(props)
                     }
                     )
                 )}
-                {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
+                {news.length === 0 && <Text m='sm' p='xs'>{t('diplomacy:news.none')}</Text>}
             </div>
         </section>
     )

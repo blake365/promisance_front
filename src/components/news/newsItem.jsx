@@ -1,26 +1,26 @@
 import { Group, Card, Text, Box, Badge } from '@mantine/core'
 
 import { Sword, Shield, ShoppingCart, ShieldStar, MagicWand, FirstAid, Handshake, HandCoins } from '@phosphor-icons/react'
-
+import { useTranslation } from 'react-i18next'
 
 export default function NewsItem({ item, now })
 {
-
-    let eventTime = new Date(item.createdAt)
-    let diff = now - eventTime
-    let minutes = Math.floor(diff / 60000)
-    let hours = Math.floor(minutes / 60)
-    let days = Math.floor(hours / 24)
+    const { t } = useTranslation('diplomacy')
+    const eventTime = new Date(item.createdAt)
+    const diff = now - eventTime
+    const minutes = Math.floor(diff / 60000)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
     let timeSince = ''
 
     if (days > 0) {
-        timeSince = `${days} days ago`
+        timeSince = `${days} ${t('diplomacy:news.daysAgo')}`
     } else if (hours > 0) {
-        timeSince = `${hours} hours ago`
+        timeSince = `${hours} ${t('diplomacy:news.hoursAgo')}`
     } else if (minutes > 0) {
-        timeSince = `${minutes} minutes ago`
+        timeSince = `${minutes} ${t('diplomacy:news.minutesAgo')}`
     } else {
-        timeSince = 'just now'
+        timeSince = `${t('diplomacy:news.justNow')}`
     }
 
     let highlight = ''
@@ -30,7 +30,7 @@ export default function NewsItem({ item, now })
 
     const parseContent = (content) =>
     {
-        let lines = content.split('/n')
+        const lines = content.split('/n')
         return lines.map((line, index) =>
         {
             let weight = 'normal'
@@ -62,7 +62,7 @@ export default function NewsItem({ item, now })
                     <Text size='xs'>{eventTime.toLocaleString()} ({timeSince})</Text>
                     {!item.seen &&
                         <Badge color='green'>
-                            new
+                            {t('diplomacy:news.new')}
                         </Badge>}
                 </Group>
             </Card.Section>

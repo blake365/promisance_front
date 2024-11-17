@@ -100,9 +100,11 @@ function Achievements()
                         // console.log(achievement)
                         if (achievement.name.length === 6 && achievement.name.includes('magic')) {
                             return
-                        } else if (achievement.name.length === 5 && achievement.name.includes('indy')) {
+                        }
+                        if (achievement.name.length === 5 && achievement.name.includes('indy')) {
                             return
-                        } else if (achievement) {
+                        }
+                        if (achievement) {
                             const { message, icon } = processAchievement(achievement.name)
                             if (achievement.name === 'indy' || achievement.name === 'magic') {
                                 return

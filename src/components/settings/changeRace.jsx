@@ -6,6 +6,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 const raceObjects = raceArray.map((race, index) => ({
     icon: index,
@@ -25,7 +26,7 @@ const RaceItem = forwardRef(({ icon, label, ...others }, ref) => (
 function ChangeRace({ status, empire }) 
 {
     const dispatch = useDispatch()
-
+    const { t } = useTranslation('settings')
     const { turnsProtection, turnsMax } = useSelector((state) => state.games.activeGame)
 
     const raceForm = useForm({
@@ -43,14 +44,14 @@ function ChangeRace({ status, empire })
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Empire Race Updated',
+                title: t('settings:settings.raceResponseSuccess'),
                 color: 'teal',
                 autoClose: 2000,
             })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error changing race',
+                title: t('settings:settings.raceResponseError'),
                 color: 'orange',
             })
         }
@@ -64,7 +65,7 @@ function ChangeRace({ status, empire })
                 updateRace(values)
             } else {
                 showNotification({
-                    title: 'Not Enough Turns',
+                    title: t('settings:settings.turnsError'),
                     color: 'orange',
                 })
             }
@@ -72,18 +73,18 @@ function ChangeRace({ status, empire })
             <Stack spacing='sm' align='center'>
                 <Group align='center'>
                     <Image src={`/icons/${raceArray[empire.race].name.toLowerCase()}.svg`} height={40} width={40} fit='contain' sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
-                    {empire.turnsUsed > turnsProtection ? (<Text w='300px'>{`Change your empire's race. This will cost you ${Math.floor(turnsMax / 2)} turns, 25% of your food, cash, and runes, and 10% of your population and army. `}</Text>) : (<Text w='300px'>{`Change your empire's race. There is no cost to changing your race while in new player protection.`}</Text>)}
+                    {empire.turnsUsed > turnsProtection ? (<Text w='300px'>{t('settings:settings.changeRace', { turnsCost: Math.floor(turnsMax / 2) })}</Text>) : (<Text w='300px'>{t('settings:settings.freeRaceChange')}</Text>)}
                 </Group>
 
                 <Select
-                    label="Choose Another Race"
-                    placeholder="Pick one"
+                    label={t('settings:settings.raceSelect')}
+                    placeholder={t('settings:settings.pickOne')}
                     itemComponent={RaceItem}
                     data={raceObjects}
                     {...raceForm.getInputProps('race')}
                 />
 
-                <Button size='sm' compact type='submit' disabled={status}>Submit</Button>
+                <Button size='sm' compact type='submit' disabled={status}>{t('settings:settings.submit')}</Button>
             </Stack>
         </form>
     )

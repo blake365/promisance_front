@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 // array of icon names from /icons
 const icons = [
@@ -34,6 +35,7 @@ const SelectItem = forwardRef(({ icon, label, ...others }, ref) => (
 export default function UpdateIcon({ status, empire })
 {
     const dispatch = useDispatch()
+    const { t } = useTranslation('settings')
     const iconForm = useForm({
         initialValues: {
             empireId: empire.id,
@@ -49,14 +51,14 @@ export default function UpdateIcon({ status, empire })
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Icon updated',
+                title: t('settings:settings.iconResponseSuccess'),
                 color: 'teal',
                 autoClose: 2000
             })
         } catch (error) {
             console.log(error)
             showNotification({
-                title: 'Icon update failed',
+                title: t('settings:settings.iconResponseError'),
                 color: 'orange',
             })
         }
@@ -72,14 +74,14 @@ export default function UpdateIcon({ status, empire })
                 <Group align='flex-end'>
                     <Avatar size="md" src={empire.profileIcon} sx={(theme) => theme.colorScheme === 'dark' ? ({ filter: 'invert(1)', opacity: '75%' }) : ({ filter: 'invert(0)', })} />
                     <Select
-                        label="Choose Your Icon"
-                        placeholder="Pick one"
+                        label={t('settings:settings.chooseIcon')}
+                        placeholder={t('settings:settings.pickOne')}
                         itemComponent={SelectItem}
                         data={iconObjects}
                         {...iconForm.getInputProps('icon')}
                     />
                 </Group>
-                <Button size='sm' compact type='submit' disabled={status}>Submit</Button>
+                <Button size='sm' compact type='submit' disabled={status}>{t('settings:settings.submit')}</Button>
             </Stack>
         </form>
     )

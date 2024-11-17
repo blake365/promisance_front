@@ -2,10 +2,12 @@ import { Box, Stack, Loader, Text } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import WorldNewsItem from './worldNewsItem'
+import { useTranslation } from 'react-i18next'
 
 export default function ScoresNews({ enemy })
 {
-    let body = {
+    const { t } = useTranslation('diplomacy')
+    const body = {
         take: 20,
         view: true,
         empire: enemy.id,
@@ -56,7 +58,7 @@ export default function ScoresNews({ enemy })
                     {
                         return <WorldNewsItem item={item} key={item.id} now={new Date()} />
                     }))}
-                {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
+                {news.length === 0 && <Text m='sm' p='xs'>{t('diplomacy:news.none')}</Text>}
             </Stack>
         </Box>
     )

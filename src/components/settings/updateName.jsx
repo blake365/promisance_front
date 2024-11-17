@@ -4,9 +4,11 @@ import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 export default function UpdateName({ status, empire })
 {
+    const { t } = useTranslation('settings')
     const dispatch = useDispatch()
 
     const form = useForm({
@@ -16,7 +18,7 @@ export default function UpdateName({ status, empire })
             name: empire.name
         },
         validate: {
-            name: hasLength({ min: 3, max: 50 }, 'Name must have between 3 and 50 characters'),
+            name: hasLength({ min: 3, max: 50 }, t('settings:settings.nameError')),
         },
     })
 
@@ -28,7 +30,7 @@ export default function UpdateName({ status, empire })
             // console.log(res.data)
             dispatch(empireLoaded(res.data))
             showNotification({
-                title: 'Name Changed',
+                title: t('settings:settings.nameResponseSuccess'),
                 color: 'teal',
                 autoClose: 2000
             })
@@ -51,13 +53,13 @@ export default function UpdateName({ status, empire })
         })}>
             <Stack spacing='sm' align='center'>
                 <TextInput
-                    label='Change Your Empire Name'
-                    description='You can change your empire name once per round'
+                    label={t('settings:settings.changeName')}
+                    description={t('settings:settings.nameLimit')}
                     placeholder={empire.name}
                     w='350px'
                     {...form.getInputProps('name')}
                 />
-                <Button size='sm' compact type='submit' disabled={status || alreadyChanged}>Submit</Button>
+                <Button size='sm' compact type='submit' disabled={status || alreadyChanged}>{t('settings:settings.submit')}</Button>
             </Stack>
         </form>
     )

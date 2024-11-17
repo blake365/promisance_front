@@ -1,0 +1,32 @@
+{
+	"settings": {
+		"title": "Empire Settings",
+		"tour": "Replay First Turns Tour",
+		"changeRace": "Change your empire's race. This will cost you {{turnsCost}} turns, 25% of your food, cash, and runes, and 10% of your population and army.",
+		"freeRaceChange": "Change your empire's race. There is no cost to changing your race while in new player protection.",
+		"raceSelect": "Choose Another Race",
+		"pickOne": "Pick one",
+		"submit": "Submit",
+		"turnsError": "Not Enough Turns",
+		"raceResponseSuccess": "Empire Race Updated",
+		"raceResponseError": "Error Changing Empire Race",
+		"deleteEmpire": "Delete Empire",
+		"deleteEmpireText": "This will fully delete your empire for this round. We are sorry to see you go.",
+		"contactUs": "Contact us",
+		"feedback": "if you have any feedback to improve the game, please let us know.",
+		"deleteEmpireConfirm": "Type 'confirm' to delete empire",
+		"pleaseConfirm": "Please confirm",
+		"chooseIcon": "Choose Your Icon",
+		"iconResponseSuccess": "Icon Updated",
+		"iconResponseError": "Icon Update Failed",
+		"changeName": "Change Your Empire Name",
+		"nameLimit": "You can change your empire name once per round",
+		"nameResponseSuccess": "Name Changed",
+		"nameError": "Name must be between 3 and 50 characters",
+		"updateProfile": "Update Your Public Profile",
+		"profilePlaceholder": "Enter your profile here",
+		"profileResponseSuccess": "Profile Updated",
+		"profileResponseError": "Profile Update Failed",
+		"profileValidation": "Profile must have 499 or less characters"
+	}
+}

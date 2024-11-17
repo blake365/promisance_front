@@ -1,0 +1,32 @@
+{
+	"settings": {
+		"title": "Configuración del Imperio",
+		"tour": "Repetir Tutorial de Primeros Turnos",
+		"changeRace": "Cambia la raza de tu imperio. Esto te costará {{turnsCost}} turnos, 25% de tu comida, dinero y runas, y 10% de tu población y ejército.",
+		"freeRaceChange": "Cambia la raza de tu imperio. No hay costo por cambiar tu raza mientras estés bajo protección de jugador nuevo.",
+		"raceSelect": "Elige Otra Raza",
+		"pickOne": "Elige uno",
+		"submit": "Enviar",
+		"turnsError": "No Hay Suficientes Turnos",
+		"raceResponseSuccess": "Raza del Imperio Actualizada",
+		"raceResponseError": "Error al Cambiar la Raza del Imperio",
+		"deleteEmpire": "Eliminar Imperio",
+		"deleteEmpireText": "Esto eliminará completamente tu imperio para esta ronda. Lamentamos verte partir.",
+		"contactUs": "Contáctanos",
+		"feedback": "si tienes alguna sugerencia para mejorar el juego, háznos saber.",
+		"deleteEmpireConfirm": "Escribe 'confirm' para eliminar el imperio",
+		"pleaseConfirm": "Por favor confirma",
+		"chooseIcon": "Elige Tu Ícono",
+		"iconResponseSuccess": "Ícono Actualizado",
+		"iconResponseError": "Error al Actualizar el Ícono",
+		"changeName": "Cambiar el Nombre de Tu Imperio",
+		"nameLimit": "Puedes cambiar el nombre de tu imperio una vez por ronda",
+		"nameResponseSuccess": "Nombre Cambiado",
+		"nameError": "El nombre debe tener entre 3 y 50 caracteres",
+		"updateProfile": "Actualizar Tu Perfil Público",
+		"profilePlaceholder": "Ingresa tu perfil aquí",
+		"profileResponseSuccess": "Perfil Actualizado",
+		"profileResponseError": "Error al Actualizar el Perfil",
+		"profileValidation": "El perfil debe tener 499 caracteres o menos"
+	}
+}

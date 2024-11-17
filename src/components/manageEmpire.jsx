@@ -9,9 +9,10 @@ import UpdateIcon from './settings/updateIcon'
 import UpdateProfile from './settings/updateProfile'
 import DeleteEmpire from './settings/deleteEmpire'
 import UpdateName from './settings/updateName';
-
+import { useTranslation } from 'react-i18next';
 export default function ManageEmpire()
 {
+	const { t } = useTranslation('settings')
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { empire } = useSelector((state) => state.empire)
 	const roundStatus = checkRoundStatus()
@@ -23,7 +24,7 @@ export default function ManageEmpire()
 		<main>
 			<Stack spacing='sm' align='center'>
 				<Title order={1} align='center'>
-					Empire Settings
+					{t('settings:settings.title')}
 				</Title>
 
 				<UpdateProfile status={roundStatus} empire={empire} />
@@ -45,7 +46,7 @@ export default function ManageEmpire()
 							boxShadow: '0 0 2px 1px #40c057',
 							color: '#40c057',
 						}}
-						className='sixth-step'>Replay First Turns Tour</Button>
+						className='sixth-step'>{t('settings:settings.tour')}</Button>
 				</Center>
 
 				<DeleteEmpire status={checkRoundStatus(true)} empire={empire} />

@@ -78,6 +78,18 @@
 		"number": "Número de Resultados",
 		"none": "No hay noticias para mostrar"
 	},
+	"news": {
+		"error": "Error al establecer datos de noticias",
+		"reloadError": "Error al recargar datos de noticias",
+		"title": "Tus Noticias",
+		"markAsRead": "Marcar como Leído",
+		"none": "No hay noticias para mostrar",
+		"new": "nuevo",
+		"minutesAgo": "minutos atrás",
+		"hoursAgo": "horas atrás",
+		"daysAgo": "días atrás",
+		"justNow": "justo ahora"
+	},
 	"intel": {
 		"noneAvailable": "Ninguno Disponible",
 		"title": "Centro de Inteligencia",

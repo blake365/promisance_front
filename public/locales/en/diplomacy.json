@@ -78,6 +78,18 @@
 		"number": "Number of Results",
 		"none": "No news to display"
 	},
+	"news": {
+		"error": "Error setting news data",
+		"reloadError": "Error reloading news data",
+		"title": "Your News",
+		"markAsRead": "Mark as Read",
+		"none": "No news to display",
+		"new": "new",
+		"minutesAgo": "minutes ago",
+		"hoursAgo": "hours ago",
+		"daysAgo": "days ago",
+		"justNow": "just now"
+	},
 	"intel": {
 		"noneAvailable": "None Available",
 		"title": "Intel Center",
