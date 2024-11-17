@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { useForm } from '@mantine/form'
 import { useSelector } from 'react-redux'
 import { PaperPlaneRight } from '@phosphor-icons/react'
+import { useTranslation } from 'react-i18next'
 
 const getMessages = async (body) =>
 {
@@ -27,7 +28,7 @@ const getMessages = async (body) =>
 
 export default function Chatbox({ conversation, source, sourceName, destinationId, destinationName })
 {
-
+    const { t } = useTranslation('diplomacy')
     const { empire } = useSelector((state) => state.empire)
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState([])
@@ -130,13 +131,13 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                             let timeSince = ''
 
                             if (days > 0) {
-                                timeSince = `${days} days ago`
+                                timeSince = `${days} ${t('diplomacy:mail.daysAgo')}`
                             } else if (hours > 0) {
-                                timeSince = `${hours} hours ago`
+                                timeSince = `${hours} ${t('diplomacy:mail.hoursAgo')}`
                             } else if (minutes > 0) {
-                                timeSince = `${minutes} minutes ago`
+                                timeSince = `${minutes} ${t('diplomacy:mail.minutesAgo')}`
                             } else {
-                                timeSince = 'just now'
+                                timeSince = t('diplomacy:mail.justNow')
                             }
                             let ml = 0
                             if (message.empireIdSource === source) ml = 'auto'
@@ -174,7 +175,7 @@ export default function Chatbox({ conversation, source, sourceName, destinationI
                         <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
-                {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>Report conversation for inappropriate or abusive language.</Anchor>)
+                {report ? (<Text align='center' size='xs' color='red'>{t('diplomacy:mail.reported')}</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>{t('diplomacy:mail.report')}</Anchor>)
                 }
             </Stack>
         </Card >

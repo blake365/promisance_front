@@ -70,7 +70,9 @@
 		"just now": "Just now",
 		"minutesAgo": "minutes ago",
 		"hoursAgo": "hours ago",
-		"daysAgo": "days ago"
+		"daysAgo": "days ago",
+		"report": "Report conversation for inappropriate or abusive language.",
+		"reported": "Conversation reported to admins"
 	},
 	"worldNews": {
 		"worldNews": "World News",

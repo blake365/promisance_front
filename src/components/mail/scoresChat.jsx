@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { useForm } from '@mantine/form'
 import { PaperPlaneRight } from '@phosphor-icons/react'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 export const concatenateIntegers = (a, b) =>
 {
@@ -41,6 +42,7 @@ export default function ScoresChat({ enemy })
     const [messages, setMessages] = useState([])
     const messageContainerRef = useRef(null)
     const [report, setReport] = useState(false)
+    const { t } = useTranslation('diplomacy')
 
     const conversationId = concatenateIntegers(enemy.id, empire.id)
 
@@ -124,7 +126,7 @@ export default function ScoresChat({ enemy })
                     width: '500px',
                 }
             }}>
-                {messages.length < 1 ? (<Text align='center' color='dimmed'>Start the conversation</Text>) : (
+                {messages.length < 1 ? (<Text align='center' color='dimmed'>{t('diplomacy:mail.startConversation')}</Text>) : (
                     <Box mt='auto' justify='flex-end' sx={{ overflowY: 'auto' }} pb='xs' ref={messageContainerRef}>
                         {messages.map((message) =>
                         {
@@ -137,13 +139,13 @@ export default function ScoresChat({ enemy })
                             let timeSince = ''
 
                             if (days > 0) {
-                                timeSince = `${days} days ago`
+                                timeSince = `${days} ${t('diplomacy:mail.daysAgo')}`
                             } else if (hours > 0) {
-                                timeSince = `${hours} hours ago`
+                                timeSince = `${hours} ${t('diplomacy:mail.hoursAgo')}`
                             } else if (minutes > 0) {
-                                timeSince = `${minutes} minutes ago`
+                                timeSince = `${minutes} ${t('diplomacy:mail.minutesAgo')}`
                             } else {
-                                timeSince = 'just now'
+                                timeSince = t('diplomacy:mail.justNow')
                             }
                             let ml = 0
                             if (message.empireIdSource === empire.id) ml = 'auto'
@@ -183,7 +185,7 @@ export default function ScoresChat({ enemy })
                         <Button type='submit' loading={loading} size='sm' p='sm'><PaperPlaneRight weight='fill' /></Button>
                     </Group>
                 </form>
-                {report ? (<Text align='center' size='xs' color='red' >Conversation reported to admins</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>Report conversation for inappropriate or abusive language.</Anchor>)
+                {report ? (<Text align='center' size='xs' color='red'>{t('diplomacy:mail.reported')}</Text>) : (<Anchor size='xs' color='red' align='center' onClick={reportMessages} underline>{t('diplomacy:mail.report')}</Anchor>)
                 }
             </Stack>
         </Center>
