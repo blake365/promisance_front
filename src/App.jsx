@@ -167,8 +167,7 @@ function App()
 
 	useEffect(() =>
 	{
-		Object.keys(achievements).forEach((key) =>
-		{
+		for (const key of Object.keys(achievements)) {
 			if (achievements[key].awarded && new Date(achievements[key].timeAwarded).getTime() + 1000 > Date.now()) {
 				// console.log(key)
 				const { message, icon } = processAchievement(key)
@@ -178,7 +177,7 @@ function App()
 					icon: icon,
 				})
 			}
-		})
+		}
 	}, [achievements])
 
 	useEffect(() =>

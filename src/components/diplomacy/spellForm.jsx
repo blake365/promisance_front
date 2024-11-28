@@ -21,7 +21,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
     const [spellSelectedEmpire, spellSetSelectedEmpire] = useState('')
     const [spellSelectedAttack, spellSetSelectedAttack] = useState('')
 
-    const { t } = useTranslation(['diplomacy', 'eras'])
+    const { t, i18n } = useTranslation(['diplomacy', 'eras'])
 
     const { maxSpells } = useSelector((state) => state.games.activeGame)
 
@@ -56,8 +56,8 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) =>
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/magic/attack?gameId=${empire.game_id}`, values)
-            dispatch(setRepeat({ route: `/magic/attack?gameId=${empire.game_id}`, body: values, color: 'indigo' }))
+            const res = await Axios.post(`/magic/attack?gameId=${empire.game_id}?lang=${i18n.language}`, values)
+            dispatch(setRepeat({ route: `/magic/attack?gameId=${empire.game_id}?lang=${i18n.language}`, body: values, color: 'indigo' }))
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

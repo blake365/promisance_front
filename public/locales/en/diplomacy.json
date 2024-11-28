@@ -58,7 +58,13 @@
 		"promote": "Promote to Assistant",
 		"demote": "Demote to Member",
 		"remove": "Remove from Clan",
-		"currentRole": "Current Role"
+		"currentRole": "Current Role",
+		"peaceOffered": "Peace Offered",
+		"errorOfferingPeace": "Error Offering Peace",
+		"warDeclared": "War Declared",
+		"errorDeclaringWar": "Error Declaring War",
+		"acceptPeace": "Accept Peace",
+		"youOfferedPeace": "You Have Offered Peace"
 	},
 	"mail": {
 		"mailbox": "Mailbox",

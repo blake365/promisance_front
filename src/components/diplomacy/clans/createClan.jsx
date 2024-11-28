@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function CreateClan({ disabled })
 {
-    const { t } = useTranslation(['diplomacy'])
+    const { t, i18n } = useTranslation(['diplomacy'])
     const { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
     const loadEmpire = useLoadEmpire(empire.uuid)
@@ -34,7 +34,7 @@ export default function CreateClan({ disabled })
     const createClan = async (values) =>
     {
         try {
-            const res = await Axios.post(`/clans/create?gameId=${empire.game_id}`, values)
+            const res = await Axios.post(`/clans/create?gameId=${empire.game_id}?lang=${i18n.language}`, values)
             // console.log(res)
             showNotification({
                 title: t('diplomacy:clans.responseCreate'),

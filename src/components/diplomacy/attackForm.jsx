@@ -12,6 +12,7 @@ import { setResult } from '../../store/turnResultsSlice'
 import { loadScores } from '../../store/scoresSlice'
 import { setRepeat } from "../../store/repeatSlice"
 import { useTranslation } from 'react-i18next'
+
 const AttackForm = ({ empire, roundStatus, defenderId }) =>
 {
     const [loading, setLoading] = useState(false)
@@ -19,7 +20,7 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
     const [selectedEmpire, setSelectedEmpire] = useState('')
     const [selectedAttack, setSelectedAttack] = useState('')
 
-    const { t } = useTranslation(['diplomacy', 'eras'])
+    const { t, i18n } = useTranslation(['diplomacy', 'eras'])
 
     const eraName = eraArray[empire.era].name.toLowerCase()
 
@@ -55,8 +56,8 @@ const AttackForm = ({ empire, roundStatus, defenderId }) =>
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/attack?gameId=${empire.game_id}`, values)
-            dispatch(setRepeat({ route: `/attack?gameId=${empire.game_id}`, body: values, color: 'red' }))
+            const res = await Axios.post(`/attack?gameId=${empire.game_id}?lang=${i18n.language}`, values)
+            dispatch(setRepeat({ route: `/attack?gameId=${empire.game_id}?lang=${i18n.language}`, body: values, color: 'red' }))
             // console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

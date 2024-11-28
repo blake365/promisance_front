@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next"
 // show clan info, clan members, clan chat
 function MyClan()
 {
-    const { t } = useTranslation('diplomacy')
+    const { t, i18n } = useTranslation('diplomacy')
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
     const [clan, setClan] = useState(null)
@@ -67,7 +67,7 @@ function MyClan()
     const disbandClan = async () =>
     {
         try {
-            const res = await Axios.post(`/clans/disband?gameId=${empire.game_id}`, { clanId: clan.id, empireId: empire.id })
+            const res = await Axios.post(`/clans/disband?gameId=${empire.game_id}?lang=${i18n.language}`, { clanId: clan.id, empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
             loadEmpire()
@@ -80,7 +80,7 @@ function MyClan()
     const leaveClan = async () =>
     {
         try {
-            const res = await Axios.post(`/clans/leave?gameId=${empire.game_id}`, { empireId: empire.id })
+            const res = await Axios.post(`/clans/leave?gameId=${empire.game_id}?lang=${i18n.language}`, { empireId: empire.id })
             console.log(res.data)
             // setResponse(res.data)
             loadEmpire()

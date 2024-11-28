@@ -58,7 +58,13 @@
 		"promote": "Promover a Asistente",
 		"demote": "Degradar a Miembro",
 		"remove": "Eliminar del Clan",
-		"currentRole": "Rol Actual"
+		"currentRole": "Rol Actual",
+		"peaceOffered": "Paz Ofrecida",
+		"errorOfferingPeace": "Error al Ofrecer Paz",
+		"warDeclared": "Guerra Declarada",
+		"errorDeclaringWar": "Error al Declarar Guerra",
+		"acceptPeace": "Aceptar Paz",
+		"youOfferedPeace": "Has Ofrecido Paz"
 	},
 	"mail": {
 		"mailbox": "Buzón de Correo",

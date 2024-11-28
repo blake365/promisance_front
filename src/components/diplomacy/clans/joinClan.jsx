@@ -23,7 +23,7 @@ export default function JoinClan({ disabled })
     const loadEmpire = useLoadEmpire(empire.uuid)
     const [clans, setClans] = useState([])
     const [selectedClan, setSelectedClan] = useState('')
-    const { t } = useTranslation(['diplomacy'])
+    const { t, i18n } = useTranslation(['diplomacy'])
 
     const form = useForm({
         initialValues: {
@@ -73,7 +73,7 @@ export default function JoinClan({ disabled })
     const joinClan = async (values) =>
     {
         try {
-            const res = await Axios.post(`/clans/join?gameId=${empire.game_id}`, values)
+            const res = await Axios.post(`/clans/join?gameId=${empire.game_id}?lang=${i18n.language}`, values)
             // console.log(res)
             showNotification({
                 title: t('diplomacy:clans.responseJoin'),

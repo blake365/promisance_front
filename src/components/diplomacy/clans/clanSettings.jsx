@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ClanSettings({ clan, empire })
 {
-    const { t } = useTranslation(['diplomacy'])
+    const { t, i18n } = useTranslation(['diplomacy'])
     const loadEmpire = useLoadEmpire(empire.uuid)
 
     const form = useForm({
@@ -31,7 +31,7 @@ export default function ClanSettings({ clan, empire })
     const updateTag = async (values) =>
     {
         try {
-            const res = await Axios.post('/clans/setTag', values)
+            const res = await Axios.post(`/clans/setTag?lang=${i18n.language}`, values)
             console.log(res)
             showNotification({
                 title: t('diplomacy:clans.tagSuccess'),

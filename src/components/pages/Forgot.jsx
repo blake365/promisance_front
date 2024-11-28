@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useLocalStorage } from '@mantine/hooks';
-
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles(() => ({
     form: {
@@ -35,6 +35,7 @@ const useStyles = createStyles(() => ({
 
 export default function Forgot()
 {
+    const { t, i18n } = useTranslation(['auth'])
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
@@ -65,7 +66,7 @@ export default function Forgot()
 
     const submitReset = async (values) =>
     {
-        const res = await Axios.post('/auth/forgot-password', values)
+        const res = await Axios.post(`/auth/forgot-password?language=${i18n.language}`, values)
         console.log(res)
         if (res.data.message) {
             setMessage(res.data.message)
@@ -89,10 +90,10 @@ export default function Forgot()
                 <Stack align='center'>
                     <Paper className={classes.form} radius={0} >
                         <Title order={2} ta="center" mt={90} mb={10}>
-                            Forgot Your Password?
+                            {t('auth:forgotPasswordTitle')}
                         </Title>
                         <Text ta="center" mb={50}>
-                            Enter your email below.
+                            {t('auth:forgotPasswordText')}
                         </Text>
                         <form onSubmit={form.onSubmit((values) =>
                         {
@@ -104,15 +105,15 @@ export default function Forgot()
                             <TextInput required label="Email" placeholder="" size="md" {...form.getInputProps('email')} />
                             <Text color='red' align='center' mt='md'>{error && error}</Text>
                             <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
-                                Request Password Reset
+                                {t('auth:forgotPasswordButton')}
                             </Button>
                             <Text color='green' weight='bold' align='center' mt='md'>{message && message}</Text>
                         </form>
                         <Text ta="center" mt="md">
-                            Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
+                            {t('auth:needAccount')} <Anchor component={Link} to='/register'>{t('auth:registerButton')}</Anchor>
                         </Text>
                         <Text ta="center" mt="md">
-                            <Anchor component={Link} to='/'>Return Home</Anchor>
+                            <Anchor component={Link} to='/'>{t('auth:returnHome')}</Anchor>
                         </Text>
                     </Paper>
                 </Stack>

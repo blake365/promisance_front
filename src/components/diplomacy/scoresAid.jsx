@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 
 export default function ScoresAid({ friend })
 {
-    const { t } = useTranslation(['diplomacy', 'eras'])
+    const { t, i18n } = useTranslation(['diplomacy', 'eras'])
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection } = useSelector((state) => state.games.activeGame)
     const loadEmpire = useLoadEmpire(empire.uuid)
@@ -91,7 +91,7 @@ export default function ScoresAid({ friend })
         setLoading(true)
         setError('')
         try {
-            const res = await Axios.post(`/aid/?gameId=${empire.game_id}`, values)
+            const res = await Axios.post(`/aid?gameId=${empire.game_id}?lang=${i18n.language}`, values)
             console.log(res.data)
             if ("error" in res.data) {
                 setError(res.data.error)

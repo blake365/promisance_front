@@ -1,0 +1,116 @@
+{
+	"aid": {
+		"public": "{{sender}} envió ayuda a {{receiver}}",
+		"private": "{{sender}} te envió {{items}}"
+	},
+	"attack": {
+		"pillage": {
+			"private": "{{attacker}} te atacó y capturó {{landCaptured}} acres de tierra, {{food}} {{foodType}}, y ${{cash}}. En la batalla perdiste: {{losses.trparm}} {{losses.unitTypes.trparm}}, {{losses.trplnd}} {{losses.unitTypes.trplnd}}, {{losses.trpfly}} {{losses.unitTypes.trpfly}}, {{losses.trpsea}} {{losses.unitTypes.trpsea}}. Mataste: {{kills.trparm}} {{kills.unitTypes.trparm}}, {{kills.trplnd}} {{kills.unitTypes.trplnd}}, {{kills.trpfly}} {{kills.unitTypes.trpfly}}, {{kills.trpsea}} {{kills.unitTypes.trpsea}}",
+			"public": "{{attacker}} atacó a {{defender}} y capturó {{landCaptured}} acres de tierra, {{food}} {{foodType}}, y ${{cash}}..."
+		},
+		"single": {
+			"private": "{{attacker}} te atacó con {{unitType}} y capturó {{landCaptured}} acres de tierra. En la batalla perdiste: {{losses}} {{defenderUnitType}}. Mataste: {{kills}} {{attackerUnitType}}",
+			"public": "{{attacker}} atacó a {{defender}} con {{unitType}} y capturó {{landCaptured}} acres de tierra..."
+		},
+		"allout": {
+			"private": "{{attacker}} te atacó con un ataque total y capturó {{landCaptured}} acres de tierra y edificios...",
+			"public": "{{attacker}} atacó a {{defender}} con un ataque total y capturó {{landCaptured}} acres de tierra y edificios..."
+		},
+		"surprise": {
+			"private": "{{attacker}} te atacó con un ataque sorpresa y capturó {{landCaptured}} acres de tierra y edificios...",
+			"public": "{{attacker}} atacó a {{defender}} con un ataque sorpresa y capturó {{landCaptured}} acres de tierra y edificios..."
+		}
+	},
+	"defense": {
+		"single": {
+			"private": "Defendiste exitosamente tu imperio. {{attacker}} te atacó con {{unitType}}. En la batalla perdiste {{losses.value}} {{losses.unitType}}. Mataste {{kills.value}} {{kills.unitType}}.",
+			"public": "{{defender}} defendió exitosamente su imperio contra el ataque de {{unitType}} de {{attacker}}. {{defender}} perdió {{defenderLosses.value}} {{defenderLosses.unitType}}. {{attacker}} perdió {{attackerLosses.value}} {{attackerLosses.unitType}}."
+		},
+		"allout": {
+			"private": "Defendiste exitosamente tu imperio. {{attacker}} te atacó con un ataque {{attackType}}. En la batalla perdiste:\n{{losses.trparm.value}} {{losses.trparm.unitType}}\n{{losses.trplnd.value}} {{losses.trplnd.unitType}}\n{{losses.trpfly.value}} {{losses.trpfly.unitType}}\n{{losses.trpsea.value}} {{losses.trpsea.unitType}}\n\nMataste:\n{{kills.trparm.value}} {{kills.trparm.unitType}}\n{{kills.trplnd.value}} {{kills.trplnd.unitType}}\n{{kills.trpfly.value}} {{kills.trpfly.unitType}}\n{{kills.trpsea.value}} {{kills.trpsea.unitType}}",
+			"public": "{{defender}} defendió exitosamente su imperio contra el ataque {{attackType}} de {{attacker}}. {{defender}} perdió:\n{{defenderLosses.trparm.value}} {{defenderLosses.trparm.unitType}}\n{{defenderLosses.trplnd.value}} {{defenderLosses.trplnd.unitType}}\n{{defenderLosses.trpfly.value}} {{defenderLosses.trpfly.unitType}}\n{{defenderLosses.trpsea.value}} {{defenderLosses.trpsea.unitType}}\n\n{{attacker}} perdió:\n{{attackerLosses.trparm.value}} {{attackerLosses.trparm.unitType}}\n{{attackerLosses.trplnd.value}} {{attackerLosses.trplnd.unitType}}\n{{attackerLosses.trpfly.value}} {{attackerLosses.trpfly.unitType}}\n{{attackerLosses.trpsea.value}} {{attackerLosses.trpsea.unitType}}"
+		},
+		"surprise": {
+			"private": "Defendiste exitosamente tu imperio. {{attacker}} te atacó con un ataque {{attackType}}...",
+			"public": "{{defender}} defendió exitosamente su imperio contra el ataque {{attackType}} de {{attacker}}..."
+		},
+		"pillage": {
+			"private": "Defendiste exitosamente tu imperio. {{attacker}} intentó saquear tu imperio...",
+			"public": "{{defender}} defendió exitosamente su imperio contra el intento de saqueo de {{attacker}}..."
+		}
+	},
+	"market": {
+		"expired": {
+			"private": "Tus {{itemName}} en el mercado público han expirado y se te ha devuelto el 75%.",
+			"public": "{{empireName}} no logró vender sus artículos en el mercado público."
+		},
+		"soldPrivate": "Vendiste {{amount}} {{item}} por ${{cost}}. El dinero fue depositado en el banco.",
+		"soldPublic": "{{buyer}} compró {{item}} del mercado público."
+	},
+	"lottery": {
+		"noWinner": {
+			"private": "",
+			"public": "Nadie ganó la lotería. El premio base ha aumentado a ${{jackpot}}."
+		},
+		"winner": {
+			"private": "¡Ganaste ${{jackpot}} en la lotería!",
+			"public": "¡{{empireName}} ganó ${{jackpot}} en la lotería!"
+		}
+	},
+	"clan": {
+		"kickedPublic": "¡{{empireName}} ha sido expulsado de {{clanName}}!",
+		"kickedPrivate": "¡Has sido expulsado de {{clanName}}!",
+		"warDeclaredPublic": "¡{{clanName}} ha declarado la guerra a {{enemyClanName}}!",
+		"warDeclaredPrivate": "¡{{clanName}} te ha declarado la guerra!",
+		"peaceAcceptedPublic": "¡{{clanName}} ha aceptado la oferta de paz para terminar la guerra con {{enemyClanName}}!",
+		"peaceAcceptedPrivate": "¡{{clanName}} ha aceptado la oferta de paz para terminar la guerra!",
+		"peaceOfferedPublic": "¡{{clanName}} ha ofrecido paz para terminar la guerra con {{enemyClanName}}!",
+		"peaceOfferedPrivate": "¡{{clanName}} ha ofrecido paz para terminar la guerra!"
+	},
+	"spells": {
+		"general": {
+			"failPublic": "{{caster}} intentó lanzar {{spell}} sobre {{target}} y falló.",
+			"failPrivate": "{{caster}} intentó lanzar {{spell}} contra ti y falló."
+		},
+		"blast": {
+			"shieldedPublic": "{{caster}} lanzó {{spell}} sobre {{target}}.",
+			"shieldedPrivate": "{{caster}} lanzó {{spell}} contra ti. Tu escudo te protegió. Eliminaron el 1% de tus fuerzas.",
+			"successPublic": "{{caster}} lanzó {{spell}} sobre {{target}}.",
+			"successPrivate": "{{caster}} lanzó {{spell}} contra ti y eliminó el 2% de tus fuerzas."
+		},
+		"fight": {
+			"successPrivate": "{{attacker}} te atacó con {{unitType}} y capturó {{landCaptured}} acres de tierra. En la batalla perdiste: {{losses}} {{defenderUnitType}}. Mataste: {{kills}} {{attackerUnitType}}",
+			"successPublic": "{{attacker}} atacó a {{defender}} con {{unitType}} y capturó {{landCaptured}} acres de tierra. En la batalla {{defender}} perdió: {{defenderLosses}} {{defenderUnitType}}. {{attacker}} perdió: {{attackerLosses}} {{attackerUnitType}}",
+			"failPrivate": "Defendiste exitosamente tu imperio. {{attacker}} te atacó con {{unitType}}. En la batalla perdiste: {{losses}} {{defenderUnitType}}. Mataste: {{kills}} {{attackerUnitType}}",
+			"failPublic": "{{defender}} defendió exitosamente su imperio contra {{attacker}}. En la batalla {{defender}} perdió: {{defenderLosses}} {{defenderUnitType}}. {{attacker}} perdió: {{attackerLosses}} {{attackerUnitType}}"
+		},
+		"struct": {
+			"shieldedPrivate": "{{attacker}} lanzó {{spell}} contra ti. Tu escudo te protegió pero {{buildings}} edificios fueron destruidos.",
+			"shieldedPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"successPrivate": "{{attacker}} lanzó {{spell}} contra ti y destruyó {{buildings}} edificios.",
+			"successPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}."
+		},
+		"storm": {
+			"shieldedPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"shieldedPrivate": "{{attacker}} lanzó {{spell}} contra ti. Tu escudo te protegió pero destruyeron ${{cash}} y {{food}} {{foodUnit}}.",
+			"successPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"successPrivate": "{{attacker}} lanzó {{spell}} contra ti y destruyó ${{cash}} y {{food}} {{foodUnit}}."
+		},
+		"steal": {
+			"shieldedPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"shieldedPrivate": "{{attacker}} lanzó {{spell}} contra ti. Tu escudo te protegió pero robaron ${{cash}}.",
+			"successPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"successPrivate": "{{attacker}} lanzó {{spell}} contra ti y robó ${{cash}}."
+		},
+		"runes": {
+			"shieldedPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"shieldedPrivate": "{{attacker}} lanzó {{spell}} contra ti. Tu escudo te protegió pero eliminaron {{runes}} {{runeType}}.",
+			"successPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}}.",
+			"successPrivate": "{{attacker}} lanzó {{spell}} contra ti y eliminó {{runes}} {{runeType}}."
+		},
+		"spy": {
+			"successPublic": "{{attacker}} lanzó {{spell}} sobre {{defender}} y vio la información de su imperio.",
+			"successPrivate": "{{attacker}} lanzó {{spell}} contra ti y vio la información de tu imperio."
+		}
+	}
+}

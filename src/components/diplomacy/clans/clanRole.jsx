@@ -13,7 +13,7 @@ export default function ClanRole({ member, role, clan })
 {
     const { empire } = useSelector((state) => state.empire)
     const loadEmpire = useLoadEmpire(empire.uuid)
-    const { t } = useTranslation(['diplomacy'])
+    const { t, i18n } = useTranslation(['diplomacy'])
     // if you are the leader, you can promote to assistant, demote to member, or remove from clan
     // console.log(clan)
     // console.log(member)
@@ -29,7 +29,7 @@ export default function ClanRole({ member, role, clan })
     const promote = async () =>
     {
         try {
-            const res = await Axios.post('/clans/assignRole', { memberId: member.id, clanRole: 'assistant', empireId: empire.id })
+            const res = await Axios.post(`/clans/assignRole?lang=${i18n.language}`, { memberId: member.id, clanRole: 'assistant', empireId: empire.id })
             // console.log(res)
             loadEmpire()
         } catch (error) {
@@ -40,7 +40,7 @@ export default function ClanRole({ member, role, clan })
     const demote = async () =>
     {
         try {
-            const res = await Axios.post('/clans/removeRole', { memberId: member.id, clanRole: role.toLowerCase(), empireId: empire.id })
+            const res = await Axios.post(`/clans/removeRole?lang=${i18n.language}`, { memberId: member.id, clanRole: role.toLowerCase(), empireId: empire.id })
             // console.log(res)
             loadEmpire()
         } catch (error) {
@@ -51,7 +51,7 @@ export default function ClanRole({ member, role, clan })
     const remove = async () =>  
     {
         try {
-            const res = await Axios.post(`/clans/kick?gameId=${empire.game_id}`, { empireId: member.id })
+            const res = await Axios.post(`/clans/kick?gameId=${empire.game_id}?lang=${i18n.language}`, { empireId: member.id })
             // console.log(res)
             loadEmpire()
         } catch (error) {

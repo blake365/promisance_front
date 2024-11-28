@@ -8,6 +8,7 @@ import { Sword, Handshake } from '@phosphor-icons/react'
 import { useSelector } from 'react-redux'
 import { useLoadEmpire } from '../../../hooks/useLoadEmpire'
 import { showNotification } from '@mantine/notifications'
+import { useTranslation } from 'react-i18next'
 
 const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
 {
@@ -16,7 +17,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
     const [opened, { toggle }] = useDisclosure(false);
     const [loading, setLoading] = useState(false)
     const [members, setMembers] = useState([])
-
+    const { t, i18n } = useTranslation(['diplomacy'])
     const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 
     // console.log(clan.clan)
@@ -54,17 +55,17 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
     {
         console.log('declaring war');
         try {
-            const res = await Axios.post('/clans/declareWar', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId });
+            const res = await Axios.post(`/clans/declareWar?lang=${i18n.language}`, { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId });
             console.log(res);
             showNotification({
-                title: 'War Declared!',
+                title: t('diplomacy:clans.warDeclared'),
                 color: 'red',
             });
             loadEmpire();
         } catch (error) {
             console.log(error);
             showNotification({
-                title: 'Error Declaring War',
+                title: t('diplomacy:clans.errorDeclaringWar'),
                 color: 'orange',
             });
         }
@@ -74,11 +75,11 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
     {
         console.log('offering peace')
         try {
-            const res = await Axios.post('/clans/offerPeace', { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
+            const res = await Axios.post(`/clans/offerPeace?lang=${i18n.language}`, { clanId: myClan.id, enemyClanId: clan.clan.id, empireId: empireId })
             console.log(res.data)
             // return res.data
             showNotification({
-                title: 'Peace Offered!',
+                title: t('diplomacy:clans.peaceOffered'),
                 color: 'green',
             })
             loadEmpire()
@@ -86,7 +87,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
         catch (error) {
             console.log(error)
             showNotification({
-                title: 'Error Offering Peace',
+                title: t('diplomacy:clans.errorOfferingPeace'),
                 color: 'orange',
             })
         }
@@ -182,7 +183,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                                         <ThemeIcon size="md" radius="sm" color='red' >
                                             <Sword />
                                         </ThemeIcon>
-                                        <Text color='green' weight='bold'>You have offered peace</Text>
+                                        <Text color='green' weight='bold'>{t('diplomacy:clans.youOfferedPeace')}</Text>
                                     </Group>
                                 ) : (
                                     peaceOfferedEnemy ? (<Group ml='lg'>
@@ -193,7 +194,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                                         {
                                             offerPeace()
                                         }}>
-                                            Accept Peace
+                                            {t('diplomacy:clans.acceptPeace')}
                                         </Button>
                                     </Group>) : (
                                         <Group ml='lg'>
@@ -204,7 +205,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                                             {
                                                 offerPeace()
                                             }}>
-                                                Offer Peace
+                                                {t('diplomacy:clans.offerPeace')}
                                             </Button>
                                         </Group>
                                     )
@@ -213,7 +214,7 @@ const ClanCard = ({ index, clan, officer, myClan, empireId, scores }) =>
                                 {
                                     declareWar()
                                 }}>
-                                    Declare War
+                                    {t('diplomacy:clans.declareWar')}
                                 </Button>
                             )}
                         </Group>)}

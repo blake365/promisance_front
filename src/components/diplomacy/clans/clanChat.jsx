@@ -11,7 +11,7 @@ const getMessages = async (body) =>
     // console.log(body)
 
     try {
-        const res = await Axios.post(`/messages/clan`, body)
+        const res = await Axios.post('/messages/clan', body)
         const data = res.data
         // console.log(data)
 
@@ -21,7 +21,7 @@ const getMessages = async (body) =>
             // console.log(body.reader === lastMessage.empireId)
             // console.log(data)
             if (body.reader !== lastMessage.empireId) {
-                await Axios.post(`/messages/clan/read`, { clanId: body.clanId, empireId: body.reader })
+                await Axios.post('/messages/clan/read', { clanId: body.clanId, empireId: body.reader })
             }
         }
         return data

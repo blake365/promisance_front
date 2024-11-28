@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { IconBrandGoogle } from '@tabler/icons-react'
 import { useLocalStorage } from '@mantine/hooks'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = createStyles(() => ({
 	form: {
@@ -23,7 +24,7 @@ export default function Signup()
 {
 	const dispatch = useDispatch()
 	const { classes } = useStyles();
-
+	const { t, i18n } = useTranslation(['auth'])
 	const [error, setError] = useState(null)
 	const { isLoggedIn, user } = useSelector((state) => state.user)
 	// let { empire } = useSelector((state) => state.empire)
@@ -48,7 +49,7 @@ export default function Signup()
 			email: '',
 			username: '',
 			password: '',
-
+			language: i18n.language,
 		},
 
 		validationRules: {
@@ -57,8 +58,8 @@ export default function Signup()
 		},
 
 		errorMessages: {
-			email: 'Invalid email address',
-			password: 'Password must be at least 6 characters',
+			email: t('auth:invalidEmail'),
+			password: t('auth:password'),
 		},
 	})
 
@@ -77,7 +78,7 @@ export default function Signup()
 				<Stack align='center'>
 					<Paper className={classes.form} radius={0} >
 						<Title order={2} ta="center" mt={90} mb={50}>
-							Register Account
+							{t('auth:register')}
 						</Title>
 
 						<form
@@ -109,7 +110,7 @@ export default function Signup()
 								{...form.getInputProps('username')}
 								mt='md'
 							/>
-							<Text size='sm' my={0} color='dimmed' align='left'>username is case sensitive</Text>
+							<Text size='sm' my={0} color='dimmed' align='left'>{t('auth:username')}</Text>
 							<PasswordInput
 								label='Password'
 								placeholder=''
@@ -119,19 +120,19 @@ export default function Signup()
 								mt='md'
 							/>
 							<Text ta="center" mt="md">
-								By registering an account, you agree to abide by the <Anchor component={Link} to='/rules'>game rules</Anchor>.
+								{t('auth:disclaimer')} <Anchor component={Link} to='/rules'>{t('auth:gameRules')}</Anchor>.
 							</Text>
 							<Text color='red' align='center' mt='md'>{error && Object.values(error)[0]}</Text>
-							<Button fullWidth mt="md" size="md" type='submit'>Register</Button>
+							<Button fullWidth mt="md" size="md" type='submit'>{t('auth:registerButton')}</Button>
 							<Button component='a' href={import.meta.env.PROD ? 'https://api.neopromisance.com/api/auth/auth/google' : 'http://localhost:5001/api/auth/auth/google'} mt="md" fullWidth size="md" color='blue' leftIcon={<IconBrandGoogle />}>
-								Login with Google
+								{t('auth:googleButton')}
 							</Button>
 						</form>
 						<Text ta="center" mt="md">
-							Already have an account? <Anchor component={Link} to='/login'>Login</Anchor>
+							{t('auth:alreadyHaveAccount')} <Anchor component={Link} to='/login'>{t('auth:login')}</Anchor>
 						</Text>
 						<Text ta="center" mt="md">
-							<Anchor component={Link} to='/'>Return Home</Anchor>
+							<Anchor component={Link} to='/'>{t('auth:returnHome')}</Anchor>
 						</Text>
 					</Paper>
 				</Stack>

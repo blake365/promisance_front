@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useLocalStorage } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles(() => ({
     form: {
@@ -39,6 +40,7 @@ export default function ForgotUsername()
     const [error, setError] = useState(null)
     const [message, setMessage] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const { t, i18n } = useTranslation(['auth'])
 
     const navigate = useNavigate()
 
@@ -64,7 +66,7 @@ export default function ForgotUsername()
 
     const submitReset = async (values) =>
     {
-        const res = await Axios.post('/auth/forgot-username', values)
+        const res = await Axios.post(`/auth/forgot-username?language=${i18n.language}`, values)
         console.log(res)
         if (res.data.message) {
             setMessage(res.data.message)
@@ -88,10 +90,10 @@ export default function ForgotUsername()
                 <Stack align='center'>
                     <Paper className={classes.form} radius={0} >
                         <Title order={2} ta="center" mt={90} mb={10}>
-                            Forgot Your Username?
+                            {t('auth:forgotUsernameTitle')}
                         </Title>
                         <Text ta="center" mb={50}>
-                            Enter your email below.
+                            {t('auth:forgotPasswordText')}
                         </Text>
                         <form onSubmit={form.onSubmit((values) =>
                         {
@@ -103,18 +105,18 @@ export default function ForgotUsername()
                             <TextInput required label="Email" placeholder="" size="md" {...form.getInputProps('email')} />
                             <Text color='red' align='center' mt='md'>{error && error}</Text>
                             <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
-                                Request Username
+                                {t('auth:forgotUsernameButton')}
                             </Button>
                             <Text color='green' weight='bold' align='center' mt='md'>{message && message}</Text>
                         </form>
                         <Text ta="center" mt="md">
-                            Return to <Anchor component={Link} to='/login'>Login</Anchor>
+                            {t('auth:returnTo')} <Anchor component={Link} to='/login'>{t('auth:loginButton')}</Anchor>
                         </Text>
                         <Text ta="center" mt="md">
-                            Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
+                            {t('auth:needAccount')} <Anchor component={Link} to='/register'>{t('auth:registerButton')}</Anchor>
                         </Text>
                         <Text ta="center" mt="md">
-                            <Anchor component={Link} to='/'>Return Home</Anchor>
+                            <Anchor component={Link} to='/'>{t('auth:returnHome')}</Anchor>
                         </Text>
                     </Paper>
                 </Stack>
