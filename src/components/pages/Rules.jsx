@@ -1,39 +1,50 @@
-import { Container, ColorSchemeProvider, MantineProvider } from '@mantine/core'
-import FooterSocial from '../layout/footer'
-import { SlimHero } from './slimHero';
-import { useLocalStorage } from '@mantine/hooks';
+import { Container, ColorSchemeProvider, MantineProvider } from "@mantine/core"
+import FooterSocial from "../layout/footer"
+import { SlimHero } from "./slimHero"
+import { useLocalStorage } from "@mantine/hooks"
+import { useTranslation } from "react-i18next"
 
-const GameRules = () =>
-{
-    const [colorScheme, setColorScheme] = useLocalStorage({
-        key: 'prom-color-scheme',
-        defaultValue: 'dark'
-    });
-    const toggleColorScheme = (value) =>
-        setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+const GameRules = () => {
+	const [colorScheme, setColorScheme] = useLocalStorage({
+		key: "prom-color-scheme",
+		defaultValue: "dark",
+	})
+	const toggleColorScheme = (value) =>
+		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"))
+	const { t } = useTranslation(["pages"])
 
-    return (
-        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-            <MantineProvider theme={{ colorScheme }} withGlobalStyles>
-                <SlimHero />
-                <Container size='lg' mt='lg'>
-                    <h2>Terms of Engagement for NeoPromisance</h2>
-                    <p>Upon creating an empire in our games, you consent to the following guidelines:</p>
-                    <ol>
-                        <li>One user account per player is permitted, which can be used to establish a single empire on each server. Utilizing additional accounts to create more empires may lead to those accounts being deactivated.</li>
-                        <li>Should you anticipate multiple users at your location (like family members or colleagues) also participating in the game, we advise informing an in-game empire <a href='mailto:admin@neopromisance.com'>administrator</a> to prevent misunderstandings regarding the multi-account rule. Neglecting this could lead to assumptions of rule violation and potential account deactivation.</li>
-                        <p>NOTE: The administration may limit access to one user account per location if misusage of multiple accounts is suspected.</p>
-                        <li>Inappropriate or offensive names for empires, clans, or profiles are strictly prohibited. Such content may be removed or altered without prior notification.</li>
-                        <li>Harassing or offensive messages within the game are forbidden. To report such behavior from another player, please use the report button on the offending message.</li>
-                        <li>Automating gameplay actions is prohibited. Empires found violating this rule are subject to deletion or disabling.</li>
-                        <li>If you discover a bug, please report it to an administrator or through the Discord server. Exploiting bugs for personal gain in the game may lead to your empire being disabled. If you would like to contribute a bug fix, open a pull request on Github.</li>
-                        <li>Failure to adhere to these rules may result in consequences ranging from warnings to permanent exclusion from the game, based on the nature and frequency of the violations.</li>
-                    </ol>
-                </Container>
-                <FooterSocial />
-            </MantineProvider>
-        </ColorSchemeProvider>
-    );
+	return (
+		<ColorSchemeProvider
+			colorScheme={colorScheme}
+			toggleColorScheme={toggleColorScheme}
+		>
+			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
+				<SlimHero />
+				<Container size="lg" mt="lg">
+					<h2>{t("pages:rules.title")}</h2>
+					<p>{t("pages:rules.text")}</p>
+					<ol>
+						<li>{t("pages:rules.rule1")}</li>
+						<li>
+							{t("pages:rules.rule2")}{" "}
+							<a href="mailto:admin@neopromisance.com">
+								{t("pages:rules.admin")}
+							</a>{" "}
+							{t("pages:rules.rule3b")}
+						</li>
+						<p>{t("pages:rules.rule3c")}</p>
+						<li>{t("pages:rules.rule4")}</li>
+						<li>{t("pages:rules.rule5")}</li>
+						<li>{t("pages:rules.rule6")}</li>
+						<li>{t("pages:rules.rule7")}</li>
+						<li>{t("pages:rules.rule8")}</li>
+						<li>{t("pages:rules.rule9")}</li>
+					</ol>
+				</Container>
+				<FooterSocial />
+			</MantineProvider>
+		</ColorSchemeProvider>
+	)
 }
 
 export default GameRules

@@ -6,8 +6,8 @@
 		"compact": "Compact"
 	},
 	"general": {
-		"flavorText": "For each turn you spend {flavor}, your empire produces 25% more {item}.",
-		"spend": "Spend how many turns {flavor}?",
+		"flavorText": "For each turn you spend {{flavor}}, your empire produces 25% more {{item}}.",
+		"spend": "Spend how many turns {{flavor}}?",
 		"condensed": "Condensed",
 		"error": "Invalid number of turns",
 		"refresh": "Refresh Data",
@@ -18,12 +18,12 @@
 		"title": "Explore",
 		"flavor": "exploring",
 		"item": "acres",
-		"flavorText": "For each turn you spend {flavor}, your empire will grow by {explore} {item}."
+		"flavorText": "For each turn you spend {{flavor}}, your empire will grow by {{explore}} {{item}}."
 	},
 	"heal": {
 		"title": "Heal",
 		"flavor": "using turns",
-		"flavorText": "Using turns in any way will heal your empire but for each turn you spend {flavor}, your empire will heal an additional percentage point. Your resource production will be reduced to 66% of its baseline value."
+		"flavorText": "Using turns in any way will heal your empire but for each turn you spend {{flavor}}, your empire will heal an additional percentage point. Your resource production will be reduced to 66% of its baseline value."
 	},
 	"farm": {
 		"title": "Farm",

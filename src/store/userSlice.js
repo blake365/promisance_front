@@ -14,7 +14,7 @@ export const register = createAsyncThunk(
 	'user/register',
 	async (values, thunkAPI) => {
 		try {
-			const response = await Axios.post(`/auth/register?language=${values.language}`, values)
+			const response = await Axios.post(`/auth/register?lang=${values.language}`, values)
 			// console.log(response)
 			let data = response.data
 			console.log('data', data)
@@ -44,7 +44,7 @@ export const login = createAsyncThunk(
 	async (values, thunkAPI) => {
 		try {
 			// console.log(values)
-			const res = await Axios.post(`/auth/login?language=${values.language}`, values)
+			const res = await Axios.post(`/auth/login?lang=${values.language}`, values)
 			// console.log(res)
 			let data = res.data
 			return { user: data }
