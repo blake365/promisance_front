@@ -1,28 +1,60 @@
-import { eraArray } from '../../../config/eras'
-import GuideLink from '../../utilities/guidelink'
-import { useSelector } from 'react-redux'
+import { eraArray } from "../../../config/eras"
+import GuideLink from "../../utilities/guidelink"
+import { useSelector } from "react-redux"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function IndyGuide({ empire })
-{
-    const { turnsMax } = useSelector((state) => state.games.activeGame)
+export default function IndyGuide({ empire }) {
+	const { turnsMax } = useSelector((state) => state.games.activeGame)
+	const { t } = useTranslation(["guide", "eras"])
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
 
-            <h2>Industrialist Strategy</h2>
+			<h2>{t("guide:guide.content.indy.title")}</h2>
 
-            <p>As an Indy (Industrialist), your primary goal is to produce troops and sell them to other players. Your troops will be in high demand from other players looking to expand their armies. </p>
+			<p>{parseGuideLinks(t("guide:guide.content.indy.description"))}</p>
 
-            <h3>Set up</h3>
-            <p>The best <GuideLink text='races' page='Race' /> for an Indy strategy are Dwarf, Orc, or Goblin due to their industry bonus. Indys are also best suited for the <GuideLink text={eraArray[2].name} page='Era' /> due to the {eraArray[2].mod_industry}% increase to industry output. Players should aim to advance to this era as soon as possible.</p>
-            <p>Indys need to focus on a few building types: {eraArray[empire.era].bldtrp}, {eraArray[empire.era].bldcost} and {eraArray[empire.era].bldwiz}. {eraArray[empire.era].bldtrp} produces new troops. {eraArray[empire.era].bldcost} reduce the upkeep cost of troops and reduce the prices on the <GuideLink text='black market' page='Black%20Market' />. {eraArray[empire.era].bldwiz} are needed in small quantities to advance eras and protect yourself from magical attacks with {eraArray[empire.era].spell_shield}. </p>
-            <h3>Using Turns</h3>
-            <p>In order to produce the most troops you can, you will need a lot of land. Start your session with full turns ({turnsMax}). Use your initial turns attacking other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and build. Build {eraArray[empire.era].bldtrp} so that they make up around 85% of your buildings. After you build, <GuideLink text='indy' page='Industry' /> until you are back to 100% health. Repeat this process until you are out of attacks. </p>
-            <p>Now that you have a lot of land and {eraArray[empire.era].bldtrp}, focus the rest of your time producing troops. Don't forget to cast a spell shield before you run out of turns. If you start to run low on cash or food, you can sell some troops on the black market for quick cash. </p>
-            <p>Take excess troops you just made and sell them on the <GuideLink text='public market' page='Public%20Market' /> for a reasonable price. If they are too expensive, other players may not want to buy them. If they are too cheap, you will not make as much money as you could have. It can be good to sell troops in batches at different price points to see what works best.
-            </p>
-            <p>Hopefully when you return to use more turns, someone will have purchased your troops. The cash you made will be in your <GuideLink text='bank' page='The%20Bank' /> account. Use the proceeds to purchase food and keep some left over for expenses. </p>
-        </div>
-    )
+			<h3>{t("guide:guide.content.indy.setup.title")}</h3>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.indy.setup.raceRecommendation", {
+						futureEra: eraArray[2].name,
+						industryBonus: eraArray[2].mod_industry,
+					}),
+				)}
+			</p>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.indy.setup.buildings", {
+						militaryBuilding: t(`eras:eras.${eraName}.bldtrp`),
+						barracksBuilding: t(`eras:eras.${eraName}.bldcost`),
+						wizardBuilding: t(`eras:eras.${eraName}.bldwiz`),
+						spellShield: t(`eras:eras.${eraName}.spell_shield`),
+					}),
+				)}
+			</p>
+
+			<h3>{t("guide:guide.content.indy.turnsUsage.title")}</h3>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.indy.turnsUsage.initialPhase", {
+						maxTurns: turnsMax,
+						militaryBuilding: t(`eras:eras.${eraName}.bldtrp`),
+					}),
+				)}
+			</p>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.indy.turnsUsage.troopProduction", {
+						militaryBuilding: t(`eras:eras.${eraName}.bldtrp`),
+					}),
+				)}
+			</p>
+			<p>{parseGuideLinks(t("guide:guide.content.indy.turnsUsage.selling"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.indy.turnsUsage.profits"))}</p>
+		</div>
+	)
 }

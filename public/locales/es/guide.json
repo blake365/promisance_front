@@ -1,0 +1,1424 @@
+{
+	"guide": {
+		"sections": {
+			"gettingStarted": "Primeros Pasos",
+			"basicStrategies": "Estrategias Básicas",
+			"information": "Información",
+			"spendingTurns": "Usar Turnos",
+			"finance": "Finanzas",
+			"diplomacy": "Diplomacia",
+			"management": "Gestión",
+			"race": "Razas",
+			"protection": "Protección"
+		},
+		"pages": {
+			"newPlayer": "Consejos Personalizados",
+			"introduction": "Introducción",
+			"buildings": "Estructuras",
+			"military": "Unidades Militares",
+			"race": "Razas",
+			"era": "Períodos de Tiempo",
+			"protection": "Protección",
+			"farmer": "Granjero",
+			"indy": "Industrialista",
+			"casher": "Comerciante",
+			"mage": "Mago",
+			"summary": "Resumen del Imperio",
+			"overview": "Vista Detallada",
+			"scores": "Lista de Puntuaciones",
+			"clanStats": "Estadísticas del Clan",
+			"mailbox": "Buzón",
+			"worldNews": "Noticias Mundiales",
+			"farm": "Enfoque Agrícola",
+			"cash": "Enfoque Económico",
+			"explore": "Exploración",
+			"industry": "Enfoque Industrial",
+			"healing": "Enfoque en Curación",
+			"meditate": "Meditar",
+			"magicCenter": "Lanzar Hechizos",
+			"build": "Construcción",
+			"demolish": "Demolición",
+			"favorites": "Favoritos",
+			"blackMarket": "Mercado Negro",
+			"publicMarket": "Mercado Público",
+			"worldBank": "El Banco",
+			"lottery": "Lotería",
+			"clans": "Clanes",
+			"warCouncil": "Tu Ejército",
+			"intelCenter": "Centro de Inteligencia",
+			"foreignAid": "Ayuda Extranjera",
+			"empireSettings": "Configuración del Imperio",
+			"achievements": "Logros"
+		},
+		"content": {
+			"common": {
+				"return": "Volver al Índice"
+			},
+			"introduction": {
+				"title": "Introducción",
+				"mainGoal": "Como líder de un imperio recién fundado, tu objetivo es convertirte en supremo sobre todos los demás. Usando todo, desde la [diplomacia](Clans) hasta la [guerra](WarCouncil), debes esforzarte por construir un imperio más rico que todos los demás. A través de todo esto, competirás contra cientos o miles de otros jugadores, todos con el mismo objetivo.",
+				"aboutTurns": {
+					"title": "Sobre los Juegos por Turnos",
+					"description": "NeoPromisance es un juego por turnos - es decir, hay un límite en la frecuencia con la que tu imperio puede avanzar o interactuar con otros.",
+					"turnGeneration": "En NeoPromisance, recibes {{turnsCount}} turnos cada {{turnsFreq}} minutos. Solo puedes acumular {{turnsMax}} turnos a la vez - si recibes más, irán a tus [Turnos Almacenados](Summary), de los cuales puedes tener hasta {{turnsStored}}; cada vez que recibas turnos adicionales, 1 de tus turnos almacenados será liberado para que lo uses.",
+					"turnUsage": "Todas las acciones listadas en la sección \"Usar Turnos\" del menú lateral consumirán un número variable de turnos cuando las realices - las opciones de [dinero](Cash), [granja](Farm) y [exploración](Explore) te permiten especificar cuánto tiempo gastar, mientras que [construir](Build) y [demoler](Demolish) consumen turnos según la rapidez con la que tu imperio pueda realizar estas acciones.",
+					"combatTurns": "Atacar a un imperio en el [Consejo de Guerra](WarCouncil), enviar [ayuda](ForeignAid) o lanzar un [hechizo](MagicCenter) (ya sea sobre ti mismo o sobre otro imperio) consume 2 turnos.",
+					"freeTurns": "Otras acciones, como participar en el [Mercado Negro](BlackMarket) o [Mercado Público](PublicMarket), unirse o gestionar un [clan](Clans), gestionar la [configuración de tu imperio](EmpireSettings) o enviar mensajes a otros imperios en el [buzón](Mailbox), no consumen turnos.",
+					"maintenance": "Cada vez que uses un turno, tu imperio recaudará impuestos de sus ciudadanos y cosechará alimentos. Los ingresos fiscales se gastarán en mantener tu imperio y su ejército, y la comida se usará para alimentar a tu población. Ten cuidado de no quedarte sin dinero o comida - mientras que el [banco](WorldBank) puede ayudarte con lo primero, lo segundo puede tener resultados desastrosos.",
+					"protection": "Cuando tu imperio es creado por primera vez, se coloca bajo [protección](Protection) para que otros imperios no puedan dañarlo durante sus etapas iniciales de desarrollo. Durante este período de protección, tu imperio tampoco puede atacar a otros, enviar ayuda extranjera o participar en el Mercado Público. Una vez que hayas usado {{turnsProtection}} turnos, la protección se levantará y tu imperio quedará expuesto al resto del mundo. Sin embargo, cuando se acerque el final de la ronda, esta protección será eliminada."
+				},
+				"statusBar": {
+					"title": "La Barra de Estado",
+					"description": "En la parte superior e inferior de cada página está tu Barra de Estado. Esto te permite verificar rápidamente las estadísticas cruciales de tu imperio. Puedes encontrar explicaciones detalladas de todas estas estadísticas en las páginas de [Resumen del Imperio](Summary) y [Vista Detallada](Overview).",
+					"stats": {
+						"turnsTitle": "Turnos",
+						"turns": "Cuántos turnos tienes disponibles para usar. Ve tu historial de turnos y el tiempo del próximo turno en el [Resumen del Imperio](Summary).",
+						"networthTitle": "Valor Neto",
+						"networth": "El valor estimado de tu imperio, teniendo en cuenta todos los activos significativos. Esto determina tu rango en la página de [Puntuaciones](Scores).",
+						"landTitle": "Tierra",
+						"land": "El tamaño actual de tu imperio. Puedes ganar más tierra mediante la [exploración](Explore) o [atacando](WarCouncil) a otros imperios.",
+						"cashTitle": "Efectivo",
+						"cash": "La cantidad de dinero que tu imperio tiene a mano, sin contar los fondos que puedas tener guardados en el [banco](WorldBank).",
+						"food": "La cantidad de comida que tu imperio tiene almacenada. ¡Sin comida, tus ciudadanos y ejército morirán de hambre! Puedes producir más mediante la [agricultura](Farm) o comprarla en el [Mercado Público](PublicMarket).",
+						"runes": "La cantidad de {{runeType}} que los {{wizardType}} de tu imperio tienen disponible para lanzar [hechizos](MagicCenter). Puedes generar más [meditando](Meditate).",
+						"healthTitle": "Salud",
+						"health": "La salud y felicidad de los ciudadanos y ejército de tu imperio. Puedes mejorar esto mediante la [curación](Healing) o bajando tu [tasa de impuestos](Cash)."
+					}
+				},
+				"otherIcons": {
+					"title": "Otros Iconos",
+					"description": "Debajo de la barra de estado se mostrarán iconos para cualquier efecto de estado que enfrente tu imperio. Los iconos mostrarán cuánto tiempo queda y mostrarán el nombre y el tiempo restante cuando se pase el cursor o se toque. También hay enlaces a tu [buzón](Mailbox) y [Noticias](WorldNews) que mostrarán un indicador si hay algo nuevo."
+				}
+			},
+			"newPlayer": {
+				"title": "Consejos Personalizados",
+				"protection": "Eres el fundador de un nuevo imperio en el mundo de Promisance. Estás en el período de protección hasta que hayas usado {{turnsProtection}} turnos. Esto significa que no puedes ser atacado por otros jugadores. Puedes usar este tiempo para aprender el juego y desarrollar tu imperio.",
+				"newPlayerGuide": "Si eres nuevo en el juego, los Recorridos y la Gua del Juego te serán muy útiles. Cada página tiene un enlace a la Guía que te llevará a la sección relevante. Los Recorridos están disponibles en las páginas de Construcción y Consejo de Guerra.",
+				"goal": "Tu objetivo es desarrollar tu imperio y convertirte en el imperio más poderoso del mundo. Para esto necesitarás desarrollar tu tierra y ejército, pero hay muchos caminos hacia la victoria. Puedes enfocarte en desarrollar tu economía, tu ejército, tu magia o tu producción de alimentos. También puedes enfocarte en una combinación de estas cosas.",
+				"magicTip": "Incluso si no estás usando una estrategia basada en magia, deberías construir algunos {{wizardBuilding}}. Esto te permitirá lanzar hechizos en el Centro de Magia que te ayudarán de muchas maneras, como lanzar un Escudo Mágico, Avanzar Eras y abrir Portales Temporales.",
+				"raceTraits": {
+					"intro": "Como {{raceName}} tu pueblo es más fuerte en {{strength}}",
+					"human": "ser generalista. Puedes ir en cualquier dirección con tu imperio. Tu pueblo puede tener éxito en cualquier era.",
+					"elf": "magia. Deberías enfocar tus edificios en Torres de Magos, usar turnos en Meditar y lanzar hechizos en el Centro de Magia. Tu pueblo es más apto para la era del Pasado.",
+					"dwarf": "industria. Deberías enfocar tus edificios en Herrerías y usar turnos en Industria. Tu pueblo es más apto para la era del Futuro.",
+					"orc": "industria y militar. Deberías enfocar tus edificios en Herrerías y usar turnos en Industria. Tu pueblo es más apto para la era del Futuro.",
+					"gnome": "economía y mercados. Deberías enfocar tus edificios en Chozas y Mercados, usar turnos en Efectivo, comprar cosas del Mercado Negro. Tu pueblo es más apto para la era del Futuro.",
+					"troll": "militar. Deberías enfocar tus edificios en Herrerías, Chozas y Mercados, y usar tu bonificación de ataque para ganar batallas. Tu pueblo es más apto para la era del Futuro.",
+					"drow": "magia y militar. Deberías enfocar tus edificios en Torres de Magos, usar turnos en Meditar y lanzar hechizos en el Centro de Magia. Tu pueblo es más apto para la era del Pasado.",
+					"gremlin": "producción de alimentos. Deberías enfocar tus edificios en Granjas, usar turnos en Granja, vender tu comida en el Mercado Público. Tu pueblo es más apto para la era del Presente.",
+					"goblin": "industria. Deberías enfocar tus edificios en Herrerías y usar tus turnos en Industria. Tu pueblo es más apto para la era del Futuro.",
+					"hobbit": "producción de alimentos. Deberías enfocar tus edificios en Granjas y usar turnos en Granja. Tu pueblo es más apto para la era del Presente.",
+					"ghoul": "producción de alimentos e industria. Deberías enfocar tus edificios en Herrerías y Granjas, y usar tus turnos en Industria o Granja. Tu pueblo es más apto para las eras del Presente y Futuro.",
+					"vampire": "economía e industria. Deberías enfocar tus edificios en Chozas, Mercados y Herrerías, y usar tus turnos en Efectivo o Industria. Tu pueblo es más apto para la era del Futuro.",
+					"minotaur": "militar y economía. Deberías enfocar tus edificios en Chozas y Mercados, y usar tus bonificaciones de ataque y defensa para ganar batallas. Tu pueblo es más apto para la era del Futuro.",
+					"pixie": "magia y economía. Deberías enfocar tus edificios en Torres de Magos, Chozas y Mercados, usar turnos en Meditar o Efectivo, y lanzar hechizos en el Centro de Magia. Ten cuidado con tus bajas estadísticas de ataque y defensa. Tu pueblo es más apto para la era del Pasado."
+				}
+			},
+			"military": {
+				"title": "Unidades Militares",
+				"description": "Tu ejército sirve no solo para proteger a tu imperio del daño, sino también para atacar a otros que te amenacen.",
+				"eraButtons": {
+					"past": "Pasado",
+					"present": "Presente",
+					"future": "Futuro"
+				},
+				"units": {
+					"armored": {
+						"name": "{{unitName}}",
+						"description": "La unidad militar básica utilizada en Ataques de Guerrilla. No es la unidad más fuerte, pero con un precio más económico, estas pueden ser movilizadas en grandes grupos para causar bastante daño a tu enemigo.",
+						"stats": "Costo base ${{cost}}, poder ofensivo {{offense}}, poder defensivo {{defense}}."
+					},
+					"land": {
+						"name": "{{unitName}}",
+						"description": "Una unidad fuerte de {{primaryStrength}} utilizada en Ataques de Asedio. Puede ser utilizada en ataques para ganar tierra de tus enemigos.",
+						"stats": "Costo base ${{cost}}, poder ofensivo {{offense}}, poder defensivo {{defense}}."
+					},
+					"air": {
+						"name": "{{unitName}}",
+						"description": "Un Ataque Aéreo a veces es la mejor opción; estas unidades también pueden capturar tierra en ataques especiales y tienen ventaja en {{primaryStrength}}.",
+						"stats": "Costo base ${{cost}}, poder ofensivo {{offense}}, poder defensivo {{defense}}."
+					},
+					"sea": {
+						"name": "{{unitName}}",
+						"description": "Esta unidad se usa en Asaltos Costeros, pero no solo se usa con fines militares, ya que se necesita para enviar ayuda extranjera a otros imperios. Con capacidades tanto ofensivas como defensivas fuertes, es la unidad más cara, pero también la más poderosa.",
+						"stats": "Costo base ${{cost}}, poder ofensivo {{offense}}, poder defensivo {{defense}}."
+					}
+				}
+			},
+			"race": {
+				"title": "Razas",
+				"description": "La raza de tu imperio determina sus fortalezas y debilidades. Cada raza tiene diferentes bonificaciones y penalizaciones que afectan varios aspectos del juego.",
+				"races": {
+					"human": {
+						"name": "Humano",
+						"description": "Los humanos son una raza versátil sin fortalezas o debilidades particulares. Son una buena opción para los nuevos jugadores que quieren experimentar con diferentes estrategias."
+					},
+					"elf": {
+						"name": "Elfo",
+						"description": "Los elfos son una raza mágica con una fuerte afinidad por la magia. Son excelentes para estrategias basadas en magia y funcionan mejor en la era del Pasado."
+					},
+					"dwarf": {
+						"name": "Enano",
+						"description": "Los enanos son expertos artesanos con una fuerte afinidad por la industria. Son excelentes para estrategias basadas en la producción y funcionan mejor en la era del Futuro."
+					},
+					"orc": {
+						"name": "Orco",
+						"description": "Los orcos son una raza guerrera con una fuerte afinidad por el combate y la industria. Son excelentes para estrategias militares y de producción."
+					},
+					"gnome": {
+						"name": "Gnomo",
+						"description": "Los gnomos son comerciantes astutos con una fuerte afinidad por la economía. Son excelentes para estrategias basadas en el mercado."
+					},
+					"troll": {
+						"name": "Trol",
+						"description": "Los troles son guerreros feroces con una fuerte afinidad por el combate. Son excelentes para estrategias militares agresivas."
+					},
+					"drow": {
+						"name": "Drow",
+						"description": "Los drow combinan magia y combate. Son excelentes para estrategias que mezclan magia y guerra."
+					},
+					"gremlin": {
+						"name": "Gremlin",
+						"description": "Los gremlins son expertos agricultores. Son excelentes para estrategias basadas en la producción de alimentos."
+					},
+					"goblin": {
+						"name": "Goblin",
+						"description": "Los goblins son industriosos y eficientes. Son excelentes para estrategias basadas en la producción."
+					},
+					"hobbit": {
+						"name": "Hobbit",
+						"description": "Los hobbits son agricultores expertos. Son excelentes para estrategias basadas en la producción de alimentos."
+					},
+					"ghoul": {
+						"name": "Ghoul",
+						"description": "Los ghouls combinan agricultura e industria. Son buenos tanto en la producción de alimentos como en la industria."
+					},
+					"vampire": {
+						"name": "Vampiro",
+						"description": "Los vampiros son expertos en economía e industria. Son excelentes para estrategias que combinan comercio y producción."
+					},
+					"minotaur": {
+						"name": "Minotauro",
+						"description": "Los minotauros combinan fuerza militar y habilidad económica. Son buenos tanto en el combate como en el comercio."
+					},
+					"pixie": {
+						"name": "Pixie",
+						"description": "Los pixies son expertos en magia y comercio, pero son físicamente débiles. Son mejores para estrategias no militares."
+					}
+				}
+			},
+			"protection": {
+				"title": "Protección",
+				"description": "La protección es un estado especial que impide que tu imperio sea atacado por otros jugadores. También impide que tu imperio ataque a otros o participe en ciertas actividades económicas.",
+				"newEmpire": {
+					"title": "Nuevo Imperio",
+					"description": "Cuando creas un nuevo imperio, estás bajo protección hasta que uses {{turnsProtection}} turnos. Durante este tiempo, puedes desarrollar tu imperio sin preocuparte por ataques enemigos."
+				},
+				"limitations": {
+					"title": "Limitaciones",
+					"description": "Mientras estás bajo protección:",
+					"list": [
+						"No puedes ser atacado por otros imperios",
+						"No puedes atacar a otros imperios",
+						"No puedes enviar ayuda extranjera",
+						"No puedes usar el Mercado Público",
+						"No puedes unirte a un clan"
+					]
+				},
+				"endingProtection": {
+					"title": "Fin de la Protección",
+					"description": "La protección termina cuando ocurre cualquiera de estas condiciones:",
+					"list": [
+						"Has usado {{turnsProtection}} turnos",
+						"Te unes a un clan",
+						"Atacas a otro imperio",
+						"La ronda está por terminar"
+					]
+				},
+				"advice": {
+					"title": "Consejos",
+					"description": "Usa tu tiempo bajo protección sabiamente:",
+					"list": [
+						"Construye una base económica sólida",
+						"Desarrolla tu infraestructura militar",
+						"Aprende los conceptos básicos del juego",
+						"Lee la guía y completa los tutoriales"
+					]
+				}
+			},
+			"farmer": {
+				"title": "Granjero",
+				"description": "Los granjeros se especializan en la producción de alimentos. Con una gran cantidad de [granjas](Build) y un enfoque en usar turnos en [agricultura](Farm), pueden producir grandes cantidades de alimentos que pueden vender en el [Mercado Público](PublicMarket) por una ganancia significativa.",
+				"advantages": {
+					"title": "Ventajas",
+					"list": [
+						"Alta producción de alimentos",
+						"Ingresos estables del Mercado Público",
+						"Bajo costo de mantenimiento",
+						"Buena opción para nuevos jugadores"
+					]
+				},
+				"disadvantages": {
+					"title": "Desventajas",
+					"list": [
+						"Vulnerable a ataques",
+						"Crecimiento más lento",
+						"Dependiente del mercado",
+						"Limitado por el espacio de almacenamiento de alimentos"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Como granjero, tu objetivo principal es producir y vender alimentos. Aquí hay algunos consejos:",
+					"buildings": {
+						"title": "Edificios",
+						"description": "Construye principalmente [granjas](Build) con algunos [mercados](Build) y [chozas](Build). Los mercados te ayudarán a vender tu exceso de alimentos, mientras que las chozas proporcionarán ingresos adicionales."
+					},
+					"turns": {
+						"title": "Uso de Turnos",
+						"description": "Usa la mayoría de tus turnos en [agricultura](Farm). Ocasionalmente usa turnos en [efectivo](Cash) para mantener un flujo de efectivo positivo."
+					},
+					"market": {
+						"title": "Mercado",
+						"description": "Vende tu exceso de alimentos en el [Mercado Público](PublicMarket). Mantén los precios competitivos pero rentables."
+					},
+					"defense": {
+						"title": "Defensa",
+						"description": "Mantén algunas unidades militares para la defensa y considera unirte a un [clan](Clans) para protección adicional."
+					}
+				},
+				"races": {
+					"title": "Mejores Razas",
+					"description": "Las mejores razas para una estrategia de granjero son:",
+					"list": [
+						"Gremlin - Bonificación natural a la producción de alimentos",
+						"Hobbit - Excelente producción de alimentos",
+						"Ghoul - Buena combinación de agricultura e industria"
+					]
+				}
+			},
+			"indy": {
+				"title": "Industrialista",
+				"description": "Los industrialistas se centran en la producción y el desarrollo tecnológico. Con muchas [herrerías](Build) y un enfoque en usar turnos en [industria](Industry), pueden crecer rápidamente y mantener un ejército fuerte.",
+				"advantages": {
+					"title": "Ventajas",
+					"list": [
+						"Crecimiento rápido",
+						"Alta producción militar",
+						"Fuerte economía",
+						"Independencia del mercado"
+					]
+				},
+				"disadvantages": {
+					"title": "Desventajas",
+					"list": [
+						"Alto costo de mantenimiento",
+						"Necesita mucho efectivo",
+						"Vulnerable en las primeras etapas",
+						"Requiere gestión activa"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Como industrialista, tu objetivo es maximizar la producción y el desarrollo. Aquí hay algunos consejos:",
+					"buildings": {
+						"title": "Edificios",
+						"description": "Construye principalmente [herrerías](Build) con algunos [mercados](Build) y [chozas](Build). Las herrerías son tu fuente principal de producción."
+					},
+					"turns": {
+						"title": "Uso de Turnos",
+						"description": "Usa la mayoría de tus turnos en [industria](Industry). Alterna con [efectivo](Cash) según sea necesario para mantener tu economía."
+					},
+					"military": {
+						"title": "Militar",
+						"description": "Mantén un ejército fuerte para la defensa y considera la expansión a través de [ataques](WarCouncil)."
+					},
+					"economy": {
+						"title": "Economía",
+						"description": "Mantén una reserva de efectivo saludable y considera usar el [banco](WorldBank) para gestionar tus finanzas."
+					}
+				},
+				"races": {
+					"title": "Mejores Razas",
+					"description": "Las mejores razas para una estrategia industrialista son:",
+					"list": [
+						"Enano - Bonificación natural a la industria",
+						"Orco - Fuerte en industria y militar",
+						"Goblin - Eficiente en producción industrial"
+					]
+				}
+			},
+			"casher": {
+				"title": "Comerciante",
+				"description": "Los comerciantes se especializan en generar ingresos a través del comercio y los impuestos. Con muchas [chozas](Build) y [mercados](Build), y un enfoque en usar turnos en [efectivo](Cash), pueden acumular grandes cantidades de oro.",
+				"advantages": {
+					"title": "Ventajas",
+					"list": [
+						"Alta generación de efectivo",
+						"Flexibilidad en el mercado",
+						"Independencia de recursos",
+						"Buena opción para jugadores activos"
+					]
+				},
+				"disadvantages": {
+					"title": "Desventajas",
+					"list": [
+						"Vulnerable a ataques",
+						"Necesita gestión constante",
+						"Dependiente del mercado",
+						"Crecimiento militar limitado"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Como comerciante, tu objetivo principal es maximizar tus ingresos. Aquí hay algunos consejos:",
+					"buildings": {
+						"title": "Edificios",
+						"description": "Construye principalmente [chozas](Build) y [mercados](Build). Las chozas generan impuestos base, mientras que los mercados aumentan tus ingresos comerciales."
+					},
+					"turns": {
+						"title": "Uso de Turnos",
+						"description": "Usa la mayoría de tus turnos en [efectivo](Cash). Mantén un equilibrio entre la tasa de impuestos y la felicidad de tu población."
+					},
+					"market": {
+						"title": "Mercado",
+						"description": "Participa activamente en el [Mercado Público](PublicMarket) y [Mercado Negro](BlackMarket). Compra barato y vende caro."
+					},
+					"banking": {
+						"title": "Banca",
+						"description": "Usa el [banco](WorldBank) sabiamente para proteger tu riqueza y ganar intereses."
+					}
+				},
+				"races": {
+					"title": "Mejores Razas",
+					"description": "Las mejores razas para una estrategia comercial son:",
+					"list": [
+						"Gnomo - Bonificación natural al comercio",
+						"Vampiro - Fuerte en economía",
+						"Minotauro - Buena combinación de comercio y militar"
+					]
+				}
+			},
+			"mage": {
+				"title": "Mago",
+				"description": "Los magos se especializan en el uso de la magia para el desarrollo y el combate. Con muchas [torres de magos](Build) y un enfoque en [meditar](Meditate), pueden lanzar poderosos hechizos en el [Centro de Magia](MagicCenter).",
+				"advantages": {
+					"title": "Ventajas",
+					"list": [
+						"Poderosos hechizos ofensivos",
+						"Habilidades defensivas únicas",
+						"Flexibilidad táctica",
+						"Independencia de recursos convencionales"
+					]
+				},
+				"disadvantages": {
+					"title": "Desventajas",
+					"list": [
+						"Alto costo de mantenimiento",
+						"Necesita tiempo para acumular runas",
+						"Vulnerable cuando está sin runas",
+						"Requiere conocimiento profundo del juego"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Como mago, tu poder viene de tus hechizos. Aquí hay algunos consejos:",
+					"buildings": {
+						"title": "Edificios",
+						"description": "Construye principalmente [torres de magos](Build) con algunos [mercados](Build) y [chozas](Build) para mantener tu economía."
+					},
+					"turns": {
+						"title": "Uso de Turnos",
+						"description": "Alterna entre [meditar](Meditate) para generar runas y otras actividades según sea necesario."
+					},
+					"spells": {
+						"title": "Hechizos",
+						"description": "Usa el [Centro de Magia](MagicCenter) sabiamente. Algunos hechizos clave incluyen:",
+						"list": [
+							"Escudo Mágico para defensa",
+							"Avanzar Era para desarrollo",
+							"Portal Temporal para exploración",
+							"Hechizos ofensivos para combate"
+						]
+					},
+					"economy": {
+						"title": "Economía",
+						"description": "Mantén una economía equilibrada para sostener tus torres de magos y ejército."
+					}
+				},
+				"races": {
+					"title": "Mejores Razas",
+					"description": "Las mejores razas para una estrategia mágica son:",
+					"list": [
+						"Elfo - Bonificación natural a la magia",
+						"Drow - Buena combinación de magia y combate",
+						"Pixie - Excelente en magia pero necesita protección"
+					]
+				}
+			},
+			"magicCenter": {
+				"title": "Centro de Magia",
+				"description": "El Centro de Magia es donde los {{wizardType}} de tu imperio pueden lanzar hechizos usando {{runeType}}. Los hechizos pueden proporcionar beneficios significativos a tu imperio o dañar a tus enemigos.",
+				"spellTypes": {
+					"title": "Tipos de Hechizos",
+					"self": {
+						"title": "Hechizos Personales",
+						"description": "Estos hechizos afectan solo a tu imperio:",
+						"list": [
+							"Escudo Mágico - Protección contra ataques",
+							"Portal Temporal - Exploración instantánea",
+							"Avanzar Era - Cambiar a una era diferente",
+							"Invocar Oro - Genera efectivo",
+							"Invocar Comida - Genera alimentos"
+						]
+					},
+					"offensive": {
+						"title": "Hechizos Ofensivos",
+						"description": "Estos hechizos afectan a otros imperios:",
+						"list": [
+							"Robar Oro - Roba efectivo del objetivo",
+							"Robar Comida - Roba alimentos del objetivo",
+							"Plaga - Reduce la población del objetivo",
+							"Tormenta - Daña los edificios del objetivo",
+							"Rebelión - Reduce la lealtad del objetivo"
+						]
+					}
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Usa tus hechizos sabiamente:",
+					"tips": {
+						"title": "Consejos",
+						"list": [
+							"Mantén siempre un Escudo Mágico activo",
+							"Usa Portal Temporal para exploración rápida",
+							"Cambia de era según tu estrategia",
+							"Coordina ataques mágicos con tu clan",
+							"Guarda runas para emergencias"
+						]
+					},
+					"defense": {
+						"title": "Defensa Mágica",
+						"description": "Protege tu imperio de ataques mágicos:",
+						"list": [
+							"Mantén un Escudo Mágico activo",
+							"Construye suficientes {{wizardBuilding}}",
+							"Mantén una reserva de runas",
+							"Considera unirte a un clan para protección"
+						]
+					}
+				},
+				"buildings": {
+					"title": "Edificios",
+					"description": "Para un uso efectivo de la magia:",
+					"list": [
+						"Construye muchos {{wizardBuilding}}",
+						"Usa [meditar](Meditate) para generar runas",
+						"Mantén una economía fuerte para sostener tus {{wizardType}}",
+						"Considera construir más {{wizardBuilding}} en tiempos de guerra"
+					]
+				}
+			},
+			"era": {
+				"title": "Períodos de Tiempo",
+				"description": "Tu imperio existe en uno de tres períodos de tiempo diferentes. Cada era tiene sus propias unidades militares y ventajas únicas. Puedes cambiar de era usando el hechizo Avanzar Era en el [Centro de Magia](MagicCenter).",
+				"eras": {
+					"past": {
+						"title": "Pasado",
+						"description": "Una era de magia y misticismo.",
+						"advantages": {
+							"title": "Ventajas",
+							"list": [
+								"Mayor producción de runas",
+								"Hechizos más poderosos",
+								"Menor costo de mantenimiento",
+								"Mejor para razas mágicas"
+							]
+						},
+						"disadvantages": {
+							"title": "Desventajas",
+							"list": [
+								"Menor producción industrial",
+								"Unidades militares más débiles",
+								"Menor producción de alimentos",
+								"Menor generación de efectivo"
+							]
+						}
+					},
+					"present": {
+						"title": "Presente",
+						"description": "Una era equilibrada de desarrollo.",
+						"advantages": {
+							"title": "Ventajas",
+							"list": [
+								"Producción equilibrada",
+								"Unidades militares versátiles",
+								"Costos moderados",
+								"Buena para todas las razas"
+							]
+						},
+						"disadvantages": {
+							"title": "Desventajas",
+							"list": [
+								"Sin bonificaciones especiales",
+								"Sin debilidades especiales",
+								"Puede ser predecible",
+								"Puede ser superada por especialización"
+							]
+						}
+					},
+					"future": {
+						"title": "Futuro",
+						"description": "Una era de tecnología y progreso.",
+						"advantages": {
+							"title": "Ventajas",
+							"list": [
+								"Mayor producción industrial",
+								"Unidades militares más fuertes",
+								"Mayor generación de efectivo",
+								"Mejor para razas industriales"
+							]
+						},
+						"disadvantages": {
+							"title": "Desventajas",
+							"list": [
+								"Menor producción de runas",
+								"Alto costo de mantenimiento",
+								"Hechizos más débiles",
+								"Mayor consumo de recursos"
+							]
+						}
+					}
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Elige tu era basándote en:",
+					"list": [
+						"Tu raza y sus bonificaciones",
+						"Tu estilo de juego preferido",
+						"Las necesidades actuales de tu imperio",
+						"La era predominante en tu región"
+					]
+				}
+			},
+			"buildings": {
+				"title": "Estructuras",
+				"description": "Los edificios son la base de tu imperio. Cada tipo de edificio sirve un propósito específico y contribuye al desarrollo de tu imperio de diferentes maneras.",
+				"types": {
+					"hut": {
+						"title": "Choza",
+						"description": "Viviendas básicas que generan ingresos fiscales.",
+						"benefits": [
+							"Genera ingresos base por turno",
+							"Aumenta la población máxima",
+							"Bajo costo de construcción",
+							"Mantenimiento mínimo"
+						]
+					},
+					"farm": {
+						"title": "Granja",
+						"description": "Produce alimentos para tu población.",
+						"benefits": [
+							"Produce alimentos por turno",
+							"Esencial para el crecimiento",
+							"Permite vender excedentes",
+							"Mantiene la felicidad"
+						]
+					},
+					"blacksmith": {
+						"title": "Herrería",
+						"description": "Centro de producción industrial y militar.",
+						"benefits": [
+							"Aumenta la producción militar",
+							"Mejora la eficiencia industrial",
+							"Permite construcción más rápida",
+							"Necesaria para unidades avanzadas"
+						]
+					},
+					"wizardTower": {
+						"title": "Torre de Magos",
+						"description": "Centro de poder mágico.",
+						"benefits": [
+							"Aumenta la generación de runas",
+							"Mejora el poder de los hechizos",
+							"Permite más {{wizardType}}",
+							"Fortalece defensas mágicas"
+						]
+					},
+					"market": {
+						"title": "Mercado",
+						"description": "Centro de comercio y economía.",
+						"benefits": [
+							"Aumenta ingresos comerciales",
+							"Mejora precios de mercado",
+							"Permite más transacciones",
+							"Aumenta límites de comercio"
+						]
+					}
+				},
+				"strategy": {
+					"title": "Estrategia de Construcción",
+					"description": "Consejos para la construcción:",
+					"list": [
+						"Equilibra tus edificios según tu estrategia",
+						"Mantén suficientes granjas para el crecimiento",
+						"Construye mercados para comercio eficiente",
+						"Adapta construcciones a tu raza y era"
+					]
+				},
+				"maintenance": {
+					"title": "Mantenimiento",
+					"description": "Consideraciones de mantenimiento:",
+					"list": [
+						"Cada edificio tiene un costo de mantenimiento",
+						"Mantén ingresos suficientes para cubrir costos",
+						"Considera demoler edificios innecesarios",
+						"Equilibra cantidad con sostenibilidad"
+					]
+				}
+			},
+			"warCouncil": {
+				"title": "Consejo de Guerra",
+				"description": "El Consejo de Guerra es donde planificas y ejecutas operaciones militares contra otros imperios. Aquí puedes ver tus unidades militares y lanzar diferentes tipos de ataques.",
+				"attackTypes": {
+					"title": "Tipos de Ataque",
+					"guerrilla": {
+						"title": "Ataque de Guerrilla",
+						"description": "Un ataque rápido usando unidades {{armoredUnit}}.",
+						"benefits": [
+							"Bajo costo en unidades",
+							"Bueno para debilitar enemigos",
+							"Puede causar daño significativo",
+							"Útil para ataques coordinados"
+						]
+					},
+					"siege": {
+						"title": "Ataque de Asedio",
+						"description": "Un ataque terrestre usando unidades {{landUnit}}.",
+						"benefits": [
+							"Puede capturar tierra",
+							"Daño sustancial a edificios",
+							"Efectivo contra defensas",
+							"Bueno para expansión"
+						]
+					},
+					"air": {
+						"title": "Ataque Aéreo",
+						"description": "Un ataque desde el aire usando unidades {{airUnit}}.",
+						"benefits": [
+							"Ignora algunas defensas",
+							"Puede capturar tierra",
+							"Daño a múltiples objetivos",
+							"Difícil de defender"
+						]
+					},
+					"coastal": {
+						"title": "Asalto Costero",
+						"description": "Un ataque naval usando unidades {{seaUnit}}.",
+						"benefits": [
+							"Muy poderoso",
+							"Daño masivo",
+							"Difícil de defender",
+							"Útil para ayuda extranjera"
+						]
+					}
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Consejos para el combate:",
+					"offense": {
+						"title": "Ofensiva",
+						"list": [
+							"Usa exploradores antes de atacar",
+							"Coordina ataques con tu clan",
+							"Combina diferentes tipos de ataque",
+							"Ataca cuando el enemigo está débil"
+						]
+					},
+					"defense": {
+						"title": "Defensa",
+						"list": [
+							"Mantén un ejército equilibrado",
+							"Construye suficientes {{defenseBuilding}}",
+							"Usa [hechizos](MagicCenter) defensivos",
+							"Únete a un clan para protección"
+						]
+					}
+				},
+				"units": {
+					"title": "Unidades Militares",
+					"description": "Cada tipo de unidad tiene su propósito:",
+					"armored": {
+						"title": "{{armoredUnit}}",
+						"description": "Unidades básicas para ataques de guerrilla"
+					},
+					"land": {
+						"title": "{{landUnit}}",
+						"description": "Unidades terrestres para asedios y captura de tierra"
+					},
+					"air": {
+						"title": "{{airUnit}}",
+						"description": "Unidades aéreas para ataques especializados"
+					},
+					"sea": {
+						"title": "{{seaUnit}}",
+						"description": "Unidades navales para ataques poderosos y ayuda"
+					}
+				}
+			},
+			"publicMarket": {
+				"title": "Mercado Público",
+				"description": "El Mercado Público es donde los imperios pueden comprar y vender recursos abiertamente. Los precios son visibles para todos y las transacciones son seguras.",
+				"trading": {
+					"title": "Comercio",
+					"buying": {
+						"title": "Comprar",
+						"description": "Consejos para comprar:",
+						"list": [
+							"Compara precios entre vendedores",
+							"Compra cuando los precios están bajos",
+							"Considera comprar en grandes cantidades",
+							"Verifica la reputación del vendedor"
+						]
+					},
+					"selling": {
+						"title": "Vender",
+						"description": "Consejos para vender:",
+						"list": [
+							"Mantén precios competitivos",
+							"Vende en cantidades manejables",
+							"Construye una reputación confiable",
+							"Actualiza tus ofertas regularmente"
+						]
+					}
+				},
+				"resources": {
+					"title": "Recursos",
+					"description": "Recursos comerciables:",
+					"list": [
+						"Alimentos - Necesario para población y ejército",
+						"Unidades Militares - Para defensa o ataque",
+						"Tierra - Para expansión rápida",
+						"Otros recursos según disponibilidad"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para comerciar efectivamente:",
+					"list": [
+						"Construye suficientes [mercados](Build)",
+						"Mantén reservas para oportunidades",
+						"Establece relaciones comerciales",
+						"Monitorea tendencias de precios"
+					]
+				}
+			},
+			"blackMarket": {
+				"title": "Mercado Negro",
+				"description": "El Mercado Negro permite transacciones más discretas y especializadas. Los precios y vendedores son anónimos, pero hay más riesgo.",
+				"features": {
+					"title": "Características",
+					"list": [
+						"Transacciones anónimas",
+						"Precios variables",
+						"Artículos especiales",
+						"Sin restricciones de protección"
+					]
+				},
+				"trading": {
+					"title": "Comercio",
+					"buying": {
+						"title": "Comprar",
+						"description": "Consejos para comprar:",
+						"list": [
+							"Verifica precios cuidadosamente",
+							"Ten cuidado con estafas",
+							"Compra solo lo necesario",
+							"Mantén efectivo de reserva"
+						]
+					},
+					"selling": {
+						"title": "Vender",
+						"description": "Consejos para vender:",
+						"list": [
+							"Establece precios razonables",
+							"Sé honesto en descripciones",
+							"Mantén stock actualizado",
+							"Construye reputación positiva"
+						]
+					}
+				},
+				"risks": {
+					"title": "Riesgos",
+					"description": "Ten en cuenta:",
+					"list": [
+						"Precios pueden ser inflados",
+						"Vendedores pueden ser poco confiables",
+						"Sin garantías de transacción",
+						"Posible pérdida de recursos"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para usar el Mercado Negro efectivamente:",
+					"list": [
+						"Investiga antes de comprar",
+						"Mantén registros de transacciones",
+						"Construye red de contactos confiables",
+						"Ten plan de respaldo"
+					]
+				}
+			},
+			"intelCenter": {
+				"title": "Centro de Inteligencia",
+				"description": "El Centro de Inteligencia te permite recopilar información sobre otros imperios. Esta información es crucial para la planificación estratégica.",
+				"features": {
+					"title": "Características",
+					"list": [
+						"Exploración de imperios",
+						"Análisis de fuerzas",
+						"Seguimiento de actividad",
+						"Información detallada"
+					]
+				},
+				"information": {
+					"title": "Información Disponible",
+					"description": "Puedes ver:",
+					"list": [
+						"Tamaño y valor del imperio",
+						"Composición militar",
+						"Edificios y recursos",
+						"Actividad reciente"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Uso efectivo de la inteligencia:",
+					"list": [
+						"Explora antes de atacar",
+						"Monitorea imperios cercanos",
+						"Identifica objetivos potenciales",
+						"Comparte información con aliados"
+					]
+				}
+			},
+			"empireSettings": {
+				"title": "Configuración del Imperio",
+				"description": "Personaliza varios aspectos de tu imperio para optimizar su funcionamiento y apariencia.",
+				"options": {
+					"title": "Opciones",
+					"display": {
+						"title": "Visualización",
+						"description": "Personaliza la apariencia:",
+						"list": [
+							"Tema del imperio",
+							"Formato de números",
+							"Diseño de interfaz",
+							"Notificaciones"
+						]
+					},
+					"automation": {
+						"title": "Automatización",
+						"description": "Configura comportamientos automáticos:",
+						"list": [
+							"Uso automático de turnos",
+							"Alertas de eventos",
+							"Respuestas automáticas",
+							"Gestión de recursos"
+						]
+					},
+					"security": {
+						"title": "Seguridad",
+						"description": "Protege tu imperio:",
+						"list": [
+							"Contraseña del imperio",
+							"Opciones de privacidad",
+							"Registros de acceso",
+							"Configuración de cuenta"
+						]
+					}
+				},
+				"recommendations": {
+					"title": "Recomendaciones",
+					"description": "Configuraciones sugeridas:",
+					"list": [
+						"Activa notificaciones importantes",
+						"Configura alertas de ataque",
+						"Personaliza la interfaz para eficiencia",
+						"Revisa configuración regularmente"
+					]
+				}
+			},
+			"mailbox": {
+				"title": "Buzón",
+				"description": "El buzón te permite comunicarte con otros jugadores. Es esencial para la diplomacia, el comercio y la coordinación con tu clan.",
+				"features": {
+					"title": "Características",
+					"list": [
+						"Mensajes privados",
+						"Notificaciones de eventos",
+						"Archivos adjuntos",
+						"Historial de mensajes"
+					]
+				},
+				"usage": {
+					"title": "Uso",
+					"sending": {
+						"title": "Enviar Mensajes",
+						"description": "Para enviar mensajes:",
+						"list": [
+							"Selecciona destinatario",
+							"Escribe mensaje claro",
+							"Adjunta información relevante",
+							"Revisa antes de enviar"
+						]
+					},
+					"receiving": {
+						"title": "Recibir Mensajes",
+						"description": "Al recibir mensajes:",
+						"list": [
+							"Revisa regularmente",
+							"Responde oportunamente",
+							"Archiva mensajes importantes",
+							"Reporta mensajes inapropiados"
+						]
+					}
+				},
+				"etiquette": {
+					"title": "Etiqueta",
+					"description": "Buenas prácticas:",
+					"list": [
+						"Sé respetuoso y profesional",
+						"Mantén mensajes concisos",
+						"Responde en tiempo razonable",
+						"Usa formato apropiado"
+					]
+				}
+			},
+			"worldNews": {
+				"title": "Noticias Mundiales",
+				"description": "Las Noticias Mundiales muestran eventos importantes que ocurren en el mundo. Mantente informado sobre guerras, logros y cambios significativos.",
+				"sections": {
+					"title": "Secciones",
+					"combat": {
+						"title": "Combate",
+						"description": "Reportes de:",
+						"list": [
+							"Grandes batallas",
+							"Conquistas importantes",
+							"Pérdidas significativas",
+							"Conflictos entre clanes"
+						]
+					},
+					"economy": {
+						"title": "Economía",
+						"description": "Información sobre:",
+						"list": [
+							"Cambios en mercados",
+							"Grandes transacciones",
+							"Nuevos récords",
+							"Tendencias económicas"
+						]
+					},
+					"politics": {
+						"title": "Política",
+						"description": "Actualizaciones de:",
+						"list": [
+							"Formación de clanes",
+							"Alianzas importantes",
+							"Cambios de liderazgo",
+							"Conflictos diplomáticos"
+						]
+					}
+				},
+				"usage": {
+					"title": "Uso",
+					"description": "Cómo usar las noticias:",
+					"list": [
+						"Monitorea actividad enemiga",
+						"Identifica oportunidades",
+						"Sigue tendencias globales",
+						"Mantente informado"
+					]
+				}
+			},
+			"scores": {
+				"title": "Lista de Puntuaciones",
+				"description": "La Lista de Puntuaciones muestra el ranking de todos los imperios basado en su valor neto. Es una medida del éxito y progreso relativo.",
+				"rankings": {
+					"title": "Rankings",
+					"description": "Tipos de clasificación:",
+					"list": [
+						"Ranking general por valor neto",
+						"Rankings por raza",
+						"Rankings por clan",
+						"Rankings históricos"
+					]
+				},
+				"metrics": {
+					"title": "Métricas",
+					"description": "Factores considerados:",
+					"list": [
+						"Valor total del imperio",
+						"Tierra y edificios",
+						"Ejército y defensas",
+						"Recursos acumulados"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para mejorar tu ranking:",
+					"list": [
+						"Desarrolla de manera equilibrada",
+						"Mantén ejército fuerte",
+						"Acumula recursos valiosos",
+						"Construye edificios eficientes"
+					]
+				}
+			},
+			"achievements": {
+				"title": "Logros",
+				"description": "Los logros son reconocimientos especiales por alcanzar ciertos hitos o completar desafíos específicos en el juego.",
+				"types": {
+					"title": "Tipos de Logros",
+					"military": {
+						"title": "Militares",
+						"description": "Logros de combate:",
+						"list": [
+							"Victorias en batalla",
+							"Tierra conquistada",
+							"Unidades destruidas",
+							"Defensas exitosas"
+						]
+					},
+					"economic": {
+						"title": "Económicos",
+						"description": "Logros financieros:",
+						"list": [
+							"Riqueza acumulada",
+							"Transacciones exitosas",
+							"Producción de recursos",
+							"Eficiencia comercial"
+						]
+					},
+					"development": {
+						"title": "Desarrollo",
+						"description": "Logros de crecimiento:",
+						"list": [
+							"Expansión territorial",
+							"Construcción de edificios",
+							"Desarrollo tecnológico",
+							"Población alcanzada"
+						]
+					}
+				},
+				"rewards": {
+					"title": "Recompensas",
+					"description": "Beneficios por logros:",
+					"list": [
+						"Títulos especiales",
+						"Bonificaciones únicas",
+						"Reconocimiento público",
+						"Ventajas estratégicas"
+					]
+				}
+			},
+			"summary": {
+				"title": "Resumen del Imperio",
+				"description": "El Resumen del Imperio proporciona una vista rápida de las estadísticas más importantes de tu imperio y su estado actual.",
+				"statistics": {
+					"title": "Estadísticas",
+					"basic": {
+						"title": "Básicas",
+						"description": "Información principal:",
+						"list": [
+							"Valor neto total",
+							"Tierra controlada",
+							"Población total",
+							"Turnos disponibles"
+						]
+					},
+					"resources": {
+						"title": "Recursos",
+						"description": "Recursos actuales:",
+						"list": [
+							"Oro en efectivo",
+							"Alimentos almacenados",
+							"Runas mágicas",
+							"Otros recursos"
+						]
+					},
+					"military": {
+						"title": "Militar",
+						"description": "Estado militar:",
+						"list": [
+							"Unidades totales",
+							"Composición del ejército",
+							"Estado de defensas",
+							"Pérdidas recientes"
+						]
+					}
+				},
+				"status": {
+					"title": "Estado",
+					"description": "Condiciones actuales:",
+					"list": [
+						"Salud del imperio",
+						"Efectos activos",
+						"Amenazas pendientes",
+						"Oportunidades disponibles"
+					]
+				}
+			},
+			"overview": {
+				"title": "Vista Detallada",
+				"description": "La Vista Detallada ofrece información completa sobre todos los aspectos de tu imperio, incluyendo estadísticas detalladas y tendencias.",
+				"sections": {
+					"title": "Secciones",
+					"economy": {
+						"title": "Economía",
+						"description": "Detalles financieros:",
+						"list": [
+							"Ingresos por turno",
+							"Gastos de mantenimiento",
+							"Balance bancario",
+							"Historial de transacciones"
+						]
+					},
+					"military": {
+						"title": "Militar",
+						"description": "Fuerzas armadas:",
+						"list": [
+							"Desglose de unidades",
+							"Capacidades ofensivas",
+							"Sistemas defensivos",
+							"Historial de batallas"
+						]
+					},
+					"infrastructure": {
+						"title": "Infraestructura",
+						"description": "Desarrollo del imperio:",
+						"list": [
+							"Edificios construidos",
+							"Uso de tierra",
+							"Eficiencia de producción",
+							"Proyectos en curso"
+						]
+					},
+					"population": {
+						"title": "Población",
+						"description": "Estadísticas demográficas:",
+						"list": [
+							"Distribución laboral",
+							"Niveles de felicidad",
+							"Tasas de crecimiento",
+							"Necesidades de recursos"
+						]
+					}
+				},
+				"analysis": {
+					"title": "Análisis",
+					"description": "Herramientas analíticas:",
+					"list": [
+						"Gráficos de tendencias",
+						"Comparativas históricas",
+						"Predicciones de desarrollo",
+						"Recomendaciones estratégicas"
+					]
+				}
+			},
+			"farm": {
+				"title": "Enfoque Agrícola",
+				"description": "El enfoque agrícola te permite dedicar turnos a la producción de alimentos. Los alimentos son esenciales para mantener a tu población y ejército.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Cada turno produce alimentos",
+						"La eficiencia depende de las granjas",
+						"El exceso se puede vender",
+						"Afecta la felicidad"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para maximizar la producción:",
+					"list": [
+						"Construye suficientes granjas",
+						"Mantén alta eficiencia",
+						"Gestiona el almacenamiento",
+						"Vende el excedente"
+					]
+				}
+			},
+			"cash": {
+				"title": "Enfoque Económico",
+				"description": "El enfoque económico te permite dedicar turnos a la generación de ingresos a través de impuestos y comercio.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Recauda impuestos por turno",
+						"Genera ingresos comerciales",
+						"Afecta la felicidad",
+						"Depende de edificios"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para maximizar ingresos:",
+					"list": [
+						"Equilibra tasa de impuestos",
+						"Construye edificios rentables",
+						"Mantén población feliz",
+						"Invierte en mercados"
+					]
+				}
+			},
+			"explore": {
+				"title": "Exploración",
+				"description": "La exploración te permite expandir tu imperio descubriendo y reclamando nuevas tierras.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Gana tierra por turno",
+						"Costos incrementales",
+						"Riesgos variables",
+						"Beneficios aleatorios"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para explorar eficientemente:",
+					"list": [
+						"Explora temprano",
+						"Mantén defensas",
+						"Gestiona recursos",
+						"Considera costos"
+					]
+				}
+			},
+			"industry": {
+				"title": "Enfoque Industrial",
+				"description": "El enfoque industrial te permite dedicar turnos a la producción y desarrollo tecnológico.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Mejora producción militar",
+						"Aumenta eficiencia",
+						"Desarrolla tecnología",
+						"Consume recursos"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para industrializar efectivamente:",
+					"list": [
+						"Construye herrerías",
+						"Mantén recursos",
+						"Balancea producción",
+						"Invierte en tecnología"
+					]
+				}
+			},
+			"healing": {
+				"title": "Enfoque en Curación",
+				"description": "El enfoque en curación te permite dedicar turnos a mejorar la salud y felicidad de tu población.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Restaura salud",
+						"Mejora felicidad",
+						"Reduce muertes",
+						"Estabiliza población"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para curar efectivamente:",
+					"list": [
+						"Cura regularmente",
+						"Mantén recursos médicos",
+						"Previene problemas",
+						"Balancea costos"
+					]
+				}
+			},
+			"meditate": {
+				"title": "Meditar",
+				"description": "Meditar permite a tus {{wizardType}} generar {{runeType}} para lanzar hechizos en el [Centro de Magia](MagicCenter).",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Genera runas por turno",
+						"Depende de torres de magos",
+						"Afectado por era",
+						"Límite de almacenamiento"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para meditar efectivamente:",
+					"list": [
+						"Construye torres de magos",
+						"Mantén reserva de runas",
+						"Considera la era",
+						"Planifica uso de hechizos"
+					]
+				}
+			},
+			"build": {
+				"title": "Construcción",
+				"description": "La construcción te permite crear nuevos edificios para mejorar tu imperio.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Consume turnos y recursos",
+						"Requiere tierra disponible",
+						"Tiempo variable por edificio",
+						"Beneficios específicos"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para construir efectivamente:",
+					"list": [
+						"Prioriza necesidades",
+						"Planifica expansión",
+						"Mantén recursos",
+						"Considera mantenimiento"
+					]
+				}
+			},
+			"demolish": {
+				"title": "Demolición",
+				"description": "La demolición te permite eliminar edificios innecesarios o ineficientes.",
+				"mechanics": {
+					"title": "Mecánicas",
+					"description": "Cómo funciona:",
+					"list": [
+						"Libera tierra",
+						"Recupera algunos recursos",
+						"Consume turnos",
+						"Sin reembolso completo"
+					]
+				},
+				"strategy": {
+					"title": "Estrategia",
+					"description": "Para demoler efectivamente:",
+					"list": [
+						"Evalúa necesidad",
+						"Considera costos",
+						"Planifica reemplazo",
+						"Mantén eficiencia"
+					]
+				}
+			}
+		}
+	}
+}

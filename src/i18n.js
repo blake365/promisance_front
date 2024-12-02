@@ -11,7 +11,7 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
-    ns: ['eras','layout', 'summary', 'time', 'diplomacy', 'turns', 'finance', 'auth', 'news', 'pages'],
+    ns: ['eras','layout', 'summary', 'time', 'diplomacy', 'turns', 'finance', 'auth', 'news', 'pages', 'guide'],
     interpolation: {
       escapeValue: false
     }

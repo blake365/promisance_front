@@ -1,75 +1,113 @@
 import { Group, Anchor } from "@mantine/core"
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
 
 export default function GuideIndex() {
+	const { t } = useTranslation(["guide"])
+
 	return (
 		<div>
-			<h2>Index of Topics </h2>
+			<h2>{t("guide:guide.sections.gettingStarted")}</h2>
 			<Anchor href="https://guide.neopromisance.com" target="_blank" mr="sm">
 				External Guide ↗
 			</Anchor>
-			<GuideLink text="Personalized Tips" page="New%20Player" color="green" />
+			<GuideLink
+				text={t("guide:guide.pages.newPlayer")}
+				page="New%20Player"
+				color="green"
+			/>
 			<div>
-				<h4>Getting Started</h4>
+				<h4>{t("guide:guide.sections.gettingStarted")}</h4>
 				<Group>
-					<GuideLink text="Introduction" page="Introduction" />
-					<GuideLink text="Structures" page="Buildings" />
-					<GuideLink text="Military Units" page="Military" />
-					<GuideLink text="Races" page="Race" />
-					<GuideLink text="Time Periods" page="Era" />
+					<GuideLink
+						text={t("guide:guide.pages.introduction")}
+						page="Introduction"
+					/>
+					<GuideLink text={t("guide:guide.pages.buildings")} page="Buildings" />
+					<GuideLink text={t("guide:guide.pages.military")} page="Military" />
+					<GuideLink text={t("guide:guide.pages.race")} page="Race" />
+					<GuideLink text={t("guide:guide.pages.era")} page="Era" />
 				</Group>
-				<h4>Basic Strategies</h4>
+				<h4>{t("guide:guide.sections.basicStrategies")}</h4>
 				<Group>
-					<GuideLink text="Protection" page="Protection" />
-					<GuideLink text="Farmer" page="Farmer" />
-					<GuideLink text="Industrialist" page="Indy" />
-					<GuideLink text="Casher" page="Casher" />
-					<GuideLink text="Mage" page="Mage" />
+					<GuideLink
+						text={t("guide:guide.pages.protection")}
+						page="Protection"
+					/>
+					<GuideLink text={t("guide:guide.pages.farmer")} page="Farmer" />
+					<GuideLink text={t("guide:guide.pages.indy")} page="Indy" />
+					<GuideLink text={t("guide:guide.pages.casher")} page="Casher" />
+					<GuideLink text={t("guide:guide.pages.mage")} page="Mage" />
 				</Group>
-				<h4>Information</h4>
+				<h4>{t("guide:guide.sections.information")}</h4>
 				<Group>
-					<GuideLink text="Empire Summary" page="Summary" />
-					<GuideLink text="Detailed Overview" page="Overview" />
-					<GuideLink text="Scores List" page="Scores" />
-					<GuideLink text="Clan Statistics" page="Clan%20Stats" />
-					{/* <GuideLink text='The Graveyard' page='Graveyard' /> */}
-					{/* <GuideLink text='Searching for Empires' page='Empire Search' /> */}
-					<GuideLink text="Mailbox" page="Mailbox" />
-					<GuideLink text="World News" page="World%20News" />
-					{/* <GuideLink text='Clan Contacts' page='Clan Contacts' /> */}
+					<GuideLink text={t("guide:guide.pages.summary")} page="Summary" />
+					<GuideLink text={t("guide:guide.pages.overview")} page="Overview" />
+					<GuideLink text={t("guide:guide.pages.scores")} page="Scores" />
+					<GuideLink
+						text={t("guide:guide.pages.clanStats")}
+						page="Clan%20Stats"
+					/>
+					<GuideLink text={t("guide:guide.pages.mailbox")} page="Mailbox" />
+					<GuideLink
+						text={t("guide:guide.pages.worldNews")}
+						page="World%20News"
+					/>
 				</Group>
-				<h4>Spending Turns</h4>
+				<h4>{t("guide:guide.sections.spendingTurns")}</h4>
 				<Group>
-					<GuideLink text="Agriculture Focus" page="Farm" />
-					<GuideLink text="Economic Focus" page="Cash" />
-					<GuideLink text="Exploration" page="Explore" />
-					<GuideLink text="Industrial Focus" page="Industry" />
-					<GuideLink text="Healing Focus" page="Healing" />
-					<GuideLink text="Meditate" page="Meditate" />
-					<GuideLink text="Casting Spells" page="Magic%20Center" />
-					<GuideLink text="Construction" page="Build" />
-					<GuideLink text="Demolition" page="demolish" />
-					<GuideLink text="Favorites" page="Favorites" />
+					<GuideLink text={t("guide:guide.pages.farm")} page="Farm" />
+					<GuideLink text={t("guide:guide.pages.cash")} page="Cash" />
+					<GuideLink text={t("guide:guide.pages.explore")} page="Explore" />
+					<GuideLink text={t("guide:guide.pages.industry")} page="Industry" />
+					<GuideLink text={t("guide:guide.pages.healing")} page="Healing" />
+					<GuideLink text={t("guide:guide.pages.meditate")} page="Meditate" />
+					<GuideLink
+						text={t("guide:guide.pages.magicCenter")}
+						page="Magic%20Center"
+					/>
+					<GuideLink text={t("guide:guide.pages.build")} page="Build" />
+					<GuideLink text={t("guide:guide.pages.demolish")} page="demolish" />
+					<GuideLink text={t("guide:guide.pages.favorites")} page="Favorites" />
 				</Group>
-				<h4>Finance</h4>
+				<h4>{t("guide:guide.sections.finance")}</h4>
 				<Group>
-					<GuideLink text="Black Market" page="Black%20Market" />
-					<GuideLink text="Public Market" page="Public%20Market" />
-					<GuideLink text="The Bank" page="The%20Bank" />
-					<GuideLink text="Lottery" page="Lottery" />
+					<GuideLink
+						text={t("guide:guide.pages.blackMarket")}
+						page="Black%20Market"
+					/>
+					<GuideLink
+						text={t("guide:guide.pages.publicMarket")}
+						page="Public%20Market"
+					/>
+					<GuideLink
+						text={t("guide:guide.pages.worldBank")}
+						page="The%20Bank"
+					/>
+					<GuideLink text={t("guide:guide.pages.lottery")} page="Lottery" />
 				</Group>
-				<h4>Diplomacy</h4>
+				<h4>{t("guide:guide.sections.diplomacy")}</h4>
 				<Group>
-					<GuideLink text="Clans" page="Clans" />
-					<GuideLink text="Your Army" page="War%20Council" />
-					<GuideLink text="Intel Center" page="Intel%20Center" />
-					<GuideLink text="Sending Foreign Aid" page="Foreign%20Aid" />
+					<GuideLink text={t("guide:guide.pages.clans")} page="Clans" />
+					<GuideLink
+						text={t("guide:guide.pages.warCouncil")}
+						page="War%20Council"
+					/>
+					<GuideLink
+						text={t("guide:guide.pages.intelCenter")}
+						page="Intel%20Center"
+					/>
+					<GuideLink
+						text={t("guide:guide.pages.foreignAid")}
+						page="Foreign%20Aid"
+					/>
 				</Group>
-				<h4>Management</h4>
+				<h4>{t("guide:guide.sections.management")}</h4>
 				<Group>
-					{/* <GuideLink text='Managing Your Account' page='Account' /> */}
-					<GuideLink text="Empire Settings" page="Empire%20Settings" />
-					{/* <GuideLink text='Managing Your Clan' page='Manage%20Clan' /> */}
+					<GuideLink
+						text={t("guide:guide.pages.empireSettings")}
+						page="Empire%20Settings"
+					/>
 				</Group>
 			</div>
 		</div>

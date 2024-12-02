@@ -1,13 +1,17 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function ClanStatsGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
-            <h2>Clan Statistics</h2>
-            <p>This page lists all clans of sufficient size and provides various statistics - the clan's name, how many members it has, the average net worth of all members, and the summed net worth of all members.</p>
-            <p>Clicking on a clan's name will list all of its members.</p>
-        </div>
-    )
+export default function ClanStatsGuide() {
+	const { t } = useTranslation(["guide"])
+
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.clanStats.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.clanStats.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.clanStats.interaction"))}</p>
+		</div>
+	)
 }

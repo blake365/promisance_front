@@ -1,14 +1,17 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function MailGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function MailGuide() {
+	const { t } = useTranslation(["guide"])
 
-            <h2>Mailbox</h2>
-            <p>This section allows you to send private messages to other empires, whether to exchange information, forge alliances, or taunt your foes.</p>
-            <p>There is a profanity filter on all messages but if you receive a message which you believe to be inappropriate or in violation of the game's rules, contact the Moderators and Administrators. Violators may have their empires Silenced or Disabled at the discretion of the Administration. Reports should only be used as a last resort - whenever possible, please attempt to resolve disputes personally so as to not place excess burden on the Administration.</p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.mail.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.mail.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.mail.rules"))}</p>
+		</div>
+	)
 }

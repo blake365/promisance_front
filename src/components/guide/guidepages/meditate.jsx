@@ -1,15 +1,32 @@
 import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function MeditateGuide({ empire })
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function MeditateGuide({ empire }) {
+	const { t } = useTranslation(["guide", "eras"])
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
-            <h2>Meditate</h2>
-            <p>Here you may choose to spend time with extra focus placed on your empire's {eraArray[empire.era].runes} production.</p>
-            <p>While spending turns here, your {eraArray[empire.era].trpwiz} {eraArray[empire.era].runes} production will increase by 25%.</p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.meditate.title")}</h2>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.meditate.description", {
+						runeType: t(`eras:eras.${eraName}.runes`),
+					}),
+				)}
+			</p>
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.meditate.bonus", {
+						wizardType: t(`eras:eras.${eraName}.trpwiz`),
+						runeType: t(`eras:eras.${eraName}.runes`),
+					}),
+				)}
+			</p>
+		</div>
+	)
 }

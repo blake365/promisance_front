@@ -51,30 +51,43 @@
 			"worldBank": "The Bank"
 		},
 		"content": {
+			"common": {
+				"return": "Return to Index"
+			},
 			"introduction": {
 				"title": "Introduction",
-				"mainGoal": "As leader of a newly founded empire, your goal is to become supreme to all others. Using everything from diplomacy to war, you must strive to build an empire wealthier than all others. Through this all, you will compete against anywhere from hundreds to thousands of other players, all aiming to achieve the same goals.",
+				"mainGoal": "As leader of a newly founded empire, your goal is to become supreme to all others. Using everything from [diplomacy](Clans) to [war](WarCouncil), you must strive to build an empire wealthier than all others. Through this all, you will compete against anywhere from hundreds to thousands of other players, all aiming to achieve the same goals.",
 				"aboutTurns": {
 					"title": "About Turn-Based Games",
 					"description": "NeoPromisance is a turn-based game - that is, there is a limit to how often your empire can advance itself or interact with others.",
-					"turnGeneration": "In NeoPromisance, you receive {{turnsCount}} of these turns every {{turnsFreq}} minutes. You can only accumulate {{turnsMax}} turns at once - if you receive more, they will go into your Stored Turns, of which you may have up to {{turnsStored}}; every time you receive additional turns, 1 of your stored turns will be released for you to use."
+					"turnGeneration": "In NeoPromisance, you receive {{turnsCount}} of these turns every {{turnsFreq}} minutes. You can only accumulate {{turnsMax}} turns at once - if you receive more, they will go into your [Stored Turns](Summary), of which you may have up to {{turnsStored}}; every time you receive additional turns, 1 of your stored turns will be released for you to use.",
+					"turnUsage": "All of the actions listed in the \"Use Turns\" section of the side menu will consume a variable number of turns when you perform them - the [cash](Cash), [farm](Farm), and [explore](Explore) options allow you to specify how much time to spend, while [building](Build) and [demolishing](Demolish) consume turns based on how quickly your empire can perform these actions.",
+					"combatTurns": "Attacking an empire in the [War Council](WarCouncil), sending [aid](ForeignAid), or casting a [spell](MagicCenter) (whether on yourself or on another empire) consumes 2 turns.",
+					"freeTurns": "Other actions, such as participating in the [Black Market](BlackMarket) or [Public Market](PublicMarket), joining or managing a [clan](Clans), managing your [empire settings](EmpireSettings), or sending messages to other empires in the [mailbox](Mailbox), do not consume any turns.",
+					"maintenance": "Each time you take a turn, your empire will collect taxes from its citizens and harvest food. Tax revenue will then be spent maintaining your empire and its military, and food will be used to feed your population. Be careful to not run out of money or food - while the [bank](WorldBank) can help you with the former, the latter can have disastrous results.",
+					"protection": "When your empire is first created, it is placed under [protection](Protection) so that other empires cannot harm it during its initial stages of development. During this period of protection, your empire also may not attack others, send foreign aid, or participate on the Public Market. Once you have used {{turnsProtection}} turns, protection will be lifted and your empire will be exposed to the rest of the world. Once the end of the round draws near, however, this protection will be removed."
 				},
 				"statusBar": {
 					"title": "The Status Bar",
-					"description": "At the top and bottom of every page is your Status Bar. This allows you to quickly check the crucial statistics of your empire:",
+					"description": "At the top and bottom of every page is your Status Bar. This allows you to quickly check the crucial statistics of your empire. You can find detailed explanations of all these stats in the [Empire Summary](Summary) and [Detailed Overview](Overview) pages.",
 					"stats": {
-						"turns": "How many turns you have available to use.",
-						"netWorth": "The estimated value of your empire, taking all significant assets into account.",
-						"land": "The current size of your empire.",
-						"cash": "The amount of money your empire has on hand, not counting any funds you may have stored in the bank.",
-						"food": "The amount of food your empire has stockpiled.",
-						"runes": "The amount of {{runeType}} your empire's {{wizardType}} have available for casting spells.",
-						"health": "The health and happiness of your empire's citizens and army."
+						"turnsTitle": "Turns",
+						"turns": "How many turns you have available to use. View your turn history and next turn time in the [Empire Summary](Summary).",
+						"networthTitle": "Net Worth",
+						"networth": "The estimated value of your empire, taking all significant assets into account. This determines your rank on the [Scores](Scores) page.",
+						"landTitle": "Land",
+						"land": "The current size of your empire. You can gain more land through [exploring](Explore) or [attacking](WarCouncil) other empires.",
+						"cashTitle": "Cash",
+						"cash": "The amount of money your empire has on hand, not counting any funds you may have stored in the [bank](WorldBank).",
+						"food": "The amount of food your empire has stockpiled. Without food, your citizens and army will starve! You can produce more through [farming](Farm) or buy it on the [Public Market](PublicMarket).",
+						"runes": "The amount of {{runeType}} your empire's {{wizardType}} have available for casting [spells](MagicCenter). You can generate more by [meditating](Meditate).",
+						"healthTitle": "Health",
+						"health": "The health and happiness of your empire's citizens and army. You can improve this through [healing](Healing) or by lowering your [tax rate](Cash)."
 					}
 				},
 				"otherIcons": {
 					"title": "Other Icons",
-					"description": "Below the status bar icons for any status effects your empire is facing will be shown. The icons will show how much time is left and show the name and time remaining when hovered or tapped on. There are also links to your mail box and News which will show an indicator if there is something new."
+					"description": "Below the status bar icons for any status effects your empire is facing will be shown. The icons will show how much time is left and show the name and time remaining when hovered or tapped on. There are also links to your [mailbox](Mailbox) and [News](WorldNews) which will show an indicator if there is something new."
 				}
 			},
 			"newPlayer": {
@@ -169,7 +182,9 @@
 			"race": {
 				"title": "Races",
 				"description": "There are many different races in the world, each with their own distinct advantages and disadvantages in the following areas:",
+				"scroll": "Scroll to see more",
 				"attributes": {
+					"name": "Race",
 					"offense": {
 						"name": "Offense",
 						"description": "Your offensive power while attacking other empires."
@@ -223,50 +238,45 @@
 			},
 			"era": {
 				"title": "Time Periods",
-				"description": "Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open Time Gate.",
-				"militaryNote": "The offensive and defensive power of military units varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:",
+				"description": "Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open [Time Gate](MagicCenter).",
+				"militaryNote": "The offensive and defensive power of [military units](Military) varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:",
 				"attributes": {
 					"economy": {
 						"name": "Economy",
-						"description": "Affects the per capita income of your citizens."
+						"description": "Affects the per capita income of your [citizens](Cash)."
 					},
 					"foodProduction": {
 						"name": "Food Production",
-						"description": "Affects how productive your {{farmType}} are."
+						"description": "Affects how productive your [{{farmType}}](Farm) are."
 					},
 					"industry": {
 						"name": "Industry",
-						"description": "Affects your ability to produce military units."
+						"description": "Affects your ability to [produce military units](Industry)."
 					},
 					"energy": {
 						"name": "Energy",
-						"description": "The rate at which your {{wizardType}} produce {{runeType}}."
+						"description": "The rate at which your [{{wizardType}}](MagicCenter) produce {{runeType}}."
 					},
 					"exploration": {
 						"name": "Exploration",
-						"description": "How much land you gain per turn spent exploring."
+						"description": "How much land you gain per turn spent [exploring](Explore)."
 					}
-				},
-				"eras": {
-					"past": "Past",
-					"present": "Present",
-					"future": "Future"
 				}
 			},
 			"farmer": {
 				"title": "Farmer Strategy",
-				"description": "As a farmer, your primary goal is to produce food and sell it to other players. Food is in high demand from most players in the game because troops and {{wizardType}} consume a lot of a food.",
+				"description": "As a farmer, your primary goal is to produce food and sell it to other players. Food is in high demand from most players in the game because troops and [{{wizardType}}](MagicCenter) consume a lot of a food.",
 				"setup": {
 					"title": "Set up",
-					"raceRecommendation": "The best races for a farming strategy are Gremlin, and Goblin due to their lower food consumption and higher food production. Farmers are also best suited for the {{presentEra}} due to the {{foodBonus}}% increase in food production. Players should aim to advance to this era as soon as possible.",
-					"buildings": "Farmers only need to focus on two primary building types: {{farmType}} and {{wizardBuilding}}. {{farmType}} obviously produce food. {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with {{spellShield}}."
+					"raceRecommendation": "The best [races](Race) for a farming strategy are Gremlin, and Goblin due to their lower food consumption and higher food production. Farmers are also best suited for the {{presentEra}} due to the {{foodBonus}}% increase in food production. Players should aim to [advance to this era](MagicCenter) as soon as possible.",
+					"buildings": "Farmers only need to focus on two primary building types: [{{farmType}}](Build) and [{{wizardBuilding}}](Build). {{farmType}} obviously produce food. {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with [{{spellShield}}](MagicCenter)."
 				},
 				"turnsUsage": {
 					"title": "Using Turns",
-					"initialPhase": "In order to produce the most food you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns attacking other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and build. Build {{farmType}} so that they make up around 95% of your buildings. After you build, farm until you are back to 100% health. Repeat this process until you are out of attacks.",
-					"foodProduction": "Now that you have a lot of land and farms built, focus the rest of your time producing food. Don't forget to cast a spell shield before you run out of turns.",
-					"selling": "Take your overflowing bounty of food and sell it on the public market for a reasonable price. If it is too expensive, other players may not want to buy it. If it is too cheap, you will not make as much money as you could have. It can be good to sell food in batches at different price points to see what works best. Food may also be in greater demand at different times in the round.",
-					"profits": "Hopefully when you return to use more turns, someone will have purchased your food. The cash you made will be in your bank account. Use the proceeds to purchase troops and keep some left over for expenses."
+					"initialPhase": "In order to produce the most food you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns [attacking](WarCouncil) other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and [build](Build). Build {{farmType}} so that they make up around 95% of your buildings. After you build, [farm](Farm) until you are back to 100% health. Repeat this process until you are out of attacks.",
+					"foodProduction": "Now that you have a lot of land and farms built, focus the rest of your time producing food. Don't forget to cast a [spell shield](MagicCenter) before you run out of turns.",
+					"selling": "Take your overflowing bounty of food and sell it on the [public market](PublicMarket) for a reasonable price. If it is too expensive, other players may not want to buy it. If it is too cheap, you will not make as much money as you could have. It can be good to sell food in batches at different price points to see what works best. Food may also be in greater demand at different times in the round.",
+					"profits": "Hopefully when you return to use more turns, someone will have purchased your food. The cash you made will be in your [bank account](WorldBank). Use the proceeds to purchase troops and keep some left over for expenses."
 				}
 			},
 			"indy": {
@@ -274,30 +284,30 @@
 				"description": "As an Indy (Industrialist), your primary goal is to produce troops and sell them to other players. Your troops will be in high demand from other players looking to expand their armies.",
 				"setup": {
 					"title": "Set up",
-					"raceRecommendation": "The best races for an Indy strategy are Dwarf, Orc, or Goblin due to their industry bonus. Indys are also best suited for the {{futureEra}} due to the {{industryBonus}}% increase to industry output. Players should aim to advance to this era as soon as possible.",
-					"buildings": "Indys need to focus on a few building types: {{militaryBuilding}}, {{barracksBuilding}} and {{wizardBuilding}}. {{militaryBuilding}} produces new troops. {{barracksBuilding}} reduce the upkeep cost of troops and reduce the prices on the black market. {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with {{spellShield}}."
+					"raceRecommendation": "The best [races](Race) for an Indy strategy are Dwarf, Orc, or Goblin due to their industry bonus. Indys are also best suited for the {{futureEra}} due to the {{industryBonus}}% increase to industry output. Players should aim to [advance to this era](MagicCenter) as soon as possible.",
+					"buildings": "Indys need to focus on a few building types: [{{militaryBuilding}}](Build), [{{barracksBuilding}}](Build) and [{{wizardBuilding}}](Build). {{militaryBuilding}} produces new troops. {{barracksBuilding}} reduce the upkeep cost of troops and reduce the prices on the [black market](BlackMarket). {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with [{{spellShield}}](MagicCenter)."
 				},
 				"turnsUsage": {
 					"title": "Using Turns",
-					"initialPhase": "In order to produce the most troops you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns attacking other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and build. Build {{militaryBuilding}} so that they make up around 85% of your buildings. After you build, use industry until you are back to 100% health. Repeat this process until you are out of attacks.",
-					"troopProduction": "Now that you have a lot of land and {{militaryBuilding}}, focus the rest of your time producing troops. Don't forget to cast a spell shield before you run out of turns. If you start to run low on cash or food, you can sell some troops on the black market for quick cash.",
-					"selling": "Take excess troops you just made and sell them on the public market for a reasonable price. If they are too expensive, other players may not want to buy them. If they are too cheap, you will not make as much money as you could have. It can be good to sell troops in batches at different price points to see what works best.",
-					"profits": "Hopefully when you return to use more turns, someone will have purchased your troops. The cash you made will be in your bank account. Use the proceeds to purchase food and keep some left over for expenses."
+					"initialPhase": "In order to produce the most troops you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns [attacking](WarCouncil) other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and [build](Build). Build {{militaryBuilding}} so that they make up around 85% of your buildings. After you build, use [industry](Industry) until you are back to 100% health. Repeat this process until you are out of attacks.",
+					"troopProduction": "Now that you have a lot of land and {{militaryBuilding}}, focus the rest of your time producing troops. Don't forget to cast a [spell shield](MagicCenter) before you run out of turns. If you start to run low on cash or food, you can sell some troops on the [black market](BlackMarket) for quick cash.",
+					"selling": "Take excess troops you just made and sell them on the [public market](PublicMarket) for a reasonable price. If they are too expensive, other players may not want to buy them. If they are too cheap, you will not make as much money as you could have. It can be good to sell troops in batches at different price points to see what works best.",
+					"profits": "Hopefully when you return to use more turns, someone will have purchased your troops. The cash you made will be in your [bank account](WorldBank). Use the proceeds to purchase food and keep some left over for expenses."
 				}
 			},
 			"casher": {
 				"title": "Casher Strategy",
-				"description": "As a casher, your primary goal is to produce cash for yourself. You will rely on other players to purchase food and troops from the markets.",
+				"description": "As a casher, your primary goal is to produce cash for yourself. You will rely on other players to purchase food and troops from the [markets](PublicMarket).",
 				"setup": {
 					"title": "Set up",
-					"raceRecommendation": "The best races for a casher strategy are Gnome, Vampire, and Minotaur due to their lower troop upkeep, higher per capita income, and market bonus (Gnome only). Cashers are also best suited for the {{futureEra}} due to the {{cashBonus}}% increase in income. Players should aim to advance to this era as soon as possible.",
-					"buildings": "Cashers need to focus on a few building types: {{housingBuilding}}, {{economyBuilding}}, {{barracksBuilding}} and {{wizardBuilding}}. {{housingBuilding}} brings more {{peasantName}} to your empire increasing your population. {{economyBuilding}} produce income and increase your per capita income. {{barracksBuilding}} reduce the upkeep cost of troops and reduce the prices on the black market. {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with {{spellShield}}."
+					"raceRecommendation": "The best [races](Race) for a casher strategy are Gnome, Vampire, and Minotaur due to their lower troop upkeep, higher per capita income, and market bonus (Gnome only). Cashers are also best suited for the {{futureEra}} due to the {{cashBonus}}% increase in income. Players should aim to [advance to this era](MagicCenter) as soon as possible.",
+					"buildings": "Cashers need to focus on a few building types: [{{housingBuilding}}](Build), [{{economyBuilding}}](Build), [{{barracksBuilding}}](Build) and [{{wizardBuilding}}](Build). {{housingBuilding}} brings more {{peasantName}} to your empire increasing your population. {{economyBuilding}} produce income and increase your per capita income. {{barracksBuilding}} reduce the upkeep cost of troops and reduce the prices on the [black market](BlackMarket). {{wizardBuilding}} are needed in small quantities to advance eras and protect yourself from magical attacks with [{{spellShield}}](MagicCenter)."
 				},
 				"turnsUsage": {
 					"title": "Using Turns",
-					"initialPhase": "In order to produce the most cash you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns attacking other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and build. Build {{housingBuilding}} and {{economyBuilding}} so that they make up around 45% of your buildings each. After you build, use cash until you are back to 100% health. Repeat this process until you are out of attacks. During this time it can be beneficial to lower your tax rate to encourage {{peasantName}} to come to your empire.",
-					"cashProduction": "Now that you have a lot of land, {{housingBuilding}}, {{economyBuilding}}, and {{peasantName}}, focus the rest of your time producing food. During this time it can be good to raise your tax rate, just remember it will cause some of your peasants to leave. Don't forget to cast a spell shield before you run out of turns.",
-					"spending": "Take cash you just made and spend it on the public market or private market. You will likely want to buy food and troops. Compare prices to get the best deal."
+					"initialPhase": "In order to produce the most cash you can, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns [attacking](WarCouncil) other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and [build](Build). Build {{housingBuilding}} and {{economyBuilding}} so that they make up around 45% of your buildings each. After you build, use [cash](Cash) until you are back to 100% health. Repeat this process until you are out of attacks. During this time it can be beneficial to lower your [tax rate](Cash) to encourage {{peasantName}} to come to your empire.",
+					"cashProduction": "Now that you have a lot of land, {{housingBuilding}}, {{economyBuilding}}, and {{peasantName}}, focus the rest of your time producing food. During this time it can be good to raise your tax rate, just remember it will cause some of your peasants to leave. Don't forget to cast a [spell shield](MagicCenter) before you run out of turns.",
+					"spending": "Take cash you just made and spend it on the [public market](PublicMarket) or [private market](BlackMarket). You will likely want to buy food and troops. Compare prices to get the best deal."
 				}
 			},
 			"mage": {
@@ -305,14 +315,14 @@
 				"description": "As an Mage, your primary goal is to produce cash through magical spells.",
 				"setup": {
 					"title": "Set up",
-					"raceRecommendation": "The best races for a Mage strategy are Elf, Drow, and Pixie due to their magic and {{runeType}} production bonus. Mages are also best suited for the {{pastEra}} due to the {{runeBonus}}% increase to {{runeType}} production. Players do not need to advance eras as a Mage.",
-					"buildings": "Mages need to focus on one main building: {{wizardBuilding}}. {{wizardBuilding}} produce {{runeType}} and bring {{wizardType}} to your empire. You may also want to build some {{farmType}} because {{wizardType}} like to eat a lot."
+					"raceRecommendation": "The best [races](Race) for a Mage strategy are Elf, Drow, and Pixie due to their magic and {{runeType}} production bonus. Mages are also best suited for the {{pastEra}} due to the {{runeBonus}}% increase to {{runeType}} production. Players do not need to advance eras as a Mage.",
+					"buildings": "Mages need to focus on one main building: [{{wizardBuilding}}](Build). {{wizardBuilding}} produce {{runeType}} and bring {{wizardType}} to your empire. You may also want to build some [{{farmType}}](Build) because {{wizardType}} like to eat a lot."
 				},
 				"turnsUsage": {
 					"title": "Using Turns",
-					"initialPhase": "In order to produce the most {{runeType}} and resources as possible, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns attacking other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and build. Build {{wizardBuilding}} so that they make up around 95% of your buildings. After you build, meditate until you are back to 100% health. Repeat this process until you are out of attacks.",
-					"spellCasting": "Now that you have a lot of land and {{wizardType}}, focus some of your turns producing more {{runeType}}. When you have enough {{runeType}}, go to the Magic Center and cast {{cashSpell}} as many times as you can. If you run low on food you can buy some from the markets or cast {{foodSpell}} to make some yourself.",
-					"spending": "Take cash you just made and spend it on the public market or private market. You will likely want to buy food and troops. Compare prices to get the best deal."
+					"initialPhase": "In order to produce the most {{runeType}} and resources as possible, you will need a lot of land. Start your session with full turns ({{maxTurns}}). Use your initial turns [attacking](WarCouncil) other players. Your health will drop as you attack. When your health is less than 70% or you fail an attack, it is time to stop and [build](Build). Build {{wizardBuilding}} so that they make up around 95% of your buildings. After you build, [meditate](Meditate) until you are back to 100% health. Repeat this process until you are out of attacks.",
+					"spellCasting": "Now that you have a lot of land and {{wizardType}}, focus some of your turns producing more {{runeType}}. When you have enough {{runeType}}, go to the [Magic Center](MagicCenter) and cast [{{cashSpell}}](MagicCenter) as many times as you can. If you run low on food you can buy some from the [markets](PublicMarket) or cast [{{foodSpell}}](MagicCenter) to make some yourself.",
+					"spending": "Take cash you just made and spend it on the [public market](PublicMarket) or [private market](BlackMarket). You will likely want to buy food and troops. Compare prices to get the best deal."
 				}
 			},
 			"protection": {
@@ -653,7 +663,7 @@
 			"healing": {
 				"title": "Healing Focus",
 				"description": "Here you may choose to spend time with extra focus placed on healing your Military and {{wizardType}}.",
-				"effect": "While spending turns here, your empire's gross production of all resources will be 75% of their baseline value. In return you will gain 1 additional health point per turn up to 100%. Having a high health value is very important for successfully attacking and defending."
+				"effect": "While spending turns here, your empire's gross production of all resources will be 66% of their baseline value. In return you will gain 1 additional health point per turn up to 100%. Having a high health value is very important for successfully attacking and defending."
 			},
 			"meditate": {
 				"title": "Meditate",
@@ -746,15 +756,6 @@
 					"priceEditing": "You may edit the price of items currently on the market, however there is a 10% fee for doing so.",
 					"warWarning": "Be wary about selling during times of war, because the market coalition does not concern itself with inter-empire relations and will gladly sell your goods to your enemies."
 				}
-			},
-			"theBank": {
-				"title": "The Bank",
-				"description": "The bank provides a place for empires both to store their excess funds and to take out loans during emergencies.",
-				"limits": "The maximum size of an empire's savings account and the most it can loan at once is determined mainly by the empire's networth.",
-				"savings": "Savings account interest rates begin at {{savingsRate}}% and gradually decreases as your empire grows larger and begins to deposit more of its funds.",
-				"loans": "Loan interest rates begin at {{loanRate}}% and gradually increase as your empire grows larger and becomes more easily able to pay off loans.",
-				"emergency": "If, while spending turns, your empire manages to run out of money, a loan will automatically be taken out for the amount you need, and the Bank will respect your state of emergency by allowing you to temporarily exceed your usual loan size limit by 100%.",
-				"endOfRound": "During the final week of a round, you will not be allowed to take out any additional loans."
 			},
 			"lottery": {
 				"title": "Lottery",

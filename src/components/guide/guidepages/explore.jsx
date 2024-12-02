@@ -1,15 +1,18 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function ExploreGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function ExploreGuide() {
+	const { t } = useTranslation(["guide"])
 
-            <h2>Exploration</h2>
-            <p>For small empires, attacking others to gain land is infeasible - their time is better spent exploring.</p>
-            <p>While spending turns here, your empire will expand its borders and gain additional land.</p>
-            <p>Be warned - as your empire grows larger, it will become more and more difficult to find usable land, at which point you will have to resort to <GuideLink text='attacking' page='War%20Council' /> other empires to steal their land.</p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.explore.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.explore.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.explore.action"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.explore.warning"))}</p>
+		</div>
+	)
 }

@@ -1,30 +1,80 @@
 import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function BuildingsGuide({ empire })
-{
+export default function BuildingsGuide({ empire }) {
+	const { t } = useTranslation(["guide", "eras"])
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
-            <h2>Structures</h2>
-            <p>Your empire's land can be allocated for the following purposes:</p>
-            <dl>
-                <dt>{eraArray[empire.era].bldpop}</dt>
-                <dd>While {eraArray[empire.era].peasants} will live on unused land, these are specifically designed for housing. As a result, they allow you to house a great deal more {eraArray[empire.era].peasants} than otherwise.</dd>
-                <dt>{eraArray[empire.era].bldcash}</dt>
-                <dd>These allow your empire's economy to grow, helping to increase your Per Capita Income, as well as directly producing money themselves.</dd>
-                <dt>{eraArray[empire.era].bldtrp}</dt>
-                <dd>These produce your military units; the percentage of resources allocated to each unit type produced is controlled through the industry settings on the industrial focus page.</dd>
-                <dt>{eraArray[empire.era].bldcost}</dt>
-                <dd>These allow you to reduce your military expenses by more efficiently housing your units. They will also lower the price of all military units purchased from the Black Market. These also increase the rate at which your Black Market refills.</dd>
-                <dt>{eraArray[empire.era].bldwiz}</dt>
-                <dd>These serve to train and house {eraArray[empire.era].trpwiz}, as well as produce {eraArray[empire.era].runes} with which they may cast their spells.</dd>
-                <dt>{eraArray[empire.era].bldfood}</dt>
-                <dd>These are vital for feeding your {eraArray[empire.era].peasants} and military; without food, your population and army will starve and desert your empire.</dd>
-                <dt>{eraArray[empire.era].blddef}</dt>
-                <dd>These are a strictly defensive building, for every 1% of land built as {eraArray[empire.era].blddef}, your defense is increased by 1% (up to 50%) and your diminishing returns (DR) rate increases by 0.01.</dd>
-            </dl>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.buildings.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.buildings.description"))}</p>
+			<dl>
+				<dt>{t(`eras:eras.${eraName}.bldpop`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.housing.description", {
+							buildingName: t(`eras:eras.${eraName}.bldpop`),
+							peasantName: t(`eras:eras.${eraName}.peasants`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.bldcash`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.economy.description", {
+							buildingName: t(`eras:eras.${eraName}.bldcash`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.bldtrp`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.military.description", {
+							buildingName: t(`eras:eras.${eraName}.bldtrp`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.bldcost`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.barracks.description", {
+							buildingName: t(`eras:eras.${eraName}.bldcost`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.bldwiz`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.magic.description", {
+							buildingName: t(`eras:eras.${eraName}.bldwiz`),
+							wizardType: t(`eras:eras.${eraName}.trpwiz`),
+							runeType: t(`eras:eras.${eraName}.runes`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.bldfood`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.food.description", {
+							buildingName: t(`eras:eras.${eraName}.bldfood`),
+							peasantName: t(`eras:eras.${eraName}.peasants`),
+						}),
+					)}
+				</dd>
+				<dt>{t(`eras:eras.${eraName}.blddef`)}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.buildings.types.defense.description", {
+							buildingName: t(`eras:eras.${eraName}.blddef`),
+						}),
+					)}
+				</dd>
+			</dl>
+		</div>
+	)
 }

@@ -1,15 +1,18 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function IndustryGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function IndustryGuide() {
+	const { t } = useTranslation(["guide"])
 
-            <h2>Industrial Focus</h2>
-            <p>Here you may choose to spend time with extra focus placed on your empire's troop prouction.</p>
-            <p>While spending turns here, your Blacksmiths troop production will increase by 25%.</p>
-            <p>You can set the percentage of production to dedicate to each troop type. The total must add up to 100. </p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.industry.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.industry.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.industry.bonus"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.industry.allocation"))}</p>
+		</div>
+	)
 }

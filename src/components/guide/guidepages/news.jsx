@@ -1,14 +1,17 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function NewsGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function NewsGuide() {
+	const { t } = useTranslation(["guide"])
 
-            <h2>World News</h2>
-            <p>Here you can see news from all the empires in the game. News is categorized into Attacks, Spells, and Market events. You can search for events based on which empire is involved and the type of event. </p>
-            <p>Checking news is a valuable way to get insights into who you may want to attack or what is in demand on the markets. </p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.worldNews.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.worldNews.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.worldNews.usage"))}</p>
+		</div>
+	)
 }

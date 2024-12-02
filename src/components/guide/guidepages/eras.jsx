@@ -1,57 +1,136 @@
 import { Table } from "@mantine/core"
 import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
-import classes from '../guide.module.css'
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
+import classes from "../guide.module.css"
 
-export default function EraGuide({ empire })
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
-            <h2>Time Periods</h2>
-            <p>Empires in this world exist in 3 different time periods. Interacting directly with an empire in another era requires an open Time Gate.</p>
-            <p>The offensive and defensive power of <GuideLink page='Military' text='military units' /> varies with one's era. Additionally, empires in different eras receive the following bonuses and penalties:</p>
-            <dl>
-                <dt>Economy</dt>
-                <dd>Affects the per capita income of your citizens.</dd>
-                <dt>Food Production</dt>
-                <dd>Affects how productive your {eraArray[empire.era].bldfood} are.</dd>
-                <dt>Industry</dt>
-                <dd>Affects your ability to produce military units.</dd>
-                <dt>Energy</dt>
-                <dd>The rate at which your {eraArray[empire.era].trpwiz} produce {eraArray[empire.era].runes}.</dd>
-                <dt>Exploration</dt>
-                <dd>How much land you gain per turn spent <GuideLink page='Explore' text='exploring' />.</dd>
-            </dl>
-            <div className={classes.guideTable}>
-                <Table highlightOnHover striped>
-                    <thead>
-                        <tr>
-                            <th>Era</th>
-                            <th>Economy</th>
-                            <th>Food Production</th>
-                            <th>Industry</th>
-                            <th>Energy</th>
-                            <th>Exploration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {eraArray.map(era => 
-                        {
-                            return (
-                                <tr key={era.name}>
-                                    <td>{era.name}</td>
-                                    <td style={era.mod_cashpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_cashpro}%</td>
-                                    <td style={era.mod_foodpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_foodpro}%</td>
-                                    <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
-                                    <td style={era.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_runepro}%</td>
-                                    <td style={era.mod_explore >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_explore}%</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </Table>
-            </div>
-        </div>
-    )
+export default function EraGuide({ empire }) {
+	const { t } = useTranslation(["guide", "eras"])
+	const eraName = eraArray[empire.era].name.toLowerCase()
+
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.era.title")}</h2>
+			<p>{parseGuideLinks(t("guide:guide.content.era.description"))}</p>
+			<p>{parseGuideLinks(t("guide:guide.content.era.militaryNote"))}</p>
+
+			<dl>
+				<dt>{t("guide:guide.content.era.attributes.economy.name")}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.era.attributes.economy.description"),
+					)}
+				</dd>
+
+				<dt>{t("guide:guide.content.era.attributes.foodProduction.name")}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.era.attributes.foodProduction.description", {
+							farmType: t(`eras:eras.${eraName}.bldfood`),
+						}),
+					)}
+				</dd>
+
+				<dt>{t("guide:guide.content.era.attributes.industry.name")}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.era.attributes.industry.description"),
+					)}
+				</dd>
+
+				<dt>{t("guide:guide.content.era.attributes.energy.name")}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.era.attributes.energy.description", {
+							wizardType: t(`eras:eras.${eraName}.trpwiz`),
+							runeType: t(`eras:eras.${eraName}.runes`),
+						}),
+					)}
+				</dd>
+
+				<dt>{t("guide:guide.content.era.attributes.exploration.name")}</dt>
+				<dd>
+					{parseGuideLinks(
+						t("guide:guide.content.era.attributes.exploration.description"),
+					)}
+				</dd>
+			</dl>
+
+			<div className={classes.guideTable}>
+				<Table highlightOnHover striped>
+					<thead>
+						<tr>
+							<th>{t("guide:guide.pages.era")}</th>
+							<th>{t("guide:guide.content.era.attributes.economy.name")}</th>
+							<th>
+								{t("guide:guide.content.era.attributes.foodProduction.name")}
+							</th>
+							<th>{t("guide:guide.content.era.attributes.industry.name")}</th>
+							<th>{t("guide:guide.content.era.attributes.energy.name")}</th>
+							<th>
+								{t("guide:guide.content.era.attributes.exploration.name")}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{eraArray.map((era) => {
+							return (
+								<tr key={era.name}>
+									<td>{era.name}</td>
+									<td
+										style={
+											era.mod_cashpro >= 0
+												? { color: "green" }
+												: { color: "red" }
+										}
+									>
+										{era.mod_cashpro}%
+									</td>
+									<td
+										style={
+											era.mod_foodpro >= 0
+												? { color: "green" }
+												: { color: "red" }
+										}
+									>
+										{era.mod_foodpro}%
+									</td>
+									<td
+										style={
+											era.mod_industry >= 0
+												? { color: "green" }
+												: { color: "red" }
+										}
+									>
+										{era.mod_industry}%
+									</td>
+									<td
+										style={
+											era.mod_runepro >= 0
+												? { color: "green" }
+												: { color: "red" }
+										}
+									>
+										{era.mod_runepro}%
+									</td>
+									<td
+										style={
+											era.mod_explore >= 0
+												? { color: "green" }
+												: { color: "red" }
+										}
+									>
+										{era.mod_explore}%
+									</td>
+								</tr>
+							)
+						})}
+					</tbody>
+				</Table>
+			</div>
+		</div>
+	)
 }

@@ -1,13 +1,18 @@
 import GuideLink from "../../utilities/guidelink"
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
 
-export default function AchievementsGuide()
-{
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+export default function AchievementsGuide() {
+	const { t } = useTranslation(["guide"])
 
-            <h2>Achievements</h2>
-            <p>Achievements are milestones your empire can earn throughout the round. Some achievements will be earned easily but others will require a dedicated effort. Achievements are saved to your user profile so you can earn all achievements over the course of multiple game rounds.</p>
-        </div>
-    )
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
+
+			<h2>{t("guide:guide.content.achievements.title")}</h2>
+			<p>
+				{parseGuideLinks(t("guide:guide.content.achievements.description"))}
+			</p>
+		</div>
+	)
 }

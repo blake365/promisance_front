@@ -3,176 +3,152 @@ import { eraArray } from "../../../config/eras"
 import GuideLink from "../../utilities/guidelink"
 import { Compass } from "@phosphor-icons/react"
 import { Table, Text } from "@mantine/core"
-import classes from '../guide.module.css'
+import { useTranslation } from "react-i18next"
+import { parseGuideLinks } from "../../utilities/parseGuideLinks"
+import classes from "../guide.module.css"
 import { useSelector } from "react-redux"
 
-export default function NewTipsGuide({ empire })
-{
+export default function NewTipsGuide({ empire }) {
+	const { turnsProtection } = useSelector((state) => state.games.activeGame)
+	const { t } = useTranslation(["guide", "eras"])
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
-    const { turnsProtection } = useSelector((state) => state.games.activeGame)
+	const renderRaceStats = (race) => {
+		const stats = [
+			{ key: "offense", mod: race.mod_offense },
+			{ key: "defense", mod: race.mod_defense },
+			{ key: "building", mod: race.mod_buildrate },
+			{ key: "upkeep", mod: race.mod_expenses },
+			{ key: "magic", mod: race.mod_magic },
+			{ key: "industry", mod: race.mod_industry },
+			{ key: "economy", mod: race.mod_income },
+			{ key: "exploration", mod: race.mod_explore },
+			{ key: "market", mod: race.mod_market },
+			{ key: "consumption", mod: race.mod_foodcon },
+			{ key: "energy", mod: race.mod_runepro },
+			{ key: "agriculture", mod: race.mod_foodpro },
+		]
 
-    const yourTraits = (empire) =>
-    {
-        let raceStrength = ''
-        let preferredEra = 0
+		return (
+			<div className={classes.guideTable}>
+				<Table mt="xs">
+					<thead>
+						<tr>
+							<th>{t("guide:guide.pages.race")}</th>
+							{stats.map((stat) => (
+								<th key={stat.key}>
+									{t(`guide:guide.content.race.attributes.${stat.key}.name`)}
+								</th>
+							))}
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{race.name}</td>
+							{stats.map((stat) => (
+								<td
+									key={stat.key}
+									style={stat.mod >= 0 ? { color: "green" } : { color: "red" }}
+								>
+									{stat.mod}%
+								</td>
+							))}
+						</tr>
+					</tbody>
+				</Table>
+			</div>
+		)
+	}
 
-        const race = raceArray[empire.race]
-        switch (race.name) {
-            case 'Human':
-                raceStrength = 'being a generalist. You can go any direction you want with your empire. Your people can succeed in any era.'
-                preferredEra = empire.era
-                break
-            case 'Elf':
-                raceStrength = 'magic. You should focus your buildings on Mage Towers, use turns in Meditate, and cast spells in the Magic Center. Your people are best suited for the Past era.'
-                preferredEra = 0
-                break
-            case 'Dwarf':
-                raceStrength = 'industry. You should focus your buildings on Blacksmiths and use turns in Industry. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Orc':
-                raceStrength = 'industry and military. You should focus your buildings on Blacksmiths and use turns in Industry. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Gnome':
-                raceStrength = 'economy and markets. You should focus your buildings on Huts and Markets,  use turns in Cash, buy things from the Black Market. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Troll':
-                raceStrength = 'military. You should focus your buildings on Blacksmiths, Huts and Markets, and use your attack bonus to win battles. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Drow':
-                raceStrength = 'magic and military. You should focus your buildings on Mage Towers, use turns in Meditate, and cast spells in the Magic Center. Your people are best suited for the Past era.'
-                preferredEra = 0
-                break
-            case 'Gremlin':
-                raceStrength = 'food production. You should focus your buildings on Farms, use turns in Farm, sell your food on the Public Market. Your people are best suited for the Present era.'
-                preferredEra = 1
-                break
-            case 'Goblin':
-                raceStrength = 'industry. You should focus your buildings on Blacksmiths and use your turns in Industry. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Hobbit':
-                raceStrength = 'food production. You should focus your buildings on Farms and use turns in Farm. Your people are best suited for the Present era.'
-                preferredEra = 1
-                break
-            case 'Ghoul':
-                raceStrength = 'food production and industry. You should focus your buildings on Blacksmiths and Farms, and use your turns in either Industry or Farm. Your people are best suited for the Present and Future era.'
-                preferredEra = 1
-                break
-            case 'Vampire':
-                raceStrength = 'economy and industry. You should focus your buildings on Huts, Markets, and Blacksmiths, and use your turns in either Cash or Industry. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Minotaur':
-                raceStrength = 'military and economy. You should focus your buildings on Huts and Markets, and use your attack and defense bonuses to win battles. Your people are best suited for the Future era.'
-                preferredEra = 2
-                break
-            case 'Pixie':
-                raceStrength = 'magic and economy. You should focus your buildings on Mage Towers, Huts, and Markets, use turns in Meditate or Cash, and cast spells in the Magic Center. Beware of your low attack and defense stats. Your people are best suited for the Past era.'
-                preferredEra = 0
-                break
-        }
+	const renderEraStats = (era) => {
+		const stats = [
+			{ key: "economy", mod: era.mod_cashpro },
+			{ key: "foodProduction", mod: era.mod_foodpro },
+			{ key: "industry", mod: era.mod_industry },
+			{ key: "energy", mod: era.mod_runepro },
+			{ key: "exploration", mod: era.mod_explore },
+		]
 
-        let era = eraArray[preferredEra]
+		return (
+			<div className={classes.guideTable}>
+				<Table mt="xs">
+					<thead>
+						<tr>
+							<th>{t("guide:guide.pages.era")}</th>
+							{stats.map((stat) => (
+								<th key={stat.key}>
+									{t(`guide:guide.content.era.attributes.${stat.key}.name`)}
+								</th>
+							))}
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{era.name}</td>
+							{stats.map((stat) => (
+								<td
+									key={stat.key}
+									style={stat.mod >= 0 ? { color: "green" } : { color: "red" }}
+								>
+									{stat.mod}%
+								</td>
+							))}
+						</tr>
+					</tbody>
+				</Table>
+			</div>
+		)
+	}
 
-        let eraStats = <div className={classes.guideTable}>
-            <Table mt='xs'>
-                <thead>
-                    <tr>
-                        <th>Era</th>
-                        <th>Economy</th>
-                        <th>Food Production</th>
-                        <th>Industry</th>
-                        <th>Energy</th>
-                        <th>Exploration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{era.name}</td>
-                        <td style={era.mod_cashpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_cashpro}%</td>
-                        <td style={era.mod_foodpro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_foodpro}%</td>
-                        <td style={era.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_industry}%</td>
-                        <td style={era.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_runepro}%</td>
-                        <td style={era.mod_explore >= 0 ? { color: 'green' } : { color: 'red' }}>{era.mod_explore}%</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
+	const renderRaceDescription = (race) => {
+		const raceName = race.name.toLowerCase()
+		return (
+			<Text>
+				{parseGuideLinks(
+					t("guide:guide.content.newPlayer.raceTraits.intro", {
+						raceName: race.name,
+						strength: t(`guide:guide.content.newPlayer.raceTraits.${raceName}`),
+					}),
+				)}
+			</Text>
+		)
+	}
 
-        let raceStats = <div className={classes.guideTable}>
-            <Table mt='xs'>
-                <thead>
-                    <tr>
-                        <th>Race</th>
-                        <th>Offense</th>
-                        <th>Defense</th>
-                        <th>Building</th>
-                        <th>Upkeep*</th>
-                        <th>Magic</th>
-                        <th>Industry</th>
-                        <th>Economy</th>
-                        <th>Exploration</th>
-                        <th>Market*</th>
-                        <th>Consumption*</th>
-                        <th>Energy</th>
-                        <th>Agriculture</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{race.name}</td>
-                        <td style={race.mod_offense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_offense}%</td>
-                        <td style={race.mod_defense >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_defense}%</td>
-                        <td style={race.mod_buildrate >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_buildrate}%</td>
-                        <td style={race.mod_expenses >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_expenses}%</td>
-                        <td style={race.mod_magic >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_magic}%</td>
-                        <td style={race.mod_industry >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_industry}%</td>
-                        <td style={race.mod_income >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_income}%</td>
-                        <td style={race.mod_explore >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_explore}%</td>
-                        <td style={race.mod_market >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_market}%</td>
-                        <td style={race.mod_foodcon >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_foodcon}%</td>
-                        <td style={race.mod_runepro >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_runepro}%</td>
-                        <td style={race.mod_foodpro >= 0 ? { color: 'green' } : { color: 'red' }}>{race.mod_foodpro}%</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
+	return (
+		<div>
+			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
 
-        return (
-            <div>
-                <Text>
-                    As a <strong>{race.name}</strong> your people are strongest in {raceStrength}
-                </Text>
-                {raceStats}
-                {eraStats}
-            </div>
-        )
-    }
+			<h2>{t("guide:guide.content.newPlayer.title")}</h2>
 
-    return (
-        <div>
-            <GuideLink text='Return to Index' page='Index' />
+			{empire.turnsUsed <= turnsProtection && (
+				<p>
+					{parseGuideLinks(
+						t("guide:guide.content.newPlayer.protection", {
+							turnsProtection,
+						}),
+					)}
+				</p>
+			)}
 
-            <h2>Personalized Tips</h2>
-            {empire.turnsUsed <= turnsProtection && (<p>
-                You are the founder of a new empire in the world of Promisance. You are in the protection period until you have used {turnsProtection} turns. This means that you cannot be attacked by other players. You can use this time to learn the game and build up your empire.
-            </p>)}
-            <p>
-                If you are brand new to the game, the <strong>Tours</strong> <Compass color='#40c057' /> and <strong>Game Guide</strong> will be very useful for you, each page has a <strong>Guide</strong> link that will take you to the relevant section of the Game Guide. Tours are available on the Build and War Council pages.
-            </p>
-            <p>
-                You're goal is to build up your empire and become the most powerful empire in the world. To do this you will need to build up your <strong>land</strong> and <strong>army</strong>, but there are many paths to victory. You can focus on building up your economy, your military, your magic, or your food production. You can also focus on a combination of these things.
-            </p>
-            <p>
-                Even if you aren't using a magic based strategy, you should build some <strong>{eraArray[empire.era].bldwiz}</strong>. This will allow you to cast spells in the <strong>Magic Center</strong> which will help you in many ways such as casting a Spell Shield, Advancing Eras, and opening Time Gates.
-            </p>
-            <div>
-                {yourTraits(empire)}
-            </div>
-        </div>
-    )
+			<p>
+				{parseGuideLinks(t("guide:guide.content.newPlayer.newPlayerGuide"))}
+			</p>
+
+			<p>{parseGuideLinks(t("guide:guide.content.newPlayer.goal"))}</p>
+
+			<p>
+				{parseGuideLinks(
+					t("guide:guide.content.newPlayer.magicTip", {
+						wizardBuilding: t(`eras:eras.${eraName}.bldwiz`),
+					}),
+				)}
+			</p>
+
+			<div>
+				{renderRaceDescription(raceArray[empire.race])}
+				{renderRaceStats(raceArray[empire.race])}
+				{renderEraStats(eraArray[empire.era])}
+			</div>
+		</div>
+	)
 }
