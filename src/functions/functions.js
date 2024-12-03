@@ -126,6 +126,7 @@ export function explore(empire) {
 }
 // food
 export function calcProvisions(empire, size) {
+
 	let production =
 		10 * empire.freeLand +
 		empire.bldFood *
