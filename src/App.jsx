@@ -19,6 +19,7 @@ import {
 	Button,
 	Image,
 	Center,
+	Box,
 } from "@mantine/core"
 import { NotificationsProvider, showNotification } from "@mantine/notifications"
 import neoIcon from "./icons/neoIcon.svg"
@@ -47,6 +48,7 @@ import RepeatButton from "./components/utilities/repeatButton"
 import { fetchGames, setActiveGame } from "./store/gamesSlice"
 import * as Sentry from "@sentry/react"
 import ResumeTutorialButton from "./components/utilities/resumeTutorialButton"
+import { LanguageSelector } from "./components/utilities/LanguageSelector"
 
 function App() {
 	const [opened, setOpened] = useState(false)
@@ -238,172 +240,177 @@ function App() {
 	const myFallback = <FallbackComponent />
 
 	return (
-		// <Sentry.ErrorBoundary fallback={myFallback}>
-		<ColorSchemeProvider
-			colorScheme={colorScheme}
-			toggleColorScheme={toggleColorScheme}
-		>
-			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-				<NotificationsProvider autoClose={4000}>
-					<AppShell
-						styles={(theme) => ({
-							main: {
-								backgroundColor:
-									theme.colorScheme === "dark"
-										? theme.colors.dark[8]
-										: theme.colors.gray[1],
-							},
-						})}
-						className="gnome9 vampire9 minotaur9 gnome8 vampire8 minotaur8"
-						navbarOffsetBreakpoint="sm"
-						fixed
-						navbar={
-							<Navbar
-								padding="sm"
-								hiddenBreakpoint="sm"
-								hidden={!opened}
-								width={{ sm: 200, base: 200 }}
-								zIndex={110}
-								sx={{
-									paddingBottom: "calc(1em + env(safe-area-inset-bottom))",
-								}}
-							>
-								<Navbar.Section
-									grow
-									component={ScrollArea}
-									ml={10}
-									onClick={() => setOpened(false)}
+		<Sentry.ErrorBoundary fallback={myFallback}>
+			<ColorSchemeProvider
+				colorScheme={colorScheme}
+				toggleColorScheme={toggleColorScheme}
+			>
+				<MantineProvider theme={{ colorScheme }} withGlobalStyles>
+					<NotificationsProvider autoClose={4000}>
+						<AppShell
+							styles={(theme) => ({
+								main: {
+									backgroundColor:
+										theme.colorScheme === "dark"
+											? theme.colors.dark[8]
+											: theme.colors.gray[1],
+								},
+							})}
+							className="gnome9 vampire9 minotaur9 gnome8 vampire8 minotaur8"
+							navbarOffsetBreakpoint="sm"
+							fixed
+							navbar={
+								<Navbar
+									padding="sm"
+									hiddenBreakpoint="sm"
+									hidden={!opened}
+									width={{ sm: 200, base: 200 }}
+									zIndex={110}
+									sx={{
+										paddingBottom: "calc(1em + env(safe-area-inset-bottom))",
+									}}
 								>
-									<Sidebar game={activeGame} />
-								</Navbar.Section>
-								<Navbar.Section>
-									<Button
-										component={Link}
-										to="/select"
-										variant="subtle"
-										color="red"
-										fullWidth
-									>
-										Mode Select
-									</Button>
-								</Navbar.Section>
-							</Navbar>
-						}
-						header={
-							<Header height={60} p="sm" zIndex={120}>
-								<Group position="apart" spacing={2}>
-									<MediaQuery largerThan="sm" styles={{ display: "none" }}>
-										<Burger
-											opened={opened}
-											onClick={() => setOpened((o) => !o)}
-											size="sm"
-										/>
-									</MediaQuery>
-									<a
-										style={{ textDecoration: "none", color: "inherit" }}
-										href="/"
-									>
-										<Group align="center" spacing={4}>
-											<MediaQuery
-												smallerThan={400}
-												styles={{ display: "none" }}
-											>
-												<Image
-													src={neoIcon}
-													height={38}
-													width={38}
-													sx={
-														colorScheme === "dark"
-															? { filter: "invert(1)", opacity: "75%" }
-															: { filter: "invert(0)" }
-													}
-												/>
-											</MediaQuery>
-											<Title order={1} ml={0}>
-												NeoPromisance
-											</Title>
-										</Group>
-									</a>
-									<Group>
-										{user?.role === "admin" ? (
-											<Button
-												component="a"
-												href="/admin/"
-												compact
-												variant="light"
-											>
-												Admin
-											</Button>
-										) : (
-											""
-										)}
-										<ThemeToggle />
-									</Group>
-								</Group>
-							</Header>
-						}
-					>
-						<main
-							style={{
-								paddingBottom: "calc(15px + env(safe-area-inset-bottom))",
-							}}
-							onClick={() => setOpened(false)}
-							className="gremlin14 dwarf14 ghoul14 goblin14 orc14 hobbit14 elf10 drow10 pixie10 gnome14 vampire14 minotaur14"
-						>
-							{empireStatus !== "succeeded" ? (
-								<Loader />
-							) : (
-								<>
-									<InfoBar data={empire} />
-									<Grid
+									<Navbar.Section
 										grow
-										justify="center"
-										sx={{ marginTop: "0.5rem", marginBottom: "0.25rem" }}
+										component={ScrollArea}
+										ml={10}
+										onClick={() => setOpened(false)}
 									>
-										<Grid.Col span={2}>
-											<EffectIcons pageState={pageState} empire={empire} />
-										</Grid.Col>
-										<Grid.Col span={3}>
-											<Group spacing="xs" position="center">
-												<GuideModalButton
-													pageName={pageName}
-													empire={empire}
-													protection={activeGame?.turnsProtection}
-												/>
-												<RefreshButton empire={empire} />
+										<Sidebar game={activeGame} />
+									</Navbar.Section>
+									<Navbar.Section>
+										<Button
+											component={Link}
+											to="/select"
+											variant="subtle"
+											color="red"
+											fullWidth
+										>
+											Mode Select
+										</Button>
+									</Navbar.Section>
+								</Navbar>
+							}
+							header={
+								<Header height={60} p="sm" zIndex={120}>
+									<Group position="apart" spacing={2}>
+										<MediaQuery largerThan="sm" styles={{ display: "none" }}>
+											<Burger
+												opened={opened}
+												onClick={() => setOpened((o) => !o)}
+												size="sm"
+											/>
+										</MediaQuery>
+										<a
+											style={{ textDecoration: "none", color: "inherit" }}
+											href="/"
+										>
+											<Group align="center" spacing={4}>
+												<MediaQuery
+													smallerThan={400}
+													styles={{ display: "none" }}
+												>
+													<Image
+														src={neoIcon}
+														height={38}
+														width={38}
+														sx={
+															colorScheme === "dark"
+																? { filter: "invert(1)", opacity: "75%" }
+																: { filter: "invert(0)" }
+														}
+													/>
+												</MediaQuery>
+												<Title order={1} ml={0}>
+													NeoPromisance
+												</Title>
 											</Group>
-										</Grid.Col>
-										<Grid.Col span={2}>
-											<Group spacing="xs" mr="sm" position="right">
-												<BonusTurns />
-												{empire.clanId !== 0 && (
-													<ClanMailButton empire={empire} kickOut={kickOut} />
-												)}
-												<MailButton
-													empire={empire}
-													kickOut={kickOut}
-													pageState={pageState}
-												/>
-												<NewsDrawerButton
-													kickOut={kickOut}
-													empire={empire}
-													pageState={pageState}
-												/>
-											</Group>
-										</Grid.Col>
-									</Grid>
-									<TurnResultContainer empire={empire} />
-									<ResumeTutorialButton />
-									<RepeatButton empire={empire} kickOut={kickOut} />
-									<Outlet />
-								</>
-							)}
-						</main>
-					</AppShell>
-				</NotificationsProvider>
-			</MantineProvider>
-		</ColorSchemeProvider>
-		// </Sentry.ErrorBoundary>
+										</a>
+										<Group>
+											{user?.role === "admin" ? (
+												<Button
+													component="a"
+													href="/admin/"
+													compact
+													variant="light"
+												>
+													Admin
+												</Button>
+											) : (
+												""
+											)}
+											<MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+												<Box>
+													<LanguageSelector />
+												</Box>
+											</MediaQuery>
+											<ThemeToggle />
+										</Group>
+									</Group>
+								</Header>
+							}
+						>
+							<main
+								style={{
+									paddingBottom: "calc(15px + env(safe-area-inset-bottom))",
+								}}
+								onClick={() => setOpened(false)}
+								className="gremlin14 dwarf14 ghoul14 goblin14 orc14 hobbit14 elf10 drow10 pixie10 gnome14 vampire14 minotaur14"
+							>
+								{empireStatus !== "succeeded" ? (
+									<Loader />
+								) : (
+									<>
+										<InfoBar data={empire} />
+										<Grid
+											grow
+											justify="center"
+											sx={{ marginTop: "0.5rem", marginBottom: "0.25rem" }}
+										>
+											<Grid.Col span={2}>
+												<EffectIcons pageState={pageState} empire={empire} />
+											</Grid.Col>
+											<Grid.Col span={3}>
+												<Group spacing="xs" position="center">
+													<GuideModalButton
+														pageName={pageName}
+														empire={empire}
+														protection={activeGame?.turnsProtection}
+													/>
+													<RefreshButton empire={empire} />
+												</Group>
+											</Grid.Col>
+											<Grid.Col span={2}>
+												<Group spacing="xs" mr="sm" position="right">
+													<BonusTurns />
+													{empire.clanId !== 0 && (
+														<ClanMailButton empire={empire} kickOut={kickOut} />
+													)}
+													<MailButton
+														empire={empire}
+														kickOut={kickOut}
+														pageState={pageState}
+													/>
+													<NewsDrawerButton
+														kickOut={kickOut}
+														empire={empire}
+														pageState={pageState}
+													/>
+												</Group>
+											</Grid.Col>
+										</Grid>
+										<TurnResultContainer empire={empire} />
+										<ResumeTutorialButton />
+										<RepeatButton empire={empire} kickOut={kickOut} />
+										<Outlet />
+									</>
+								)}
+							</main>
+						</AppShell>
+					</NotificationsProvider>
+				</MantineProvider>
+			</ColorSchemeProvider>
+		</Sentry.ErrorBoundary>
 	)
 }
 

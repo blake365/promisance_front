@@ -19,7 +19,7 @@ import { persistor } from "../../store/store"
 import { logout } from "../../store/userSlice"
 import { logoutEmpire } from "../../store/empireSlice"
 import { useTranslation } from "react-i18next"
-
+import { LanguageSelector } from "../utilities/LanguageSelector"
 const useStyles = createStyles((theme) => ({
 	root: {
 		backgroundColor: "#000000",
@@ -171,6 +171,7 @@ export function HeroImageRight() {
 					>
 						Discord
 					</Button>
+					<LanguageSelector />
 				</Group>
 			</Container>
 		</div>

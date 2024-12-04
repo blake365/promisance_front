@@ -1,18 +1,19 @@
-import { Stack, Title, Button, Center } from '@mantine/core'
-import { useSelector } from 'react-redux'
-import { Compass } from '@phosphor-icons/react'
-import { useTour } from '@reactour/tour';
-import { steps } from '../tour/steps'
-import { checkRoundStatus } from '../functions/checkRoundStatus'
-import ChangeRace from './settings/changeRace'
-import UpdateIcon from './settings/updateIcon'
-import UpdateProfile from './settings/updateProfile'
-import DeleteEmpire from './settings/deleteEmpire'
-import UpdateName from './settings/updateName';
-import { useTranslation } from 'react-i18next';
-export default function ManageEmpire()
-{
-	const { t } = useTranslation('settings')
+import { Stack, Title, Button, Center } from "@mantine/core"
+import { useSelector } from "react-redux"
+import { Compass } from "@phosphor-icons/react"
+import { useTour } from "@reactour/tour"
+import { steps } from "../tour/steps"
+import { checkRoundStatus } from "../functions/checkRoundStatus"
+import ChangeRace from "./settings/changeRace"
+import UpdateIcon from "./settings/updateIcon"
+import UpdateProfile from "./settings/updateProfile"
+import DeleteEmpire from "./settings/deleteEmpire"
+import UpdateName from "./settings/updateName"
+import { useTranslation } from "react-i18next"
+import { LanguageSelector } from "./utilities/LanguageSelector"
+
+export default function ManageEmpire() {
+	const { t } = useTranslation("settings")
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { empire } = useSelector((state) => state.empire)
 	const roundStatus = checkRoundStatus()
@@ -22,9 +23,10 @@ export default function ManageEmpire()
 
 	return (
 		<main>
-			<Stack spacing='sm' align='center'>
-				<Title order={1} align='center'>
-					{t('settings:settings.title')}
+			<Stack spacing="sm" align="center">
+				<LanguageSelector />
+				<Title order={1} align="center">
+					{t("settings:settings.title")}
 				</Title>
 
 				<UpdateProfile status={roundStatus} empire={empire} />
@@ -32,21 +34,27 @@ export default function ManageEmpire()
 				<ChangeRace status={roundStatus} empire={empire} />
 				<UpdateName status={checkRoundStatus(true)} empire={empire} />
 
-				<Center my='sm'>
-					<Button compact variant='outline' align='center' onClick={() =>
-					{
-						setMeta('new player tour')
-						setSteps(steps)
-						setCurrentStep(0)
-						setIsOpen(true)
-					}}
+				<Center my="sm">
+					<Button
+						compact
+						variant="outline"
+						align="center"
+						onClick={() => {
+							setMeta("new player tour")
+							setSteps(steps)
+							setCurrentStep(0)
+							setIsOpen(true)
+						}}
 						rightIcon={<Compass />}
 						sx={{
-							border: '1px solid #40c057',
-							boxShadow: '0 0 2px 1px #40c057',
-							color: '#40c057',
+							border: "1px solid #40c057",
+							boxShadow: "0 0 2px 1px #40c057",
+							color: "#40c057",
 						}}
-						className='sixth-step'>{t('settings:settings.tour')}</Button>
+						className="sixth-step"
+					>
+						{t("settings:settings.tour")}
+					</Button>
 				</Center>
 
 				<DeleteEmpire status={checkRoundStatus(true)} empire={empire} />
