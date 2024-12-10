@@ -7,8 +7,6 @@ export default function MailGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.mail.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.mail.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.mail.rules"))}</p>

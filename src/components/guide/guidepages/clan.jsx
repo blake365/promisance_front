@@ -7,8 +7,6 @@ export default function ClanGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.clans.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.clans.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.clans.defense"))}</p>

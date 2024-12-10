@@ -4,7 +4,9 @@ import {
 	Loader,
 	MantineProvider,
 	ColorSchemeProvider,
+	Center,
 } from "@mantine/core"
+import { Suspense } from "react"
 import { SlimHero } from "./slimHero"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
@@ -16,6 +18,14 @@ import ModeCard from "./ModeCard"
 import { persistor } from "../../store/store"
 import { logoutEmpire } from "../../store/empireSlice"
 import { useLocalStorage } from "@mantine/hooks"
+
+function LoadingFallback() {
+	return (
+		<Center style={{ width: "100%", height: "100vh" }}>
+			<Loader size="xl" />
+		</Center>
+	)
+}
 
 export default function ModeSelect() {
 	const dispatch = useDispatch()
@@ -48,7 +58,7 @@ export default function ModeSelect() {
 		}
 
 		loadUser()
-	}, [])
+	}, [dispatch])
 
 	const { status, games } = useSelector((state) => state.games)
 
@@ -75,37 +85,39 @@ export default function ModeSelect() {
 			toggleColorScheme={toggleColorScheme}
 		>
 			<MantineProvider theme={{ colorScheme }} withGlobalStyles>
-				<SlimHero />
-				<Container size="lg" align="center" py="xl">
-					<Group mt="md" position="center" key="owjojd">
-						{status === "succeeded" && games.length > 0 ? (
-							games.map((game) => {
-								if (game.isActive === false) return null
-								let empireFound = false
-								if (user?.empires?.length > 0) {
-									const empire = user.empires.find(
-										(empire) => empire.game_id === game.game_id,
-									)
-									if (empire) {
-										empireFound = true
+				<Suspense fallback={<LoadingFallback />}>
+					<SlimHero />
+					<Container size="lg" align="center" py="xl">
+						<Group mt="md" position="center" key="owjojd">
+							{status === "succeeded" && games.length > 0 ? (
+								games.map((game) => {
+									if (game.isActive === false) return null
+									let empireFound = false
+									if (user?.empires?.length > 0) {
+										const empire = user.empires.find(
+											(empire) => empire.game_id === game.game_id,
+										)
+										if (empire) {
+											empireFound = true
+										}
 									}
-								}
 
-								return (
-									<ModeCard
-										game={game}
-										empireFound={empireFound}
-										user={user}
-										key={game.id}
-									/>
-								)
-							})
-						) : (
-							<Loader size="xl" />
-						)}
-					</Group>
-				</Container>
-				<FooterSocial />
+									return (
+										<ModeCard
+											game={game}
+											empireFound={empireFound}
+											user={user}
+											key={game.id}
+										/>
+									)
+								})
+							) : (
+								<Loader size="xl" />
+							)}
+						</Group>
+					</Container>
+					<FooterSocial />
+				</Suspense>
 			</MantineProvider>
 		</ColorSchemeProvider>
 	)

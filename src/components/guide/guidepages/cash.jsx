@@ -7,8 +7,6 @@ export default function CashGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.cash.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.cash.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.cash.bonus"))}</p>

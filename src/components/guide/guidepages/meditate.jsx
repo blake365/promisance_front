@@ -9,8 +9,6 @@ export default function MeditateGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.meditate.title")}</h2>
 			<p>
 				{parseGuideLinks(

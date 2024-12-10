@@ -9,8 +9,6 @@ export default function ScoresGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.scores.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.scores.description"))}</p>
 			<dl>

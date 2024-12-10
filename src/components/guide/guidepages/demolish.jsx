@@ -7,8 +7,6 @@ export default function DemolishGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.demolish.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.demolish.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.demolish.speed"))}</p>

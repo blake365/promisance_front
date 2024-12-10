@@ -116,8 +116,6 @@ export default function NewTipsGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.newPlayer.title")}</h2>
 
 			{empire.turnsUsed <= turnsProtection && (

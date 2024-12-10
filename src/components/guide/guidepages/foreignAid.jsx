@@ -13,8 +13,6 @@ export default function AidGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.foreignAid.title")}</h2>
 			<p>
 				{parseGuideLinks(

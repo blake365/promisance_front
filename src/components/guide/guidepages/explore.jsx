@@ -7,8 +7,6 @@ export default function ExploreGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.explore.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.explore.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.explore.action"))}</p>

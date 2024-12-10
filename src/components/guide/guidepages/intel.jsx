@@ -9,8 +9,6 @@ export default function IntelGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.intelCenter.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.intelCenter.description"))}</p>
 			<p>

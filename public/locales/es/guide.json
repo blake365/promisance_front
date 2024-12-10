@@ -1,5 +1,36 @@
 {
 	"guide": {
+		"links": {
+			"": "",
+			"Guide": "Guía",
+			"Summary": "Resumen",
+			"Overview": "Vista General",
+			"Scores": "Puntuaciones",
+			"Clan Stats": "Estadísticas del Clan",
+			"Mailbox": "Buzón",
+			"World News": "Noticias Mundiales",
+			"Farm": "Granja",
+			"Cash": "Dinero",
+			"Explore": "Explorar",
+			"Industry": "Industria",
+			"Healing": "Curación",
+			"Meditate": "Meditar",
+			"Magic Center": "Centro de Magia",
+			"Build": "Construir",
+			"Demolish": "Demoler",
+			"Favorites": "Favoritos",
+			"Black Market": "Mercado Negro",
+			"Public Market": "Mercado Público",
+			"The Bank": "El Banco",
+			"Lottery": "Lotería",
+			"Clans": "Clanes",
+			"War Council": "Consejo de Guerra",
+			"Intel Center": "Centro de Inteligencia",
+			"Foreign Aid": "Ayuda Extranjera",
+			"Empire Settings": "Ajustes del Imperio",
+			"Achievements": "Logros",
+			"Charts": "Gráficos"
+		},
 		"sections": {
 			"gettingStarted": "Primeros Pasos",
 			"basicStrategies": "Estrategias Básicas",
@@ -52,7 +83,9 @@
 		},
 		"content": {
 			"common": {
-				"return": "Volver al Índice"
+				"return": "Volver al Índice",
+				"back": "Volver",
+				"title": "Guía del Juego"
 			},
 			"introduction": {
 				"title": "Introducción",

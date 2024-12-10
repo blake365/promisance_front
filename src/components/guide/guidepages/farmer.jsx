@@ -11,8 +11,6 @@ export default function FarmerGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.farmer.title")}</h2>
 
 			<p>

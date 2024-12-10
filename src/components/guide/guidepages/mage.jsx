@@ -11,8 +11,6 @@ export default function MageGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.mage.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.mage.description"))}</p>
 

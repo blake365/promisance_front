@@ -11,8 +11,6 @@ export default function WorldBankGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.worldBank.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.worldBank.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.worldBank.accountLimits"))}</p>

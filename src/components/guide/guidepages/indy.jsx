@@ -11,8 +11,6 @@ export default function IndyGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.indy.title")}</h2>
 
 			<p>{parseGuideLinks(t("guide:guide.content.indy.description"))}</p>

@@ -7,7 +7,6 @@ export default function BuildGuide() {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
 			<h2>{t("guide:guide.content.build.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.build.description"))}</p>
 			<p>{parseGuideLinks(t("guide:guide.content.build.speed"))}</p>

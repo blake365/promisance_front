@@ -11,8 +11,6 @@ export default function RaceGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.race.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.race.description"))}</p>
 			<dl>

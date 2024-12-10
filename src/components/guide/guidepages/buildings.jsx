@@ -9,8 +9,6 @@ export default function BuildingsGuide({ empire }) {
 
 	return (
 		<div>
-			<GuideLink text={t("guide:guide.content.common.return")} page="Index" />
-
 			<h2>{t("guide:guide.content.buildings.title")}</h2>
 			<p>{parseGuideLinks(t("guide:guide.content.buildings.description"))}</p>
 			<dl>
