@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form"
 import { useLoadEmpire } from "../../hooks/useLoadEmpire"
 import { useDispatch, useSelector } from "react-redux"
 import { Card, Select, Stack, Text, Button, Group } from "@mantine/core"
-import { useState, forwardRef } from "react"
+import { useState, forwardRef, useCallback, useMemo, memo } from "react"
 import { FavoriteButton } from "../utilities/maxbutton"
 import { useLoadOtherEmpires } from "../../hooks/useLoadOtherEmpires"
 import { eraArray } from "../../config/eras"
@@ -14,28 +14,105 @@ import { loadScores } from "../../store/scoresSlice"
 import { setRepeat } from "../../store/repeatSlice"
 import { useTranslation } from "react-i18next"
 
-const SpellForm = ({ empire, roundStatus, spy, defenderId }) => {
+const SpellForm = memo(({ empire, roundStatus, spy, defenderId }) => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState("")
 	const [spellSelectedEmpire, spellSetSelectedEmpire] = useState("")
 	const [spellSelectedAttack, spellSetSelectedAttack] = useState("")
 
 	const { t, i18n } = useTranslation(["diplomacy", "eras"])
+	const dispatch = useDispatch()
 
-	const { maxSpells } = useSelector((state) => state.games.activeGame)
-
-	const eraName = eraArray[empire.era].name.toLowerCase()
+	const maxSpells = useSelector((state) => state.games.activeGame.maxSpells)
+	const eraName = useMemo(
+		() => eraArray[empire.era].name.toLowerCase(),
+		[empire.era],
+	)
 
 	const loadEmpire = useLoadEmpire(empire.uuid)
-	const dispatch = useDispatch()
-	let otherEmpires = null
-	if (!defenderId) {
-		otherEmpires = useLoadOtherEmpires(
-			empire.game_id,
-			empire.id,
-			empire.offTotal,
-		)
-	}
+	const otherEmpires = useLoadOtherEmpires(
+		empire.game_id,
+		empire.id,
+		empire.offTotal,
+	)
+
+	const spellData = useMemo(
+		() => [
+			{
+				value: "fight",
+				label: t(`eras:eras.${eraName}.spell_fight`),
+				ratio: "2.2x",
+				cost: Math.ceil(baseCost(empire) * 27.5),
+			},
+			{
+				value: "blast",
+				label: t(`eras:eras.${eraName}.spell_blast`),
+				ratio: "1.5x",
+				cost: Math.ceil(baseCost(empire) * 25),
+			},
+			{
+				value: "steal",
+				label: t(`eras:eras.${eraName}.spell_steal`),
+				ratio: "1.75x",
+				cost: Math.ceil(baseCost(empire) * 30.75),
+			},
+			{
+				value: "storm",
+				label: t(`eras:eras.${eraName}.spell_storm`),
+				ratio: "1.21x",
+				cost: Math.ceil(baseCost(empire) * 22.25),
+			},
+			{
+				value: "runes",
+				label: t(`eras:eras.${eraName}.spell_runes`),
+				ratio: "1.3x",
+				cost: Math.ceil(baseCost(empire) * 24.5),
+			},
+			{
+				value: "struct",
+				label: t(`eras:eras.${eraName}.spell_struct`),
+				ratio: "1.7x",
+				cost: Math.ceil(baseCost(empire) * 23),
+			},
+		],
+		[eraName, t, empire],
+	)
+
+	const sendSpellAttack = useCallback(
+		async (values) => {
+			setLoading(true)
+			setError("")
+			try {
+				const res = await Axios.post(
+					`/magic/attack?gameId=${empire.game_id}&lang=${i18n.language}`,
+					values,
+				)
+				dispatch(
+					setRepeat({
+						route: `/magic/attack?gameId=${empire.game_id}&lang=${i18n.language}`,
+						body: values,
+						color: "indigo",
+					}),
+				)
+				if ("error" in res.data) {
+					setError(res.data.error)
+				} else {
+					window.scroll({ top: 0, behavior: "smooth" })
+					dispatch(setResult([res.data]))
+					loadEmpire()
+				}
+				if (defenderId) {
+					dispatch(loadScores(empire.game_id))
+				}
+			} catch (error) {
+				console.log(error)
+				setError(error)
+			} finally {
+				setLoading(false)
+			}
+		},
+		[empire.game_id, i18n.language, dispatch, loadEmpire, defenderId],
+	)
 
 	const spellForm = useForm({
 		initialValues: {
@@ -44,84 +121,59 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) => {
 			defenderId: defenderId ? defenderId : "",
 			spell: spy ? "spy" : "",
 		},
-
 		validationRules: {
 			number: (value) => empire.turns >= 2 && value > 0,
 		},
-
 		errorMessages: {
 			number: t("diplomacy:warCouncil.attackError"),
 		},
 	})
 
-	const sendSpellAttack = async (values) => {
-		setLoading(true)
-		setError("")
-		try {
-			const res = await Axios.post(
-				`/magic/attack?gameId=${empire.game_id}&lang=${i18n.language}`,
-				values,
-			)
-			dispatch(
-				setRepeat({
-					route: `/magic/attack?gameId=${empire.game_id}&lang=${i18n.language}`,
-					body: values,
-					color: "indigo",
-				}),
-			)
-			// console.log(res.data)
-			if ("error" in res.data) {
-				setError(res.data.error)
-			} else {
-				window.scroll({ top: 0, behavior: "smooth" })
-				dispatch(setResult([res.data]))
-				loadEmpire()
-			}
-			if (defenderId) {
-				dispatch(loadScores(empire.game_id))
-			}
-			setLoading(false)
-		} catch (error) {
-			console.log(error)
-			setError(error)
-			setLoading(false)
-		}
-	}
+	const handleSubmit = useCallback(
+		(values) => {
+			sendSpellAttack(values)
+		},
+		[sendSpellAttack],
+	)
 
-	const SelectSpell = forwardRef(({ label, ratio, cost, ...others }, ref) => (
-		<div ref={ref} {...others}>
-			<Text size="md">{label}</Text>
-			<Text size="xs">
-				{t("diplomacy:warCouncil.spellRatio")}: {ratio}
-			</Text>
-			<Text size="xs">
-				{t("diplomacy:warCouncil.spellCost")}: {cost.toLocaleString()}{" "}
-				{t(`eras:eras.${eraName}.runes`)}
-			</Text>
-		</div>
-	))
-
-	const SelectItem = forwardRef(
-		({ land, era, empireId, name, race, networth, dr, ...others }, ref) => (
+	const SelectSpell = memo(
+		forwardRef(({ label, ratio, cost, ...others }, ref) => (
 			<div ref={ref} {...others}>
-				<div>
-					<Text size="sm" weight="bold">
-						{name}
-					</Text>
-					<Text size="sm">
-						<Mountains /> {land} {t("diplomacy:warCouncil.landDR")} {dr}%
-					</Text>
-					<Text size="sm">
-						<Scales /> ${networth}
-					</Text>
-					<Text size="sm">
-						<Hourglass /> {era}
-					</Text>
-					<Text size="sm">
-						<Alien /> {race}
-					</Text>
-				</div>
+				<Text size="md">{label}</Text>
+				<Text size="xs">
+					{t("diplomacy:warCouncil.spellRatio")}: {ratio}
+				</Text>
+				<Text size="xs">
+					{t("diplomacy:warCouncil.spellCost")}: {cost.toLocaleString()}{" "}
+					{t(`eras:eras.${eraName}.runes`)}
+				</Text>
 			</div>
+		)),
+	)
+
+	const SelectItem = memo(
+		forwardRef(
+			({ land, era, empireId, name, race, networth, dr, ...others }, ref) => (
+				<div ref={ref} {...others}>
+					<div>
+						<Text size="sm" weight="bold">
+							{name}
+						</Text>
+						<Text size="sm">
+							<Mountains /> {land} {t("diplomacy:warCouncil.landDR")} {dr}%
+						</Text>
+						<Text size="sm">
+							<Scales /> ${networth}
+						</Text>
+						<Text size="sm">
+							<Hourglass /> {era}
+						</Text>
+						<Text size="sm">
+							<Alien /> {race}
+						</Text>
+					</div>
+				</div>
+			),
 		),
 	)
 
@@ -135,14 +187,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) => {
 					</Group>
 				</Card.Section>
 			)}
-			<form
-				onSubmit={spellForm.onSubmit((values) => {
-					// console.log(values)
-					sendSpellAttack(values)
-					// dispatch(clearResult)
-					// window.scroll({ top: 0, behavior: 'smooth' })
-				})}
-			>
+			<form onSubmit={spellForm.onSubmit(handleSubmit)}>
 				<Stack spacing="sm" align="center">
 					{otherEmpires && (
 						<Select
@@ -172,44 +217,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) => {
 							withAsterisk
 							withinPortal
 							itemComponent={SelectSpell}
-							data={[
-								{
-									value: "fight",
-									label: t(`eras:eras.${eraName}.spell_fight`),
-									ratio: "2.2x",
-									cost: Math.ceil(baseCost(empire) * 27.5),
-								},
-								{
-									value: "blast",
-									label: t(`eras:eras.${eraName}.spell_blast`),
-									ratio: "1.5x",
-									cost: Math.ceil(baseCost(empire) * 25),
-								},
-								{
-									value: "steal",
-									label: t(`eras:eras.${eraName}.spell_steal`),
-									ratio: "1.75x",
-									cost: Math.ceil(baseCost(empire) * 30.75),
-								},
-								{
-									value: "storm",
-									label: t(`eras:eras.${eraName}.spell_storm`),
-									ratio: "1.21x",
-									cost: Math.ceil(baseCost(empire) * 22.25),
-								},
-								{
-									value: "runes",
-									label: t(`eras:eras.${eraName}.spell_runes`),
-									ratio: "1.3x",
-									cost: Math.ceil(baseCost(empire) * 24.5),
-								},
-								{
-									value: "struct",
-									label: t(`eras:eras.${eraName}.spell_struct`),
-									ratio: "1.7x",
-									cost: Math.ceil(baseCost(empire) * 23),
-								},
-							]}
+							data={spellData}
 							{...spellForm.getInputProps("spell")}
 						/>
 					)}
@@ -234,6 +242,7 @@ const SpellForm = ({ empire, roundStatus, spy, defenderId }) => {
 			</form>
 		</Card>
 	)
-}
+})
 
+SpellForm.displayName = "SpellForm"
 export default SpellForm

@@ -3,11 +3,12 @@ import { IconArrowBarToUp, IconStar, IconStarFilled } from "@tabler/icons-react"
 import Axios from "axios"
 import { useLoadEmpire } from "../../hooks/useLoadEmpire"
 import { convertLegacyKey } from "../useTurns/favoritesConfig"
+import { memo } from "react"
 
 // const dispatch = useDispatch()
 
-export function FavoriteButton(props) {
-	const loadEmpire = useLoadEmpire(props.empire.uuid)
+export const FavoriteButton = memo(({ title, empire, size }) => {
+	const loadEmpire = useLoadEmpire(empire.uuid)
 
 	const checkFavorite = (empire, item) => {
 		const newKey = convertLegacyKey(item)
@@ -30,110 +31,100 @@ export function FavoriteButton(props) {
 
 	return (
 		<ActionIcon
-			size={props.size ? "xs" : "md"}
+			size={size ? size : "md"}
 			color="blue"
 			sx={{ display: "inline" }}
 			onClick={() => {
-				setFavorite(props.empire, props.title)
+				setFavorite(empire, title)
 			}}
 		>
-			{checkFavorite(props.empire, props.title) ? (
-				<IconStarFilled size={props.size} />
+			{checkFavorite(empire, title) ? (
+				<IconStarFilled size={size} />
 			) : (
-				<IconStar size={props.size} />
+				<IconStar size={size} />
 			)}
 		</ActionIcon>
 	)
-}
+})
 
-export function MaxButton(props) {
+FavoriteButton.displayName = "FavoriteButton"
+
+export const MaxButton = memo(({ formName, fieldName, maxValue }) => {
 	return (
 		<ActionIcon
 			variant="transparent"
 			size="sm"
 			color="blue"
-			onClick={() => {
-				props.formName.setFieldValue(
-					props.fieldName,
-					Math.floor(props.maxValue),
-				)
-			}}
+			onClick={() => formName.setFieldValue(fieldName, Math.floor(maxValue))}
 		>
 			<IconArrowBarToUp />
 		</ActionIcon>
 	)
-}
+})
 
-export function HalfButton(props) {
+export const HalfButton = memo(({ formName, fieldName, maxValue }) => {
 	return (
 		<ActionIcon
 			variant="transparent"
 			size="sm"
 			color="blue"
-			onClick={() => {
-				props.formName.setFieldValue(
-					props.fieldName,
-					Math.floor(props.maxValue / 2),
-				)
-			}}
+			onClick={() =>
+				formName.setFieldValue(fieldName, Math.floor(maxValue / 2))
+			}
 		>
 			½
 		</ActionIcon>
 	)
-}
+})
 
-export function HalfAndAll(props) {
+export const HalfAndAll = memo(({ formName, fieldName, maxValue, style }) => {
 	return (
-		<div style={props.style}>
+		<div style={style}>
 			<ActionIcon
 				variant="transparent"
 				size="md"
 				color="blue"
-				onClick={() => {
-					props.formName.setFieldValue(
-						props.fieldName,
-						Math.floor(props.maxValue),
-					)
-				}}
+				onClick={() => formName.setFieldValue(fieldName, Math.floor(maxValue))}
 			>
 				<IconArrowBarToUp />
 			</ActionIcon>
 			<ActionIcon
 				size="md"
 				color="blue"
-				onClick={() => {
-					props.formName.setFieldValue(
-						props.fieldName,
-						Math.floor(props.maxValue / 2),
-					)
-				}}
+				onClick={() =>
+					formName.setFieldValue(fieldName, Math.floor(maxValue / 2))
+				}
 			>
 				½
 			</ActionIcon>
 		</div>
 	)
-}
+})
 
-export function OneTurn(props) {
-	// console.log(props.currentValue)
-	const currentValue = props.currentValue ? props.currentValue : 0
-	return (
-		<ActionIcon
-			size="sm"
-			color="blue"
-			variant="transparent"
-			onClick={() => {
-				if (props.value + currentValue > props.max) {
-					props.formName.setFieldValue(props.fieldName, props.max)
-				} else {
-					props.formName.setFieldValue(
-						props.fieldName,
-						props.value + currentValue,
-					)
-				}
-			}}
-		>
-			1
-		</ActionIcon>
-	)
-}
+export const OneTurn = memo(
+	({ formName, fieldName, value, max, currentValue }) => {
+		const curValue = currentValue ? currentValue : 0
+		return (
+			<ActionIcon
+				size="sm"
+				color="blue"
+				variant="transparent"
+				onClick={() => {
+					if (value + curValue > max) {
+						formName.setFieldValue(fieldName, max)
+					} else {
+						formName.setFieldValue(fieldName, value + curValue)
+					}
+				}}
+			>
+				1
+			</ActionIcon>
+		)
+	},
+)
+
+OneTurn.displayName = "OneTurn"
+
+MaxButton.displayName = "MaxButton"
+HalfButton.displayName = "HalfButton"
+HalfAndAll.displayName = "HalfAndAll"

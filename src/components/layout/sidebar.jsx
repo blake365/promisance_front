@@ -1,11 +1,11 @@
 import { Button, Stack, Title } from "@mantine/core"
-import { Fragment } from "react"
+import { Fragment, memo } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { useTour } from "@reactour/tour"
 import { useTranslation } from "react-i18next"
 
-const Sidebar = ({ game }) => {
+const Sidebar = memo(({ game }) => {
 	const { t } = useTranslation(["layout"])
 	const { setCurrentStep, meta } = useTour()
 
@@ -391,6 +391,7 @@ const Sidebar = ({ game }) => {
 			</Stack>
 		</Fragment>
 	)
-}
+})
 
+Sidebar.displayName = "Sidebar"
 export default Sidebar

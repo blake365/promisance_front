@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react"
 import {
 	createStyles,
 	Container,
@@ -20,6 +21,7 @@ import { logout } from "../../store/userSlice"
 import { logoutEmpire } from "../../store/empireSlice"
 import { useTranslation } from "react-i18next"
 import { LanguageSelector } from "../utilities/LanguageSelector"
+
 const useStyles = createStyles((theme) => ({
 	root: {
 		backgroundColor: "#000000",
@@ -67,11 +69,81 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export function HeroImageRight() {
+const ExternalLink = memo(({ href, icon, children }) => (
+	<Button
+		leftIcon={icon}
+		component="a"
+		href={href}
+		target="_blank"
+		color="dark"
+		compact
+		size="md"
+	>
+		{children}
+	</Button>
+))
+
+const InternalLink = memo(({ to, icon, children }) => (
+	<Button
+		component={Link}
+		to={to}
+		leftIcon={icon}
+		color="dark"
+		compact
+		size="md"
+	>
+		{children}
+	</Button>
+))
+
+const AuthButtons = memo(({ user, onLogout }) => {
+	const { t } = useTranslation(["pages"])
+
+	if (!user) {
+		return (
+			<>
+				<Button component={Link} to="/register" size="lg">
+					{t("pages:hero.register")}
+				</Button>
+				<Button component={Link} to="/login" size="lg" color="teal">
+					{t("pages:hero.login")}
+				</Button>
+			</>
+		)
+	}
+
+	return (
+		<>
+			<Button component={Link} to="/select" size="lg">
+				{t("pages:hero.select")}
+			</Button>
+			<Button onClick={onLogout} size="lg" color="red">
+				{t("pages:hero.logout")}
+			</Button>
+			{user.role === "admin" && (
+				<Button component={Link} to="/admin/" size="lg" color="teal">
+					Admin
+				</Button>
+			)}
+		</>
+	)
+})
+
+function HeroImageRight() {
 	const { user } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
 	const { classes } = useStyles()
 	const { t } = useTranslation(["pages"])
+
+	const handleLogout = useCallback(() => {
+		persistor.pause()
+		persistor.flush().then(() => {
+			return persistor.purge()
+		})
+		dispatch(logout())
+		dispatch(logoutEmpire())
+	}, [dispatch])
+
 	return (
 		<div className={classes.root}>
 			<Container size="lg">
@@ -91,89 +163,39 @@ export function HeroImageRight() {
 						</Text>
 					</div>
 				</div>
+
 				<Group my="lg" spacing="lg">
-					{!user ? (
-						<>
-							<Button component={Link} to="/register" size="lg">
-								{t("pages:hero.register")}
-							</Button>
-							<Button component={Link} to="/login" size="lg" color="teal">
-								{t("pages:hero.login")}
-							</Button>
-						</>
-					) : (
-						<>
-							<Button component={Link} to="/select" size="lg">
-								{t("pages:hero.select")}
-							</Button>
-							<Button
-								onClick={() => {
-									persistor.pause()
-									persistor.flush().then(() => {
-										return persistor.purge()
-									})
-									dispatch(logout())
-									dispatch(logoutEmpire())
-								}}
-								size="lg"
-								color="red"
-							>
-								{t("pages:hero.logout")}
-							</Button>
-							{user.role === "admin" && (
-								<Button component={Link} to="/admin/" size="lg" color="teal">
-									Admin
-								</Button>
-							)}
-						</>
-					)}
+					<AuthButtons user={user} onLogout={handleLogout} />
 				</Group>
+
 				<Group position="left">
-					<Button
-						leftIcon={<Compass size={14} />}
-						component="a"
+					<ExternalLink
 						href="https://guide.neopromisance.com"
-						target="_blank"
-						color="dark"
-						compact
-						size="md"
+						icon={<Compass size={14} />}
 					>
 						{t("pages:hero.guide")}
-					</Button>
-					<Button
-						component={Link}
-						to="/rules"
-						leftIcon={<ListBullets size={14} />}
-						color="dark"
-						compact
-						size="md"
-					>
+					</ExternalLink>
+
+					<InternalLink to="/rules" icon={<ListBullets size={14} />}>
 						{t("pages:hero.rules")}
-					</Button>
-					<Button
-						component={Link}
-						to="/archive"
-						leftIcon={<Archive size={14} />}
-						color="dark"
-						compact
-						size="md"
-					>
+					</InternalLink>
+
+					<InternalLink to="/archive" icon={<Archive size={14} />}>
 						{t("pages:hero.archive")}
-					</Button>
-					<Button
-						leftIcon={<DiscordLogo size={14} />}
-						component="a"
+					</InternalLink>
+
+					<ExternalLink
 						href="https://discord.gg/bnuVy2pdgM"
-						target="_blank"
-						color="dark"
-						compact
-						size="md"
+						icon={<DiscordLogo size={14} />}
 					>
 						Discord
-					</Button>
+					</ExternalLink>
+
 					<LanguageSelector />
 				</Group>
 			</Container>
 		</div>
 	)
 }
+
+export default memo(HeroImageRight)

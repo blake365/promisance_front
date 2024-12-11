@@ -19,7 +19,7 @@ import { steps } from "../tour/steps"
 import { Compass } from "@phosphor-icons/react"
 import { setBgImage } from "../functions/setBgImage"
 import NewPlayerModal from "./layout/newPlayerModal"
-import { useEffect } from "react"
+import { useEffect, useMemo, memo } from "react"
 import { raceTutorials } from "../tour/raceTutorials"
 import CountdownTimer from "./utilities/countdownTimer"
 import { useTranslation } from "react-i18next"
@@ -34,6 +34,32 @@ const formatTimeParts = (milliseconds) => {
 	return { days, hours, minutes }
 }
 
+const StatText = memo(({ label, value }) => (
+	<tr>
+		<td style={{ width: "50%" }}>{label}</td>
+		<td align="right">{value}</td>
+	</tr>
+))
+
+const RoundStatus = memo(({ time }) => {
+	const { t } = useTranslation(["time"])
+	const status = useMemo(() => {
+		const upcoming = time.start - time.time
+		const remaining = time.end - time.time
+
+		if (upcoming > 0) {
+			const parts = formatTimeParts(upcoming)
+			return t("time:round.willStart", parts)
+		}
+		if (remaining < 0) return t("time:round.ended")
+
+		const parts = formatTimeParts(remaining)
+		return t("time:round.willEnd", parts)
+	}, [time.start, time.end, time.time, t])
+
+	return <Text align="center">{status}</Text>
+})
+
 export default function Summary() {
 	const { t } = useTranslation(["eras", "summary", "time"])
 	const { empire } = useSelector((state) => state.empire)
@@ -44,49 +70,13 @@ export default function Summary() {
 	const navigate = useNavigate()
 	const bgimage = setBgImage(empire, game.turnsProtection)
 
+	const memoizedTime = useMemo(() => ({ ...time }), [time])
+
 	useEffect(() => {
 		if (!game) {
 			navigate("/select")
 		}
 	}, [game, navigate])
-
-	let roundStatus = t("time:round.notStarted")
-	const upcoming = time.start - time.time
-	const remaining = time.end - time.time
-
-	if (upcoming > 0) {
-		const time = formatTimeParts(upcoming)
-		roundStatus = t("time:round.willStart", {
-			days: time.days,
-			hours: time.hours,
-			minutes: time.minutes,
-		})
-	} else if (remaining < 0) {
-		roundStatus = t("time:round.ended")
-	} else {
-		const time = formatTimeParts(remaining)
-		roundStatus = t("time:round.willEnd", {
-			days: time.days,
-			hours: time.hours,
-			minutes: time.minutes,
-		})
-	}
-
-	const startTutorial = (race) => {
-		function findSteps(array, selector) {
-			for (let i = 0; i < array.length; i++) {
-				if (array[i][0].selector === `.${selector}0`) {
-					return array[i]
-				}
-			}
-		}
-
-		const steps = findSteps(raceTutorials, race.toLowerCase())
-		setSteps(steps)
-		setMeta(`${race} tutorial`)
-		setCurrentStep(0)
-		setIsOpen(true)
-	}
 
 	return (
 		<main>
@@ -105,7 +95,7 @@ export default function Summary() {
 					{t("summary:summary.title")}
 				</Title>
 				<div className="dwarf0 elf0 gremlin0 drow0 ghoul0 gnome0 pixie0 minotaur0 goblin0 orc0 hobbit0 vampire0">
-					<NewPlayerModal empire={empire} time={time} />
+					<NewPlayerModal empire={empire} time={memoizedTime} />
 					<Card>
 						<Group position="center" align="center" spacing={5}>
 							<Avatar
@@ -167,72 +157,58 @@ export default function Summary() {
 									}}
 								>
 									<tbody>
-										<tr>
-											<td style={{ width: "50%" }}>
-												{t("summary:summary.turns")}
-											</td>
-											<td align="right">
-												{empire?.turns} ({t("summary:summary.max")}{" "}
-												{game.turnsMax})
-											</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.storedturns")}</td>
-											<td align="right">
-												{empire?.storedturns} ({t("summary:summary.max")}{" "}
-												{game.turnsStored})
-											</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.rank")}</td>
-											<td align="right">{empire?.rank}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.peasants`,
-												)}
-											</td>
-											<td align="right">
-												{empire?.peasants?.toLocaleString()}
-											</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.land")}</td>
-											<td align="right">{empire?.land?.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.cash")}</td>
-											<td align="right">${empire?.cash?.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.food`,
-												)}
-											</td>
-											<td align="right">{empire?.food?.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.runes`,
-												)}
-											</td>
-											<td align="right">{empire?.runes?.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.networth")}</td>
-											<td align="right">
-												${empire?.networth?.toLocaleString()}
-											</td>
-										</tr>
+										<StatText
+											label={t("summary:summary.turns")}
+											value={`${empire?.turns} (${t("summary:summary.max")} ${
+												game.turnsMax
+											})`}
+										/>
+										<StatText
+											label={t("summary:summary.storedturns")}
+											value={`${empire?.storedturns} (${t(
+												"summary:summary.max",
+											)} ${game.turnsStored})`}
+										/>
+										<StatText
+											label={t("summary:summary.rank")}
+											value={empire?.rank}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.peasants`,
+											)}
+											value={empire?.peasants?.toLocaleString()}
+										/>
+										<StatText
+											label={t("summary:summary.land")}
+											value={empire?.land?.toLocaleString()}
+										/>
+										<StatText
+											label={t("summary:summary.cash")}
+											value={`${empire?.cash?.toLocaleString()}`}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.food`,
+											)}
+											value={empire?.food?.toLocaleString()}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.runes`,
+											)}
+											value={empire?.runes?.toLocaleString()}
+										/>
+										<StatText
+											label={t("summary:summary.networth")}
+											value={`${empire?.networth?.toLocaleString()}`}
+										/>
 									</tbody>
 								</Table>
 							</Grid.Col>
@@ -246,80 +222,66 @@ export default function Summary() {
 									}}
 								>
 									<tbody>
-										<tr>
-											<td style={{ width: "50%" }}>
-												{t("summary:summary.era")}
-											</td>
-											<td align="right">
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.name`,
-												)}
-											</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.race")}</td>
-											<td align="right">{raceArray[empire.race].name}</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.health")}</td>
-											<td align="right">{empire?.health}%</td>
-										</tr>
-										<tr>
-											<td>{t("summary:summary.tax")}</td>
-											<td align="right">{empire?.tax}%</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.trparm`,
-												)}
-											</td>
-											<td align="right">{empire?.trpArm.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.trplnd`,
-												)}
-											</td>
-											<td align="right">{empire?.trpLnd.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.trpfly`,
-												)}
-											</td>
-											<td align="right">{empire?.trpFly.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.trpsea`,
-												)}
-											</td>
-											<td align="right">{empire?.trpSea.toLocaleString()}</td>
-										</tr>
-										<tr>
-											<td>
-												{t(
-													`eras:eras.${eraArray[
-														empire.era
-													].name.toLowerCase()}.trpwiz`,
-												)}
-											</td>
-											<td align="right">{empire?.trpWiz.toLocaleString()}</td>
-										</tr>
+										<StatText
+											label={t("summary:summary.era")}
+											value={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.name`,
+											)}
+										/>
+										<StatText
+											label={t("summary:summary.race")}
+											value={raceArray[empire.race].name}
+										/>
+										<StatText
+											label={t("summary:summary.health")}
+											value={`${empire?.health}%`}
+										/>
+										<StatText
+											label={t("summary:summary.tax")}
+											value={`${empire?.tax}%`}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.trparm`,
+											)}
+											value={empire?.trpArm.toLocaleString()}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.trplnd`,
+											)}
+											value={empire?.trpLnd.toLocaleString()}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.trpfly`,
+											)}
+											value={empire?.trpFly.toLocaleString()}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.trpsea`,
+											)}
+											value={empire?.trpSea.toLocaleString()}
+										/>
+										<StatText
+											label={t(
+												`eras:eras.${eraArray[
+													empire.era
+												].name.toLowerCase()}.trpwiz`,
+											)}
+											value={empire?.trpWiz.toLocaleString()}
+										/>
 									</tbody>
 								</Table>
 							</Grid.Col>
@@ -356,7 +318,7 @@ export default function Summary() {
 									time: new Date(time.time).toUTCString(),
 								})}
 							</Text>
-							<Text align="center">{roundStatus}</Text>
+							<RoundStatus time={memoizedTime} />
 							{empire.race !== 0 || empire.race !== 3 ? (
 								<Button
 									mt="md"

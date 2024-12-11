@@ -12,7 +12,7 @@ import {
 	Grid,
 	Group,
 } from "@mantine/core"
-import { HeroImageRight } from "./homeHero"
+import HeroImageRight from "./homeHero"
 import { useEffect } from "react"
 import FooterSocial from "../layout/footer"
 import { useDispatch } from "react-redux"

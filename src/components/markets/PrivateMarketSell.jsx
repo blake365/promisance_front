@@ -1,3 +1,4 @@
+import { memo, useRef, useMemo } from "react"
 import { Button, Center, NumberInput, Text, Stack } from "@mantine/core"
 import { useSelector } from "react-redux"
 import { useForm } from "@mantine/form"
@@ -9,60 +10,47 @@ import { useTranslation } from "react-i18next"
 import classes from "./markets.module.css"
 import { useLoadEmpire } from "../../hooks/useLoadEmpire"
 import { showNotification } from "@mantine/notifications"
-import { useRef } from "react"
 
-export default function PrivateMarketSell() {
+const MarketRow = memo(({ label, children }) => (
+	<tr>
+		<td align="center">{label}</td>
+		{children}
+	</tr>
+))
+
+function PrivateMarketSell() {
 	const { t } = useTranslation(["finance", "eras"])
 	const { empire } = useSelector((state) => state.empire)
-	const {
-		pvtmShopBonus,
-		pvtmTrpArm,
-		pvtmTrpLnd,
-		pvtmTrpFly,
-		pvtmTrpSea,
-		pvtmFood,
-		pvtmRunes,
-		pvtmMaxSell,
-	} = useSelector((state) => state.games.activeGame)
+	const gameSettings = useSelector((state) => state.games.activeGame)
 	const loadEmpire = useLoadEmpire(empire.uuid)
 	const buttonRef = useRef()
-
-	const getCost = (emp, base, multiplier) => {
-		let cost = base * multiplier
-		let costBonus =
-			1 +
-			((1 - pvtmShopBonus) * (emp.bldCost / emp.land) +
-				pvtmShopBonus * (emp.bldCash / emp.land))
-
-		cost *= costBonus
-		cost /= 2 - (100 + raceArray[emp.race].mod_market) / 100
-
-		if (cost > base * 0.5) {
-			cost = base * 0.5
-		}
-
-		return Math.round(cost)
-	}
-
 	const eraName = eraArray[empire.era].name.toLowerCase()
 
-	const units = ["Arm", "Lnd", "Fly", "Sea", "Food", "Runes"]
+	const getCost = useMemo(
+		() => (emp, base, multiplier) => {
+			const costBonus =
+				1 +
+				((1 - gameSettings.pvtmShopBonus) * (emp.bldCost / emp.land) +
+					gameSettings.pvtmShopBonus * (emp.bldCash / emp.land))
 
-	const trpArmCost = getCost(empire, pvtmTrpArm, 0.38)
-	const trpLndCost = getCost(empire, pvtmTrpLnd, 0.4)
-	const trpFlyCost = getCost(empire, pvtmTrpFly, 0.42)
-	const trpSeaCost = getCost(empire, pvtmTrpSea, 0.44)
-	const foodCost = Math.round(pvtmFood * 0.38)
-	const runesCost = Math.round(pvtmRunes * 0.2)
+			let cost = base * multiplier * costBonus
+			cost /= 2 - (100 + raceArray[emp.race].mod_market) / 100
+			return Math.min(cost, base * 0.5)
+		},
+		[gameSettings.pvtmShopBonus],
+	)
 
-	const priceArray = [
-		trpArmCost,
-		trpLndCost,
-		trpFlyCost,
-		trpSeaCost,
-		foodCost,
-		runesCost,
-	]
+	const costs = useMemo(
+		() => ({
+			arm: Math.round(getCost(empire, gameSettings.pvtmTrpArm, 0.38)),
+			lnd: Math.round(getCost(empire, gameSettings.pvtmTrpLnd, 0.4)),
+			fly: Math.round(getCost(empire, gameSettings.pvtmTrpFly, 0.42)),
+			sea: Math.round(getCost(empire, gameSettings.pvtmTrpSea, 0.44)),
+			food: Math.round(gameSettings.pvtmFood * 0.38),
+			runes: Math.round(gameSettings.pvtmRunes * 0.2),
+		}),
+		[empire, getCost, gameSettings],
+	)
 
 	const form = useForm({
 		initialValues: {
@@ -75,115 +63,43 @@ export default function PrivateMarketSell() {
 			sellFood: 0,
 			sellRunes: 0,
 		},
-
-		validationRules: {
-			sellArm: (value) => value <= empire.trpArm * (pvtmMaxSell / 10000),
-			sellLnd: (value) => value <= empire.trpLnd * (pvtmMaxSell / 10000),
-			sellFly: (value) => value <= empire.trpFly * (pvtmMaxSell / 10000),
-			sellSea: (value) => value <= empire.trpSea * (pvtmMaxSell / 10000),
+		validate: {
+			sellArm: (value) =>
+				value <= empire.trpArm * (gameSettings.pvtmMaxSell / 10000),
+			sellLnd: (value) =>
+				value <= empire.trpLnd * (gameSettings.pvtmMaxSell / 10000),
+			sellFly: (value) =>
+				value <= empire.trpFly * (gameSettings.pvtmMaxSell / 10000),
+			sellSea: (value) =>
+				value <= empire.trpSea * (gameSettings.pvtmMaxSell / 10000),
 			sellFood: (value) => value <= empire.food,
 			sellRunes: (value) => value <= empire.runes,
 		},
-
-		errorMessages: {
-			sellArm: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.trparm`),
-			}),
-			sellLnd: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.trplnd`),
-			}),
-			sellFly: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.trpfly`),
-			}),
-			sellSea: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.trpsea`),
-			}),
-			sellFood: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.food`),
-			}),
-			sellRunes: t("finance:blackMarket.sellError", {
-				item: t(`eras:eras.${eraName}.runes`),
-			}),
-		},
 	})
 
-	if (form.values["sellArm"] === undefined) {
-		form.setFieldValue("sellArm", 0)
-	}
-	if (form.values["sellLnd"] === undefined) {
-		form.setFieldValue("sellLnd", 0)
-	}
-	if (form.values["sellFly"] === undefined) {
-		form.setFieldValue("sellFly", 0)
-	}
-	if (form.values["sellSea"] === undefined) {
-		form.setFieldValue("sellSea", 0)
-	}
-	if (form.values["sellFood"] === undefined) {
-		form.setFieldValue("sellFood", 0)
-	}
-	if (form.values["sellRunes"] === undefined) {
-		form.setFieldValue("sellRunes", 0)
-	}
+	const interpretResult = useMemo(
+		() => (result) => {
+			const resultMap = {
+				resultSellArm: "trparm",
+				resultSellLnd: "trplnd",
+				resultSellFly: "trpfly",
+				resultSellSea: "trpsea",
+				resultSellFood: "food",
+				resultSellRunes: "runes",
+			}
 
-	const interpretResult = (result) => {
-		let returnArray = []
-		if (result.resultSellArm.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellArm.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trparm`),
-					price: result.resultSellArm.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result.resultSellLnd.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellLnd.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trplnd`),
-					price: result.resultSellLnd.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result.resultSellFly.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellFly.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trpfly`),
-					price: result.resultSellFly.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result.resultSellSea.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellSea.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trpsea`),
-					price: result.resultSellSea.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result.resultSellFood.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellFood.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.food`),
-					price: result.resultSellFood.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result.resultSellRunes.amount > 0) {
-			returnArray.push(
-				t("finance:blackMarket.sellResultArray", {
-					amount: result.resultSellRunes.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.runes`),
-					price: result.resultSellRunes.price.toLocaleString(),
-				}),
-			)
-		}
-		return returnArray
-	}
+			return Object.entries(resultMap)
+				.filter(([key]) => result[key]?.amount > 0)
+				.map(([key, item]) =>
+					t("finance:blackMarket.sellResultArray", {
+						amount: result[key].amount.toLocaleString(),
+						item: t(`eras:eras.${eraName}.${item}`),
+						price: result[key].price.toLocaleString(),
+					}),
+				)
+		},
+		[t, eraName],
+	)
 
 	const doSell = async (values) => {
 		try {
@@ -191,18 +107,17 @@ export default function PrivateMarketSell() {
 				`/privatemarket/sell?gameId=${empire.game_id}`,
 				values,
 			)
-			const result = res.data
-			const resultArray = interpretResult(result)
+			const resultArray = interpretResult(res.data)
 			showNotification({
 				title: t("finance:blackMarket.responseSellSuccess"),
-				message: resultArray.map((item) => <Text>{item}</Text>),
+				message: resultArray.map((item) => <Text key={item}>{item}</Text>),
 				color: "blue",
 			})
 			loadEmpire()
-			buttonRef.current.focus()
+			buttonRef.current?.focus()
 			form.reset()
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			showNotification({
 				title: t("finance:blackMarket.responseSellError"),
 				color: "orange",
@@ -210,16 +125,13 @@ export default function PrivateMarketSell() {
 		}
 	}
 
+	const units = ["Arm", "Lnd", "Fly", "Sea", "Food", "Runes"]
+
 	return (
 		<main>
 			<Center my={10}>
 				<Stack spacing="sm" align="center">
-					<form
-						onSubmit={form.onSubmit((values) => {
-							// console.log(values)
-							doSell(values)
-						})}
-					>
+					<form onSubmit={form.onSubmit(doSell)}>
 						<div className={classes.tablecontainer}>
 							<table className={classes.widetable}>
 								<thead>
@@ -245,70 +157,59 @@ export default function PrivateMarketSell() {
 									</tr>
 								</thead>
 								<tbody>
-									{units.map((unit, index) => {
-										let eraTroop = "trp" + unit.toLowerCase()
-										let troop = `trp${unit}`
-										let sell = `sell${unit}`
-
-										if (unit === "Food") {
-											troop = "food"
-											eraTroop = "food"
-										} else if (unit === "Runes") {
-											troop = "runes"
-											eraTroop = "runes"
-										}
+									{units.map((unit) => {
+										const troop =
+											unit === "Food" || unit === "Runes"
+												? unit.toLowerCase()
+												: `trp${unit}`
+										const sell = `sell${unit}`
+										const price = costs[unit.toLowerCase()]
+										const maxSell =
+											unit === "Food" || unit === "Runes"
+												? empire[troop]
+												: Math.floor(
+														empire[troop] * (gameSettings.pvtmMaxSell / 10000),
+												  )
 
 										return (
-											<tr key={index}>
-												<td align="center">
-													{t(`eras:eras.${eraName}.${eraTroop}`)}
-												</td>
+											<MarketRow
+												key={unit}
+												label={t(
+													`eras:eras.${eraName}.${
+														unit === "Food" || unit === "Runes"
+															? unit.toLowerCase()
+															: `trp${unit.toLowerCase()}`
+													}`,
+												)}
+											>
 												<td align="center">{empire[troop].toLocaleString()}</td>
-												<td align="center">
-													${Math.floor(priceArray[index]).toLocaleString()}
-												</td>
-												<td align="center">
-													{Math.floor(
-														empire[troop] * (pvtmMaxSell / 10000),
-													).toLocaleString()}
-												</td>
+												<td align="center">${price.toLocaleString()}</td>
+												<td align="center">{maxSell.toLocaleString()}</td>
 												<td align="center">
 													<NumberInput
 														hideControls
 														min={0}
-														max={empire[troop] * (pvtmMaxSell / 10000)}
-														parser={(value) =>
-															value
-																.split(" ")
-																.join("")
-																.replace(/\$\s?|(,*)|\s/g, "")
-														}
-														formatter={(value) => {
-															// console.log(typeof value)
-															return !Number.isNaN(parseFloat(value))
-																? `${value}`.replace(
-																		/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-																		",",
-																  )
-																: ""
-														}}
+														max={maxSell}
 														{...form.getInputProps(sell)}
+														parser={(value) => value.replace(/[^\d]/g, "")}
+														formatter={(value) =>
+															value
+																? value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+																: ""
+														}
 														rightSection={
 															<MaxButton
 																formName={form}
 																fieldName={sell}
-																maxValue={empire[troop] * (pvtmMaxSell / 10000)}
+																maxValue={maxSell}
 															/>
 														}
 													/>
 												</td>
 												<td align="center">
-													$
-													{Math.floor(
-														priceArray[index] * form.values[sell],
-													).toLocaleString()}
+													${(price * form.values[sell]).toLocaleString()}
 												</td>
-											</tr>
+											</MarketRow>
 										)
 									})}
 								</tbody>
@@ -325,3 +226,5 @@ export default function PrivateMarketSell() {
 		</main>
 	)
 }
+
+export default memo(PrivateMarketSell)

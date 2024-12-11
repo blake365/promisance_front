@@ -1,3 +1,4 @@
+import { memo, useRef, useMemo } from "react"
 import { Button, Center, NumberInput, Stack, Text } from "@mantine/core"
 import { useSelector } from "react-redux"
 import { useForm } from "@mantine/form"
@@ -5,89 +6,64 @@ import Axios from "axios"
 import { eraArray } from "../../config/eras"
 import { raceArray } from "../../config/races"
 import { MaxButton } from "../utilities/maxbutton"
-import { useRef } from "react"
-import classes from "./markets.module.css"
 import { useLoadEmpire } from "../../hooks/useLoadEmpire"
 import { showNotification } from "@mantine/notifications"
 import { useTranslation } from "react-i18next"
+import classes from "./markets.module.css"
 
-// DONE: build sell side of market
-// make it mobile friendly
-// DONE: add buy max buttons
-// FIXED: max buy can be higher than available
+const MarketRow = memo(({ label, children }) => (
+	<tr>
+		<td align="center">{label}</td>
+		{children}
+	</tr>
+))
 
-export default function PrivateMarketBuy() {
+function PrivateMarketBuy() {
 	const { t } = useTranslation(["finance", "eras"])
-
 	const buttonRef = useRef()
 	const { empire } = useSelector((state) => state.empire)
-	const {
-		pvtmShopBonus,
-		pvtmTrpArm,
-		pvtmTrpLnd,
-		pvtmTrpFly,
-		pvtmTrpSea,
-		pvtmFood,
-		pvtmRunes,
-	} = useSelector((state) => state.games.activeGame)
-
-	let buyNumberArray = []
-	let totalPrice = 0
-	let errors = {
-		error: "",
-	}
-
+	const gameSettings = useSelector((state) => state.games.activeGame)
 	const loadEmpire = useLoadEmpire(empire.uuid)
+	const eraName = eraArray[empire.era].name.toLowerCase()
 
-	const getCost = (emp, base) => {
-		let cost = base
-		let costBonus =
-			1 -
-			((1 - pvtmShopBonus) * (emp.bldCost / emp.land) +
-				pvtmShopBonus * (emp.bldCash / emp.land))
+	const getCost = useMemo(
+		() => (emp, base) => {
+			const costBonus =
+				1 -
+				((1 - gameSettings.pvtmShopBonus) * (emp.bldCost / emp.land) +
+					gameSettings.pvtmShopBonus * (emp.bldCash / emp.land))
 
-		cost *= costBonus
-		cost *= 2 - (100 + raceArray[emp.race].mod_market) / 100
+			let cost =
+				base * costBonus * (2 - (100 + raceArray[emp.race].mod_market) / 100)
+			return Math.max(cost, base * 0.6)
+		},
+		[gameSettings.pvtmShopBonus],
+	)
 
-		if (cost < base * 0.6) {
-			cost = base * 0.6
+	const { costs, availArray } = useMemo(() => {
+		const costs = {
+			arm: Math.round(getCost(empire, gameSettings.pvtmTrpArm)),
+			lnd: Math.round(getCost(empire, gameSettings.pvtmTrpLnd)),
+			fly: Math.round(getCost(empire, gameSettings.pvtmTrpFly)),
+			sea: Math.round(getCost(empire, gameSettings.pvtmTrpSea)),
+			food: gameSettings.pvtmFood,
+			runes: gameSettings.pvtmRunes,
 		}
 
-		return Math.round(cost)
-	}
+		const availArray = [
+			empire.mktArm,
+			empire.mktLnd,
+			empire.mktFly,
+			empire.mktSea,
+			empire.mktFood,
+			empire.mktRunes,
+		].map((item, index) => {
+			const price = Object.values(costs)[index]
+			return Math.min(item, Math.floor(empire.cash / price))
+		})
 
-	const units = ["Arm", "Lnd", "Fly", "Sea", "Food", "Runes"]
-
-	const trpArmCost = getCost(empire, pvtmTrpArm)
-	const trpLndCost = getCost(empire, pvtmTrpLnd)
-	const trpFlyCost = getCost(empire, pvtmTrpFly)
-	const trpSeaCost = getCost(empire, pvtmTrpSea)
-
-	const priceArray = [
-		trpArmCost,
-		trpLndCost,
-		trpFlyCost,
-		trpSeaCost,
-		pvtmFood,
-		pvtmRunes,
-	]
-
-	let availArray = [
-		empire.mktArm,
-		empire.mktLnd,
-		empire.mktFly,
-		empire.mktSea,
-		empire.mktFood,
-		empire.mktRunes,
-	]
-
-	availArray = availArray.map((item, index) => {
-		if (item < Math.floor(empire.cash / priceArray[index])) {
-			return item
-		}
-
-		return Math.floor(empire.cash / priceArray[index])
-	})
+		return { costs, availArray }
+	}, [empire, getCost, gameSettings])
 
 	const form = useForm({
 		initialValues: {
@@ -100,134 +76,23 @@ export default function PrivateMarketBuy() {
 			buyFood: 0,
 			buyRunes: 0,
 		},
-
-		validationRules: {
-			buyArm: (value) => value <= empire.cash / trpArmCost,
-			buyLnd: (value) => value <= empire.cash / trpLndCost,
-			buyFly: (value) => value <= empire.cash / trpFlyCost,
-			buySea: (value) => value <= empire.cash / trpSeaCost,
-			buyFood: (value) => value <= empire.cash / pvtmFood,
-			buyRunes: (value) => value <= empire.cash / pvtmRunes,
-		},
-
-		errorMessages: {
-			buyArm: t("finance:blackMarket.buyError"),
-			buyLnd: t("finance:blackMarket.buyError"),
-			buyFly: t("finance:blackMarket.buyError"),
-			buySea: t("finance:blackMarket.buyError"),
-			buyFood: t("finance:blackMarket.buyError"),
-			buyRunes: t("finance:blackMarket.buyError"),
+		validate: {
+			buyArm: (value) => value <= empire.cash / costs.arm,
+			buyLnd: (value) => value <= empire.cash / costs.lnd,
+			buyFly: (value) => value <= empire.cash / costs.fly,
+			buySea: (value) => value <= empire.cash / costs.sea,
+			buyFood: (value) => value <= empire.cash / costs.food,
+			buyRunes: (value) => value <= empire.cash / costs.runes,
 		},
 	})
 
-	if (form.values["buyArm"] === undefined) {
-		form.setFieldValue("buyArm", 0)
-	}
-	if (form.values["buyLnd"] === undefined) {
-		form.setFieldValue("buyLnd", 0)
-	}
-	if (form.values["buyFly"] === undefined) {
-		form.setFieldValue("buyFly", 0)
-	}
-	if (form.values["buySea"] === undefined) {
-		form.setFieldValue("buySea", 0)
-	}
-	if (form.values["buyFood"] === undefined) {
-		form.setFieldValue("buyFood", 0)
-	}
-	if (form.values["buyRunes"] === undefined) {
-		form.setFieldValue("buyRunes", 0)
-	}
-
-	buyNumberArray = Object.values(form.values).slice(2)
-	// console.log(buyNumberArray)
-
-	const spendArray = buyNumberArray.map((value, index) => {
-		value = value * priceArray[index]
-		return value
-	})
-
-	totalPrice = spendArray
-		.filter(Number)
-		.reduce((partialSum, a) => partialSum + a, 0)
-	// console.log(totalPrice)
-	// console.log(value)
-
-	function setErrors(error) {
-		errors.error = error
-	}
-
-	const eraName = eraArray[empire.era].name.toLowerCase()
-
-	const interpretResult = (result) => {
-		let returnArray = []
-		if (result?.resultBuyArm.amount > 0) {
-			console.log("test")
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuyArm.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trparm`),
-					price: result.resultBuyArm.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result?.resultBuyLnd.amount > 0) {
-			console.log("test")
-
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuyLnd.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trplnd`),
-					price: result.resultBuyLnd.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result?.resultBuyFly.amount > 0) {
-			console.log("test")
-
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuyFly.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trpfly`),
-					price: result.resultBuyFly.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result?.resultBuySea.amount > 0) {
-			console.log("test")
-
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuySea.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.trpsea`),
-					price: result.resultBuySea.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result?.resultBuyFood.amount > 0) {
-			console.log("test")
-
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuyFood.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.food`),
-					price: result.resultBuyFood.price.toLocaleString(),
-				}),
-			)
-		}
-		if (result?.resultBuyRunes.amount > 0) {
-			console.log("test")
-
-			returnArray.push(
-				t("finance:blackMarket.buyResultArray", {
-					amount: result.resultBuyRunes.amount.toLocaleString(),
-					item: t(`eras:eras.${eraName}.runes`),
-					price: result.resultBuyRunes.price.toLocaleString(),
-				}),
-			)
-		}
-		return returnArray
-	}
+	const totalPrice = useMemo(() => {
+		const values = Object.values(form.values).slice(2)
+		return values.reduce(
+			(sum, value, index) => sum + value * Object.values(costs)[index],
+			0,
+		)
+	}, [form.values, costs])
 
 	const doBuy = async (values) => {
 		try {
@@ -235,20 +100,18 @@ export default function PrivateMarketBuy() {
 				`/privatemarket/buy?gameId=${empire.game_id}`,
 				values,
 			)
-			const result = res.data
-			const resultArray = interpretResult(result)
 			showNotification({
 				title: t("finance:blackMarket.responseBuySuccess"),
-				message: resultArray.map((item, index) => (
-					<Text key={index}>{item}</Text>
+				message: interpretResult(res.data).map((item, i) => (
+					<Text key={item}>{item}</Text>
 				)),
 				color: "blue",
 			})
 			loadEmpire()
-			buttonRef.current.focus()
+			buttonRef.current?.focus()
 			form.reset()
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			showNotification({
 				title: t("finance:blackMarket.responseBuyFail"),
 				color: "orange",
@@ -256,20 +119,13 @@ export default function PrivateMarketBuy() {
 		}
 	}
 
+	const units = ["Arm", "Lnd", "Fly", "Sea", "Food", "Runes"]
+
 	return (
 		<main>
 			<Center my={10}>
 				<Stack spacing="sm" align="center">
-					<form
-						onSubmit={
-							totalPrice < empire.cash
-								? form.onSubmit((values) => {
-										// console.log(values)
-										doBuy(values)
-								  })
-								: setErrors(t("finance:blackMarket.buyError"))
-						}
-					>
+					<form onSubmit={form.onSubmit(doBuy)}>
 						<div className={classes.tablecontainer}>
 							<table className={classes.widetable}>
 								<thead>
@@ -299,59 +155,49 @@ export default function PrivateMarketBuy() {
 								</thead>
 								<tbody>
 									{units.map((unit, index) => {
-										let eraTroop = "trp" + unit.toLocaleLowerCase()
-										let troop = `trp${unit}`
-										let mktTroop = `mkt${unit}`
-										let price = priceArray[index]
-										let avail = availArray[index]
-										let buy = `buy${unit}`
-
-										if (unit === "Food") {
-											troop = "food"
-											eraTroop = "food"
-										} else if (unit === "Runes") {
-											troop = "runes"
-											eraTroop = "runes"
-										}
+										const troop =
+											unit === "Food" || unit === "Runes"
+												? unit.toLowerCase()
+												: `trp${unit}`
+										const buy = `buy${unit}`
+										const price = Object.values(costs)[index]
 
 										return (
-											<tr key={index}>
-												<td align="center">
-													{t(`eras:eras.${eraName}.${eraTroop}`)}
-												</td>
+											<MarketRow
+												key={unit}
+												label={t(
+													`eras:eras.${eraName}.${
+														unit === "Food" || unit === "Runes"
+															? unit.toLowerCase()
+															: `trp${unit.toLowerCase()}`
+													}`,
+												)}
+											>
 												<td align="center">{empire[troop].toLocaleString()}</td>
 												<td align="center">
-													{empire[mktTroop].toLocaleString()}
+													{empire[`mkt${unit}`].toLocaleString()}
 												</td>
 												<td align="center">${price}</td>
-												<td align="center">{avail.toLocaleString()}</td>
+												<td align="center">
+													{availArray[index].toLocaleString()}
+												</td>
 												<td align="center">
 													<NumberInput
 														w={130}
-														hideControls
 														min={0}
-														max={avail}
-														parser={(value) =>
-															value
-																.split(" ")
-																.join("")
-																.replace(/\$\s?|(,*)|\s/g, "")
-														}
-														formatter={(value) => {
-															// console.log(typeof value)
-															return !Number.isNaN(parseFloat(value))
-																? `${value}`.replace(
-																		/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-																		",",
-																  )
-																: ""
-														}}
+														max={availArray[index]}
 														{...form.getInputProps(buy)}
+														parser={(value) => value.replace(/[^\d]/g, "")}
+														formatter={(value) =>
+															value
+																? value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+																: ""
+														}
 														rightSection={
 															<MaxButton
 																formName={form}
 																fieldName={buy}
-																maxValue={avail}
+																maxValue={availArray[index]}
 															/>
 														}
 													/>
@@ -359,21 +205,26 @@ export default function PrivateMarketBuy() {
 												<td align="center">
 													${(price * form.values[buy]).toLocaleString()}
 												</td>
-											</tr>
+											</MarketRow>
 										)
 									})}
 								</tbody>
 							</table>
 						</div>
-						<Stack align="center">
-							<Text style={{ color: "red" }}>{errors.error}</Text>
-							<Button type="submit" disabled={errors.error} ref={buttonRef}>
+						<Center>
+							<Button
+								type="submit"
+								ref={buttonRef}
+								disabled={totalPrice > empire.cash}
+							>
 								{t("finance:blackMarket.buySubmit")}
 							</Button>
-						</Stack>
+						</Center>
 					</form>
 				</Stack>
 			</Center>
 		</main>
 	)
 }
+
+export default memo(PrivateMarketBuy)

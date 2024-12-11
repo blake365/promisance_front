@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+// import MillionLint from "@million/lint";
 // import { dependencies } from './package.json'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 
@@ -34,6 +35,7 @@ export default defineConfig(() => {
 				org: 'blake-morgan',
 				project: 'javascript-react',
 			}),
+			// MillionLint.vite(),
 		],
 	}
 })
