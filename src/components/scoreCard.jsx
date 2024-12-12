@@ -119,7 +119,7 @@ const ScoreCard = memo(({ empire, myEmpire, home, clan, clanTag, role }) => {
 		}
 	}, [empire.id])
 
-	// Fix color and disabled calculations
+	// Fix color and disabled calculations with null checks
 	const { color, disabled } = useMemo(() => {
 		let color = ""
 		let disabled = false
@@ -142,9 +142,9 @@ const ScoreCard = memo(({ empire, myEmpire, home, clan, clanTag, role }) => {
 			color = "orange"
 		}
 
-		if (!home) {
-			const upcoming = time.start - time.time
-			const remaining = time.end - time.time
+		if (!home && time) {
+			const upcoming = (time.start || 0) - (time.time || 0)
+			const remaining = (time.end || 0) - (time.time || 0)
 
 			if (upcoming > 0 || remaining < 0) {
 				disabled = true
@@ -158,12 +158,11 @@ const ScoreCard = memo(({ empire, myEmpire, home, clan, clanTag, role }) => {
 		empire.mode,
 		empire.id,
 		myEmpire?.id,
-
 		empire.flags,
 		home,
-		time.start,
-		time.end,
-		time.time,
+		time?.start,
+		time?.end,
+		time?.time,
 	])
 
 	useEffect(() => {
