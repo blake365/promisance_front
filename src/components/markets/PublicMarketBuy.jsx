@@ -18,6 +18,8 @@ export default memo(({ empire }) => {
 
 	const eraName = eraArray[empire.era].name.toLowerCase()
 
+	console.log(gameSettings)
+
 	return (
 		<main>
 			<Center my={10} maw={950}>
@@ -40,9 +42,13 @@ export default memo(({ empire }) => {
 							}
 							item={otherItems[type]}
 							base={
-								gameSettings[
-									`pvtm${type.charAt(0).toUpperCase()}${type.slice(1)}`
-								]
+								type === "food" || type === "runes"
+									? gameSettings[
+											`pvtm${type.charAt(0).toUpperCase()}${type.slice(1)}`
+									  ]
+									: gameSettings[
+											`pvtmTrp${type.charAt(0).toUpperCase()}${type.slice(1)}`
+									  ]
 							}
 							cash={empire.cash}
 							empireId={empire.id}

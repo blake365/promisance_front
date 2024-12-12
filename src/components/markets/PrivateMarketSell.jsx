@@ -63,7 +63,7 @@ function PrivateMarketSell() {
 			sellFood: 0,
 			sellRunes: 0,
 		},
-		validate: {
+		validationRules: {
 			sellArm: (value) =>
 				value <= empire.trpArm * (gameSettings.pvtmMaxSell / 10000),
 			sellLnd: (value) =>
@@ -75,7 +75,46 @@ function PrivateMarketSell() {
 			sellFood: (value) => value <= empire.food,
 			sellRunes: (value) => value <= empire.runes,
 		},
+		errorMessages: {
+			sellArm: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.trparm`),
+			}),
+			sellLnd: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.trplnd`),
+			}),
+			sellFly: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.trpfly`),
+			}),
+			sellSea: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.trpsea`),
+			}),
+			sellFood: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.food`),
+			}),
+			sellRunes: t("finance:blackMarket.sellError", {
+				item: t(`eras:eras.${eraName}.runes`),
+			}),
+		},
 	})
+
+	if (form.values["sellArm"] === undefined) {
+		form.setFieldValue("sellArm", 0)
+	}
+	if (form.values["sellLnd"] === undefined) {
+		form.setFieldValue("sellLnd", 0)
+	}
+	if (form.values["sellFly"] === undefined) {
+		form.setFieldValue("sellFly", 0)
+	}
+	if (form.values["sellSea"] === undefined) {
+		form.setFieldValue("sellSea", 0)
+	}
+	if (form.values["sellFood"] === undefined) {
+		form.setFieldValue("sellFood", 0)
+	}
+	if (form.values["sellRunes"] === undefined) {
+		form.setFieldValue("sellRunes", 0)
+	}
 
 	const interpretResult = useMemo(
 		() => (result) => {

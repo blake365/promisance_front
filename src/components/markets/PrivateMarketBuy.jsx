@@ -76,23 +76,139 @@ function PrivateMarketBuy() {
 			buyFood: 0,
 			buyRunes: 0,
 		},
-		validate: {
-			buyArm: (value) => value <= empire.cash / costs.arm,
-			buyLnd: (value) => value <= empire.cash / costs.lnd,
-			buyFly: (value) => value <= empire.cash / costs.fly,
-			buySea: (value) => value <= empire.cash / costs.sea,
-			buyFood: (value) => value <= empire.cash / costs.food,
-			buyRunes: (value) => value <= empire.cash / costs.runes,
+		validationRules: {
+			buyArm: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[0]
+			},
+			buyLnd: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[1]
+			},
+			buyFly: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[2]
+			},
+			buySea: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[3]
+			},
+			buyFood: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[4]
+			},
+			buyRunes: (value) => {
+				const numValue = parseInt(value || 0)
+				return numValue <= availArray[5]
+			},
+		},
+
+		errorMessages: {
+			buyArm: t("finance:blackMarket.buyError"),
+			buyLnd: t("finance:blackMarket.buyError"),
+			buyFly: t("finance:blackMarket.buyError"),
+			buySea: t("finance:blackMarket.buyError"),
+			buyFood: t("finance:blackMarket.buyError"),
+			buyRunes: t("finance:blackMarket.buyError"),
 		},
 	})
 
+	if (form.values["buyArm"] === undefined) {
+		form.setFieldValue("buyArm", 0)
+	}
+	if (form.values["buyLnd"] === undefined) {
+		form.setFieldValue("buyLnd", 0)
+	}
+	if (form.values["buyFly"] === undefined) {
+		form.setFieldValue("buyFly", 0)
+	}
+	if (form.values["buySea"] === undefined) {
+		form.setFieldValue("buySea", 0)
+	}
+	if (form.values["buyFood"] === undefined) {
+		form.setFieldValue("buyFood", 0)
+	}
+	if (form.values["buyRunes"] === undefined) {
+		form.setFieldValue("buyRunes", 0)
+	}
+
 	const totalPrice = useMemo(() => {
 		const values = Object.values(form.values).slice(2)
-		return values.reduce(
-			(sum, value, index) => sum + value * Object.values(costs)[index],
-			0,
-		)
+		return values.reduce((sum, value, index) => {
+			const numValue = parseInt(value || 0)
+			return sum + numValue * Object.values(costs)[index]
+		}, 0)
 	}, [form.values, costs])
+
+	const interpretResult = (result) => {
+		let returnArray = []
+		if (result?.resultBuyArm.amount > 0) {
+			console.log("test")
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuyArm.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.trparm`),
+					price: result.resultBuyArm.price.toLocaleString(),
+				}),
+			)
+		}
+		if (result?.resultBuyLnd.amount > 0) {
+			console.log("test")
+
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuyLnd.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.trplnd`),
+					price: result.resultBuyLnd.price.toLocaleString(),
+				}),
+			)
+		}
+		if (result?.resultBuyFly.amount > 0) {
+			console.log("test")
+
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuyFly.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.trpfly`),
+					price: result.resultBuyFly.price.toLocaleString(),
+				}),
+			)
+		}
+		if (result?.resultBuySea.amount > 0) {
+			console.log("test")
+
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuySea.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.trpsea`),
+					price: result.resultBuySea.price.toLocaleString(),
+				}),
+			)
+		}
+		if (result?.resultBuyFood.amount > 0) {
+			console.log("test")
+
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuyFood.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.food`),
+					price: result.resultBuyFood.price.toLocaleString(),
+				}),
+			)
+		}
+		if (result?.resultBuyRunes.amount > 0) {
+			console.log("test")
+
+			returnArray.push(
+				t("finance:blackMarket.buyResultArray", {
+					amount: result.resultBuyRunes.amount.toLocaleString(),
+					item: t(`eras:eras.${eraName}.runes`),
+					price: result.resultBuyRunes.price.toLocaleString(),
+				}),
+			)
+		}
+		return returnArray
+	}
 
 	const doBuy = async (values) => {
 		try {
@@ -203,7 +319,10 @@ function PrivateMarketBuy() {
 													/>
 												</td>
 												<td align="center">
-													${(price * form.values[buy]).toLocaleString()}
+													$
+													{(
+														parseInt(form.values[buy] || 0) * price || 0
+													).toLocaleString()}
 												</td>
 											</MarketRow>
 										)

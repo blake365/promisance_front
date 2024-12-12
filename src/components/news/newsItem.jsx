@@ -68,6 +68,8 @@ export default function NewsItem({ item, now }) {
 		return `news:${content.key}`
 	}
 
+	console.log(item)
+
 	return (
 		<Card shadow="sm" radius="sm" m="sm" p="xs" withBorder>
 			<Card.Section p="xs">

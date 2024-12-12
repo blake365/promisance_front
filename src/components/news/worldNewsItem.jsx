@@ -67,8 +67,11 @@ export default function WorldNewsItem({ item, now }) {
 	// Generate unique key for news content
 	const getContentKey = (content) => {
 		if (!content?.key) return null
+		console.log(content.key)
 		return `news:${content.key}`
 	}
+
+	// console.log(item)
 
 	return (
 		<Card shadow="sm" radius="sm" p="xs" withBorder sx={{ overflowX: "auto" }}>

@@ -231,8 +231,8 @@ export default memo(function PublicMarketSell({ empire }) {
 					<Text key={index}>
 						{t("finance:publicMarket.sellResult", {
 							amount: element.amount.toLocaleString(),
-							item: t(`eras:era.${eraName}.${item}`),
-							price: element.price,
+							item: t(`eras:eras.${eraName}.${item}`),
+							price: element.price.toLocaleString(),
 						})}
 					</Text>
 				)

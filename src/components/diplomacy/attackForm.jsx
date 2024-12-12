@@ -47,7 +47,7 @@ const AttackForm = memo(({ empire, roundStatus, defenderId }) => {
 			number: (value) => empire.turns >= 2 && value > 0,
 		},
 		errorMessages: {
-			number: t("diplomacy:attackError"),
+			number: t("diplomacy:warCouncil.attackError"),
 		},
 	})
 
