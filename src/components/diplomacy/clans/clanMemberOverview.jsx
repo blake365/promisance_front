@@ -156,9 +156,9 @@ export default function ClanMemberOverview({ empire }) {
 				</Card>
 
 				<Card sx={{ width: "380px", minHeight: "295px" }}>
-					<Text weight={800} size="lg">
-						Agriculture
-					</Text>
+                    <Text weight={800} size="lg">
+                        {t("summary:summary.agriculture")}
+                    </Text>
 					<SimpleGrid cols={2} spacing={1}>
 						<Text>{t("summary:summary.food")}:</Text>
 						<Text align="right">{empire.food.toLocaleString()}</Text>
@@ -183,7 +183,7 @@ export default function ClanMemberOverview({ empire }) {
 							{t("summary:summary.explore")}:{" "}
 							<RaceBonus value={era.mod_explore + race.mod_explore} />
 						</Text>
-						<Text align="right">+{newLand} acres</Text>
+                        <Text align="right">+{newLand} {t("summary:summary.acres")}</Text>
 						<Text align="left">
 							{t("summary:summary.blackmarket")}:{" "}
 							<RaceBonus value={race.mod_market} />
@@ -192,11 +192,11 @@ export default function ClanMemberOverview({ empire }) {
 				</Card>
 
 				<Card sx={{ width: "380px", minHeight: "295px" }}>
-					<Text weight={800} size="lg">
-						Economy
-					</Text>
+                    <Text weight={800} size="lg">
+                        {t("summary:summary.economy")}
+                    </Text>
 					<SimpleGrid cols={2} spacing={1}>
-						<Text>{t("summary:summary.money")}:</Text>
+                        <Text>{t("summary:summary.cash")}:</Text>
 						<Text align="right">${empire.cash.toLocaleString()}</Text>
 						<Text>{t("summary:summary.percapitaincome")}:</Text>
 						<Text align="right">${cpi.toLocaleString()}</Text>
@@ -244,7 +244,7 @@ export default function ClanMemberOverview({ empire }) {
 							<Text align="right">{t("summary:summary.buildrate")}: </Text>
 							<Text align="right">{empire.bldPop.toLocaleString()}</Text>
 							<Text align="right">{empire.bldCash.toLocaleString()}</Text>
-							<Text align="right">{empire.bldTroop.toLocaleString()}</Text>
+                            <Text align="right">{empire.bldTrp.toLocaleString()}</Text>
 							<Text align="right">{empire.bldCost.toLocaleString()}</Text>
 							<Text align="right">{empire.bldWiz.toLocaleString()}</Text>
 							<Text align="right">{empire.bldFood.toLocaleString()}</Text>

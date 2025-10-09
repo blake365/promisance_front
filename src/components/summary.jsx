@@ -147,7 +147,7 @@ export default function Summary() {
 									}}
 									className="sixth-step"
 								>
-									{t("summary.tour")}
+								{t("summary:summary.tour")}
 								</Button>
 							</Center>
 						)}
