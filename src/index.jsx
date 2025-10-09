@@ -199,11 +199,10 @@ function TourRoot({ children }) {
 
 ReactDOM.render(
 	<React.StrictMode>
-        <TourRoot>
-			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
-					<BrowserRouter>
-						<SentryRoutes>
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<BrowserRouter>
+					<SentryRoutes>
 							<Route
 								path="/"
 								element={
@@ -342,9 +341,11 @@ ReactDOM.render(
 							<Route
 								path="/app/"
 								element={
-									<Suspense fallback={<LoadingComponent />}>
+								<Suspense fallback={<LoadingComponent />}>
+									<TourRoot>
 										<App />
-									</Suspense>
+									</TourRoot>
+								</Suspense>
 									// <App />
 								}
 							>
@@ -567,7 +568,6 @@ ReactDOM.render(
 					</BrowserRouter>
 				</PersistGate>
 			</Provider>
-        </TourRoot>
 	</React.StrictMode>,
 	document.getElementById("root"),
 )
