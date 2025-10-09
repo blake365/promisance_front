@@ -93,7 +93,8 @@ import { PersistGate } from "redux-persist/integration/react"
 import { inject } from "@vercel/analytics"
 
 import { TourProvider } from "@reactour/tour"
-import { steps } from "./tour/steps"
+import { getSteps } from "./tour/steps"
+import { useTranslation } from "react-i18next"
 import Forgot from "./components/pages/Forgot"
 import Reset from "./components/pages/Reset"
 import ForgotUsername from "./components/pages/ForgotUsername"
@@ -165,31 +166,40 @@ function LoadingComponent() {
 	)
 }
 
+function TourRoot({ children }) {
+    const { t } = useTranslation(["tour"]) // ensure namespace is loaded
+    return (
+        <TourProvider
+            steps={getSteps(t)}
+            showCloseButton={true}
+            styles={{
+                popover: (base) => ({
+                    ...base,
+                    "--reactour-accent": "#40c057",
+                    borderRadius: "10px",
+                    color: "black",
+                    marginLeft: "8px",
+                    boxShadow: "0 0 3em rgba(0, 0, 0, 0.5)",
+                }),
+                button: (base) => ({
+                    ...base,
+                    color: "black",
+                }),
+                maskWrapper: () => {
+                    return {
+                        display: "none",
+                    }
+                },
+            }}
+        >
+            {children}
+        </TourProvider>
+    )
+}
+
 ReactDOM.render(
 	<React.StrictMode>
-		<TourProvider
-			steps={steps}
-			showCloseButton={true}
-			styles={{
-				popover: (base) => ({
-					...base,
-					"--reactour-accent": "#40c057",
-					borderRadius: "10px",
-					color: "black",
-					marginLeft: "8px",
-					boxShadow: "0 0 3em rgba(0, 0, 0, 0.5)",
-				}),
-				button: (base) => ({
-					...base,
-					color: "black",
-				}),
-				maskWrapper: () => {
-					return {
-						display: "none",
-					}
-				},
-			}}
-		>
+        <TourRoot>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<BrowserRouter>
@@ -557,7 +567,7 @@ ReactDOM.render(
 					</BrowserRouter>
 				</PersistGate>
 			</Provider>
-		</TourProvider>
+        </TourRoot>
 	</React.StrictMode>,
 	document.getElementById("root"),
 )

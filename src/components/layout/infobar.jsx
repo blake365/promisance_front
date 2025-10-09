@@ -15,7 +15,7 @@ import { useEffect, useState, useRef, memo } from "react"
 import classes from "./numberChange.module.css"
 import { useSelector } from "react-redux"
 import CountdownTimer from "../utilities/countdownTimer"
-import { useTranslation } from "react-i18next"
+ 
 
 const AnimateNumberChange = memo(({ number, type }) => {
 	const [prevNumber, setPrevNumber] = useState(number)

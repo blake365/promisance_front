@@ -2,7 +2,7 @@ import { Stack, Title, Button, Center } from "@mantine/core"
 import { useSelector } from "react-redux"
 import { Compass } from "@phosphor-icons/react"
 import { useTour } from "@reactour/tour"
-import { steps } from "../tour/steps"
+import { getSteps } from "../tour/steps"
 import { checkRoundStatus } from "../functions/checkRoundStatus"
 import ChangeRace from "./settings/changeRace"
 import UpdateIcon from "./settings/updateIcon"
@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next"
 import { LanguageSelector } from "./utilities/LanguageSelector"
 
 export default function ManageEmpire() {
-	const { t } = useTranslation("settings")
+    const { t } = useTranslation(["settings", "tour"])
 	const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
 	const { empire } = useSelector((state) => state.empire)
 	const roundStatus = checkRoundStatus()
@@ -39,9 +39,9 @@ export default function ManageEmpire() {
 						compact
 						variant="outline"
 						align="center"
-						onClick={() => {
+                        onClick={() => {
 							setMeta("new player tour")
-							setSteps(steps)
+                            setSteps(getSteps(t))
 							setCurrentStep(0)
 							setIsOpen(true)
 						}}
