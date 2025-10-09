@@ -1,4 +1,5 @@
 import { Paper, Grid, Text, Center, Progress, Popover } from "@mantine/core"
+import { useTranslation } from "react-i18next"
 import { eraArray } from "../../config/eras"
 import {
 	Mountains,
@@ -67,7 +68,7 @@ AnimateNumberChange.displayName = "AnimateNumberChange"
 export default function InfoBar({ data }) {
 	// console.log(data.empire)
 	const empire = data
-	const { t, i18n } = useTranslation(["layout", "eras"])
+	const { t, i18n } = useTranslation(["layout", "eras", "time"])
 	// i18n.changeLanguage('es')
 	// console.log(i18n.language)
 
@@ -85,22 +86,18 @@ export default function InfoBar({ data }) {
 	const remaining = time.end - time.time
 	// console.log(remaining)
 
-	// TODO: Translate round status
 	if (upcoming > 0) {
-		roundStatus = `The round will start in ${Math.floor(
-			upcoming / (1000 * 60 * 60 * 24),
-		)} days and ${Math.floor(
-			(upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-		)} hours`
+		const days = Math.floor(upcoming / (1000 * 60 * 60 * 24))
+		const hours = Math.floor((upcoming % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+		const minutes = Math.floor((upcoming % (1000 * 60 * 60)) / (1000 * 60))
+		roundStatus = t('time:round.willStart', { days, hours, minutes })
 	} else if (remaining < 0) {
-		roundStatus =
-			"The round has ended, thanks for playing! A new round will start soon."
+		roundStatus = t('time:round.ended')
 	} else if (remaining < 48 * 60 * 60 * 1000) {
-		roundStatus = `The round will end in ${Math.floor(
-			remaining / (1000 * 60 * 60),
-		)} hours and ${Math.floor(
-			(remaining % (1000 * 60 * 60)) / (1000 * 60),
-		)} minutes`
+		const days = Math.floor(remaining / (1000 * 60 * 60 * 24))
+		const hours = Math.floor(remaining / (1000 * 60 * 60))
+		const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))
+		roundStatus = t('time:round.willEnd', { days, hours, minutes })
 	}
 
 	return (

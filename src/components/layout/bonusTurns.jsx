@@ -1,5 +1,6 @@
 import { Button } from '@mantine/core'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import Axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { empireLoaded } from '../../store/empireSlice'
@@ -7,6 +8,7 @@ import { checkRoundStatus } from '../../functions/checkRoundStatus'
 
 export default function BonusTurns()
 {
+    const { t } = useTranslation(['turns'])
     const dispatch = useDispatch()
     const { empire } = useSelector((state) => state.empire)
     // console.log(data.empire)
@@ -36,7 +38,7 @@ export default function BonusTurns()
     return (
         round ? '' :
             <div>
-                {status === 'succeeded' && empire.flags === 0 && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= turnsMax - 10}>Bonus Turns</Button>) : ('')}
+                {status === 'succeeded' && empire.flags === 0 && bonus.length === 0 ? (<Button onClick={getBonusTurns} compact size='sm' color='green' mb={2.5} disabled={empire.turns >= turnsMax - 10}>{t('turns:general.bonusTurns')}</Button>) : ('')}
             </div>
     )
 }

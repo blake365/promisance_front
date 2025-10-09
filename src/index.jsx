@@ -107,7 +107,7 @@ inject()
 if (import.meta.env.PROD) {
 	Axios.defaults.baseURL = "https://api.neopromisance.com/api"
 } else {
-	Axios.defaults.baseURL = "http://localhost:5001/api"
+	Axios.defaults.baseURL = "http://localhost:3000/api"
 }
 
 // console.log(import.meta.env.PROD)

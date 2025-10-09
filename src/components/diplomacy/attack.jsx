@@ -15,7 +15,7 @@ import { raceArray } from "../../config/races"
 import { Compass } from "@phosphor-icons/react"
 import { checkRoundStatus } from "../../functions/checkRoundStatus"
 import { useTour } from "@reactour/tour"
-import { attackSteps } from "../../tour/attackSteps"
+import { getAttackSteps } from "../../tour/attackSteps"
 import AttackForm from "./attackForm"
 import SpellForm from "./spellForm"
 import { useTranslation } from "react-i18next"
@@ -67,7 +67,7 @@ export default function Attack() {
 								ml="xs"
 								onClick={() => {
 									setMeta("attacking tour")
-									setSteps(attackSteps)
+									setSteps(getAttackSteps(t))
 									setCurrentStep(0)
 									setIsOpen(true)
 								}}

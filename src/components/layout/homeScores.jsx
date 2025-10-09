@@ -1,11 +1,13 @@
 import { Stack, Title, Loader } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 import ScoreCard from '../../components/scoreCard'
 
 export default function HomeScores({ gameId })
 {
+    const { t } = useTranslation(['layout'])
     const [loading, setLoading] = useState(false)
     const [scores, setScores] = useState([])
 
@@ -58,7 +60,7 @@ export default function HomeScores({ gameId })
         <section style={{ maxWidth: '100%' }}>
             <Stack spacing='xs' align='center' maw={500}>
                 <Title order={1} align='center'>
-                    Top Ten
+                    {t('layout:home.topTen')}
                 </Title>
                 {loading && <Loader />}
                 {scores && scores.map(empire =>

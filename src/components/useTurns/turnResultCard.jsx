@@ -4,11 +4,12 @@ import
 	Text,
 	SimpleGrid,
 } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 import { eraArray } from '../../config/eras'
 import NetProduced from '../utilities/NetProduced'
 
-const attackResult = (result, era) =>
+const attackResult = (result, era, t) =>
 {
 	if (result.result === 'success') {
 		// console.log(result.message)
@@ -30,13 +31,13 @@ const attackResult = (result, era) =>
 
 			return (<>
 				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'green'}>{result.message}</Text>
-				<Text align='center'>You lost: {youLost.map((item, index) =>
+				<Text align='center'>{t('turns:results.youLost')} {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
 					return (`${item}, `)
 				}
 				)}</Text>
-				<Text align='center'>You killed: {youKilled.map((item, index) =>
+				<Text align='center'>{t('turns:results.youKilled')} {youKilled.map((item, index) =>
 				{
 					if (index === youKilled.length - 1) { return (item) }
 					return (`${item}, `)
@@ -77,7 +78,7 @@ const attackResult = (result, era) =>
 				if (newKey === 'bldtroop') {
 					string = `${eraArray[era].bldtrp}: ${result.buildingGain[key].toLocaleString()}`
 				} else if (newKey === 'freeland') {
-					string = `Free Land: ${result.buildingGain[key].toLocaleString()}`
+					string = `${t('turns:results.freeLand')}: ${result.buildingGain[key].toLocaleString()}`
 				}
 				buildingsCaptured.push(string);
 			}
@@ -98,7 +99,7 @@ const attackResult = (result, era) =>
 			}
 			)}</Text>
 			{result.attackType !== 'surprise' && <Text align='center'>
-				You captured: {buildingsCaptured.map((item, index) =>
+				{t('turns:results.youCaptured')} {buildingsCaptured.map((item, index) =>
 				{
 					if (index === buildingsCaptured.length - 1) { return (item) }
 					return (`${item}, `)
@@ -126,14 +127,14 @@ const attackResult = (result, era) =>
 
 			return (<>
 				<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
-				<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
-				<Text align='center'>You lost: {youLost.map((item, index) =>
+				<Text align='center' weight='bold' color='red'>{t('turns:results.attackFailed')}</Text>
+				<Text align='center'>{t('turns:results.youLost')} {youLost.map((item, index) =>
 				{
 					if (index === youLost.length - 1) { return (item) }
 					return (`${item}, `)
 				}
 				)}</Text>
-				<Text align='center'>You killed: {youKilled.map((item, index) =>
+				<Text align='center'>{t('turns:results.youKilled')} {youKilled.map((item, index) =>
 				{
 					if (index === youKilled.length - 1) { return (item) }
 					return (`${item}, `)
@@ -144,7 +145,7 @@ const attackResult = (result, era) =>
 		}
 		return (<>
 			<Text align='center' weight='bold' color={result.message.includes('desert') ? 'orange' : 'red'}>{result.message}</Text>
-			<Text align='center' weight='bold' color='red'>The attack was unsuccessful!</Text>
+			<Text align='center' weight='bold' color='red'>{t('turns:results.attackFailed')}</Text>
 			<Text align='center'>You lost {result.troopLoss[result.attackType].toLocaleString()} {result.troopType}</Text>
 			<Text align='center'>You killed {result.troopKilled[result.attackType].toLocaleString()} {result.troopType}</Text>
 		</>)
@@ -156,7 +157,7 @@ const attackResult = (result, era) =>
 	}
 }
 
-const spellResult = (result) =>
+const spellResult = (result, t) =>
 {
 	// console.log(result)
 	if (result.result === 'success' || result.result === 'shielded') {
@@ -202,7 +203,7 @@ const spellResult = (result) =>
 			})
 		}
 		return (<>
-			<Text align='center' weight='bold' color='red'>The spell was unsuccessful! {result.wizloss.toLocaleString()} {result.descriptor} died in the explosion.</Text>
+			<Text align='center' weight='bold' color='red'>{t('turns:results.spellFailed', { wizloss: result.wizloss.toLocaleString(), descriptor: result.descriptor })}</Text>
 		</>)
 
 	} if (result.result === 'desertion') {
@@ -214,6 +215,7 @@ const spellResult = (result) =>
 
 export default function TurnResultCard({ data, era })
 {
+	const { t } = useTranslation(['turns'])
 	// console.log(data)
 	return (
 		<div>
@@ -232,12 +234,12 @@ export default function TurnResultCard({ data, era })
 							backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 						},
 					})}>
-						{data.type === 'explore' && <Text align='center' weight='bold' color='green'>You gained {data.result.toLocaleString()} acres while exploring</Text>}
+						{data.type === 'explore' && <Text align='center' weight='bold' color='green'>{t('turns:results.exploreSuccess', { count: data.result.toLocaleString() })}</Text>}
 						{data?.messages?.desertion && <Text align='center' color='red' weight='bold'>{data.messages.desertion}</Text>}
-						{data.attack && attackResult(data.attack, era)}
-						{data.cast && spellResult(data.cast)}
+						{data.attack && attackResult(data.attack, era, t)}
+						{data.cast && spellResult(data.cast, t)}
 						{data?.aid?.includes('successfully') ? (<Text align='center' weight='bold' color='green'>{data.aid}</Text>) : (<Text align='center' weight='bold' color='red'>{data.aid}</Text>)}
-						{data.withdraw > 0 ? <Text align='center' color='orange'>Your savings balance has exceeded the limit. ${data.withdraw.toLocaleString()} has been returned to you.</Text> : ''}
+						{data.withdraw > 0 ? <Text align='center' color='orange'>{t('turns:results.savingsOverflow', { amount: data.withdraw.toLocaleString() })}</Text> : ''}
 						<SimpleGrid
 							cols={3}
 							spacing='xs'
@@ -247,15 +249,15 @@ export default function TurnResultCard({ data, era })
 							]}
 						>
 							<div>
-								<Text weight={800}>Economy:</Text>
+								<Text weight={800}>{t('turns:results.economy')}</Text>
 								<SimpleGrid cols={2} spacing={1}>
-									<Text>Income:</Text>
+									<Text>{t('turns:results.income')}</Text>
 									<Text align='right'>${data.income.toLocaleString()}</Text>
-									<Text>Expenses:</Text>
+									<Text>{t('turns:results.expenses')}</Text>
 									<Text align='right'>${data.expenses.toLocaleString()}</Text>
 									{data.loanpayed !== 0 ? (
 										<>
-											<Text>Loan Payment:</Text>
+											<Text>{t('turns:results.loanPayment')}</Text>
 											<Text align='right'>${(data.loanpayed).toLocaleString()}</Text>
 										</>
 									) : (
@@ -263,41 +265,41 @@ export default function TurnResultCard({ data, era })
 									)}
 									{data.loanInterest > 0 ? (
 										<>
-											<Text>Loan Interest:</Text>
+											<Text>{t('turns:results.loanInterest')}</Text>
 											<Text align='right'>${(data.loanInterest).toLocaleString()}</Text>
 										</>
 									) : (
 										''
 									)}
 									{data.corruption > 0 ? (<>
-										<Text>Corruption:</Text>
+										<Text>{t('turns:results.corruption')}</Text>
 										<Text align='right'>${(data.corruption).toLocaleString()}</Text>
 									</>) : ('')}
 									{data.wartax > 0 ? (<>
-										<Text>War Tax:</Text>
+										<Text>{t('turns:results.warTax')}</Text>
 										<Text align='right'>${(data.wartax).toLocaleString()}</Text>
 									</>) : ('')}
-									<NetProduced title='Net' value={data.money} money />
+									<NetProduced title={t('turns:results.net')} value={data.money} money />
 								</SimpleGrid>
 							</div>
 							<div>
-								<Text weight={800}>Agriculture:</Text>
+								<Text weight={800}>{t('turns:results.agriculture')}</Text>
 								<SimpleGrid cols={2} spacing={1}>
-									<Text>Produced:</Text>
+									<Text>{t('turns:results.produced')}</Text>
 									<Text align='right'>{data.foodpro.toLocaleString()}</Text>
-									<Text>Consumed:</Text>
+									<Text>{t('turns:results.consumed')}</Text>
 									<Text align='right'>{data.foodcon.toLocaleString()}</Text>
 									{data.rot > 0 ?
 										(<>
-											<Text>Rot:</Text>
+											<Text>{t('turns:results.rot')}</Text>
 											<Text align='right'>{data.rot.toLocaleString()}</Text>
 										</>)
 										: ('')}
-									<NetProduced title='Net' value={data.food} />
+									<NetProduced title={t('turns:results.net')} value={data.food} />
 								</SimpleGrid>
 							</div>
 							<div>
-								<Text weight={800}>Population and Military:</Text>
+								<Text weight={800}>{t('turns:results.populationAndMilitary')}</Text>
 								<SimpleGrid cols={2} spacing={1}>
 									{data.peasants !== 0 ? (<NetProduced value={data.peasants} title={eraArray[era].peasants} />) : ('')
 									}

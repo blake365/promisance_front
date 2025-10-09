@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
 export default function FooterSocial() {
-	const { t } = useTranslation("pages")
+	const { t } = useTranslation(["pages", "layout"])
 	return (
 		<div>
 			<Container size="lg" py="lg">
@@ -18,13 +18,13 @@ export default function FooterSocial() {
 							href="https://guide.neopromisance.com"
 							target="_blank"
 						>
-							Guide
+							{t('layout:footer.guide')}
 						</Anchor>
 						<Anchor component={Link} to="/rules" color="dimmed">
-							Rules
+							{t('layout:footer.rules')}
 						</Anchor>
 						<Anchor component={Link} to="/privacy" color="dimmed">
-							Privacy Policy
+							{t('layout:footer.privacy')}
 						</Anchor>
 						<Anchor
 							component="a"
@@ -32,7 +32,7 @@ export default function FooterSocial() {
 							target="_blank"
 							color="dimmed"
 						>
-							Donate
+							{t('layout:footer.donate')}
 						</Anchor>
 						<ActionIcon
 							size="lg"

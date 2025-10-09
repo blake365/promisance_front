@@ -12,7 +12,8 @@
 		"error": "Invalid number of turns",
 		"refresh": "Refresh Data",
 		"repeat": "Repeat Action",
-		"resume": "Resume Tutorial"
+		"resume": "Resume Tutorial",
+		"bonusTurns": "Bonus Turns"
 	},
 	"explore": {
 		"title": "Explore",
@@ -95,5 +96,28 @@
 		"castError": "Can't cast that many spells",
 		"powerReq": "Power",
 		"cost": "Cost"
+	},
+	"results": {
+		"freeLand": "Free Land",
+		"attackFailed": "The attack was unsuccessful!",
+		"spellFailed": "The spell was unsuccessful! {{wizloss}} {{descriptor}} died in the explosion.",
+		"exploreSuccess": "You gained {{count}} acres while exploring",
+		"savingsOverflow": "Your savings balance has exceeded the limit. ${{amount}} has been returned to you.",
+		"economy": "Economy:",
+		"income": "Income:",
+		"expenses": "Expenses:",
+		"loanPayment": "Loan Payment:",
+		"loanInterest": "Loan Interest:",
+		"corruption": "Corruption:",
+		"warTax": "War Tax:",
+		"net": "Net",
+		"agriculture": "Agriculture:",
+		"produced": "Produced:",
+		"consumed": "Consumed:",
+		"rot": "Rot:",
+		"populationAndMilitary": "Population and Military:",
+		"youLost": "You lost:",
+		"youKilled": "You killed:",
+		"youCaptured": "You captured:"
 	}
 }

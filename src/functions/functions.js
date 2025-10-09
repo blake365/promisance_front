@@ -143,11 +143,11 @@ export function calcProvisions(empire, size) {
 	let foodpro = Math.round(production)
 
 	let consumption =
-		empire.trpArm * 0.0166 +
-		empire.trpLnd * 0.025 +
-		empire.trpFly * 0.0333 +
-		empire.trpSea * 0.025 +
-		empire.trpWiz * 0.17
+		empire.trpArm * 0.011 +
+		empire.trpLnd * 0.016 +
+		empire.trpFly * 0.022 +
+		empire.trpSea * 0.016 +
+		empire.trpWiz * 0.11
 
 	consumption *= (100 - raceArray[empire.race].mod_foodcon) / 100
 
@@ -183,23 +183,38 @@ export function calcPCI(empire) {
 
 // takes place of calcFinances function
 export function calcFinances(pci, empire, size) {
+	// Align with backend: use economic efficiency and updated cash building factor
+	const economicEfficiency = typeof size === 'number' ? Math.max(0.8, size * 1.25) : (size?.economicEfficiency ?? 1)
 	let income = Math.round(
 		pci * (empire.tax / 100) * (empire.health / 100) * empire.peasants +
-			empire.bldCash * 500 * Math.max(0.8, size * 1.25)
+			empire.bldCash * 550 * economicEfficiency
 	)
 
 	// income *= Math.max(0.8, size)
 
 	// let loan = Math.round(empire.loan / 200)
 
-	let expenses = Math.round(
-		empire.trpArm * 0.13 +
-			empire.trpLnd * 0.5 +
-			empire.trpFly * 1.5 +
-			empire.trpSea * 3 +
-			empire.land * 3.2 +
-			empire.trpWiz * 0.53
-	)
+	// Backend upkeep with softened coefficients to allow larger armies
+	const baseUpkeep =
+		empire.trpArm * 0.18 +
+			empire.trpLnd * 0.7 +
+			empire.trpFly * 2.0 +
+			empire.trpSea * 4.0 +
+			empire.trpWiz * 0.7
+
+	const troopDensity =
+		(empire.trpArm + empire.trpLnd + empire.trpFly + empire.trpSea) / Math.max(empire.land, 1)
+	let densityMultiplier = 1.0
+	if (troopDensity > 30) {
+		densityMultiplier = 1.0 + (troopDensity - 30) * 0.005
+	}
+
+	// Soften and clamp military logistics multiplier similar to backend
+	const rawLogistics = typeof size === 'object' && size?.militaryLogistics ? size.militaryLogistics : 1.0
+	const softenedLogistics = 1.0 + Math.pow((Math.max(0, (rawLogistics - 1.0)) * 100) / 125, 1.2)
+	const militaryLogistics = Math.min(1.25, softenedLogistics)
+
+	let expenses = Math.round(baseUpkeep * militaryLogistics * densityMultiplier + empire.land * 3.2)
 
 	// console.log(empire.loan)
 	let loanpayed = 0
@@ -217,6 +232,48 @@ export function calcFinances(pci, empire, size) {
 	expenses -= Math.round(expenses * expensesBonus)
 
 	return { income: income, expenses: expenses, loanpayed: loanpayed }
+}
+
+// Detailed upkeep breakdown for UI
+export function computeUpkeepBreakdown(empire, size) {
+	const baseUpkeep =
+		empire.trpArm * 0.18 +
+			empire.trpLnd * 0.7 +
+			empire.trpFly * 2.0 +
+			empire.trpSea * 4.0 +
+			empire.trpWiz * 0.7
+
+	const troopDensity =
+		(empire.trpArm + empire.trpLnd + empire.trpFly + empire.trpSea) / Math.max(empire.land, 1)
+	let densityMultiplier = 1.0
+	if (troopDensity > 30) {
+		densityMultiplier = 1.0 + (troopDensity - 30) * 0.005
+	}
+
+	const rawLogistics = typeof size === 'object' && size?.militaryLogistics ? size.militaryLogistics : 1.0
+	const softenedLogistics = 1.0 + Math.pow((Math.max(0, (rawLogistics - 1.0)) * 100) / 125, 1.2)
+	const militaryLogistics = Math.min(1.25, softenedLogistics)
+
+	const landCost = Math.round(empire.land * 3.2)
+	const preUpkeep = Math.round(baseUpkeep * militaryLogistics * densityMultiplier + landCost)
+
+	const expensesBonus = Math.min(
+		0.5,
+		(raceArray[empire.race].mod_expenses + 100) / 100 - 1 + empire.bldCost / Math.max(empire.land, 1),
+	)
+	const discount = Math.round(preUpkeep * expensesBonus)
+	const finalExpenses = preUpkeep - discount
+
+	return {
+		baseUpkeep: Math.round(baseUpkeep),
+		landCost,
+		densityMultiplier: Math.round(densityMultiplier * 1000) / 1000,
+		militaryLogistics: Math.round(militaryLogistics * 1000) / 1000,
+		preUpkeep,
+		expensesBonus,
+		discount,
+		finalExpenses,
+	}
 }
 
 export const calcCorruption = (empire) => {

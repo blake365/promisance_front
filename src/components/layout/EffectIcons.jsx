@@ -1,11 +1,13 @@
 import { Group, ThemeIcon, Tooltip, RingProgress, Center, Stack } from '@mantine/core'
 import { useSelector, useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { ShieldStar, Sword, CalendarCheck, HourglassMedium, Skull } from '@phosphor-icons/react'
 import { useEffect } from 'react'
 import { fetchEffects } from '../../store/effectSlice'
 
 export default function EffectIcons({ empire, pageState })
 {
+    const { t } = useTranslation(['layout'])
     // console.log(data.empire)
     const dispatch = useDispatch()
     const effects = useSelector((state) => state.effects.effects)
@@ -58,7 +60,7 @@ export default function EffectIcons({ empire, pageState })
                                 label={
                                     <Stack spacing={0} align='center'>
                                         <div>{effect.empireEffectName.toUpperCase()}</div>
-                                        <div>{Math.round(remaining / 60) + ' hours remaining'}</div>
+                                        <div>{t('layout:effects.hoursRemaining', { count: Math.round(remaining / 60) })}</div>
                                     </Stack>
                                 } withArrow events={{ hover: true, focus: false, touch: true }} key={effect.id}>
                                 <RingProgress

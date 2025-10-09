@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Axios from 'axios';
 
 let bg = '/images/login.webp'
@@ -43,6 +44,7 @@ const useStyles = createStyles(() => ({
 
 export default function Reset()
 {
+    const { t } = useTranslation(['auth'])
     const { isLoggedIn, user } = useSelector((state) => state.user)
     // let { empire } = useSelector((state) => state.empire)
     const [error, setError] = useState(null)
@@ -72,7 +74,7 @@ export default function Reset()
             password: '',
         },
         validate: (values) => ({
-            password: values.password.length < 3 ? 'Too short name' : null,
+            password: values.password.length < 3 ? t('auth:validation.passwordTooShort') : null,
         }),
     })
 
@@ -94,10 +96,10 @@ export default function Reset()
         <div className={classes.wrapper}>
             <Paper className={classes.form} radius={0} >
                 <Title order={2} ta="center" mt={90} mb={10}>
-                    Forgot Your Password?
+                    {t('auth:reset.title')}
                 </Title>
                 <Text ta="center" mb={50}>
-                    Enter a new password.
+                    {t('auth:reset.subtitle')}
                 </Text>
                 <form onSubmit={form.onSubmit((values) =>
                 {
@@ -106,21 +108,21 @@ export default function Reset()
                 }
                 )
                 }>
-                    <TextInput required label="New Password" placeholder="" size="md" {...form.getInputProps('password')} />
+                    <TextInput required label={t('auth:reset.passwordLabel')} placeholder="" size="md" {...form.getInputProps('password')} />
                     <Text color='red' align='center' mt='md'>{error && error}</Text>
                     <Button fullWidth mt="xl" size="md" type='submit' color='teal' disabled={disabled}>
-                        Submit New Password
+                        {t('auth:reset.submitButton')}
                     </Button>
                     {message && <>
                         <Text color='green' align='center' mt='md'>{message}</Text>
-                        <Anchor component={Link} align='center' to='/login'>Return to Login</Anchor>
+                        <Anchor component={Link} align='center' to='/login'>{t('auth:reset.returnToLogin')}</Anchor>
                     </>}
                 </form>
                 <Text ta="center" mt="md">
-                    Need an account? <Anchor component={Link} to='/register'>Register</Anchor>
+                    {t('auth:reset.needAccount')} <Anchor component={Link} to='/register'>{t('auth:reset.registerLink')}</Anchor>
                 </Text>
                 <Text ta="center" mt="md">
-                    <Anchor component={Link} to='/'>Return home</Anchor>
+                    <Anchor component={Link} to='/'>{t('auth:reset.returnHome')}</Anchor>
                 </Text>
             </Paper>
         </div>

@@ -48,6 +48,23 @@
 			"food": "Food",
 			"runes": "Runes",
 			"health": "Health"
+		},
+		"effects": {
+			"hoursRemaining": "{{count}} hours remaining"
+		},
+		"footer": {
+			"guide": "Guide",
+			"rules": "Rules",
+			"privacy": "Privacy Policy",
+			"donate": "Donate"
+		},
+		"home": {
+			"topTen": "Top Ten",
+			"recentWorldNews": "Recent World News",
+			"noNews": "No news to display"
+		},
+		"theme": {
+			"toggle": "Toggle color scheme"
 		}
 	}
 }

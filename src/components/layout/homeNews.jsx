@@ -1,11 +1,13 @@
 import { Stack, Title, Loader, Text } from '@mantine/core'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
+import { useTranslation } from 'react-i18next'
 import WorldNewsItem from '../../components/news/worldNewsItem'
 
 
 export default function HomeNews({ gameId })
 {
+    const { t } = useTranslation(['layout'])
     let body = {
         skip: 0,
         take: 10,
@@ -53,7 +55,7 @@ export default function HomeNews({ gameId })
         <section>
             <Stack spacing='sm' align='center' maw={500}>
                 <Title order={1} align='center'>
-                    Recent World News
+                    {t('layout:home.recentWorldNews')}
                 </Title>
                 <Stack spacing='xs'>
                     {loading ? <Loader /> : (
@@ -61,7 +63,7 @@ export default function HomeNews({ gameId })
                         {
                             return <WorldNewsItem item={item} key={item.id} now={new Date()} />
                         }))}
-                    {news.length === 0 && <Text m='sm' p='xs'>No news to display</Text>}
+                    {news.length === 0 && <Text m='sm' p='xs'>{t('layout:home.noNews')}</Text>}
                 </Stack>
             </Stack>
         </section>

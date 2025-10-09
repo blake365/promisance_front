@@ -6,12 +6,14 @@ import classes from './guide.module.css'
 import { useSelector } from "react-redux"
 import { useTour } from "@reactour/tour"
 import { raceTutorials } from "../../tour/raceTutorials"
+import { useTranslation } from "react-i18next"
 
 export default function NewPlayerTips()
 {
     const { empire } = useSelector((state) => state.empire)
     const { turnsProtection } = useSelector((state) => state.games.activeGame)
     const { setIsOpen, setSteps, setMeta, setCurrentStep } = useTour()
+    const { t } = useTranslation(['races'])
 
     const startTutorial = (race) =>
     {
@@ -19,7 +21,7 @@ export default function NewPlayerTips()
         {
             for (let i = 0; i < array.length; i++) {
                 if (array[i][0].selector === `.${selector}0`) {
-                    return array[i]
+                    return array[i](t)
                 }
             }
         }

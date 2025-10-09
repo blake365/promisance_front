@@ -15,7 +15,7 @@ import { eraArray } from "../config/eras"
 import { raceArray } from "../config/races"
 import { Link, useNavigate } from "react-router-dom"
 import { useTour } from "@reactour/tour"
-import { steps } from "../tour/steps"
+import { getSteps } from "../tour/steps"
 import { Compass } from "@phosphor-icons/react"
 import { setBgImage } from "../functions/setBgImage"
 import NewPlayerModal from "./layout/newPlayerModal"
@@ -72,6 +72,22 @@ export default function Summary() {
 
 	const memoizedTime = useMemo(() => ({ ...time }), [time])
 
+	const startTutorial = (race) => {
+		function findSteps(array, selector) {
+			for (let i = 0; i < array.length; i++) {
+				if (array[i][0].selector === `.${selector}0`) {
+					return array[i](t)
+				}
+			}
+		}
+
+		const steps = findSteps(raceTutorials, race.toLowerCase())
+		setSteps(steps)
+		setMeta(`${race} tutorial`)
+		setCurrentStep(0)
+		setIsOpen(true)
+	}
+
 	useEffect(() => {
 		if (!game) {
 			navigate("/select")
@@ -119,7 +135,7 @@ export default function Summary() {
 									align="center"
 									onClick={() => {
 										setMeta("new player tour")
-										setSteps(steps)
+										setSteps(getSteps(t))
 										setCurrentStep(0)
 										setIsOpen(true)
 									}}

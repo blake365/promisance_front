@@ -1,31 +1,31 @@
-import { drow } from './drow'
-import { dwarf } from './dwarf'
-import { elf } from './elf'
-// import { human } from './human';
-import { orc } from './orc'
-import { ghoul } from './ghoul'
-import { gnome } from './gnome'
-import { goblin } from './goblin'
-import { gremlin } from './gremlin'
-import { hobbit } from './hobbit'
-import { minotaur } from './minotaur'
-// import { troll } from './troll';
-import { pixie } from './pixie'
-import { vampire } from './vampire'
+import { getDrow } from './drow'
+import { getDwarf } from './dwarf'
+import { getElf } from './elf'
+// import { getHuman } from './human';
+import { getOrc } from './orc'
+import { getGhoul } from './ghoul'
+import { getGnome } from './gnome'
+import { getGoblin } from './goblin'
+import { getGremlin } from './gremlin'
+import { getHobbit } from './hobbit'
+import { getMinotaur } from './minotaur'
+// import { getTroll } from './troll';
+import { getPixie } from './pixie'
+import { getVampire } from './vampire'
 
 export const raceTutorials = [
-	drow,
-	dwarf,
-	elf,
-	// human,
-	orc,
-	ghoul,
-	gnome,
-	goblin,
-	gremlin,
-	hobbit,
-	minotaur,
-	// troll,
-	pixie,
-	vampire,
+	getDrow,
+	getDwarf,
+	getElf,
+	// getHuman,
+	getOrc,
+	getGhoul,
+	getGnome,
+	getGoblin,
+	getGremlin,
+	getHobbit,
+	getMinotaur,
+	// getTroll,
+	getPixie,
+	getVampire,
 ]

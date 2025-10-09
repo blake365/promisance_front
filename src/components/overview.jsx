@@ -10,7 +10,7 @@ import
 import { useSelector } from 'react-redux'
 import { eraArray } from '../config/eras'
 import { raceArray } from '../config/races'
-import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense, calcCorruption, calcRot } from '../functions/functions'
+import { calcSizeBonus, calcPCI, explore, calcFinances, calcProvisions, offense, defense, calcCorruption, calcRot, computeUpkeepBreakdown } from '../functions/functions'
 import NetProduced from './utilities/NetProduced'
 import { setBgImage } from '../functions/setBgImage'
 import TinyAction from './useTurns/tinyAction'
@@ -108,6 +108,9 @@ export default function Overview()
 
 	const bgimage = setBgImage(empire, turnsProtection)
 
+	// Expenses breakdown for clearer player visibility
+	const upkeep = computeUpkeepBreakdown(empire, size)
+
 	return (
 		<main>
 			<Stack spacing='sm' align='center'>
@@ -204,7 +207,11 @@ export default function Overview()
 								</Popover>
 								<Text align='right'>${income.toLocaleString()}</Text>
 								<Text>{t('summary:summary.expenses')}: <RaceBonus value={race.mod_expenses} /></Text>
-								<Text align='right'>${expenses.toLocaleString()}</Text>
+					<Text align='right'>${expenses.toLocaleString()}</Text>
+					<Text>Upkeep multiplier:</Text>
+					<Text align='right'>×{(upkeep.militaryLogistics * upkeep.densityMultiplier).toFixed(2)}</Text>
+					<Text>Cost reduction:</Text>
+					<Text align='right'>−{Math.round(upkeep.expensesBonus * 100)}%</Text>
 								<Text>{t('summary:summary.corruption')}: </Text>
 								<Text align='right'>${corruption.toLocaleString()}</Text>
 								<Text>{t('summary:summary.loanpayment')}:</Text>

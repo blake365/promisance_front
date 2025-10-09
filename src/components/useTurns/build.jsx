@@ -11,7 +11,7 @@ import { calcSizeBonus } from '../../functions/functions'
 import { useState, useRef } from 'react'
 import { useTour } from '@reactour/tour'
 import { Compass } from '@phosphor-icons/react'
-import { buildSteps } from '../../tour/buildSteps'
+import { getBuildSteps } from '../../tour/buildSteps'
 import { useLoadEmpire } from '../../hooks/useLoadEmpire'
 import { checkRoundStatus } from '../../functions/checkRoundStatus'
 import { setRepeat } from '../../store/repeatSlice'
@@ -171,7 +171,7 @@ export default function Build({ size })
 							<ActionIcon size='md' onClick={() =>
 							{
 								setMeta('build tour')
-								setSteps(buildSteps)
+								setSteps(getBuildSteps(t))
 								setCurrentStep(0)
 								setIsOpen(true)
 							}}

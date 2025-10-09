@@ -12,7 +12,8 @@
 		"error": "Número de turnos inválido",
 		"refresh": "Actualizar Datos",
 		"repeat": "Repetir Acción",
-		"resume": "Resumir Tutorial"
+		"resume": "Resumir Tutorial",
+		"bonusTurns": "Turnos Bonus"
 	},
 	"explore": {
 		"title": "Explorar",
@@ -95,5 +96,28 @@
 		"castError": "No puedes lanzar tantos hechizos",
 		"powerReq": "Poder",
 		"cost": "Costo"
+	},
+	"results": {
+		"freeLand": "Tierra Libre",
+		"attackFailed": "¡El ataque no tuvo éxito!",
+		"spellFailed": "¡El hechizo no tuvo éxito! {{wizloss}} {{descriptor}} murieron en la explosión.",
+		"exploreSuccess": "Ganaste {{count}} acres mientras explorabas",
+		"savingsOverflow": "Tu saldo de ahorros ha excedido el límite. ${{amount}} te ha sido devuelto.",
+		"economy": "Economía:",
+		"income": "Ingresos:",
+		"expenses": "Gastos:",
+		"loanPayment": "Pago de Préstamo:",
+		"loanInterest": "Interés de Préstamo:",
+		"corruption": "Corrupción:",
+		"warTax": "Impuesto de Guerra:",
+		"net": "Neto",
+		"agriculture": "Agricultura:",
+		"produced": "Producido:",
+		"consumed": "Consumido:",
+		"rot": "Putrefacción:",
+		"populationAndMilitary": "Población y Militar:",
+		"youLost": "Perdiste:",
+		"youKilled": "Mataste:",
+		"youCaptured": "Capturaste:"
 	}
 }

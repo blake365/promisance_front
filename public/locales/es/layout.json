@@ -48,6 +48,23 @@
 			"food": "Comida",
 			"runes": "Runas",
 			"health": "Salud"
+		},
+		"effects": {
+			"hoursRemaining": "{{count}} horas restantes"
+		},
+		"footer": {
+			"guide": "Guía",
+			"rules": "Reglas",
+			"privacy": "Política de Privacidad",
+			"donate": "Donar"
+		},
+		"home": {
+			"topTen": "Top Diez",
+			"recentWorldNews": "Noticias Mundiales Recientes",
+			"noNews": "No hay noticias que mostrar"
+		},
+		"theme": {
+			"toggle": "Cambiar esquema de colores"
 		}
 	}
 }

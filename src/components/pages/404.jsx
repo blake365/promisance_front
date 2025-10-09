@@ -1,5 +1,6 @@
 import { createStyles, Container, Title, Text, Button, Group, } from '@mantine/core';
 import { Illustration } from './Illustration';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -48,19 +49,19 @@ const useStyles = createStyles((theme) => ({
 export function NothingFoundBackground()
 {
     const { classes } = useStyles();
+    const { t } = useTranslation(['pages']);
 
     return (
         <Container className={classes.root}>
             <div className={classes.inner}>
                 <Illustration className={classes.image} />
                 <div className={classes.content}>
-                    <Title className={classes.title}>Nothing to see here</Title>
+                    <Title className={classes.title}>{t('pages:error.title')}</Title>
                     <Text color="dimmed" size="lg" align="center" className={classes.description}>
-                        Page you are trying to open does not exist. You may have mistyped the address, or the
-                        page has been moved to another URL. If you think this is an error contact support.
+                        {t('pages:error.description')}
                     </Text>
                     <Group position="center">
-                        <Button size="md" component='a' href='/'>Take me back home</Button>
+                        <Button size="md" component='a' href='/'>{t('pages:error.homeButton')}</Button>
                     </Group>
                 </div>
             </div>

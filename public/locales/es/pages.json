@@ -22,6 +22,11 @@
 		"diplomacyText": "Forja alianzas y rivalidades con otros jugadores a través de mensajes en el juego. El panorama político puede ser tan importante como el campo de batalla.",
 		"news": "Mantente al Día con las Noticias",
 		"newsText": "Mantente informado con las últimas noticias del mundo del juego. Lee sobre el resultado de batallas, hechizos, eventos del mercado, sorteos de lotería y más para mantenerte por delante de la competencia.",
+	"error": {
+		"title": "No hay nada que ver aquí",
+		"description": "La página que intentas abrir no existe. Es posible que hayas escrito mal la dirección, o que la página se haya movido a otra URL. Si crees que esto es un error, contacta al soporte.",
+		"homeButton": "Llévame de vuelta a casa"
+	},
 		"strategies": "Elige Tu Estrategia",
 		"strategiesText": "Hay muchas formas de jugar Promisance. Usa tus turnos para construir estructuras y realizar acciones para producir diferentes recursos. A medida que tu imperio crece, necesitarás atacar a otros jugadores para adquirir la tierra necesaria para crecer aún más. Es común ser atacado en este juego, pero hay límites para tratar de evitar que alguien sufra demasiado daño. Asegúrate de protegerte de los hechizos enemigos usando un escudo mágico. A continuación se presentan las Cuatro Grandes estrategias que puedes usar para jugar.",
 		"farmer": "Granjero",
